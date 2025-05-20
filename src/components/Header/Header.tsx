@@ -2,7 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import LangSelect from '../LangSelect/LangSelect';
 import style from './style.module.css';
 
-export default function Header() {
+interface Props {
+    title?: string | null;
+}
+
+export default function Header({ title }: Props) {
     const navigate = useNavigate();
     const toMain = () => {
         navigate('/');
@@ -18,6 +22,7 @@ export default function Header() {
                     style={{ cursor: 'pointer' }}
                     onClick={toMain}
                 />
+                {title && <h1>{title}</h1>}
                 <LangSelect />
             </header>
         </div>

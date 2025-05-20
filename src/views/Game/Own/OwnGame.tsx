@@ -2,96 +2,57 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import Header from '../../../components/Header/Header';
 import Footer from '../../../components/Footer/Footer';
-import { Button, Webcam } from '@knicos/genai-base';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { imageAtom } from '../../../utils/state';
+import { Button } from '@knicos/genai-base';
+import CameraCapture from '../../../components/CameraCapture/CameraCapture';
+import FileUploadCapture from '../../../components/FileUploader/FileUploadCapture';
 
 export default function OwnGame() {
     const { t } = useTranslation();
     const [image, setImage] = useAtom(imageAtom);
     const [hasCaptured, setHasCaptured] = useState(false);
-    const [capture, setCapture] = useState(false);
-
-    const getImage = useCallback(
-        (img: HTMLCanvasElement) => {
-            setImage(img);
-            setHasCaptured(true);
-        },
-        [setImage]
-    );
+    const [method, setMethod] = useState<'camera' | 'upload' | null>(null);
 
     const resetCapture = () => {
         setImage(null);
         setHasCaptured(false);
-        setCapture(false);
+        setMethod(null);
     };
-
-    const handleFileUpload = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            const file = e.target.files?.[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = () => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const size = 224;
-                    canvas.width = size;
-                    canvas.height = size;
-                    const ctx = canvas.getContext('2d');
-                    if (ctx) {
-                        ctx.drawImage(img, 0, 0, size, size);
-                        setImage(canvas);
-                        setHasCaptured(true);
-                    }
-                };
-                if (typeof reader.result === 'string') {
-                    img.src = reader.result;
-                }
-            };
-            reader.readAsDataURL(file);
-        },
-        [setImage]
-    );
-
-    const startCapture = useCallback(() => setCapture(true), [setCapture]);
-    const stopCapture = useCallback(() => setCapture(false), [setCapture]);
 
     return (
         <div className={style.container}>
-            <Header />
+            <Header title={t('common.title')} />
             <div className={style.innerContainer}>
                 <div className={style.innerContainer}>
-                    <h1>{t('common.title')}</h1>
                     <h2>{t('game.own.title')}</h2>
-                    <input
-                        type="file"
-                        id="upload"
-                        accept="image/*"
-                        onChange={handleFileUpload}
-                    />
-                    {!hasCaptured && (
-                        <>
-                            <Webcam
-                                size={224}
-                                interval={1000}
-                                onCapture={getImage}
-                                capture={capture}
-                            />
-                            <Button
-                                onMouseDown={startCapture}
-                                onMouseUp={stopCapture}
-                                onBlur={stopCapture}
-                                onMouseLeave={stopCapture}
-                                onTouchEnd={stopCapture}
-                                onTouchCancel={stopCapture}
-                            >
-                                ota kuva
+
+                    {!hasCaptured && method === null && (
+                        <div className={style.selectionButtons}>
+                            <Button onClick={() => setMethod('camera')}>
+                                {t('game.own.useCamera', 'Käytä kameraa')}
                             </Button>
-                        </>
+                            <Button onClick={() => setMethod('upload')}>
+                                {t('game.own.uploadFile', 'Lataa kuva tiedostosta')}
+                            </Button>
+                        </div>
                     )}
+
+                    {!hasCaptured && method === 'camera' && (
+                        <CameraCapture
+                            onCapture={setImage}
+                            onDone={() => setHasCaptured(true)}
+                        />
+                    )}
+
+                    {!hasCaptured && method === 'upload' && (
+                        <FileUploadCapture
+                            onCapture={setImage}
+                            onDone={() => setHasCaptured(true)}
+                        />
+                    )}
+
                     {hasCaptured && image && (
                         <>
                             <img
@@ -99,12 +60,9 @@ export default function OwnGame() {
                                 alt="Kuvakaappaus"
                                 style={{ width: '224px', height: '224px' }}
                             />
-                            <Button onClick={resetCapture}>{t('game.own.takeNew', 'Ota uusi kuva')}</Button>
+                            <Button onClick={resetCapture}>{t('game.own.takeNew', 'Vaihda kuva')}</Button>
                         </>
                     )}
-                    {/**Tähän tulee jotain alkuasetteluja kuten kuvan lataus*/}
-                    {/**Tähän tulee valmis pelin aloituspainike, jonka painalluksen jälkeen peli alkaa */}
-                    {/*&&ready niin renderöityy kuva, johon sitten */}
                 </div>
             </div>
             <Footer />

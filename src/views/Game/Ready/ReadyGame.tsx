@@ -8,9 +8,8 @@ export default function ReadyGame() {
 
     return (
         <div className={style.container}>
-            <Header />
+            <Header title={t('common.title')} />
             <div className={style.innerContainer}>
-                <h1>{t('common.title')}</h1>
                 <h2>{t('game.ready.title')}</h2>
                 {/**Tähän tulee jotain alkuasetteluja */}
                 {/**Tähän tulee valmis pelin aloituspainike, jonka painalluksen jälkeen peli alkaa */}

@@ -14,9 +14,9 @@
 
 aloitetaan seuraavasta:
 
--   ottaa kuvan
--   luokittellee kuvan
--   heatmap kuvasta
+-   [x] ottaa kuvan
+-           luokittelee kuvan
+-           heatmap kuvasta
 
 try to use function, top level atleast
 

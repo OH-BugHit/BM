@@ -8,8 +8,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/*background: #dee4e8;*/
+
 #root {
-  background: #dee4e8;
+  background: white;
   position: absolute;
   top: 0;
   bottom: 0;

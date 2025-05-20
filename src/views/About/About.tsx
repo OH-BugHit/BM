@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
+import Markdown from 'react-markdown';
 
 export default function About() {
     const { t } = useTranslation();
@@ -15,6 +16,9 @@ export default function About() {
                     />
                     <h1>{t('about.title')}</h1>
                 </header>
+
+                <h2>{t('about.privacyTitle')}</h2>
+                <Markdown>{(t('about.privacy', { returnObjects: true }) as string[]).join('\n\n')}</Markdown>
             </main>
         </div>
     );

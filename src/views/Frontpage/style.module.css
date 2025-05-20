@@ -3,8 +3,10 @@
     flex-direction: column;
     font-size: 1rem;
     width: 100%;
+    height: 100%;
     align-self: center;
     box-sizing: border-box;
+    justify-content: center;
     padding: 2rem;
     overflow: auto;
     background: white;
@@ -13,7 +15,9 @@
 
 .container header {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
     margin-bottom: 1rem;
 }
@@ -25,12 +29,9 @@
     margin: 0;
 }
 
-.container main {
+.innerContainer {
     max-width: 700px;
     width: 100%;
-}
-
-.container p {
-    margin-bottom: 1rem;
-    text-align: justify;
+    align-items: center;
+    margin: 0;
 }

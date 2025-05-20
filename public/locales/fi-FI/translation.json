@@ -5,5 +5,8 @@
     "about": {
         "title": "Generation AI",
         "privacyTitle": "Tietoturvaselvitys"
+    },
+    "common": {
+        "title": "BiasGame"
     }
 }

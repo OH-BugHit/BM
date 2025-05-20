@@ -3,7 +3,7 @@
 ## Todo
 
 -   [x] kielet, käytä samaa
--   [ ] vitest
+-   [ ] vitest, (lisätty, ei käytetä vielä mihinkään)
 -   [ ] pelkkä frontti, vaatii sen routejutun
 -   [x] lint ja prettier configit
 -   [x] tsconfig.json
@@ -35,5 +35,7 @@ etsi modelsseja (verkkoselaimella toimivia)
 opeta mallia lisää
 
 redis jos tarvetta jakaa global state
+
+-   optimoi myöhemmin käyttämällä lazy() latausta
 
 Dmitry, Semenov, kysy tipun lätkästä, UEFIN sähköpostilla

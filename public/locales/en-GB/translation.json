@@ -1,5 +1,9 @@
 {
     "test": {
         "button": "TestButton"
+    },
+    "about": {
+        "title": "Generation AI",
+        "privacyTitle": "Privacy"
     }
 }

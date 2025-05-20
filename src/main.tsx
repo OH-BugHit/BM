@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import './i18n';
@@ -7,9 +7,9 @@ import App from './App';
 import { theme } from '@knicos/genai-base';
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
+    <React.StrictMode>
         <ThemeProvider theme={theme}>
             <App />
         </ThemeProvider>
-    </StrictMode>
+    </React.StrictMode>
 );

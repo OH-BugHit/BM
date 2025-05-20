@@ -1,5 +1,9 @@
 {
     "test": {
         "button": "Testipainike"
+    },
+    "about": {
+        "title": "Generation AI",
+        "privacyTitle": "Tietoturvaselvitys"
     }
 }

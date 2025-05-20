@@ -1,0 +1,8 @@
+@value textDark from "@knicos/genai-base/css/colours.module.css";
+
+.lang {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #aaa;
+}

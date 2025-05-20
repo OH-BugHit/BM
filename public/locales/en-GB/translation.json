@@ -45,6 +45,7 @@
         ]
     },
     "common": {
-        "title": "BiasGame"
+        "title": "BiasGame",
+        "start": "Start"
     }
 }

@@ -4,7 +4,7 @@
 
 -   [x] kielet, käytä samaa
 -   [ ] vitest, (lisätty, ei käytetä vielä mihinkään)
--   [ ] pelkkä frontti, vaatii sen routejutun
+-   [ ] pelkkä frontti, vaatii sen routejutun buildiin
 -   [x] lint ja prettier configit
 -   [x] tsconfig.json
 
@@ -38,4 +38,4 @@ redis jos tarvetta jakaa global state
 
 -   optimoi myöhemmin käyttämällä lazy() latausta
 
-Dmitry, Semenov, kysy tipun lätkästä, UEFIN sähköpostilla
+-   [x] Dmitry, Semenov, kysy tipun lätkästä, UEFIN sähköpostilla (sähköpostilähetetty 20.5.2025)

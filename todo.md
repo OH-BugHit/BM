@@ -39,3 +39,7 @@ redis jos tarvetta jakaa global state
 -   optimoi myöhemmin käyttämällä lazy() latausta
 
 -   [x] Dmitry, Semenov, kysy tipun lätkästä, UEFIN sähköpostilla (sähköpostilähetetty 20.5.2025)
+
+# Questions to Nicolas
+
+Webcam, single picture from component?

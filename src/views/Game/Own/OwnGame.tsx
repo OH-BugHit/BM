@@ -27,6 +27,35 @@ export default function OwnGame() {
         setCapture(false);
     };
 
+    const handleFileUpload = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const size = 224;
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+                    if (ctx) {
+                        ctx.drawImage(img, 0, 0, size, size);
+                        setImage(canvas);
+                        setHasCaptured(true);
+                    }
+                };
+                if (typeof reader.result === 'string') {
+                    img.src = reader.result;
+                }
+            };
+            reader.readAsDataURL(file);
+        },
+        [setImage]
+    );
+
     const startCapture = useCallback(() => setCapture(true), [setCapture]);
     const stopCapture = useCallback(() => setCapture(false), [setCapture]);
 
@@ -37,6 +66,12 @@ export default function OwnGame() {
                 <div className={style.innerContainer}>
                     <h1>{t('common.title')}</h1>
                     <h2>{t('game.own.title')}</h2>
+                    <input
+                        type="file"
+                        id="upload"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                    />
                     {!hasCaptured && (
                         <>
                             <Webcam
@@ -57,7 +92,6 @@ export default function OwnGame() {
                             </Button>
                         </>
                     )}
-
                     {hasCaptured && image && (
                         <>
                             <img

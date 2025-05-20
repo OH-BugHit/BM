@@ -1,22 +1,19 @@
 import { NativeSelect } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useCallback } from 'react';
 import style from './style.module.css';
 import LanguageIcon from '@mui/icons-material/Language';
 
-export const LANGS = [
-    { name: 'en-GB', label: 'English' },
-    { name: 'fi-FI', label: 'Suomi' },
-];
-
 export default function LangSelect() {
     const { t, i18n } = useTranslation();
-    const doChangeLanguage = useCallback(
-        (e: React.ChangeEvent<HTMLSelectElement>) => {
-            i18n.changeLanguage(e.target.value || 'en');
-        },
-        [i18n]
-    );
+    const doChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        i18n.changeLanguage(e.target.value || 'en-GB');
+    };
+
+    const supportedLanguages = Array.isArray(i18n.options.supportedLngs)
+        ? i18n.options.supportedLngs.filter(
+              (lng: string) => lng !== 'cimode' // dont show test languages
+          )
+        : [];
 
     return (
         <div className={style.lang}>
@@ -25,14 +22,15 @@ export default function LangSelect() {
                 onChange={doChangeLanguage}
                 variant="outlined"
                 data-testid="select-lang"
+                style={{ padding: '2px' }}
                 inputProps={{ 'aria-label': t('app.language', { ns: 'common' }) }}
             >
-                {LANGS.map((lng) => (
+                {supportedLanguages.map((lng) => (
                     <option
-                        key={lng.name}
-                        value={lng.name}
+                        key={lng}
+                        value={lng}
                     >
-                        {lng.label}
+                        {t(`languages.${lng}`)}
                     </option>
                 ))}
             </NativeSelect>

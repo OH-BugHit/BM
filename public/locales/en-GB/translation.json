@@ -1,6 +1,7 @@
 {
-    "test": {
-        "button": "TestButton"
+    "languages": {
+        "en-GB": "English",
+        "fi-FI": "Suomi"
     },
     "about": {
         "title": "Generation AI",
@@ -47,5 +48,32 @@
     "common": {
         "title": "BiasGame",
         "start": "Start"
+    },
+    "frontpage": {
+        "title": "BiasGame",
+        "readyImages": "Ready images",
+        "readyImagesDescription": "Play with ready images",
+        "ownImages": "Own images",
+        "ownImagesDescription": "Play with your own images"
+    },
+    "game": {
+        "own": {
+            "title": "Own images",
+            "description": "Upload your own images to play with them.",
+            "upload": "Upload",
+            "uploadDescription": "Upload your own images to play with them.",
+            "uploadButton": "Upload",
+            "uploadError": {
+                "title": "Error",
+                "description": "Please upload a valid image file."
+            }
+        },
+        "ready": {
+            "title": "Ready images",
+            "description": "Play with ready images.",
+            "play": "Play",
+            "playDescription": "Play with ready images.",
+            "playButton": "Play"
+        }
     }
 }

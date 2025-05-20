@@ -1,43 +1,52 @@
 import style from './style.module.css';
 //import { testAtom } from '../../utils/state';
 //import { useAtom } from 'jotai';
-import Privacy from '../../components/Privacy/Privacy';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@knicos/genai-base';
 import { useNavigate } from 'react-router-dom';
 import LangSelect from '../../components/LangSelect/LangSelect';
+import Footer from '../../components/Footer/Footer';
 
 export default function Frontpage() {
     //const [count, setCount] = useAtom(testAtom);
     const { t } = useTranslation();
     const navigate = useNavigate();
 
-    const handleStart = () => {
-        navigate('/game');
+    const toReadyGame = () => {
+        navigate('/game/ready');
+    };
+
+    const toOwnGame = () => {
+        navigate('/game/own');
     };
 
     return (
         <div className={style.container}>
             <div className={style.innerContainer}>
-                <header>
-                    <img
-                        src="/logo192_bw.png"
-                        alt="logo"
-                        width={192}
-                        height={192}
-                    />
-                </header>
+                <img
+                    src="/logo192_bw.png"
+                    alt="logo"
+                    width={192}
+                    height={192}
+                />
                 <h1>{t('common.title')}</h1>
                 <Button
                     sx={{ fontSize: '14pt', minWidth: '140px' }}
-                    onClick={handleStart}
+                    onClick={toReadyGame}
                     variant="contained"
                 >
-                    {t('common.start')}
+                    {t('frontpage.readyImages')}
+                </Button>
+                <Button
+                    sx={{ fontSize: '14pt', minWidth: '140px' }}
+                    onClick={toOwnGame}
+                    variant="contained"
+                >
+                    {t('frontpage.ownImages')}
                 </Button>
                 <LangSelect />
             </div>
-            <Privacy position="bottomLeft" />
+            <Footer />
         </div>
     );
 }

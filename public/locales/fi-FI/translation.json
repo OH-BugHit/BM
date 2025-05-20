@@ -1,7 +1,4 @@
 {
-    "test": {
-        "button": "Testipainike"
-    },
     "about": {
         "title": "Generation AI",
         "privacyTitle": "Tietoturvaselvitys"
@@ -9,5 +6,12 @@
     "common": {
         "title": "BiasGame",
         "start": "Aloita"
+    },
+    "frontpage": {
+        "title": "BiasGame",
+        "readyImages": "Valmiit kuvat",
+        "readyImagesDescription": "Pelaa valmiilla kuvilla",
+        "ownImages": "Omat kuvat",
+        "ownImagesDescription": "Pelaa omilla kuvilla"
     }
 }

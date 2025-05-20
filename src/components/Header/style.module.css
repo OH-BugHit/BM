@@ -1,0 +1,9 @@
+.container header {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    left: 14px;
+    right: 14px;
+    top: 8px;
+}

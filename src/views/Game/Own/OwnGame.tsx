@@ -4,17 +4,25 @@ import Header from '../../../components/Header/Header';
 import Footer from '../../../components/Footer/Footer';
 import { useState } from 'react';
 import { useAtom } from 'jotai';
-import { imageAtom } from '../../../utils/state';
+import { imageAtom } from '../../../atoms/state';
 import { Button } from '@knicos/genai-base';
 import CameraCapture from '../../../components/CameraCapture/CameraCapture';
 import FileUploadCapture from '../../../components/FileUploader/FileUploadCapture';
 
+/**
+ * Bias game with own images
+ * @returns OwnGame view
+ */
 export default function OwnGame() {
     const { t } = useTranslation();
     const [image, setImage] = useAtom(imageAtom);
     const [hasCaptured, setHasCaptured] = useState(false);
     const [method, setMethod] = useState<'camera' | 'upload' | null>(null);
 
+    /**
+     * Resets the image capture state.
+     * This function clears the captured image, resets the capture status
+     */
     const resetCapture = () => {
         setImage(null);
         setHasCaptured(false);
@@ -30,10 +38,18 @@ export default function OwnGame() {
 
                     {!hasCaptured && method === null && (
                         <div className={style.selectionButtons}>
-                            <Button onClick={() => setMethod('camera')}>
+                            <Button
+                                sx={{ fontSize: '14pt', minWidth: '140px' }}
+                                variant="contained"
+                                onClick={() => setMethod('camera')}
+                            >
                                 {t('game.own.useCamera', 'Käytä kameraa')}
                             </Button>
-                            <Button onClick={() => setMethod('upload')}>
+                            <Button
+                                sx={{ fontSize: '14pt', minWidth: '140px' }}
+                                variant="contained"
+                                onClick={() => setMethod('upload')}
+                            >
                                 {t('game.own.uploadFile', 'Lataa kuva tiedostosta')}
                             </Button>
                         </div>
@@ -60,7 +76,13 @@ export default function OwnGame() {
                                 alt="Kuvakaappaus"
                                 style={{ width: '224px', height: '224px' }}
                             />
-                            <Button onClick={resetCapture}>{t('game.own.takeNew', 'Vaihda kuva')}</Button>
+                            <Button
+                                sx={{ fontSize: '14pt', minWidth: '140px' }}
+                                variant="contained"
+                                onClick={resetCapture}
+                            >
+                                {t('game.own.takeNew', 'Vaihda kuva')}
+                            </Button>
                         </>
                     )}
                 </div>

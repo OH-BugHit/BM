@@ -15,8 +15,8 @@
 aloitetaan seuraavasta:
 
 -   [x] ottaa kuvan
--           luokittelee kuvan
--           heatmap kuvasta
+-                       luokittelee kuvan
+-                       heatmap kuvasta
 
 try to use function, top level atleast
 
@@ -43,3 +43,41 @@ redis jos tarvetta jakaa global state
 # Questions to Nicolas
 
 Webcam, single picture from component?
+
+Store.gen-ai-fi kuville?
+
+# Questions to someone/ Matti
+
+SAP Cats
+
+# Ideas
+
+## Käyttäjä toteuttaa vääristymän ja luokittelija myös
+
+Kolmiportainen tehtävä
+Ihminen "antaa" sen vääristymän??
+
+1. Käyttäjä maalaa, että mistä voidaan tunnistaa vaikkapa opettaja (tausta viittaa siihen)
+
+-   ja saa pisteet siitä miten hyvin osui luokittelijan tunnistamiin piirteisiin
+
+näitä useita
+
+2. Käyttäjä maalaa, että mistä voidaan tunnistaa "piirre" -kuten sukupuoli samasta kuvasta (olisko nainen tai muun-sukupuolinen ja mies tai muun-sukupuolinen)
+
+-   ja saa pisteet siitä miten hyvin osui luokittelijan tunnistamiin piirteisiin
+
+näitä useita
+
+3. Feikki loading-screen jonka aikana selitetään, että miksi vinouma syntyy, per kuva?
+
+4. Luokittelija tunnistaa sukupuolen taustasta? (valmiiksi opetettu vinoon)
+
+-   loppunäkymä jossa näytetään pisteet ja miten luokittelija oppi vinouman
+
+## Ammattiluokittelu
+
+Saman kaverin luokittelu ammattiin taustalla?
+Saman kaverin luokittelu (joku tunnettu fiksu kuten Einstein)
+
+Edellinen voi myös jatkua tähän, että laitetaan niihin edellisiin kuviin joku julkkis ja kone ennustaa sille jotain?

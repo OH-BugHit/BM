@@ -6,11 +6,25 @@ import { Button } from '@knicos/genai-base';
 import { useNavigate } from 'react-router-dom';
 import LangSelect from '../../components/LangSelect/LangSelect';
 import Footer from '../../components/Footer/Footer';
+import { useAtom } from 'jotai';
+import { useEffect } from 'react';
+import { modelAtom } from '../../atoms/state';
+import { loadMobileNetModel } from '../../services/loadModel';
 
 export default function Frontpage() {
     //const [count, setCount] = useAtom(testAtom);
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const [model, setModel] = useAtom(modelAtom);
+
+    useEffect(() => {
+        if (model === null) {
+            loadMobileNetModel().then(setModel);
+            console.log('Model now loaded');
+        } else {
+            console.log('Model already loaded');
+        }
+    }, [model, setModel]);
 
     const toReadyGame = () => {
         navigate('/game/ready');

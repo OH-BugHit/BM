@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <div className={style.container}>
             <footer>
-                <Privacy position="bottomLeft" />;
+                <Privacy position="bottomLeft" />
             </footer>
         </div>
     );

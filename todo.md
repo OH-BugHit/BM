@@ -15,8 +15,8 @@
 aloitetaan seuraavasta:
 
 -   [x] ottaa kuvan
--                         luokittelee kuvan
--                         heatmap kuvasta
+-   [x] luokittelee kuvan
+-   [ ] heatmap kuvasta
 
 try to use function, top level atleast
 
@@ -36,11 +36,13 @@ opeta mallia lisää
 
 redis jos tarvetta jakaa global state
 
--   optimoi myöhemmin käyttämällä lazy() latausta
+-   [ ] optimoi myöhemmin käyttämällä lazy() latausta
 
 -   [x] Dmitry, Semenov, kysy tipun lätkästä, UEFIN sähköpostilla (sähköpostilähetetty 20.5.2025)
 
-# Questions to Nicolas
+# Questions
+
+### Questions to Nicolas
 
 Webcam, single picture from component?
 
@@ -48,7 +50,7 @@ Store.gen-ai-fi kuville?
 
 Mallin korkkaus, jotta voi käyttää heatMappia? Tai ennemmin siis toki valmiin komponentin käyttö, että miten tuosta saisi irti tuosta Teachable Modelista.
 
-# Questions to someone/ Matti
+### Questions to someone/ Matti
 
 SAP Cats
 

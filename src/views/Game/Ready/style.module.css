@@ -29,3 +29,17 @@
     gap: 1rem 16px;
     margin: 0;
 }
+
+.classificationBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 0px 1rem;
+    background-color: #cdecfbcc;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}

@@ -24,6 +24,12 @@ export default function OwnGame() {
     const [classificationResult, setClassificationResult] = useAtom(classificationResultAtom);
 
     useEffect(() => {
+        if (!hasCaptured || !image) {
+            setClassificationResult(null);
+        }
+    }, [hasCaptured, image, setClassificationResult]);
+
+    useEffect(() => {
         if (model === null) {
             loadMobileNetModel().then(setModel);
             console.log('Model now loaded');

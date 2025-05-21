@@ -29,6 +29,12 @@ export default function ReadyGame() {
         }
     }, [model, setModel]);
 
+    useEffect(() => {
+        if (!currentImage) {
+            setClassificationResult(null);
+        }
+    }, [currentImage, setClassificationResult]);
+
     const goNextImage = () => {
         if (!currentImage) {
             setCurrentImage(allImages[0]); // Aseta ensimmäinen kuva, jos ei ole asetettu
@@ -64,7 +70,7 @@ export default function ReadyGame() {
             <div className={style.innerContainer}>
                 <h2>{t('game.ready.title')}</h2>
                 {classificationResult && (
-                    <div>
+                    <div className={style.classificationBox}>
                         <h4>Luokittelutulokset:</h4> {/**Tänne tehdään ne värit? */}
                         <ul>
                             {classificationResult.map((result, i) => (

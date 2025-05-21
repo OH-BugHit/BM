@@ -45,7 +45,7 @@
     justify-content: center;
     align-items: center;
     width: fit-content;
-    padding: 1rem;
+    padding: 0px 1rem;
     background-color: #cdecfbcc;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

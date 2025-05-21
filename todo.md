@@ -15,8 +15,8 @@
 aloitetaan seuraavasta:
 
 -   [x] ottaa kuvan
--                       luokittelee kuvan
--                       heatmap kuvasta
+-                         luokittelee kuvan
+-                         heatmap kuvasta
 
 try to use function, top level atleast
 
@@ -45,6 +45,8 @@ redis jos tarvetta jakaa global state
 Webcam, single picture from component?
 
 Store.gen-ai-fi kuville?
+
+Mallin korkkaus, jotta voi käyttää heatMappia? Tai ennemmin siis toki valmiin komponentin käyttö, että miten tuosta saisi irti tuosta Teachable Modelista.
 
 # Questions to someone/ Matti
 

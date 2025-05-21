@@ -2,12 +2,14 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import Header from '../../../components/Header/Header';
 import Footer from '../../../components/Footer/Footer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import { imageAtom } from '../../../atoms/state';
+import { imageAtom, modelAtom, classificationResultAtom } from '../../../atoms/state';
 import { Button } from '@knicos/genai-base';
 import CameraCapture from '../../../components/CameraCapture/CameraCapture';
 import FileUploadCapture from '../../../components/FileUploader/FileUploadCapture';
+import { loadMobileNetModel } from '../../../services/loadModel';
+import { classifyImage } from '../../../utils/classifyImage';
 
 /**
  * Bias game with own images
@@ -18,6 +20,33 @@ export default function OwnGame() {
     const [image, setImage] = useAtom(imageAtom);
     const [hasCaptured, setHasCaptured] = useState(false);
     const [method, setMethod] = useState<'camera' | 'upload' | null>(null);
+    const [model, setModel] = useAtom(modelAtom);
+    const [classificationResult, setClassificationResult] = useAtom(classificationResultAtom);
+
+    useEffect(() => {
+        if (model === null) {
+            loadMobileNetModel().then(setModel);
+            console.log('Model now loaded');
+        } else {
+            console.log('Model already loaded');
+        }
+    }, [model, setModel]);
+
+    useEffect(() => {
+        const classify = async () => {
+            if (!model || !hasCaptured || !image) return;
+
+            try {
+                const results = await classifyImage(model, image); // image is toDataURL + canvas
+                setClassificationResult(results.slice(0, 3)); // Top 3
+            } catch (err) {
+                console.error('Luokittelu epäonnistui:', err);
+                setClassificationResult(null);
+            }
+        };
+
+        classify();
+    }, [model, hasCaptured, image]);
 
     /**
      * Resets the image capture state.
@@ -35,7 +64,18 @@ export default function OwnGame() {
             <div className={style.innerContainer}>
                 <div className={style.innerContainer}>
                     <h2>{t('game.own.title')}</h2>
-
+                    {classificationResult && (
+                        <div className={style.classificationBox}>
+                            <h3>Luokittelutulos:</h3>
+                            <ul>
+                                {classificationResult.map((res, idx) => (
+                                    <li key={idx}>
+                                        {res.className} ({(res.probability * 100).toFixed(1)} %)
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                     {!hasCaptured && method === null && (
                         <div className={style.selectionButtons}>
                             <Button

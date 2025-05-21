@@ -5,13 +5,16 @@ import Footer from '../../../components/Footer/Footer';
 import { Button } from '@knicos/genai-base';
 import ImageViewer from '../../../components/ImageViewer/ImageViewer';
 import { useAtom } from 'jotai';
-import { currentImageAtom, modelAtom } from '../../../atoms/state';
+import { classificationResultAtom, currentImageAtom, imageCacheAtom, modelAtom } from '../../../atoms/state';
 import { useEffect } from 'react';
 import { loadMobileNetModel } from '../../../services/loadModel';
+import { classifyImage } from '../../../utils/classifyImage';
 
 export default function ReadyGame() {
     const { t } = useTranslation();
     const [currentImage, setCurrentImage] = useAtom(currentImageAtom); // Välimuisti vuorossa olevalle kuvalle
+    const [classificationResult, setClassificationResult] = useAtom(classificationResultAtom); // Välimuisti luokittelutulokselle
+    const [cache] = useAtom(imageCacheAtom); // Välimuisti kuvien välimuistille
     const allImages = ['teacher_female1.jpg', 'teacher_female2.jpg', 'teacher_female3.jpg']; // Tiedostonimet, tee hakemaan ensin nämä ja sekoita järjestys, tai että pyytää vaikka kolme nimeä tms muuta.
     // Voidaan myös tallentaa jotaihin nämä ja varmaan kannattaakin?
 
@@ -36,11 +39,42 @@ export default function ReadyGame() {
         if (next) setCurrentImage(next);
     };
 
+    // Luokittelu
+    useEffect(() => {
+        const classify = async () => {
+            if (!model || !currentImage) return;
+            const imageUrl = cache[currentImage];
+            if (!imageUrl) return;
+
+            try {
+                const results = await classifyImage(model, imageUrl);
+                setClassificationResult(results.slice(0, 3)); // 3 parasta
+            } catch (err) {
+                console.error('Luokittelu epäonnistui:', err);
+                setClassificationResult(null);
+            }
+        };
+
+        classify();
+    }, [model, currentImage, cache]);
+
     return (
         <div className={style.container}>
             <Header title={t('common.title')} />
             <div className={style.innerContainer}>
                 <h2>{t('game.ready.title')}</h2>
+                {classificationResult && (
+                    <div>
+                        <h4>Luokittelutulokset:</h4> {/**Tänne tehdään ne värit? */}
+                        <ul>
+                            {classificationResult.map((result, i) => (
+                                <li key={i}>
+                                    {result.className} - {(result.probability * 100).toFixed(1)} %
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
                 <ImageViewer />
                 <Button
                     sx={{ fontSize: '14pt', minWidth: '140px' }}

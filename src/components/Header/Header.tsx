@@ -13,6 +13,7 @@ export default function Header({ title }: Props) {
     };
     return (
         <div className={style.container}>
+            {title && <h1>{title}</h1>}
             <header>
                 <img
                     src="/logo192_bw.png"
@@ -22,7 +23,6 @@ export default function Header({ title }: Props) {
                     style={{ cursor: 'pointer' }}
                     onClick={toMain}
                 />
-                {title && <h1>{title}</h1>}
                 <LangSelect />
             </header>
         </div>

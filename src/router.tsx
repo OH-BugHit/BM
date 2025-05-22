@@ -3,6 +3,7 @@ import Frontpage from './views/Frontpage/Frontpage';
 import About from './views/About/About';
 import ReadyGame from './views/Game/Ready/ReadyGame';
 import ExploitBiasGame from './views/Game/ExploitBiasGame/ExploitBiasGame';
+import ExploitBiasGameScores from './views/Scores/ExploitBiasGameScores/ExploitBiasGameScores';
 
 const routes = createRoutesFromElements(
     <Route
@@ -24,6 +25,10 @@ const routes = createRoutesFromElements(
         <Route
             path="/game/own"
             element={<ExploitBiasGame />}
+        />
+        <Route
+            path="/game/own/scores"
+            element={<ExploitBiasGameScores />}
         />
     </Route>
 );

@@ -5,7 +5,12 @@ interface Props {
     onCapture: (img: HTMLCanvasElement) => void;
     onDone: () => void;
 }
-
+// Ei käytössä tällä hetkellä, mutta voi olla hyödyllinen tulevaisuudessa
+/**
+ * CameraCapture komponent for capturing images from the webcam
+ * @param param0 - onCapture: function to call when an image is captured
+ * @returns Component for capturing image from the webcam
+ */
 export default function CameraCapture({ onCapture, onDone }: Props) {
     const [capture, setCapture] = useState(false);
 

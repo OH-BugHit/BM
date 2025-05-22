@@ -9,11 +9,12 @@ import { classificationResultAtom, currentImageAtom, imageCacheAtom, modelAtom }
 import { useEffect } from 'react';
 import { loadMobileNetModel } from '../../../services/loadModel';
 import { classifyImage } from '../../../utils/classifyImage';
+import { ClassificationResults } from '../../../components/ClassificationResults/ClassificationResults';
 
 export default function ReadyGame() {
     const { t } = useTranslation();
     const [currentImage, setCurrentImage] = useAtom(currentImageAtom); // Välimuisti vuorossa olevalle kuvalle
-    const [classificationResult, setClassificationResult] = useAtom(classificationResultAtom); // Välimuisti luokittelutulokselle
+    const [, setClassificationResult] = useAtom(classificationResultAtom); // Välimuisti luokittelutulokselle
     const [cache] = useAtom(imageCacheAtom); // Välimuisti kuvien välimuistille
     const allImages = ['teacher_female1.jpg', 'teacher_female2.jpg', 'teacher_female3.jpg']; // Tiedostonimet, tee hakemaan ensin nämä ja sekoita järjestys, tai että pyytää vaikka kolme nimeä tms muuta.
     // Voidaan myös tallentaa jotaihin nämä ja varmaan kannattaakin?
@@ -62,26 +63,15 @@ export default function ReadyGame() {
         };
 
         classify();
-    }, [model, currentImage, cache]);
+    }, [model, currentImage, cache, setClassificationResult]);
 
     return (
         <div className={style.container}>
             <Header title={t('common.title')} />
             <div className={style.innerContainer}>
                 <h2>{t('game.ready.title')}</h2>
-                {classificationResult && (
-                    <div className={style.classificationBox}>
-                        <h4>Luokittelutulokset:</h4> {/**Tänne tehdään ne värit? */}
-                        <ul>
-                            {classificationResult.map((result, i) => (
-                                <li key={i}>
-                                    {result.className} - {(result.probability * 100).toFixed(1)} %
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
                 <ImageViewer />
+                <ClassificationResults />
                 <Button
                     sx={{ fontSize: '14pt', minWidth: '140px' }}
                     variant="contained"

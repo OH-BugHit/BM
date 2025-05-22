@@ -4,7 +4,12 @@ interface Props {
     onCapture: (img: HTMLCanvasElement) => void;
     onDone: () => void;
 }
-
+// Ei käytössä tällä hetkellä, mutta voi olla hyödyllinen tulevaisuudessa
+/**
+ * FileUploadCapture component
+ * @param param0  - Props containing onCapture and onDone functions that are called when a file is uploaded and processed
+ * @returns JSX.Element that renders a file input for image upload
+ */
 export default function FileUploadCapture({ onCapture, onDone }: Props) {
     const handleFileUpload = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {

@@ -7,9 +7,14 @@ import '@tensorflow/tfjs';
  * This function takes an image element or URL and classifies it using the provided MobileNet model.
  * @param model Movbilenet model for image classification
  * @param input Image element or URL to classify
+ * @param topK Number of top results to return, default is 3
  * @returns Classification results
  */
-export async function classifyImage(model: mobilenet.MobileNet, input: HTMLImageElement | HTMLCanvasElement | string) {
+export async function classifyImage(
+    model: mobilenet.MobileNet,
+    input: HTMLImageElement | HTMLCanvasElement | string,
+    topK: number = 3
+) {
     let element: HTMLImageElement | HTMLCanvasElement;
 
     if (typeof input === 'string') {
@@ -25,5 +30,5 @@ export async function classifyImage(model: mobilenet.MobileNet, input: HTMLImage
         element = input;
     }
 
-    return model.classify(element);
+    return model.classify(element, topK);
 }

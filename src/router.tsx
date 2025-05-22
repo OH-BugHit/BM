@@ -2,7 +2,7 @@ import { createBrowserRouter, createRoutesFromElements, Route } from 'react-rout
 import Frontpage from './views/Frontpage/Frontpage';
 import About from './views/About/About';
 import ReadyGame from './views/Game/Ready/ReadyGame';
-import OwnGame from './views/Game/Own/OwnGame';
+import ExploitBiasGame from './views/Game/ExploitBiasGame/ExploitBiasGame';
 
 const routes = createRoutesFromElements(
     <Route
@@ -23,10 +23,8 @@ const routes = createRoutesFromElements(
         />
         <Route
             path="/game/own"
-            element={<OwnGame />}
+            element={<ExploitBiasGame />}
         />
-        {/*etusivu*/}
-        {/* lisää muut reitit */}
     </Route>
 );
 

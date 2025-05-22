@@ -36,19 +36,16 @@ opeta mallia lisää
 
 redis jos tarvetta jakaa global state
 
--   [ ] optimoi myöhemmin käyttämällä lazy() latausta
+Nicolas kertoo myöhemmin tästä lisää: Store.gen-ai-fi kuville ja mallille
 
--   [x] Dmitry, Semenov, kysy tipun lätkästä, UEFIN sähköpostilla (sähköpostilähetetty 20.5.2025)
+Mallin korkkaus, jotta voi käyttää heatMappia? Tai ennemmin siis toki valmiin komponentin käyttö, että miten tuosta saisi irti tuosta Teachable Modelista.
+</br>Nicolas tekee tiistaiksi (27.5.2025)
+
+-   [ ] optimoi myöhemmin käyttämällä lazy() latausta
 
 # Questions
 
 ### Questions to Nicolas
-
-Webcam, single picture from component?
-
-Store.gen-ai-fi kuville?
-
-Mallin korkkaus, jotta voi käyttää heatMappia? Tai ennemmin siis toki valmiin komponentin käyttö, että miten tuosta saisi irti tuosta Teachable Modelista.
 
 ### Questions to someone/ Matti
 
@@ -85,3 +82,28 @@ Saman kaverin luokittelu ammattiin taustalla?
 Saman kaverin luokittelu (joku tunnettu fiksu kuten Einstein)
 
 Edellinen voi myös jatkua tähän, että laitetaan niihin edellisiin kuviin joku julkkis ja kone ennustaa sille jotain?
+
+# Keskustelu 22.5.
+
+vaikka 5 erilaista ammattiryhmää ja yhdistetään joihinkin piirteisiin
+
+peli kahdessa osassa,
+
+1. opetetaan mitä se on
+   multiple features.
+
+-   outside/ inside
+-   muuta taustasta..
+-   gender
+-   age
+-   style (vaatetus)
+-   muuta frontista..
+
+2. opetetaan miten sitä "käytetään hyödyksi"
+
+tallennetaan se
+
+-
+-   kuka saa parannettua tulostaan eniten
+-   näyttää enemmän joltain
+-

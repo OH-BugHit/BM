@@ -36,7 +36,7 @@ export default function CountdownTimer({
 
     return (
         <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
-            {secondsLeft > 0 ? `Aikaa jäljellä: ${secondsLeft} s` : 'Siirry seuraavaan vaiheeseen'}
+            {secondsLeft > 0 ? `Aikaa jäljellä: ${secondsLeft} s` : 'Jatka'}
         </div>
     );
 }

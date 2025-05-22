@@ -107,3 +107,33 @@ tallennetaan se
 -   kuka saa parannettua tulostaan eniten
 -   näyttää enemmän joltain
 -
+
+# Bias Exploitation Game
+
+## Esimerkkiluokkia
+
+### Ammatit
+
+// TODO: muuta nää sitten sukupuolineutraaleiksi
+
+-   Opettaja
+-   Vanki
+-   Johtaja
+-   Liikemies
+-   Rakennustyömies (sähköasentaja tai joku toinen tarkempi sopii myös?)
+-   Kokki
+-   Metsästäjä
+-   Taiteilija
+-   Parturi
+-   ...
+
+### Frontground
+
+-   sex
+-   age
+-   style (vaatetus)
+-   ...
+
+### Background
+
+-   outside / inside

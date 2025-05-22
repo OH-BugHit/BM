@@ -1,12 +1,19 @@
 # Muistiinpanot ja TODO
 
-## Todo
+## Todo next:
 
--   [x] kielet, käytä samaa
+-   [ ] optimoi käyttämällä lazy() latausta
+-   [ ] pisteet pois näkyvistä, siirrä console.logiin (muutkin ylimääräiset piiloon tai jotenkin vielä silleen, että näkee paremmin miltä pitää näyttää)
+-   [ ] basetason ottamisessa tee kameraikkunasta näyttävämpi ja joku teksti että asetetaan nollatasoa
+-   [ ] toptason ottamisessa jokin pistepalkki, jossa näkyy sen hetkinen taso ja myös taso jolla kuva on sillähetkellä
+-   [ ] pistetaulukko tyylikkäämmäksi ja sinne overallscore oliskohan palkki, jossa näkyy mistä osista koostuu kokonaispisteet
+
+## Todo myöhemmin
+
+-   [ ] Heatmap-selite, miksi luokittelee (ja tämä pitää olla verrattuna siihen vuorossa olevaan luokittelutermiin!??)
 -   [ ] vitest, (lisätty, ei käytetä vielä mihinkään)
 -   [ ] pelkkä frontti, vaatii sen routejutun buildiin
--   [x] lint ja prettier configit
--   [x] tsconfig.json
+-   [ ] pisteiden näkymään muiden pelaajien pisteet?! eli vähän niinkuin opettajanäkymä?
 
 -   [x] heatmapcomponent -> TeachableModel CAM
 
@@ -18,22 +25,6 @@ aloitetaan seuraavasta:
 -   [x] luokittelee kuvan
 -   [ ] heatmap kuvasta
 
-try to use function, top level atleast
-
-import style
-
-viewsit erikseen ja komponentit erikseen
-
-services vähän niinkun se olis backednissä
-
-utils normi settiä
-
-teachable machine tulee knicosin gitistä
-
-etsi modelsseja (verkkoselaimella toimivia)
-
-opeta mallia lisää
-
 redis jos tarvetta jakaa global state
 
 Nicolas kertoo myöhemmin tästä lisää: Store.gen-ai-fi kuville ja mallille
@@ -41,11 +32,11 @@ Nicolas kertoo myöhemmin tästä lisää: Store.gen-ai-fi kuville ja mallille
 Mallin korkkaus, jotta voi käyttää heatMappia? Tai ennemmin siis toki valmiin komponentin käyttö, että miten tuosta saisi irti tuosta Teachable Modelista.
 </br>Nicolas tekee tiistaiksi (27.5.2025)
 
--   [ ] optimoi myöhemmin käyttämällä lazy() latausta
-
 # Questions
 
 ### Questions to Nicolas
+
+-   [ ] Heatmap-selite, miksi luokittelee (ja tämä pitää olla verrattuna siihen vuorossa olevaan luokittelutermiin!??) kysy onko mahdolista
 
 ### Questions to someone/ Matti
 
@@ -76,13 +67,6 @@ näitä useita
 
 -   loppunäkymä jossa näytetään pisteet ja miten luokittelija oppi vinouman
 
-## Ammattiluokittelu
-
-Saman kaverin luokittelu ammattiin taustalla?
-Saman kaverin luokittelu (joku tunnettu fiksu kuten Einstein)
-
-Edellinen voi myös jatkua tähän, että laitetaan niihin edellisiin kuviin joku julkkis ja kone ennustaa sille jotain?
-
 # Keskustelu 22.5.
 
 vaikka 5 erilaista ammattiryhmää ja yhdistetään joihinkin piirteisiin
@@ -108,7 +92,31 @@ tallennetaan se
 -   näyttää enemmän joltain
 -
 
-# Bias Exploitation Game
+# Bias Game
+
+key idea:
+First students are taught the basic consepts of classification bias with game 1
+After students have learned the consepts of classification biases, the try to exploit them in game 2
+
+# Game 1 (Exploring Biases)
+
+asdasdasd
+
+# Game 2 (Bias Exploitation Game)
+
+key idea:
+
+1. There is a given occupation or feature = term
+2. 1st we take baselane of how well the video is classified as that term
+3. Student tries to get as good as classification result as she or he can (there is limited oppoturnities so biases should be exploited to get maximal score)
+4. Students see scoreboard of how they succeeded
+
+5. ?? teacher selects occupation from list and free-for-all with only "topScore". Scoreboard visible??
+
+Saman kaverin luokittelu ammattiin taustalla?
+Saman kaverin luokittelu (joku tunnettu fiksu kuten Einstein)
+
+Edellinen voi myös jatkua tähän, että laitetaan niihin edellisiin kuviin joku julkkis ja kone ennustaa sille jotain?
 
 ## Esimerkkiluokkia
 

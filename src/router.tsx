@@ -1,9 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 import Frontpage from './views/Frontpage/Frontpage';
-import About from './views/About/About';
-import ReadyGame from './views/Game/Ready/ReadyGame';
-import ExploitBiasGame from './views/Game/ExploitBiasGame/ExploitBiasGame';
-import ExploitBiasGameScores from './views/Scores/ExploitBiasGameScores/ExploitBiasGameScores';
 
 const routes = createRoutesFromElements(
     <Route
@@ -16,19 +12,25 @@ const routes = createRoutesFromElements(
         />{' '}
         <Route
             path="/about"
-            element={<About />}
+            lazy={() => import('./views/About/About').then((mod) => ({ element: <mod.default /> }))}
         />
         <Route
             path="/game/ready"
-            element={<ReadyGame />}
+            lazy={() => import('./views/Game/Ready/ReadyGame').then((mod) => ({ element: <mod.default /> }))}
         />
         <Route
             path="/game/own"
-            element={<ExploitBiasGame />}
+            lazy={() =>
+                import('./views/Game/ExploitBiasGame/ExploitBiasGame').then((mod) => ({ element: <mod.default /> }))
+            }
         />
         <Route
             path="/game/own/scores"
-            element={<ExploitBiasGameScores />}
+            lazy={() =>
+                import('./views/Scores/ExploitBiasGameScores/ExploitBiasGameScores').then((mod) => ({
+                    element: <mod.default />,
+                }))
+            }
         />
     </Route>
 );

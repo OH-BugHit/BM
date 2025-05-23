@@ -2,11 +2,12 @@
 
 ## Todo next:
 
--   [ ] optimoi käyttämällä lazy() latausta
--   [ ] pisteet pois näkyvistä, siirrä console.logiin (muutkin ylimääräiset piiloon tai jotenkin vielä silleen, että näkee paremmin miltä pitää näyttää)
--   [ ] basetason ottamisessa tee kameraikkunasta näyttävämpi ja joku teksti että asetetaan nollatasoa
--   [ ] toptason ottamisessa jokin pistepalkki, jossa näkyy sen hetkinen taso ja myös taso jolla kuva on sillähetkellä
+-   [x] optimoi käyttämällä lazy() latausta
+-   [x] pisteet pois näkyvistä, siirrä console.logiin (muutkin ylimääräiset piiloon tai jotenkin vielä silleen, että näkee paremmin miltä pitää näyttää)
+-   [x] basetason ottamisessa tee kameraikkunasta näyttävämpi ja joku teksti että asetetaan nollatasoa
+-   [x] toptason ottamisessa jokin pistepalkki, jossa näkyy sen hetkinen taso ja myös taso jolla kuva on sillähetkellä
 -   [ ] pistetaulukko tyylikkäämmäksi ja sinne overallscore oliskohan palkki, jossa näkyy mistä osista koostuu kokonaispisteet
+-   [ ] tallennetaan kuva joka sai parhaat pisteet!
 
 ## Todo myöhemmin
 

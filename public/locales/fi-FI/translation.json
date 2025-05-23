@@ -13,5 +13,8 @@
         "readyImagesDescription": "Pelaa valmiilla kuvilla",
         "ownImages": "Omat kuvat",
         "ownImagesDescription": "Pelaa omilla kuvilla"
+    },
+    "webcam": {
+        "notAvailable": "Kamera käynnistyy"
     }
 }

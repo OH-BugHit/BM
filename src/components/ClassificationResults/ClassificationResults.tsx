@@ -2,6 +2,10 @@ import { useAtom } from 'jotai';
 import { classificationResultAtom } from '../../atoms/state';
 import style from './style.module.css';
 
+/**
+ * component shows classification results from atom. This component is in this point for testing only
+ * @returns
+ */
 export function ClassificationResults() {
     const [classificationResult] = useAtom(classificationResultAtom);
     return (

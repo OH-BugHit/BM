@@ -75,5 +75,8 @@
             "playDescription": "Play with ready images.",
             "playButton": "Play"
         }
+    },
+    "webcam": {
+        "notAvailable": "Camera loading"
     }
 }

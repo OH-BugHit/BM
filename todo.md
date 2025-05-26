@@ -15,6 +15,7 @@
 -   [ ] vitest, (lisätty, ei käytetä vielä mihinkään)
 -   [ ] pelkkä frontti, vaatii sen routejutun buildiin
 -   [ ] pisteiden näkymään muiden pelaajien pisteet?! eli vähän niinkuin opettajanäkymä?
+-   [ ] Etukameraksi vaihtaminen tökkii, kysy Nick
 
 -   [x] heatmapcomponent -> TeachableModel CAM
 

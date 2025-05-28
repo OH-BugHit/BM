@@ -1,0 +1,47 @@
+import { useAtom } from 'jotai';
+import style from './style.module.css';
+import { scoresAtom } from '../../atoms/state';
+import { Score } from '../../utils/types';
+import { useTranslation } from 'react-i18next';
+
+export default function OverallScore() {
+    const { t } = useTranslation();
+    const [scores] = useAtom<Score[]>(scoresAtom);
+
+    const overallScore = () => {
+        let fullScore = 0;
+        scores.forEach((score) => (fullScore += score.topScore - score.lowScore));
+
+        return (
+            <div>
+                <div style={{ justifyItems: 'center' }}>
+                    <div className={style.scoreBarContainer}>
+                        <div className={style.scoreBar}>
+                            <span style={{ width: `${fullScore}%` }}></span>
+                        </div>
+                        <div
+                            className={style.scoreBarToolTip}
+                            style={{ width: `${fullScore}%` }}
+                        >
+                            <span data-label={fullScore}></span>
+                        </div>
+                    </div>
+                </div>
+                {fullScore}
+            </div>
+        );
+    };
+
+    return (
+        <div className={style.overallScoreContainer}>
+            {scores[0] ? (
+                <>
+                    <h2>{t('scores.overall')}</h2>
+                    {overallScore()}
+                </>
+            ) : (
+                <h3>Tapahtui virhe, lataa sivu uudelleen ja aloita alusta</h3>
+            )}
+        </div>
+    );
+}

@@ -12,5 +12,11 @@ export const modelAtom = atom<mobilenet.MobileNet | null>(null);
 export const classificationResultAtom = atom<{ className: string; probability: number }[] | null>(null);
 
 export const scoresAtom = atom<
-    { className: string; lowScore: number; topScore: number; topCanvas: HTMLCanvasElement | null }[]
+    {
+        className: string;
+        lowScore: number;
+        topScore: number;
+        topCanvas: HTMLCanvasElement | null;
+        topHeatmap: HTMLCanvasElement | null;
+    }[]
 >([]);

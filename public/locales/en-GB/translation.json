@@ -47,7 +47,9 @@
     },
     "common": {
         "title": "BiasGame",
-        "start": "Start"
+        "start": "Start",
+        "showInfo": "Show info",
+        "hideInfo": "Hide info"
     },
     "frontpage": {
         "title": "BiasGame",
@@ -75,6 +77,10 @@
             "playDescription": "Play with ready images.",
             "playButton": "Play"
         }
+    },
+    "scores": {
+        "bestImage": "Best image",
+        "overall": "Overall score"
     },
     "webcam": {
         "notAvailable": "Camera loading"

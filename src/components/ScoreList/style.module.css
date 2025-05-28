@@ -1,5 +1,18 @@
+.overallScoreContainer {
+    margin-top: 20px;
+    width: 80%;
+    padding: 10px;
+    color: black;
+    background-color: rgba(255, 251, 221, 0.421);
+    padding: 0px 0px 20px 0px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px) brightness(120%);
+}
+
 .scoreDetails {
     max-height: 0;
+    max-width: 0;
     overflow: hidden;
 }
 
@@ -11,13 +24,21 @@
 }
 
 .scoresContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100dvw;
+    max-width: 1200px;
     padding: 8px 20px;
 }
 
 .termItemRow {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 600px;
     gap: 18px;
     justify-content: space-between;
 
@@ -26,6 +47,7 @@
 /* Has the scores of single term*/
 .termItemContainer {
     display: flex;
+    width: 80%;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
@@ -39,8 +61,8 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     text-align: center;
     gap: 8px;
     backdrop-filter: blur(10px);
@@ -60,6 +82,8 @@
 /* One canvas for top-image and one for heatmap*/
 .topCanvas {
     max-width: 400px;
+    max-height: fit-content;
+    width: 100%;
     border-radius: 10px;
 }
 
@@ -150,20 +174,6 @@
     font-size: 0.8em;
     background-color: rgb(240, 237, 34);
     color: #000000;
-}
-
-@keyframes scoreBar {
-    0% {
-        width: 0%
-    }
-
-    50% {
-        width: 60%;
-    }
-
-    100% {
-        width: 0%;
-    }
 }
 
 @keyframes scoreBarAfter {

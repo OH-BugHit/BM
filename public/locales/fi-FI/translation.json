@@ -5,7 +5,9 @@
     },
     "common": {
         "title": "BiasGame",
-        "start": "Aloita"
+        "start": "Aloita",
+        "showInfo": "Näytä tiedot",
+        "hideInfo": "Piilota tiedot"
     },
     "frontpage": {
         "title": "BiasGame",
@@ -13,6 +15,10 @@
         "readyImagesDescription": "Pelaa valmiilla kuvilla",
         "ownImages": "Omat kuvat",
         "ownImagesDescription": "Pelaa omilla kuvilla"
+    },
+    "scores": {
+        "bestImage": "Paras kuva",
+        "overall": "Kokonaispisteet"
     },
     "webcam": {
         "notAvailable": "Kamera käynnistyy"

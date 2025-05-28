@@ -3,15 +3,12 @@ import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { scoresAtom } from '../../atoms/state';
 import { Button } from '@knicos/genai-base';
-
-type Score = {
-    className: string;
-    lowScore: number;
-    topScore: number;
-    topCanvas: HTMLCanvasElement | null;
-};
+import { useTranslation } from 'react-i18next';
+import OverallScore from './OverallScore';
+import { Score } from '../../utils/types';
 
 export default function ScoreList() {
+    const { t } = useTranslation();
     const [openIndices, setOpenIndices] = useState<{ [key: number]: boolean }>({});
     const [scores] = useAtom<Score[]>(scoresAtom);
 
@@ -27,6 +24,7 @@ export default function ScoreList() {
 
     return (
         <div className={style.scoresContainer}>
+            <OverallScore />
             {scores.map((score, idx) => (
                 <div
                     key={`${score.className}-${idx}`}
@@ -38,7 +36,7 @@ export default function ScoreList() {
                             variant="contained"
                             onClick={() => toggleOpen(idx)}
                         >
-                            {openIndices[idx] ? 'Piilota tiedot' : 'Näytä tiedot'}
+                            {openIndices[idx] ? t('common.hideInfo') : t('common.showInfo')}
                         </Button>
                     </div>
 
@@ -59,7 +57,7 @@ export default function ScoreList() {
                                     </div>
                                 </div>
                                 {/* Lisää haluamaasi sisältöä */}
-                                <h3>Paras kuva</h3>
+                                <h3>{t('scores.bestImage')}</h3>
                                 <div className={style.topCanvasContainer}>
                                     <canvas
                                         className={style.topCanvas}
@@ -77,12 +75,12 @@ export default function ScoreList() {
                                     <canvas
                                         className={style.topCanvas}
                                         ref={(el) => {
-                                            if (el && score.topCanvas) {
-                                                el.width = score.topCanvas.width;
-                                                el.height = score.topCanvas.height;
+                                            if (el && score.topHeatmap) {
+                                                el.width = score.topHeatmap.width;
+                                                el.height = score.topHeatmap.height;
                                                 const ctx = el.getContext('2d');
                                                 if (ctx) {
-                                                    ctx.drawImage(score.topCanvas, 0, 0);
+                                                    ctx.drawImage(score.topHeatmap, 0, 0);
                                                 }
                                             }
                                         }}

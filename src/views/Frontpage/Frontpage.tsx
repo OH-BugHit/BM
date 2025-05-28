@@ -60,7 +60,7 @@ export default function Frontpage() {
                 </Button>
                 <LangSelect />
             </div>
-            <Footer />
+            <Footer hideLang={true} />
         </div>
     );
 }

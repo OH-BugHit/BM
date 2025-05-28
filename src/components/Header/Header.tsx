@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import LangSelect from '../LangSelect/LangSelect';
 import style from './style.module.css';
 
 interface Props {
@@ -23,7 +22,14 @@ export default function Header({ title }: Props) {
                     style={{ cursor: 'pointer' }}
                     onClick={toMain}
                 />
-                <LangSelect />
+                <img
+                    src="/home.png"
+                    alt="logo"
+                    width={52}
+                    height={52}
+                    style={{ cursor: 'pointer', opacity: '0.7' }}
+                    onClick={toMain}
+                />
             </header>
         </div>
     );

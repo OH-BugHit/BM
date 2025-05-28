@@ -1,8 +1,11 @@
 .container footer {
     position: absolute;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     left: 14px;
     bottom: 8px;
+}
+
+.container {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
 }

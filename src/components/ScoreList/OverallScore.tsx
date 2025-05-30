@@ -17,17 +17,16 @@ export default function OverallScore() {
                 <div style={{ justifyItems: 'center' }}>
                     <div className={style.scoreBarContainer}>
                         <div className={style.scoreBar}>
-                            <span style={{ width: `${fullScore}%` }}></span>
+                            <span style={{ width: `${fullScore / scores.length}%` }}></span>
                         </div>
                         <div
                             className={style.scoreBarToolTip}
-                            style={{ width: `${fullScore}%` }}
+                            style={{ width: `${fullScore / scores.length}%` }}
                         >
-                            <span data-label={fullScore}></span>
+                            <span data-label={fullScore.toFixed(2)}></span>
                         </div>
                     </div>
                 </div>
-                {fullScore}
             </div>
         );
     };

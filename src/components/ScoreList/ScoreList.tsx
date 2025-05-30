@@ -35,6 +35,7 @@ export default function ScoreList() {
                         <Button
                             variant="contained"
                             onClick={() => toggleOpen(idx)}
+                            sx={{ minHeight: '60px' }}
                         >
                             {openIndices[idx] ? t('common.hideInfo') : t('common.showInfo')}
                         </Button>

@@ -1,5 +1,5 @@
 // src/utils/classifyImage.ts
-import * as mobilenet from '@tensorflow-models/mobilenet';
+import ClassifierApp from '@genai-fi/classifier';
 import '@tensorflow/tfjs';
 
 /**
@@ -10,11 +10,7 @@ import '@tensorflow/tfjs';
  * @param topK Number of top results to return, default is 3
  * @returns Classification results
  */
-export async function classifyImage(
-    model: mobilenet.MobileNet,
-    input: HTMLImageElement | HTMLCanvasElement | string,
-    topK: number = 3
-) {
+export async function classifyImage(model: ClassifierApp, input: HTMLImageElement | HTMLCanvasElement | string) { //TODO: Modify input image to -> HTMLCanvasElement if it is not
     let element: HTMLImageElement | HTMLCanvasElement;
 
     if (typeof input === 'string') {
@@ -30,5 +26,9 @@ export async function classifyImage(
         element = input;
     }
 
-    return model.classify(element, topK);
+    if (model instanceof ClassifierApp && element instanceof HTMLCanvasElement) {
+        return model.predict(element);
+    } else {
+        return null;
+    }
 }

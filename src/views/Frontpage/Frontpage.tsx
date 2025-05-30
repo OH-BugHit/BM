@@ -9,7 +9,7 @@ import Footer from '../../components/Footer/Footer';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { modelAtom } from '../../atoms/state';
-import { loadMobileNetModel } from '../../services/loadModel';
+import { loadModel } from '../../services/loadModel';
 
 export default function Frontpage() {
     //const [count, setCount] = useAtom(testAtom);
@@ -19,8 +19,9 @@ export default function Frontpage() {
 
     useEffect(() => {
         if (model === null) {
-            loadMobileNetModel().then(setModel);
-            console.log('Model now loaded');
+            loadModel().then((loadedModel) => {
+                setModel(loadedModel);
+            });
         } else {
             console.log('Model already loaded');
         }

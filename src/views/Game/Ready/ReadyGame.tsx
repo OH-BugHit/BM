@@ -7,7 +7,7 @@ import ImageViewer from '../../../components/ImageViewer/ImageViewer';
 import { useAtom } from 'jotai';
 import { classificationResultAtom, currentImageAtom, imageCacheAtom, modelAtom } from '../../../atoms/state';
 import { useEffect } from 'react';
-import { loadMobileNetModel } from '../../../services/loadModel';
+import { loadModel } from '../../../services/loadModel';
 import { classifyImage } from '../../../utils/classifyImage';
 import { ClassificationResults } from '../../../components/ClassificationResults/ClassificationResults';
 
@@ -23,7 +23,7 @@ export default function ReadyGame() {
 
     useEffect(() => {
         if (model === null) {
-            loadMobileNetModel().then(setModel);
+            loadModel().then(setModel);
             console.log('Model now loaded');
         } else {
             console.log('Model already loaded');
@@ -55,7 +55,9 @@ export default function ReadyGame() {
 
             try {
                 const results = await classifyImage(model, imageUrl);
-                setClassificationResult(results.slice(0, 3)); // 3 parasta
+                if (results) {
+                    setClassificationResult(results.predictions.slice(0, 3)); // 3 parasta
+                }
             } catch (err) {
                 console.error('Luokittelu epäonnistui:', err);
                 setClassificationResult(null);

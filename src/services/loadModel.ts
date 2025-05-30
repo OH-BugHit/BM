@@ -1,10 +1,9 @@
-import * as mobilenet from '@tensorflow-models/mobilenet';
-import * as tf from '@tensorflow/tfjs';
+//import * as mobilenet from '@tensorflow-models/mobilenet';
 import '@tensorflow/tfjs-backend-webgl';
+import TMClassifier from '@genai-fi/classifier';
 
-export async function loadMobileNetModel() {
-    await tf.setBackend('webgl'); // Varmistetaan backend
-    await tf.ready(); // Odotetaan että se on käyttövalmis
-    const model = await mobilenet.load();
+export async function loadModel() {
+    // const model = await mobilenet.load(); mobilenetin luokittelija
+    const model = TMClassifier.load('https://store.gen-ai.fi/classifiers/flower-mushroom.zip');
     return model;
 }

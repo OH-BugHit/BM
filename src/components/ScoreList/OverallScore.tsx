@@ -9,21 +9,26 @@ export default function OverallScore() {
     const [scores] = useAtom<Score[]>(scoresAtom);
 
     const overallScore = () => {
-        let fullScore = 0;
-        scores.forEach((score) => (fullScore += score.topScore - score.lowScore));
+        let topScore = 0;
+        let baseline = 0;
+        scores.forEach((score) => {
+            topScore += score.topScore;
+            baseline += score.lowScore;
+        });
+        const fullscore = topScore;
 
         return (
             <div>
                 <div style={{ justifyItems: 'center' }}>
                     <div className={style.scoreBarContainer}>
                         <div className={style.scoreBar}>
-                            <span style={{ width: `${fullScore / scores.length}%` }}></span>
+                            <span style={{ width: `${fullscore / scores.length}%` }}></span>
                         </div>
                         <div
                             className={style.scoreBarToolTip}
-                            style={{ width: `${fullScore / scores.length}%` }}
+                            style={{ width: `${fullscore / scores.length}%` }}
                         >
-                            <span data-label={fullScore.toFixed(2)}></span>
+                            <span data-label={fullscore.toFixed(2)}></span>
                         </div>
                     </div>
                 </div>

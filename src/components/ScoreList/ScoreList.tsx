@@ -18,7 +18,7 @@ export default function ScoreList() {
 
     const countScore = (score: Score) => {
         let points = '';
-        points = (score.topScore - score.lowScore).toFixed(2);
+        points = score.topScore.toFixed(2);
         return `${points}`;
     };
 
@@ -57,7 +57,6 @@ export default function ScoreList() {
                                         </div>
                                     </div>
                                 </div>
-                                {/* Lisää haluamaasi sisältöä */}
                                 <h3>{t('scores.bestImage')}</h3>
                                 <div className={style.topCanvasContainer}>
                                     <canvas

@@ -10,7 +10,8 @@ import '@tensorflow/tfjs';
  * @param topK Number of top results to return, default is 3
  * @returns Classification results
  */
-export async function classifyImage(model: ClassifierApp, input: HTMLImageElement | HTMLCanvasElement | string) { //TODO: Modify input image to -> HTMLCanvasElement if it is not
+export async function classifyImage(model: ClassifierApp, input: HTMLImageElement | HTMLCanvasElement | string) {
+    //TODO: Modify input image to -> HTMLCanvasElement if it is not
     let element: HTMLImageElement | HTMLCanvasElement;
 
     if (typeof input === 'string') {

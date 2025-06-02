@@ -3,11 +3,16 @@ import style from './style.module.css';
 
 interface Props {
     title?: string | null;
+    block?: boolean | null;
 }
 
-export default function Header({ title }: Props) {
+export default function Header({ title, block }: Props) {
     const navigate = useNavigate();
     const toMain = () => {
+        if (block) {
+            const confirmLeave = window.confirm('Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua?');
+            if (!confirmLeave) return;
+        }
         navigate('/');
     };
     return (

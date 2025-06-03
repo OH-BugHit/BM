@@ -21,6 +21,7 @@ export default function Frontpage() {
         if (model === null) {
             loadModel().then((loadedModel) => {
                 setModel(loadedModel);
+                console.log('Model loaded');
             });
         } else {
             console.log('Model already loaded');

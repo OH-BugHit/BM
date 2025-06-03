@@ -1,6 +1,7 @@
 .overallScoreContainer {
     margin-top: 20px;
     width: 80%;
+    min-width: 70dvw;
     padding: 10px;
     color: black;
     background-color: rgba(255, 251, 221, 0.421);
@@ -39,15 +40,16 @@
     flex-wrap: wrap;
     min-width: fit-content;
     width: 90%;
-    max-width: 600px;
+    max-width: 500px;
     gap: 18px;
-    justify-content: inherit;
+    justify-content: space-between;
 }
 
 /* Has the scores of single term*/
 .termItemContainer {
     display: flex;
-    width: 80%;
+    min-width: 80%;
+    max-width: 95dvw;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;

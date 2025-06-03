@@ -6,9 +6,9 @@
 -   [x] pisteet pois näkyvistä, siirrä console.logiin (muutkin ylimääräiset piiloon tai jotenkin vielä silleen, että näkee paremmin miltä pitää näyttää)
 -   [x] basetason ottamisessa tee kameraikkunasta näyttävämpi ja joku teksti että asetetaan nollatasoa
 -   [x] toptason ottamisessa jokin pistepalkki, jossa näkyy sen hetkinen taso ja myös taso jolla kuva on sillähetkellä
--   [ ] pistetaulukko tyylikkäämmäksi ja sinne overallscore oliskohan palkki, jossa näkyy mistä osista koostuu kokonaispisteet
+-   [x] pistetaulukko tyylikkäämmäksi ja sinne overallscore oliskohan palkki, jossa näkyy mistä osista koostuu kokonaispisteet
 -   [x] tallennetaan kuva joka sai parhaat pisteet!
--   [ ] Luodaan pistetaulukkonäkymään divit avaamaan termin tulos, liika-tyylisesti, ks. chattikeskustelu
+-   [x] Luodaan pistetaulukkonäkymään divit avaamaan termin tulos, liika-tyylisesti, ks. chattikeskustelu
 
 ## Todo myöhemmin
 
@@ -39,13 +39,9 @@ Mallin korkkaus, jotta voi käyttää heatMappia? Tai ennemmin siis toki valmiin
 
 ### Questions to Nicolas
 
--   [ ] Heatmap-selite, miksi luokittelee (ja tämä pitää olla verrattuna siihen vuorossa olevaan luokittelutermiin!??) kysy onko mahdolista
-
 -   [ ] Flipcamera-ongelma koodiapua
 
 ### Questions to someone/ Matti
-
-SAP Cats
 
 # Ideas
 

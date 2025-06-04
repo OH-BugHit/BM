@@ -4,13 +4,13 @@
         "privacyTitle": "Tietoturvaselvitys"
     },
     "common": {
-        "title": "BiasGame",
+        "title": "Spoofing Game",
         "start": "Aloita",
         "showInfo": "Näytä tiedot",
         "hideInfo": "Piilota tiedot"
     },
     "frontpage": {
-        "title": "BiasGame",
+        "title": "Spoofing Game",
         "readyImages": "Valmiit kuvat",
         "readyImagesDescription": "Pelaa valmiilla kuvilla",
         "ownImages": "Omat kuvat",

@@ -4,6 +4,7 @@
     min-width: 70dvw;
     padding: 10px;
     color: black;
+    margin-bottom: 4px;
     background-color: rgba(255, 251, 221, 0.421);
     padding: 0px 0px 20px 0px;
     border-radius: 10px;
@@ -54,7 +55,6 @@
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
-    padding: 10px;
     color: black;
     background-color: rgba(255,
             255,

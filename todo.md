@@ -1,5 +1,17 @@
 # Muistiinpanot ja TODO
 
+normalisoi todennäköisyys vaikka 10 kuvalle
+
+### Opettajanäkymä
+
+top3 score, muilta parhaat kuvat
+
+-   keskeiset käsitteet
+-   adversial attack
+-   spoofing
+-   luottamusta voi olla vääriin asioihin confidencen merkitys
+-   opetusdata
+
 ## Todo next:
 
 -   [x] optimoi käyttämällä lazy() latausta

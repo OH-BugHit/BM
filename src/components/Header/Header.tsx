@@ -17,7 +17,7 @@ export default function Header({ title, block }: Props) {
     };
     return (
         <div className={style.container}>
-            {title && <h1>{title}</h1>}
+            {title && <h1 style={{ maxWidth: '60%', whiteSpace: 'pre-wrap' }}>{title}</h1>}
             <header>
                 <img
                     src="/logo192_bw.png"

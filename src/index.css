@@ -29,3 +29,22 @@ code {
 p {
   margin: 0;
 }
+
+h1 {
+  font-family: 'Tektur';
+  font-weight: bold;
+  font-size: 3rem;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 2rem;
+  }
+}

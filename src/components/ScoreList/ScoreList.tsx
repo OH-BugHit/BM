@@ -43,7 +43,7 @@ export default function ScoreList() {
 
                     <div className={openIndices[idx] ? style.scoreDetailsOpen : style.scoreDetails}>
                         {openIndices[idx] && (
-                            <div>
+                            <>
                                 <div style={{ justifyItems: 'center' }}>
                                     <div className={style.scoreBarContainer}>
                                         <div className={style.scoreBar}>
@@ -86,7 +86,7 @@ export default function ScoreList() {
                                         }}
                                     ></canvas>
                                 </div>
-                            </div>
+                            </>
                         )}
                     </div>
                 </div>

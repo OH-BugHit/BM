@@ -14,12 +14,7 @@
     background-repeat: no-repeat;
 }
 
-.container h1 {
-    font-family: 'Tektur';
-    font-weight: bold;
-    font-size: 3rem;
-    margin: 0;
-}
+
 
 .innerContainer {
     max-width: 1400px;
@@ -27,4 +22,6 @@
     flex-direction: column;
     align-items: center;
     margin-top: 16px;
+    height: 100%;
+    width: 100%;
 }

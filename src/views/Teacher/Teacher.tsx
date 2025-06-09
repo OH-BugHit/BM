@@ -1,6 +1,7 @@
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import { useLeaveWarning } from '../../hooks/leaveBlocker';
+import ServerProtocol from '../../services/ServerProtocol';
 import style from './style.module.css';
 
 export default function Teacher() {
@@ -8,6 +9,8 @@ export default function Teacher() {
 
     return (
         <div className={style.container}>
+            <ServerProtocol code={'123'} />
+            <p>spoof_123</p>
             <Header
                 title={'Teacher'}
                 block={true}

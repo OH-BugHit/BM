@@ -1,4 +1,4 @@
-import { Connection, ConnectionStatus, usePeer } from '@knicos/genai-base';
+import { ConnectionStatus, usePeer } from '@knicos/genai-base';
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
 import { EventProtocol } from './protocol';
 import { ImageData, ScoreData } from '../utils/types';
@@ -20,8 +20,8 @@ export function useSpoofProtocol() {
     return useContext(ProtocolContext);
 }
 export default function StudentProtocol({ server, mycode, children }: Props) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const dataHandler = useCallback((data: EventProtocol, conn: Connection<EventProtocol>) => {
+    // conn: Connection<EventProtocol>
+    const dataHandler = useCallback((data: EventProtocol) => {
         if (data.event === 'eter:join') {
             console.log('Join command');
             // Send

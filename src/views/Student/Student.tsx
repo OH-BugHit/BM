@@ -2,7 +2,7 @@ import { Button } from '@knicos/genai-base';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import { useLeaveWarning } from '../../hooks/leaveBlocker';
-import StudentProtocol, { useSpoofProtocol } from '../../services/StudentProtocol';
+import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
 import { useAtom } from 'jotai';
 import { SpoofConfig } from '../../utils/types';
@@ -22,34 +22,32 @@ export default function Student() {
     };
 
     return (
-        <StudentProtocol server="123">
-            <div className={style.container}>
-                <Header
-                    title={'Student'}
-                    block={true}
-                />
-                <div>
-                    {config && (
-                        <Button
-                            sx={{ fontSize: '14pt', minWidth: '40px', marginTop: '6px' }}
-                            variant="contained"
-                            onClick={() => {
-                                handleSendScore();
-                            }}
-                        >
-                            Lähetä testiä
-                        </Button>
-                    )}
-                </div>
-                <div className={style.innerContainer}>
-                    <div className={style.studentControlContainer}>
-                        Contains controller for app and controlling the word if only one etc...
-                    </div>
-                    <div className={style.topThreeContainer}>top 3</div>
-                    <div className={style.otherResultsContainer}>all else</div>
-                </div>
-                <Footer />
+        <div className={style.container}>
+            <Header
+                title={'Student'}
+                block={true}
+            />
+            <div>
+                {config && (
+                    <Button
+                        sx={{ fontSize: '14pt', minWidth: '40px', marginTop: '6px' }}
+                        variant="contained"
+                        onClick={() => {
+                            handleSendScore();
+                        }}
+                    >
+                        Lähetä testiä
+                    </Button>
+                )}
             </div>
-        </StudentProtocol>
+            <div className={style.innerContainer}>
+                <div className={style.studentControlContainer}>
+                    Contains controller for app and controlling the word if only one etc...
+                </div>
+                <div className={style.topThreeContainer}>top 3</div>
+                <div className={style.otherResultsContainer}>all else</div>
+            </div>
+            <Footer />
+        </div>
     );
 }

@@ -1,5 +1,7 @@
 # Muistiinpanot ja TODO
 
+miten itse luokittelisit vs miten kone luokitteli, piirretää nheatmap
+
 normalisoi todennäköisyys vaikka 10 kuvalle
 
 ### Opettajanäkymä

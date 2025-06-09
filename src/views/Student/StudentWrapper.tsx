@@ -1,7 +1,10 @@
-import { useSpoofProtocol } from '../../services/StudentProtocol';
+import StudentProtocol from '../../services/StudentProtocol';
 import Student from './Student';
 
 export default function StudentWrapper() {
-    const { doSendScore, doSendImages } = useSpoofProtocol();
-    return <Student />;
+    return (
+        <StudentProtocol server="123">
+            <Student />
+        </StudentProtocol>
+    );
 }

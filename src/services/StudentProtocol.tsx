@@ -20,6 +20,7 @@ export function useSpoofProtocol() {
     return useContext(ProtocolContext);
 }
 export default function StudentProtocol({ server, mycode, children }: Props) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const dataHandler = useCallback((data: EventProtocol, conn: Connection<EventProtocol>) => {
         if (data.event === 'eter:join') {
             console.log('Join command');

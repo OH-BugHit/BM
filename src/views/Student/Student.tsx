@@ -10,7 +10,7 @@ import { configAtom } from '../../atoms/state';
 
 export default function Student() {
     useLeaveWarning(true);
-    const { doSendScore, doSendImages } = useSpoofProtocol();
+    const { doSendScore } = useSpoofProtocol();
     const config = useAtom<SpoofConfig>(configAtom);
 
     const handleSendScore = () => {

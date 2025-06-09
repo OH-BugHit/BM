@@ -21,7 +21,7 @@ export default function ImageViewer() {
                     setError(err.message);
                 });
         }
-    }, [currentImage]);
+    }, [currentImage, cache, setCache]);
 
     if (error) return <p>Virhe: {error}</p>;
 

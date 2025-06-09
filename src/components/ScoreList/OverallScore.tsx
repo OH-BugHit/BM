@@ -10,10 +10,8 @@ export default function OverallScore() {
 
     const overallScore = () => {
         let topScore = 0;
-        let baseline = 0;
         scores.forEach((score) => {
             topScore += score.topScore;
-            baseline += score.lowScore;
         });
         const fullscore = topScore;
 

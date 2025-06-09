@@ -2,6 +2,14 @@ import { atom } from 'jotai';
 import ClassifierApp from '@genai-fi/classifier';
 import { SpoofConfig } from '../utils/types';
 
+export type Scores = {
+    className: string;
+    lowScore: number;
+    topScore: number;
+    topCanvas: HTMLCanvasElement | null;
+    topHeatmap: HTMLCanvasElement | null;
+}[];
+
 export const imageAtom = atom<HTMLCanvasElement | null>(null);
 
 export const imageCacheAtom = atom<{ [filename: string]: string }>({});
@@ -14,12 +22,4 @@ export const classificationResultAtom = atom<{ className: string; probability: n
 
 export const configAtom = atom<SpoofConfig>({ data: 'notSet' });
 
-export const scoresAtom = atom<
-    {
-        className: string;
-        lowScore: number;
-        topScore: number;
-        topCanvas: HTMLCanvasElement | null;
-        topHeatmap: HTMLCanvasElement | null;
-    }[]
->([]);
+export const scoresAtom = atom<Scores>([]);

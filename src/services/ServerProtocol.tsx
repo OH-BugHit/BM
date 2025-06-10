@@ -12,7 +12,8 @@ export default function ServerProtocol({ code }: { code: string }) {
         // Jatka onData tänne lisää
         if (data.event === 'eter:join') {
             console.log('Join command');
-            conn.send({ event: 'eter:config', configuration: { data: `asd` } });
+            console.log(data);
+            conn.send({ event: 'eter:config', configuration: { data: `initialConfig` } });
             // Send
         }
         if (data.event === 'eter:score') {

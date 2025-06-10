@@ -7,14 +7,14 @@
         "title": "Generation AI",
         "privacyTitle": "Privacy",
         "privacy": [
-            "Welcome to our Privacy Notice, designed to inform you about how we handle your personal data following the General Data Protection Regulation (GDPR) when you use our website featuring the GenAI Bias Game.",
+            "Welcome to our Privacy Notice, designed to inform you about how we handle your personal data following the General Data Protection Regulation (GDPR) when you use our website featuring the GenAI Spoofing Game.",
             "To make the subject matter of this notice clearer, let us define some terms from the GDPR. The \"controller\" refers to us, as we decide how and why your personal data is used, which also makes us responsible for protecting your personal data. \"Personal data\" includes any information that can identify you directly or indirectly, like your IP address. \"Processing\" covers all actions done with your data, such as collecting, storing, using, and deleting it.",
             "It is important to read this notice to understand what data we collect from you, why we collect it, what we do with it, and what rights you have regarding your data.",
             "If you have any questions about this notice, please reach out to the controller:",
-            "**Olli Hilke**,",
+            "**Dr. Nicolas Pope**,",
             "**Postal address:** University of Eastern Finland, Länsikatu 15, 80110 Joensuu, Finland.",
-            "**Email:** hilkolli@uef.fi",
-            "**Phone:** +358 41 435 1989.",
+            "**Email:** nicolas.pope@uef.fi",
+            "**Phone:** +358 505 288 449.",
             "### 1. Data Processing Activity:",
             "We log IP addresses.",
             "However, we do not use cookies for tracking or analytics; instead, we provide content based solely on your inputs.",
@@ -46,17 +46,24 @@
         ]
     },
     "common": {
-        "title": "Spoofing Game",
+        "createNew": "Create new",
+        "hideInfo": "Hide info",
+        "or": "or",
         "start": "Start",
         "showInfo": "Show info",
-        "hideInfo": "Hide info"
+        "title": "Spoofing Game"
     },
     "frontpage": {
+        "labels": {
+            "enterCode": "Enter code"
+        },
         "title": "Spoofing Game",
         "readyImages": "Ready images",
         "readyImagesDescription": "Play with ready images",
+        "multiplayer": "Multiplayer",
         "ownImages": "Own images",
-        "ownImagesDescription": "Play with your own images"
+        "ownImagesDescription": "Play with your own images",
+        "singleplayer": "Singleplayer"
     },
     "game": {
         "own": {

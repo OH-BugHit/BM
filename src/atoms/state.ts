@@ -23,3 +23,5 @@ export const classificationResultAtom = atom<{ className: string; probability: n
 export const configAtom = atom<SpoofConfig>({ data: 'notSet' });
 
 export const scoresAtom = atom<Scores>([]);
+
+export const serverCodeAtom = atom<string>('');

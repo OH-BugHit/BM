@@ -4,17 +4,24 @@
         "privacyTitle": "Tietoturvaselvitys"
     },
     "common": {
-        "title": "Spoofing Game",
+        "createNew": "Luo uusi",
+        "hideInfo": "Piilota tiedot",
+        "or": "tai",
         "start": "Aloita",
         "showInfo": "Näytä tiedot",
-        "hideInfo": "Piilota tiedot"
+        "title": "Spoofing Game"
     },
     "frontpage": {
+        "labels": {
+            "enterCode": "Syötä koodi"
+        },
         "title": "Spoofing Game",
         "readyImages": "Valmiit kuvat",
         "readyImagesDescription": "Pelaa valmiilla kuvilla",
+        "multiplayer": "Luokkatila",
         "ownImages": "Omat kuvat",
-        "ownImagesDescription": "Pelaa omilla kuvilla"
+        "ownImagesDescription": "Pelaa omilla kuvilla",
+        "singleplayer": "Yksinpeli"
     },
     "scores": {
         "bestImage": "Paras kuva",

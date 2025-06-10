@@ -25,3 +25,267 @@
     height: 100%;
     width: 100%;
 }
+
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.webcamWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/*For displaying text that camera is not active on top of the webcam component*/
+.cameraNotActive {
+    display: block;
+    position: absolute;
+    top: 50%;
+    align-self: center;
+    justify-self: center;
+    background-color: rgba(240, 248, 255, 0.712);
+    border-radius: 4px;
+    padding: 4px 8px;
+    backdrop-filter: blur(10px) brightness(150%);
+    z-index: 10000;
+}
+
+/*Baseline evaluating filter for webcameran*/
+.baseline {
+    filter: grayscale(0.4) brightness(0.8);
+    backdrop-filter: blur(4px);
+}
+
+/*Webcameran filter*/
+.filtered {
+    filter: brightness(1.05);
+}
+
+/*Text-overlay for webcam image*/
+.overlayText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    text-align: center;
+    z-index: 2;
+}
+
+
+.scoreBarContainer {
+    width: 50%;
+    text-align: left;
+}
+
+/*Score bar container*/
+/*
+Vaihtoehtoisia taustavärejä:
+rgba(219, 240, 143, 0.354);
+rgba(89, 205, 100, 0.354);
+rgba(20, 190, 181, 0.114);
+rgba(110, 175, 124, 0.114);
+*/
+.scoreBar {
+    position: relative;
+    display: block;
+    padding: 5px 5px 5px 5px;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 16px;
+    border-radius: 30px;
+    background: rgba(110, 175, 124, 0.114);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.8);
+}
+
+/*TopScore*/
+.scoreBar span {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    height: 20px;
+    border-radius: 10px 4px 4px 10px;
+    background-color: #f56982;
+    /*asetetaan parempi? väri tänne vaikka kulta*/
+    background-size: 100%;
+    background-image: linear-gradient(to bottom, #f9e31d, #fbff28);
+    /*animation: scoreBar 6s infinite linear;*/
+}
+
+.scoreBar span::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    border-radius: 10px;
+    background-size: 100%;
+    background-image: linear-gradient(45deg, #fff 25%,
+            rgba(0, 0, 0, 0)25%,
+            rgba(0, 0, 0, 0)50%,
+            #fff 50%,
+            #fff 75%,
+            rgba(0, 0, 0, 0)75%,
+            rgba(0, 0, 0, 0));
+    background-size: 30px 30px;
+    opacity: 0.4;
+    animation: scoreBarAfter 0.7s infinite linear;
+}
+
+/*Score*/
+.currentScoreBar span {
+    z-index: 3;
+    opacity: 0.8;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    top: 26px;
+    margin-left: 5px;
+    height: 20px;
+    border-radius: 10px 0 0 10px;
+    background-color: #f56982;
+    /*asetetaan parempi? väri tänne vaikka kulta*/
+    background-size: 100%;
+    background-image: linear-gradient(to bottom, #f2395a, #b90cb2);
+    /*animation: scoreBar 6s infinite linear;*/
+}
+
+.currentScoreBar span::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    border-radius: 10px 0 0 10px;
+    background-size: 100%;
+    background-image: linear-gradient(45deg, #fff 25%,
+            rgba(0, 0, 0, 0)25%,
+            rgba(0, 0, 0, 0)50%,
+            #ffffff 50%,
+            #ffffff 75%,
+            rgba(0, 0, 0, 0)75%,
+            rgba(0, 0, 0, 0));
+    background-size: 30px 30px;
+    opacity: 0.4;
+    animation: scoreBarAfter 0.5s infinite linear;
+}
+
+.scoreBarCurrentToolTip {
+    position: relative;
+    display: block;
+    top: -28px;
+    z-index: 2;
+}
+
+.scoreBarToolTip {
+    position: relative;
+    display: block;
+    top: -28px;
+    z-index: 1;
+}
+
+.scoreBarToolTip span::before {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-top-color: rgb(255, 229, 28);
+    content: "";
+}
+
+.scoreBarToolTip span::after {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 5px);
+    z-index: 1;
+    display: inline-block;
+    content: attr(data-label);
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    background-color: rgb(240, 237, 34);
+    color: #000000;
+}
+
+.scoreBarCurrentToolTip span::before {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-top-color: rgb(0, 0, 0);
+    content: "";
+}
+
+.scoreBarCurrentToolTip span::after {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 5px);
+    z-index: 1;
+    display: inline-block;
+    content: attr(data-label);
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    background-color: rgba(0, 0, 0, 1);
+    color: #fff;
+}
+
+/* Change imported webcam style*/
+.webcamWrapper [class*="wrapContainer"] {
+    color: rgb(48, 189, 173);
+}
+
+.webcamWrapper [class*="Mui"] {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
+
+/* Imported webcam style changer ends*/
+
+@keyframes scoreBar {
+    0% {
+        width: 0%
+    }
+
+    50% {
+        width: 60%;
+    }
+
+    100% {
+        width: 0%;
+    }
+}
+
+@keyframes scoreBarAfter {
+    0% {
+        background-position: 0 100%;
+    }
+
+    100% {
+        background-position: 30px 100%;
+    }
+}

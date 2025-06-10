@@ -1,27 +1,29 @@
-// import { useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import { useLeaveWarning } from '../../hooks/leaveBlocker';
 import ServerProtocol from '../../services/ServerProtocol';
 import style from './style.module.css';
-//import { configAtom } from '../../atoms/state';
-//import { useState } from 'react';
-import { Button } from '@knicos/genai-base';
+import { configAtom } from '../../atoms/state';
+import { useState } from 'react';
+import { Button, useID } from '@knicos/genai-base';
 
 export default function Teacher() {
     useLeaveWarning(true);
-    //const [config, setConfig] = useAtom(configAtom);
-    //const [word, setWord] = useState('');
+    const [, setConfig] = useAtom(configAtom);
+    const [word, setWord] = useState('');
+    const MYCODE = useID(5);
 
     const handleChangeConfig = () => {
-        //setConfig(word)
+        console.log('Lähetetään sana: ', word);
+        setConfig({ data: word });
     };
 
     // Komennot lähetetään muokkaamalla config-atomia
     return (
         <div className={style.container}>
-            <ServerProtocol code={'123'} />
-            <p>spoof_123</p>
+            <ServerProtocol code={MYCODE} />
+            <p>{`address: ${MYCODE}`}</p>
             <Header
                 title={'Teacher'}
                 block={true}
@@ -35,6 +37,11 @@ export default function Teacher() {
             >
                 Lähetä testiä
             </Button>
+            <input
+                type="text"
+                value={word}
+                onChange={(e) => setWord(e.target.value)}
+            />
             <div className={style.innerContainer}>
                 <div className={style.studentControlContainer}>
                     Contains controller for app and controlling the word if only one etc...

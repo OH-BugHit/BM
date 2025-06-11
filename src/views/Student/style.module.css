@@ -6,15 +6,24 @@
     height: 100%;
     align-self: center;
     overflow: auto;
-    background: white;
+    background: #dee4e8;
     align-items: center;
-    background-image: url('/genAiTausta.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
+.heatmapContainer {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+}
 
+.heatmapCanvas {
+    border: 2px solid #fff;
+    background: #4646aec1;
+    width: 100%;
+    /* skaalaa tarvittaessa */
+    max-width: 800px;
+    height: auto;
+}
 
 .innerContainer {
     max-width: 1400px;

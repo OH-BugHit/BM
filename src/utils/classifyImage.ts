@@ -5,9 +5,8 @@ import '@tensorflow/tfjs';
 /**
  * Imageclassifier function using MobileNet model.
  * This function takes an image element or URL and classifies it using the provided MobileNet model.
- * @param model Movbilenet model for image classification
+ * @param model Mobilenet model for image classification
  * @param input Image element or URL to classify
- * @param topK Number of top results to return, default is 3
  * @returns Classification results
  */
 export async function classifyImage(model: ClassifierApp, input: HTMLImageElement | HTMLCanvasElement | string) {
@@ -28,7 +27,16 @@ export async function classifyImage(model: ClassifierApp, input: HTMLImageElemen
     }
 
     if (model instanceof ClassifierApp && element instanceof HTMLCanvasElement) {
-        return model.predict(element);
+        const resizedCanvas = document.createElement('canvas');
+        resizedCanvas.width = 224;
+        resizedCanvas.height = 224;
+        const ctx = resizedCanvas.getContext('2d');
+        if (ctx) {
+            ctx.drawImage(element, 0, 0, 224, 224);
+            return model.predict(resizedCanvas);
+        } else {
+            return null;
+        }
     } else {
         return null;
     }

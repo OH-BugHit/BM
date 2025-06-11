@@ -15,7 +15,7 @@
         "test": "vitest"
     },
     "dependencies": {
-        "@genai-fi/classifier": "^0.0.1",
+        "@genai-fi/classifier": "^0.1.0",
         "@knicos/genai-base": "^3.0.0",
         "@mui/icons-material": "^7.1.0",
         "@tensorflow-models/mobilenet": "^2.1.1",

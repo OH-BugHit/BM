@@ -52,6 +52,9 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
         setHasBeenReady(true);
     }, [ready]);
 
+    /**
+     * Sends score to the teacher
+     */
     const doSendScore = useCallback(
         (score: ScoreData) => {
             if (send) {
@@ -61,6 +64,9 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
         [send]
     );
 
+    /**
+     * Sends heatmap and normal image to the teacher
+     */
     const doSendImages = useCallback(
         (images: ImageData) => {
             if (send) {

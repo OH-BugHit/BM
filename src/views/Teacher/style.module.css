@@ -6,12 +6,8 @@
     height: 100%;
     align-self: center;
     overflow: auto;
-    background: white;
+    background: #dee4e8;
     align-items: center;
-    background-image: url('/genAiTausta.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 

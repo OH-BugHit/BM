@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import ClassifierApp from '@genai-fi/classifier';
-import { SpoofConfig } from '../utils/types';
+import { SpoofConfig, StudentData } from '../utils/types';
 
 export type Scores = {
     className: string;
@@ -25,3 +25,5 @@ export const configAtom = atom<SpoofConfig>({ data: 'notSet' });
 export const scoresAtom = atom<Scores>([]);
 
 export const serverCodeAtom = atom<string>('');
+
+export const studentDataAtom = atom<StudentData | null>(null);

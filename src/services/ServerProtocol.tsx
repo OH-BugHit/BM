@@ -16,7 +16,7 @@ export default function ServerProtocol({ code }: { code: string }) {
             if (data.event === 'eter:join') {
                 console.log('Join command');
                 console.log(data);
-                conn.send({ event: 'eter:config', configuration: { data: `initialConfig` } });
+                conn.send({ event: 'eter:config', configuration: { data: config.data, pause: true } });
                 // Send
             } else if (data.event === 'eter:score') {
                 console.log('Score command', data); // vastaanotetaan opiskelijan pisteet
@@ -26,13 +26,15 @@ export default function ServerProtocol({ code }: { code: string }) {
                 (async () => {
                     const topCanvas = await base64ToCanvas(data.data.image);
                     const topHeatmap = await base64ToCanvas(data.data.heatmap);
+                    const score = data.data.score;
                     setStudentAtom((prev) => {
-                        const id = 'student1'; // kovakoodattu id toistaiseksi
+                        const id = data.data.studentId; // kovakoodattu id toistaiseksi
                         // Luo uusi StudentScores jos ei ole
                         const prevStudents = prev?.students ?? new Map();
                         const studentScores = prevStudents.get(id) ?? { data: new Map() };
                         // Päivitä tämän classnamen tiedot
                         studentScores.data.set(data.data.classname, {
+                            score,
                             topCanvas,
                             topHeatmap,
                         });
@@ -42,7 +44,7 @@ export default function ServerProtocol({ code }: { code: string }) {
                 })();
             }
         },
-        [setStudentAtom]
+        [setStudentAtom, config.data]
     );
 
     const { ready, send, peer } = usePeer({
@@ -65,7 +67,7 @@ export default function ServerProtocol({ code }: { code: string }) {
             appName={'spoofgame'}
             ready={ready}
             peer={peer}
-            visibility={3}
+            visibility={1}
         />
     );
 }

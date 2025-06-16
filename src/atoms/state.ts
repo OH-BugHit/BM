@@ -26,4 +26,4 @@ export const scoresAtom = atom<Scores>([]);
 
 export const serverCodeAtom = atom<string>('');
 
-export const studentDataAtom = atom<StudentData | null>(null);
+export const studentDataAtom = atom<StudentData>({ students: new Map() });

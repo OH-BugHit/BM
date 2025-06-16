@@ -12,7 +12,7 @@ export default function StudentWrapper() {
             server={serverCode}
             mycode={MYCODE}
         >
-            <Student />
+            <Student MYCODE={MYCODE} />
         </StudentProtocol>
     );
 }

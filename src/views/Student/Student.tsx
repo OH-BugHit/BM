@@ -1,4 +1,4 @@
-import { Button, Webcam } from '@knicos/genai-base';
+import { Webcam } from '@knicos/genai-base';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import { useLeaveWarning } from '../../hooks/leaveBlocker';
@@ -11,13 +11,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loadModel } from '../../services/loadModel';
 import { classifyImage } from '../../utils/classifyImage';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
 import { ClassificationResults } from '../../components/ClassificationResults/ClassificationResults';
 import { canvasToBase64 } from '../../utils/canvasToBase64';
 import { cloneCanvas } from '../../utils/cloneCanvas';
+import { PauseButton } from '../../components/Buttons/PauseButton';
+import { validateCanvas } from '../../utils/validateCanvas';
 
-export default function Student() {
+export default function Student({ MYCODE }: { MYCODE: string }) {
     const { t } = useTranslation();
     const [model, setModel] = useAtom(modelAtom);
     const [, setClassificationResult] = useAtom(classificationResultAtom);
@@ -40,9 +40,15 @@ export default function Student() {
     useLeaveWarning(true); // Blocks unintended leaving
 
     useEffect(() => {
-        setClassifyTerm(config.data);
-        model?.setXAIClass(config.data); //TODO CASESENSITIVE TOISTAISEKSI!!
-    }, [config.data, model]); // Update classify term and model class when config
+        if (config.data) {
+            setClassifyTerm(config.data);
+            setLastSentScore(0); // Reset last sent score when config changes
+            model?.setXAIClass(config.data);
+        }
+        if (config.pause !== undefined) {
+            setPause(config.pause);
+        }
+    }, [config, model]); // Update classify term and model class when config
 
     // Load model if needed
     useEffect(() => {
@@ -73,69 +79,73 @@ export default function Student() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            console.log('intervalli ', score, lastSentScore);
             if (score > lastSentScore && topCanvasRef.current && topHeatmapRef.current && doSendImages) {
                 const imageBase64 = canvasToBase64(topCanvasRef.current);
                 const heatmapBase64 = canvasToBase64(topHeatmapRef.current);
                 doSendImages({
+                    studentId: MYCODE,
                     classname: classifyTerm,
                     image: imageBase64,
                     heatmap: heatmapBase64,
+                    score: score,
                 });
+                console.log(lastSentScore, score);
                 setLastSentScore(score);
             }
-        }, 5000);
+        }, 2000);
         return () => clearInterval(interval);
-    }, [doSendImages, classifyTerm, lastSentScore, score]);
+    }, [doSendImages, classifyTerm, lastSentScore, score, MYCODE]);
 
     // Classify from canvas
     const handleCapture = async (canvas: HTMLCanvasElement) => {
         if (!model) return;
-        try {
-            const results = await classifyImage(model, canvas);
-            if (results) {
-                // working code continues
-                const result = results.predictions.filter((r) =>
-                    r.className.toLowerCase().includes(`${classifyTerm.toLowerCase()}`)
-                );
-                if (!pause && result.length > 0) {
-                    const currentScore = Math.floor(result[0].probability * 10000) / 100;
-                    setCurrentScore(currentScore);
-                    setScore((prevScore) => {
-                        if (currentScore > prevScore) {
-                            topCanvasRef.current = canvas; // Save topCanvas topHeatmap to be sent at the next interval
-                            if (heatmapRef.current) {
-                                topHeatmapRef.current = cloneCanvas(heatmapRef.current);
+        if (validateCanvas(canvas)) {
+            try {
+                const results = await classifyImage(model, canvas);
+                if (results) {
+                    // working code continues
+                    const result = results.predictions.filter((r) =>
+                        r.className.toLowerCase().includes(`${classifyTerm.toLowerCase()}`)
+                    );
+                    if (!pause && result.length > 0) {
+                        const currentScore = Math.floor(result[0].probability * 10000) / 100;
+                        setCurrentScore(currentScore);
+                        setScore((prevScore) => {
+                            if (currentScore > prevScore) {
+                                topCanvasRef.current = canvas; // Save topCanvas topHeatmap to be sent at the next interval
+                                if (heatmapRef.current) {
+                                    topHeatmapRef.current = cloneCanvas(heatmapRef.current);
+                                }
+                                if (doSendScore) {
+                                    doSendScore({ studentId: MYCODE, classname: classifyTerm, score: currentScore });
+                                }
+                                return currentScore;
                             }
-                            if (doSendScore) {
-                                doSendScore({ classname: classifyTerm, score: currentScore });
-                            }
-                            return currentScore;
+                            return prevScore;
+                        });
+                    }
+                    setClassificationResult(results.predictions.slice(0, 3)); // Top 3 storing (for TEMP view only)
+                    if (heatmapRef.current && enlargedHeatmapRef.current) {
+                        const src = heatmapRef.current;
+                        const dst = enlargedHeatmapRef.current;
+                        const ctx = dst.getContext('2d');
+                        if (ctx) {
+                            ctx.clearRect(0, 0, dst.width, dst.height);
+                            ctx.drawImage(src, 0, 0, src.width, src.height, 0, 0, dst.width, dst.height);
                         }
-                        return prevScore;
-                    });
-                }
-                setClassificationResult(results.predictions.slice(0, 3)); // Top 3 storing (for TEMP view only)
-                if (heatmapRef.current && enlargedHeatmapRef.current) {
-                    const src = heatmapRef.current;
-                    const dst = enlargedHeatmapRef.current;
-                    const ctx = dst.getContext('2d');
-                    if (ctx) {
-                        ctx.clearRect(0, 0, dst.width, dst.height);
-                        ctx.drawImage(src, 0, 0, src.width, src.height, 0, 0, dst.width, dst.height);
                     }
                 }
+            } catch (err) {
+                console.error('Luokittelu epäonnistui:', err);
+                setClassificationResult(null);
             }
-        } catch (err) {
-            console.error('Luokittelu epäonnistui:', err);
-            setClassificationResult(null);
         }
     };
 
     return (
         <div className={style.container}>
             <Header
-                title={'Student'}
+                title={`Student ${MYCODE}`}
                 block={true}
             />
             <div className={style.innerContainer}>
@@ -194,17 +204,10 @@ export default function Student() {
                         />
                     </div>
                     <ClassificationResults />
-                    {
-                        <Button
-                            sx={{ fontSize: '14pt', minWidth: '40px', marginTop: '6px' }}
-                            variant="contained"
-                            onClick={() => {
-                                setPause((prev) => !prev);
-                            }}
-                        >
-                            {!pause ? <PauseIcon /> : <PlayArrowIcon />}
-                        </Button>
-                    }
+                    <PauseButton
+                        pause={pause}
+                        setPause={setPause}
+                    />
                 </div>
                 <div className={style.topThreeContainer}>top 3</div>
                 <div className={style.otherResultsContainer}>all else</div>

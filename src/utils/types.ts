@@ -19,9 +19,19 @@ export type StudentScores = {
     data: Map<string, StudentScore>;
 };
 
-export type SpoofConfig = { data: string }; // Jatka change null
-export type ScoreData = { classname: string; score: number };
-export type ImageData = { classname: string; image: string; heatmap: string }; // TODO: Vaihda imaget
+export type SpoofConfig = { data?: string; pause?: boolean };
+export type ScoreData = {
+    studentId: string;
+    classname: string;
+    score: number;
+};
+export type ImageData = {
+    studentId: string;
+    classname: string;
+    image: string;
+    heatmap: string;
+    score: number;
+}; // TODO: Vaihda imaget
 /**
  * Maps a student ID to their scores (K = student ID, V = StudentScores)
  */

@@ -16,7 +16,7 @@ export default function ServerProtocol({ code }: { code: string }) {
             if (data.event === 'eter:join') {
                 console.log('Join command');
                 console.log(data);
-                conn.send({ event: 'eter:config', configuration: { data: config.data, pause: true } });
+                conn.send({ event: 'eter:config', configuration: { data: config.data, pause: config.pause } });
                 // Send
             } else if (data.event === 'eter:score') {
                 console.log('Score command', data); // vastaanotetaan opiskelijan pisteet
@@ -28,23 +28,32 @@ export default function ServerProtocol({ code }: { code: string }) {
                     const topHeatmap = await base64ToCanvas(data.data.heatmap);
                     const score = data.data.score;
                     setStudentAtom((prev) => {
-                        const id = data.data.studentId; // kovakoodattu id toistaiseksi
+                        const id = data.data.studentId; // Vaihdetaan ehkä usernameksi!?
                         // Luo uusi StudentScores jos ei ole
                         const prevStudents = prev?.students ?? new Map();
                         const studentScores = prevStudents.get(id) ?? { data: new Map() };
-                        // Päivitä tämän classnamen tiedot
-                        studentScores.data.set(data.data.classname, {
-                            score,
-                            topCanvas,
-                            topHeatmap,
-                        });
+                        // Update the scores if better
+                        if (studentScores.data.get(data.data.classname)) {
+                            const existing = studentScores.data.get(data.data.classname);
+                            if (existing.score < score) {
+                                existing.score = score; // Päivitetään vain jos uusi score on suurempi
+                                existing.topCanvas = topCanvas;
+                                existing.topHeatmap = topHeatmap;
+                            }
+                        } else {
+                            studentScores.data.set(data.data.classname, {
+                                score,
+                                topCanvas,
+                                topHeatmap,
+                            });
+                        }
                         prevStudents.set(id, studentScores);
                         return { students: prevStudents };
                     });
                 })();
             }
         },
-        [setStudentAtom, config.data]
+        [setStudentAtom, config.data, config.pause]
     );
 
     const { ready, send, peer } = usePeer({

@@ -21,12 +21,13 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
     const { t } = useTranslation();
     const [model, setModel] = useAtom(modelAtom);
     const [, setClassificationResult] = useAtom(classificationResultAtom);
-    const [classifyTerm, setClassifyTerm] = useState<string>(''); //TODO: ota sana configista
+    const [classifyTerm, setClassifyTerm] = useState<string>('');
     const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
     const [currentScore, setCurrentScore] = useState<number>(0);
     const [score, setScore] = useState<number>(0);
     const [lastSentScore, setLastSentScore] = useState<number>(0);
     const [pause, setPause] = useState<boolean>(false);
+    const [remotePause, setRemotePause] = useState<boolean>(false);
     const topCanvasRef = useRef<HTMLCanvasElement | null>(null);
     const topHeatmapRef = useRef<HTMLCanvasElement | null>(null);
     const [webcamSize, setWebcamSize] = useState<number>(
@@ -42,11 +43,12 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
     useEffect(() => {
         if (config.data) {
             setClassifyTerm(config.data);
+            setScore(0);
             setLastSentScore(0); // Reset last sent score when config changes
             model?.setXAIClass(config.data);
         }
         if (config.pause !== undefined) {
-            setPause(config.pause);
+            setRemotePause(config.pause);
         }
     }, [config, model]); // Update classify term and model class when config
 
@@ -98,7 +100,7 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
 
     // Classify from canvas
     const handleCapture = async (canvas: HTMLCanvasElement) => {
-        if (!model) return;
+        if (!model || classifyTerm.length === 0 || pause || remotePause) return;
         if (validateCanvas(canvas)) {
             try {
                 const results = await classifyImage(model, canvas);
@@ -107,7 +109,7 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                     const result = results.predictions.filter((r) =>
                         r.className.toLowerCase().includes(`${classifyTerm.toLowerCase()}`)
                     );
-                    if (!pause && result.length > 0) {
+                    if (result.length > 0) {
                         const currentScore = Math.floor(result[0].probability * 10000) / 100;
                         setCurrentScore(currentScore);
                         setScore((prevScore) => {
@@ -176,12 +178,12 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                         </div>
                     </div>
                     <div className={`${style.webcamWrapper} ${pause ? style.baseline : style.filtered}`}>
-                        {pause && <div className={style.overlayText}>Game paused</div>}
+                        {(pause || remotePause) && <div className={style.overlayText}>Game paused</div>}
                         <Webcam
                             size={webcamSize}
                             interval={100}
-                            capture={!pause}
-                            disable={pause}
+                            capture={!pause || !remotePause}
+                            disable={pause || remotePause}
                             onCapture={handleCapture}
                             hidden={false}
                             onActivated={setIsCameraActive}
@@ -205,8 +207,9 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                     </div>
                     <ClassificationResults />
                     <PauseButton
-                        pause={pause}
+                        pause={pause || remotePause}
                         setPause={setPause}
+                        disable={remotePause}
                     />
                 </div>
                 <div className={style.topThreeContainer}>top 3</div>

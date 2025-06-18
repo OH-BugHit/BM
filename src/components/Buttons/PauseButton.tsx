@@ -7,13 +7,15 @@ import { Dispatch, SetStateAction } from 'react';
 type PauseButtonProps = {
     pause: boolean;
     setPause: Dispatch<SetStateAction<boolean>>;
-    setConfig?: (config: { data?: string; pause?: boolean }) => void;
+    data?: string;
+    setConfig?: (config: { data: string; pause: boolean }) => void;
+    disable?: boolean;
 };
 
-export function PauseButton({ pause, setPause, setConfig }: PauseButtonProps) {
+export function PauseButton({ pause, setPause, setConfig, disable = false, data }: PauseButtonProps) {
     const handlePause = () => {
-        if (setConfig) {
-            setConfig({ pause: !pause });
+        if (setConfig && data) {
+            setConfig({ data: data, pause: !pause });
         }
         setPause((prev) => !prev);
     };
@@ -22,6 +24,7 @@ export function PauseButton({ pause, setPause, setConfig }: PauseButtonProps) {
             sx={{ fontSize: '14pt', minWidth: '40px', marginTop: '6px' }}
             variant="contained"
             onClick={handlePause}
+            disabled={disable}
         >
             {!pause ? <PauseIcon /> : <PlayArrowIcon />}
         </Button>

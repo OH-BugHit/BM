@@ -1,7 +1,12 @@
 // Komponentti, joka kopioi annetun canvasin sisällön näkyvään canvas-elementtiin
 import { useRef, useEffect } from 'react';
 
-export function CanvasCopy({ sourceCanvas }: { sourceCanvas: HTMLCanvasElement }) {
+type CanvasCopyProps = {
+    sourceCanvas: HTMLCanvasElement;
+    maxWidth?: number;
+};
+
+export function CanvasCopy({ sourceCanvas, maxWidth = 160 }: CanvasCopyProps) {
     const ref = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
@@ -19,7 +24,7 @@ export function CanvasCopy({ sourceCanvas }: { sourceCanvas: HTMLCanvasElement }
     return (
         <canvas
             ref={ref}
-            style={{ maxWidth: 160, border: '1px solid #ccc' }}
+            style={{ maxWidth: maxWidth, border: '1px solid #ccc' }}
         />
     );
 }

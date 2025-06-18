@@ -12,18 +12,19 @@ import { PauseButton } from '../../components/Buttons/PauseButton';
 import { loadModel } from '../../services/loadModel';
 import { NativeSelect } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { DatasetGallery } from '../../components/DatasetGallery/DatasetGallery';
 
 export default function Teacher() {
     useLeaveWarning(true);
     const { t } = useTranslation();
-    const [, setConfig] = useAtom(configAtom);
+    const [config, setConfig] = useAtom(configAtom);
     const [word, setWord] = useState('');
     const MYCODE = useID(5);
     const [studentData] = useAtom(studentDataAtom);
     const [model, setModel] = useAtom(modelAtom);
     const [pause, setPause] = useState(true);
 
-    // Load model if needed
+    // Load model if needed and set initial term, also pause the students
     useEffect(() => {
         if (!model) {
             loadModel().then((loadedModel) => {
@@ -37,7 +38,7 @@ export default function Teacher() {
     const handleChangeTerm = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newWord = event.target.value;
         setWord(newWord);
-        setConfig({ data: newWord });
+        setConfig({ data: newWord, pause: pause });
     };
 
     // Renderöi opiskelijoiden kuvat
@@ -84,16 +85,13 @@ export default function Teacher() {
                     const others = studentsWithTerm.slice(2);
 
                     return (
-                        <div
-                            key={classname}
-                            style={{ marginBottom: 32 }}
-                        >
+                        <div key={classname}>
                             <h3>{classname}</h3>
-                            <div style={{ display: 'flex', gap: 24 }}>
+                            <div className={style.topStudentsContainer}>
                                 {topTwo.map((entry) => (
                                     <div
                                         key={entry.studentId}
-                                        style={{ border: '1px solid #ccc', padding: 8 }}
+                                        className={style.topStudentItem}
                                     >
                                         <div>
                                             <b>ID:</b> {entry.studentId}
@@ -103,14 +101,20 @@ export default function Teacher() {
                                         </div>
                                         {entry.topCanvas && (
                                             <div>
-                                                <div>Paras kuva</div>
-                                                <CanvasCopy sourceCanvas={entry.topCanvas} />
+                                                <h4>Paras kuva</h4>
+                                                <CanvasCopy
+                                                    sourceCanvas={entry.topCanvas}
+                                                    maxWidth={200}
+                                                />
                                             </div>
                                         )}
                                         {entry.topHeatmap && (
                                             <div>
-                                                <div>Heatmap</div>
-                                                <CanvasCopy sourceCanvas={entry.topHeatmap} />
+                                                <h4>Heatmap</h4>
+                                                <CanvasCopy
+                                                    sourceCanvas={entry.topHeatmap}
+                                                    maxWidth={200}
+                                                />
                                             </div>
                                         )}
                                     </div>
@@ -183,9 +187,14 @@ export default function Teacher() {
                         pause={pause}
                         setPause={setPause}
                         setConfig={setConfig}
+                        data={word}
                     />
                 </div>
-                <div className={style.topThreeContainer}>{renderStudentImages()}</div>
+                <div className={style.galleryContainer}>
+                    <DatasetGallery config={config} />
+                </div>
+
+                <div className={style.resultsContainer}>{renderStudentImages()}</div>
                 <div className={style.otherResultsContainer}>all else</div>
             </div>
             <Footer />

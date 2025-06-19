@@ -10,6 +10,11 @@ export type Scores = {
     topHeatmap: HTMLCanvasElement | null;
 }[];
 
+//TODO: MOVE TO TYPES WHEN READY
+type UserEntry = {
+    username: string;
+};
+
 export const imageAtom = atom<HTMLCanvasElement | null>(null);
 
 export const imageCacheAtom = atom<{ [filename: string]: string }>({});
@@ -27,3 +32,7 @@ export const scoresAtom = atom<Scores>([]);
 export const serverCodeAtom = atom<string>('');
 
 export const studentDataAtom = atom<StudentData>({ students: new Map() });
+
+export const availableUsersAtom = atom<UserEntry[]>([]);
+
+export const usernameAtom = atom<string>('');

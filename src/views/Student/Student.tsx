@@ -6,7 +6,7 @@ import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
 import { useAtom } from 'jotai';
 import { SpoofConfig } from '../../utils/types';
-import { classificationResultAtom, configAtom, modelAtom } from '../../atoms/state';
+import { classificationResultAtom, configAtom, modelAtom, usernameAtom } from '../../atoms/state';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loadModel } from '../../services/loadModel';
@@ -16,11 +16,13 @@ import { canvasToBase64 } from '../../utils/canvasToBase64';
 import { cloneCanvas } from '../../utils/cloneCanvas';
 import { PauseButton } from '../../components/Buttons/PauseButton';
 import { validateCanvas } from '../../utils/validateCanvas';
+import { DatasetGallery } from '../../components/DatasetGallery/DatasetGallery';
 
 export default function Student({ MYCODE }: { MYCODE: string }) {
     const { t } = useTranslation();
     const [model, setModel] = useAtom(modelAtom);
     const [, setClassificationResult] = useAtom(classificationResultAtom);
+    const [username] = useAtom(usernameAtom);
     const [classifyTerm, setClassifyTerm] = useState<string>('');
     const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
     const [currentScore, setCurrentScore] = useState<number>(0);
@@ -85,7 +87,7 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                 const imageBase64 = canvasToBase64(topCanvasRef.current);
                 const heatmapBase64 = canvasToBase64(topHeatmapRef.current);
                 doSendImages({
-                    studentId: MYCODE,
+                    studentId: username,
                     classname: classifyTerm,
                     image: imageBase64,
                     heatmap: heatmapBase64,
@@ -96,7 +98,7 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
             }
         }, 2000);
         return () => clearInterval(interval);
-    }, [doSendImages, classifyTerm, lastSentScore, score, MYCODE]);
+    }, [doSendImages, classifyTerm, lastSentScore, score, username]);
 
     // Classify from canvas
     const handleCapture = async (canvas: HTMLCanvasElement) => {
@@ -147,7 +149,7 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
     return (
         <div className={style.container}>
             <Header
-                title={`Student ${MYCODE}`}
+                title={`${username}`}
                 block={true}
             />
             <div className={style.innerContainer}>
@@ -211,9 +213,10 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                         setPause={setPause}
                         disable={remotePause}
                     />
+                    <div className={style.galleryContainer}>
+                        <DatasetGallery config={config} />
+                    </div>
                 </div>
-                <div className={style.topThreeContainer}>top 3</div>
-                <div className={style.otherResultsContainer}>all else</div>
             </div>
             <Footer />
         </div>

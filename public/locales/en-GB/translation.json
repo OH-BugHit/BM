@@ -46,12 +46,28 @@
         ]
     },
     "common": {
+        "close": "Close",
         "createNew": "Create new",
+        "hide": "Hide",
         "hideInfo": "Hide info",
+        "noTeachingData": "No data available",
         "or": "or",
         "start": "Start",
+        "show": "Show",
         "showInfo": "Show info",
-        "title": "Spoofing Game"
+        "title": "Spoofing Game",
+        "dataset": "dataset"
+    },
+    "enterUsername": {
+        "actions": { "enterUser": "Enter" },
+        "labels": { "enterUsername": "Enter Username" },
+        "messages": {
+            "usernameError": {
+                "missing": "A username is required",
+                "long": "The username is too long",
+                "short": "The username must be 3 or more characters"
+            }
+        }
     },
     "frontpage": {
         "labels": {
@@ -83,6 +99,49 @@
             "play": "Play",
             "playDescription": "Play with ready images.",
             "playButton": "Play"
+        }
+    },
+    "loader": {
+        "messages": {
+            "cameraPermission": "To allow direct connections between devices you need to allow temporary access to the camera.",
+            "connecting": "Trying to connect...",
+            "disconnected": "Disconnected from the other device",
+            "retry": "Retrying...",
+            "content_load": "Loading the content",
+            "content_download": "Downloading the content",
+            "ready": "Connected",
+            "content_none": "Content ready",
+            "starting": "Connecting...",
+            "wifiNetwork": "Your data is being sent over the internet because you are not using the same Wi-Fi network.",
+            "permNetwork": "Your data is being sent over the internet because you didn't allow camera access.",
+            "quality0": "Checking...",
+            "quality1": "Poor Connection",
+            "quality2": "Connected",
+            "quality3": "Connected",
+            "failed": "No Connection"
+        },
+        "errors": {
+            "unknown": "A connection problem occurred",
+            "id-in-use": "Someone is already using this code",
+            "peer-not-found": "The code could not be found",
+            "missing-ice": "Could not connect, you may be offline.",
+            "no-signaling": "Our server isn't responding",
+            "bad-browser": "Your device doesn't support this app",
+            "unknownContent": "There is a problem with the media content",
+            "load": "Could not load the media content",
+            "download": "Could not download the media content",
+            "none": "Ok"
+        },
+        "titles": {
+            "iceConfig": "Configuring",
+            "permission": "Permissions",
+            "connecting": "Connection",
+            "error": "Problem",
+            "contentLoad": "Media Content",
+            "networkType": "Information"
+        },
+        "actions": {
+            "close": "Close"
         }
     },
     "scores": {

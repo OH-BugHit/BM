@@ -21,7 +21,7 @@ export function PauseButton({ pause, setPause, setConfig, disable = false, data 
     };
     return (
         <Button
-            sx={{ fontSize: '14pt', minWidth: '40px', marginTop: '6px' }}
+            sx={{ fontSize: '14pt', minWidth: '40px' }}
             variant="contained"
             onClick={handlePause}
             disabled={disable}

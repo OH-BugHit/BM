@@ -6,13 +6,15 @@ import ServerProtocol from '../../services/ServerProtocol';
 import style from './style.module.css';
 import { configAtom, modelAtom, studentDataAtom } from '../../atoms/state';
 import { useEffect, useState } from 'react';
-import { useID } from '@knicos/genai-base';
+import { Button, useID } from '@knicos/genai-base';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import { PauseButton } from '../../components/Buttons/PauseButton';
 import { loadModel } from '../../services/loadModel';
 import { NativeSelect } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { DatasetGallery } from '../../components/DatasetGallery/DatasetGallery';
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
+import { close } from '../../components/Buttons/buttonStyles';
 
 export default function Teacher() {
     useLeaveWarning(true);
@@ -23,6 +25,7 @@ export default function Teacher() {
     const [studentData] = useAtom(studentDataAtom);
     const [model, setModel] = useAtom(modelAtom);
     const [pause, setPause] = useState(true);
+    const [openImage, setOpenImage] = useState<string | null>(null);
 
     // Load model if needed and set initial term, also pause the students
     useEffect(() => {
@@ -94,14 +97,20 @@ export default function Teacher() {
                                         className={style.topStudentItem}
                                     >
                                         <div>
-                                            <b>ID:</b> {entry.studentId}
+                                            <b>Name:</b> {entry.studentId}
                                         </div>
                                         <div>
                                             <b>Score:</b> {entry.score}
                                         </div>
                                         {entry.topCanvas && (
-                                            <div>
-                                                <h4>Paras kuva</h4>
+                                            <div
+                                                onClick={() => {
+                                                    const dataUrl = entry.topCanvas?.toDataURL();
+                                                    if (dataUrl) setOpenImage(dataUrl);
+                                                }}
+                                                style={{ cursor: 'pointer' }}
+                                            >
+                                                <h4>{t('scores.bestImage')}</h4>
                                                 <CanvasCopy
                                                     sourceCanvas={entry.topCanvas}
                                                     maxWidth={200}
@@ -110,11 +119,19 @@ export default function Teacher() {
                                         )}
                                         {entry.topHeatmap && (
                                             <div>
-                                                <h4>Heatmap</h4>
-                                                <CanvasCopy
-                                                    sourceCanvas={entry.topHeatmap}
-                                                    maxWidth={200}
-                                                />
+                                                <div
+                                                    onClick={() => {
+                                                        const dataUrl = entry.topHeatmap?.toDataURL();
+                                                        if (dataUrl) setOpenImage(dataUrl);
+                                                    }}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    <h4>Heatmap</h4>
+                                                    <CanvasCopy
+                                                        sourceCanvas={entry.topHeatmap}
+                                                        maxWidth={200}
+                                                    />
+                                                </div>
                                             </div>
                                         )}
                                     </div>
@@ -133,12 +150,24 @@ export default function Teacher() {
                                                     <b>ID:</b> {entry.studentId}
                                                 </div>
                                                 {entry.topCanvas && (
-                                                    <div>
+                                                    <div
+                                                        onClick={() => {
+                                                            const dataUrl = entry.topCanvas?.toDataURL();
+                                                            if (dataUrl) setOpenImage(dataUrl);
+                                                        }}
+                                                        style={{ cursor: 'pointer' }}
+                                                    >
                                                         <CanvasCopy sourceCanvas={entry.topCanvas} />
                                                     </div>
                                                 )}
                                                 {entry.topHeatmap && (
-                                                    <div>
+                                                    <div
+                                                        onClick={() => {
+                                                            const dataUrl = entry.topHeatmap?.toDataURL();
+                                                            if (dataUrl) setOpenImage(dataUrl);
+                                                        }}
+                                                        style={{ cursor: 'pointer' }}
+                                                    >
                                                         <CanvasCopy sourceCanvas={entry.topHeatmap} />
                                                     </div>
                                                 )}
@@ -160,11 +189,11 @@ export default function Teacher() {
             <div className={style.serverProtocolContainer}>
                 <ServerProtocol code={MYCODE} />
             </div>
-            <p>{`address: ${MYCODE}`}</p>
             <Header
                 title={'Teacher'}
                 block={true}
             />
+            <p>{`address: ${MYCODE}`}</p>
             <div className={style.innerContainer}>
                 <div className={style.studentControlContainer}>
                     <NativeSelect
@@ -172,7 +201,6 @@ export default function Teacher() {
                         onChange={handleChangeTerm}
                         variant="outlined"
                         style={{ padding: '4px' }}
-                        inputProps={{ 'aria-label': t('app.language', { ns: 'common' }) }}
                     >
                         {model?.getLabels().map((lbl) => (
                             <option
@@ -190,13 +218,36 @@ export default function Teacher() {
                         data={word}
                     />
                 </div>
+                {}
                 <div className={style.galleryContainer}>
                     <DatasetGallery config={config} />
                 </div>
 
                 <div className={style.resultsContainer}>{renderStudentImages()}</div>
-                <div className={style.otherResultsContainer}>all else</div>
             </div>
+            {openImage && (
+                <div
+                    className={style.openImageOverlay}
+                    onClick={() => setOpenImage(null)}
+                >
+                    <div className={style.imageWrapper}>
+                        <Button
+                            onClick={() => setOpenImage(null)}
+                            style={close}
+                            title={t('common.close')}
+                            aria-label="Sulje"
+                        >
+                            <CloseSharpIcon />
+                        </Button>
+                        <img
+                            src={openImage}
+                            alt="isompi kuva"
+                            style={{ maxWidth: '90vw', maxHeight: '90vh', boxShadow: '0 0 24px #000' }}
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </div>
+                </div>
+            )}
             <Footer />
         </div>
     );

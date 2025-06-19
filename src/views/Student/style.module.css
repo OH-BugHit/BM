@@ -1,3 +1,11 @@
+.usernameInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -11,7 +19,6 @@
 }
 
 .heatmapContainer {
-    margin-top: 12px;
     display: flex;
     justify-content: center;
 }
@@ -40,6 +47,14 @@
     flex-direction: column;
     align-items: center;
     margin-top: 16px;
+    gap: 1rem;
+}
+
+.galleryContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
 }
 
 .webcamWrapper {

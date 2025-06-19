@@ -1,37 +1,67 @@
 .container {
     display: flex;
     flex-direction: column;
-    width: 100%;
     font-size: 1rem;
-    align-self: center;
-    justify-content: center;
-    justify-self: center;
-    overflow: auto;
     align-items: center;
+    background-color: rgba(255,
+            255,
+            255,
+            0.421);
+    padding: 0.5rem 1rem 1rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
 }
 
-.container h1 {
-    font-family: 'Tektur';
-    font-weight: bold;
-    font-size: 3rem;
-    margin: 0;
+.hidden {
+    display: none;
+}
+
+.headerToggle {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
 }
 
 .datasetContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     box-sizing: border-box;
     gap: 1rem;
     max-height: 50dvh;
-    width: 100%;
     overflow-y: auto;
-    overflow-x: auto;
     padding: 1rem;
 }
 
 .image {
-    flex: 1 0 320px;
-    max-width: 100%;
+    width: 100%;
     height: auto;
     object-fit: contain;
+    display: block;
+    cursor: pointer;
+}
+
+.openImageOverlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.imageWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.noData {
+    justify-items: center;
+    align-items: center;
+    text-align: center;
 }

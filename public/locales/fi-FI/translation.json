@@ -4,12 +4,26 @@
         "privacyTitle": "Tietoturvaselvitys"
     },
     "common": {
+        "close": "Sulje",
         "createNew": "Luo uusi",
         "hideInfo": "Piilota tiedot",
+        "noTeachingData": "Opetusdataa ei saatavilla",
         "or": "tai",
         "start": "Aloita",
         "showInfo": "Näytä tiedot",
-        "title": "Spoofing Game"
+        "title": "Spoofing Game",
+        "dataset": "opetusdata"
+    },
+    "enterUsername": {
+        "actions": { "enterUser": "Aloita" },
+        "labels": { "enterUsername": "Anna käyttäjänimesi" },
+        "messages": {
+            "usernameError": {
+                "missing": "Käyttäjänimi puuttuu",
+                "long": "Käyttäjänimi on liian pitkä",
+                "short": "Käyttäjänimen pitää olla ainakin 3 merkkiä"
+            }
+        }
     },
     "frontpage": {
         "labels": {
@@ -22,6 +36,51 @@
         "ownImages": "Omat kuvat",
         "ownImagesDescription": "Pelaa omilla kuvilla",
         "singleplayer": "Yksinpeli"
+    },
+    "loader": {
+        "messages": {
+            "getIceConfig": "Selvitän verkkoyhteyden asetuksia",
+            "cameraPermission": "Lupa kameran käyttöön tarvitaan suoran yhteyden muodostamiseksi laitteiden välille.",
+            "connecting": "Yritän yhdistää...",
+            "signaling": "Etsin muita laitteita",
+            "disconnected": "Yhteys toiseen laitteeseen katkesi",
+            "retry": "Yritän yhdistää uudelleen...",
+            "content_load": "Avaan sisältöä",
+            "content_download": "Lataan sisältöä",
+            "ready": "Yhteys valmis",
+            "content_none": "Sisältö valmis",
+            "starting": "Käynnistää",
+            "wifiNetwork": "Tietosi lähetetään internetin kautta, koska et käytä samaa Wi-Fi-verkkoa.",
+            "permNetwork": "Tietosi lähetetään internetin kautta, koska et sallinut kameran käyttöoikeutta.",
+            "quality0": "Checking...",
+            "quality1": "Poor Connection",
+            "quality2": "Connected",
+            "quality3": "Connected",
+            "failed": "No Connection"
+        },
+        "errors": {
+            "unknown": "Ongelma laitteiden välisessä viestinnässä",
+            "id-in-use": "Jollakulla toisella on jo tämä koodi käytössä",
+            "peer-not-found": "Koodia tai QR-koodia ei löytynyt",
+            "missing-ice": "Asetuksia ei löydy",
+            "no-signaling": "Palvelimeen ei saada yhteyttä",
+            "bad-browser": "Tätä appia ei voi käyttää laitteellasi",
+            "unknownContent": "Ongelma kuvasisällössä",
+            "load": "Ongelma kuvien lataamisessa",
+            "download": "Ongelma kuvien hakemisessa",
+            "none": "Ok"
+        },
+        "titles": {
+            "iceConfig": "Asetukset",
+            "permission": "Oikeudet",
+            "connecting": "Yhteys",
+            "error": "Ongelma",
+            "contentLoad": "Kuvasisältö",
+            "networkType": "Informaatio"
+        },
+        "actions": {
+            "close": "Sulje"
+        }
     },
     "scores": {
         "bestImage": "Paras kuva",

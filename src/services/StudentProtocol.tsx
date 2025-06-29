@@ -3,7 +3,7 @@ import { createContext, PropsWithChildren, useCallback, useContext, useEffect, u
 import { EventProtocol } from './protocol';
 import { ImageData, ScoreData } from '../utils/types';
 import { useAtom } from 'jotai';
-import { configAtom } from '../atoms/state';
+import { availableUsernamesAtom, configAtom, Username } from '../atoms/state';
 
 interface Props extends PropsWithChildren {
     server?: string;
@@ -11,8 +11,9 @@ interface Props extends PropsWithChildren {
 }
 
 interface ProtocolContextType {
-    doSendScore?: (data: ScoreData) => void; // Do interface and send also the image
-    doSendImages?: (data: ImageData) => void; // TODO: Send image here
+    doSendScore?: (data: ScoreData) => void; // Send score
+    doSendImages?: (data: ImageData) => void; // Send Image + heatmap image
+    doSendUsername?: (data: Username) => void; // Send username
 }
 
 const ProtocolContext = createContext<ProtocolContextType>({});
@@ -23,6 +24,7 @@ export function useSpoofProtocol() {
 }
 export default function StudentProtocol({ server, mycode, children }: Props) {
     const [, setConfig] = useAtom(configAtom);
+    const [, setAvailableUsernames] = useAtom(availableUsernamesAtom);
     // conn: Connection<EventProtocol>
     const dataHandler = useCallback(
         (data: EventProtocol) => {
@@ -32,9 +34,12 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
             } else if (data.event === 'eter:config') {
                 console.log('New config received: ', data.configuration);
                 setConfig(data.configuration);
+            } else if (data.event === 'eter:userlist') {
+                console.log('käyttäjälista saatu', data);
+                setAvailableUsernames(data.data);
             }
         },
-        [setConfig]
+        [setConfig, setAvailableUsernames]
     );
     const [hasBeenReady, setHasBeenReady] = useState(false);
 
@@ -76,11 +81,21 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
         [send]
     );
 
+    const doRegister = useCallback(
+        (username: Username) => {
+            if (send) {
+                send({ event: 'eter:register', data: username });
+            }
+        },
+        [send]
+    );
+
     return (
         <ProtocolContext.Provider
             value={{
                 doSendScore,
                 doSendImages,
+                doSendUsername: doRegister,
             }}
         >
             {hasBeenReady && children}

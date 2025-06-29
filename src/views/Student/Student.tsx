@@ -1,6 +1,4 @@
 import { Webcam } from '@knicos/genai-base';
-import Footer from '../../components/Footer/Footer';
-import Header from '../../components/Header/Header';
 import { useLeaveWarning } from '../../hooks/leaveBlocker';
 import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
@@ -14,9 +12,9 @@ import { classifyImage } from '../../utils/classifyImage';
 import { ClassificationResults } from '../../components/ClassificationResults/ClassificationResults';
 import { canvasToBase64 } from '../../utils/canvasToBase64';
 import { cloneCanvas } from '../../utils/cloneCanvas';
-import { PauseButton } from '../../components/Buttons/PauseButton';
 import { validateCanvas } from '../../utils/validateCanvas';
-import { DatasetGallery } from '../../components/DatasetGallery/DatasetGallery';
+import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
+import StudentNavBar from '../StudentNavBar/StudentNavBar';
 
 export default function Student({ MYCODE }: { MYCODE: string }) {
     const { t } = useTranslation();
@@ -35,10 +33,12 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
     const [webcamSize, setWebcamSize] = useState<number>(
         Math.min(Math.floor(window.innerWidth * 0.7), Math.floor(window.innerHeight * 0.6) * 0.7, 800)
     ); // Size of the webcam component
-    const { doSendScore, doSendImages } = useSpoofProtocol();
+    const { doSendScore, doSendImages, doSendUsername } = useSpoofProtocol();
     const [config] = useAtom<SpoofConfig>(configAtom);
     const heatmapRef = useRef<HTMLCanvasElement | null>(null);
     const enlargedHeatmapRef = useRef<HTMLCanvasElement | null>(null);
+    const sentRef = useRef(false);
+    const [allLabels, setAllLabels] = useState<string[]>([]);
 
     useLeaveWarning(true); // Blocks unintended leaving
 
@@ -54,11 +54,19 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
         }
     }, [config, model]); // Update classify term and model class when config
 
+    useEffect(() => {
+        if (!sentRef.current && doSendUsername && username) {
+            doSendUsername({ username });
+            sentRef.current = true;
+        }
+    }, [doSendUsername, username]);
+
     // Load model if needed
     useEffect(() => {
         if (!model) {
             loadModel().then((loadedModel) => {
                 setModel(loadedModel);
+                setAllLabels(loadedModel.getLabels());
             });
         }
         setScore(0);
@@ -93,7 +101,6 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                     heatmap: heatmapBase64,
                     score: score,
                 });
-                console.log(lastSentScore, score);
                 setLastSentScore(score);
             }
         }, 2000);
@@ -147,78 +154,82 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
     };
 
     return (
-        <div className={style.container}>
-            <Header
+        <>
+            <StudentNavBar
                 title={`${username}`}
-                block={true}
+                pause={pause}
+                setPause={setPause}
+                remotePause={remotePause}
             />
-            <div className={style.innerContainer}>
-                <div className={style.gameContainer}>
-                    <h2>{classifyTerm && `Luokittelusana: \n${classifyTerm}`}</h2>
-                    {!isCameraActive && (
-                        <div className={style.cameraNotActive}>{t('webcam.notAvailable', 'Kamera käynnistyy')}</div>
-                    )}
-                    <div className={style.scoreBarContainer}>
-                        <div className={style.currentScoreBar}>
-                            <span style={{ width: `${Math.round(currentScore)}%` }}></span>
-                        </div>
-                        <div className={style.scoreBar}>
-                            <span style={{ width: `${Math.round(score)}%` }}></span>
-                        </div>
+            <div className={style.galleryContainer}>
+                <DatasetGallery allLabels={allLabels} />
+            </div>
+            <div className={style.container}>
+                <div className={style.innerContainer}>
+                    <div className={style.gameContainer}>
+                        <h2>{classifyTerm && `Luokittelusana: \n${classifyTerm}`}</h2>
+                        {!isCameraActive && (
+                            <div className={style.cameraNotActive}>{t('webcam.notAvailable', 'Kamera käynnistyy')}</div>
+                        )}
+                        <div className={style.scoreBarContainer}>
+                            <div className={style.currentScoreBar}>
+                                <span style={{ width: `${Math.round(currentScore)}%` }}></span>
+                            </div>
+                            <div className={style.scoreBar}>
+                                <span style={{ width: `${Math.round(score)}%` }}></span>
+                            </div>
 
-                        <div
-                            className={style.scoreBarToolTip}
-                            style={{ width: `${Math.round(score)}%` }}
-                        >
-                            <span data-label={score}></span>
+                            <div
+                                className={style.scoreBarToolTip}
+                                style={{ width: `${Math.round(score)}%` }}
+                            >
+                                <span data-label={score}></span>
+                            </div>
+                            <div
+                                className={style.scoreBarCurrentToolTip}
+                                style={{ width: `${Math.round(currentScore)}%` }}
+                            >
+                                <span data-label={currentScore}></span>
+                            </div>
                         </div>
-                        <div
-                            className={style.scoreBarCurrentToolTip}
-                            style={{ width: `${Math.round(currentScore)}%` }}
-                        >
-                            <span data-label={currentScore}></span>
+                        <div className={`${style.webcamWrapper} ${pause ? style.baseline : style.filtered}`}>
+                            {(pause || remotePause) && <div className={style.overlayText}>Game paused</div>}
+                            <Webcam
+                                size={webcamSize}
+                                interval={100}
+                                capture={!pause || !remotePause}
+                                disable={pause || remotePause}
+                                onCapture={handleCapture}
+                                hidden={false}
+                                onActivated={setIsCameraActive}
+                                onFatal={() => console.error('Webcam failure')}
+                            />
                         </div>
-                    </div>
-                    <div className={`${style.webcamWrapper} ${pause ? style.baseline : style.filtered}`}>
-                        {(pause || remotePause) && <div className={style.overlayText}>Game paused</div>}
-                        <Webcam
-                            size={webcamSize}
-                            interval={100}
-                            capture={!pause || !remotePause}
-                            disable={pause || remotePause}
-                            onCapture={handleCapture}
-                            hidden={false}
-                            onActivated={setIsCameraActive}
-                            onFatal={() => console.error('Webcam failure')}
-                        />
-                    </div>
-                    <div style={{ display: 'none' }}>
-                        <canvas
-                            ref={heatmapRef}
-                            width={224}
-                            height={224}
-                        />
-                    </div>
-                    <div className={style.heatmapContainer}>
-                        <canvas
-                            ref={enlargedHeatmapRef}
-                            width={webcamSize}
-                            height={webcamSize}
-                            className={style.heatmapCanvas}
-                        />
-                    </div>
-                    <ClassificationResults />
-                    <PauseButton
-                        pause={pause || remotePause}
-                        setPause={setPause}
-                        disable={remotePause}
-                    />
-                    <div className={style.galleryContainer}>
-                        <DatasetGallery config={config} />
+                        <div style={{ display: 'none' }}>
+                            <canvas
+                                ref={heatmapRef}
+                                width={224}
+                                height={224}
+                            />
+                        </div>
+                        <div className={style.heatmapContainer}>
+                            <canvas
+                                ref={enlargedHeatmapRef}
+                                width={webcamSize}
+                                height={webcamSize}
+                                className={style.heatmapCanvas}
+                            />
+                        </div>
+                        <ClassificationResults />
+                        {/*
+                            <PauseButton
+                                pause={pause || remotePause}
+                                setPause={setPause}
+                                disable={remotePause}
+                            />*/}
                     </div>
                 </div>
             </div>
-            <Footer />
-        </div>
+        </>
     );
 }

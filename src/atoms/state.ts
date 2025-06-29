@@ -11,7 +11,12 @@ export type Scores = {
 }[];
 
 //TODO: MOVE TO TYPES WHEN READY
-type UserEntry = {
+export type UserInfo = {
+    username: string;
+    connectionId: string;
+};
+
+export type Username = {
     username: string;
 };
 
@@ -29,10 +34,16 @@ export const configAtom = atom<SpoofConfig>({ data: '', pause: false });
 
 export const scoresAtom = atom<Scores>([]);
 
-export const serverCodeAtom = atom<string>('');
-
 export const studentDataAtom = atom<StudentData>({ students: new Map() });
 
-export const availableUsersAtom = atom<UserEntry[]>([]);
+export const usersAtom = atom<UserInfo[]>([]);
+
+export const usernamesAtom = atom<Username[]>([]);
+
+export const availableUsernamesAtom = atom<Username[]>([]);
 
 export const usernameAtom = atom<string>('');
+
+export const menuShowShareAtom = atom<boolean>(false);
+
+export const menuShowTrainingDataAtom = atom<boolean>(false);

@@ -6,7 +6,7 @@ import LangSelect from '../../components/LangSelect/LangSelect';
 import Footer from '../../components/Footer/Footer';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { modelAtom, serverCodeAtom } from '../../atoms/state';
+import { modelAtom } from '../../atoms/state';
 import { loadModel } from '../../services/loadModel';
 import { TextField } from '@mui/material';
 
@@ -16,7 +16,6 @@ export default function Frontpage() {
     const [model, setModel] = useAtom(modelAtom);
     const [modeSelection, setModeSelection] = useState<number>(0);
     const [inputCode, setInputCode] = useState<string>('');
-    const [, setServerCode] = useAtom(serverCodeAtom);
 
     useEffect(() => {
         if (model === null) {
@@ -38,13 +37,11 @@ export default function Frontpage() {
     };
 
     const toStudent = () => {
-        console.log('inputcode:', inputCode);
-        setServerCode(inputCode);
-        navigate('/student/main');
+        navigate(`/student/${inputCode}/main`);
     };
 
     const toTeacher = () => {
-        navigate('/teacher/main');
+        navigate('/teacher/');
     };
 
     const toggleMode = (mode: number) => {

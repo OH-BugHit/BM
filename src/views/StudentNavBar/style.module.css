@@ -1,0 +1,55 @@
+@value bgColourful1 from "@knicos/genai-base/css/colours.module.css";
+@value backgroundDark2: #444;
+@value backgroundDark3: #555;
+@value secondaryLight: #E996E9;
+
+.bottomNav {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background: backgroundDark2;
+    color: white;
+    display: flex;
+    box-shadow: 0 0 10px #888;
+    overflow: hidden;
+    z-index: 10;
+    box-sizing: border-box;
+    justify-content: center;
+    gap: 0rem;
+    flex-wrap: wrap;
+}
+
+.bottomNavClosed {
+    composes: bottomNav;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.backgroundLogo {
+    display: flex;
+    background: none;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    max-height: 48px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.logoRow {
+    display: flex;
+    min-height: 100%;
+    justify-content: center;
+    background: bgColourful1;
+    color: white;
+    align-items: center;
+}
+
+.logoRowOpen {
+    composes: logoRow;
+    width: 100%;
+    justify-content: space-between;
+}

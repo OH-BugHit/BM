@@ -9,10 +9,15 @@
         "hideInfo": "Piilota tiedot",
         "noTeachingData": "Opetusdataa ei saatavilla",
         "or": "tai",
+        "selectLabel": "Valitse *label*",
         "start": "Aloita",
         "showInfo": "Näytä tiedot",
         "title": "Spoofing Game",
-        "dataset": "opetusdata"
+        "dataset": "Opetusdata",
+        "labels": {
+            "disableApp": "Pysäytä",
+            "datasetTip": "Tutki opetusdataa"
+        }
     },
     "enterUsername": {
         "actions": { "enterUser": "Aloita" },
@@ -82,9 +87,43 @@
             "close": "Sulje"
         }
     },
+    "menu": {
+        "labels": {
+            "exit": "Lopeta (Kaikki tiedot menetetään)"
+        },
+        "vis": {
+            "usergrid": "Käyttäjäruudukko"
+        }
+    },
     "scores": {
         "bestImage": "Paras kuva",
         "overall": "Kokonaispisteet"
+    },
+    "student": {
+        "labels": {
+            "disableApp": "Pysäytä kamera"
+        }
+    },
+    "teacher": {
+        "aria": {
+            "mainMenu": "Avaa tai sulje sivupäävalikko"
+        },
+        "actions": {
+            "start": "Aloita"
+        },
+        "labels": {
+            "disableApp": "Pysäytä käyttäjien apit",
+            "shareTip": "Näytä QR-koodi liittymistä varten"
+        },
+        "messages": {
+            "connection": "Mene allaolevaan www-osoitteeseen ja syötä koodi <Code>{{codeText}}</Code>, tai käytä QR -koodia.",
+            "waitingPeople": "Odotetaan käyttäjiä...",
+            "onePerson": "{{count}} käyttäjä on liittynyt mukaan.",
+            "manyPeople": "{{count}} käyttäjää on liittynyt mukaan."
+        },
+        "titles": {
+            "connectUsers": "Yhdistä käyttäjiä"
+        }
     },
     "webcam": {
         "notAvailable": "Kamera käynnistyy"

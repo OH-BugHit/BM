@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
 import LanguageIcon from '@mui/icons-material/Language';
 
-export default function LangSelect() {
+interface Props {
+    position?: string | null;
+}
+
+export default function LangSelect({ position }: Props) {
     const { t, i18n } = useTranslation();
     const doChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
         i18n.changeLanguage(e.target.value || 'en-GB');
@@ -16,7 +20,7 @@ export default function LangSelect() {
         : [];
 
     return (
-        <div className={style.lang}>
+        <div className={`${style.lang} ${position === 'topRight' ? style.langTopRight : style.langBottomRight}`}>
             <NativeSelect
                 value={i18n.language}
                 onChange={doChangeLanguage}

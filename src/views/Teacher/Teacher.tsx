@@ -1,20 +1,20 @@
 import { useAtom } from 'jotai';
 import Footer from '../../components/Footer/Footer';
-import Header from '../../components/Header/Header';
 import { useLeaveWarning } from '../../hooks/leaveBlocker';
 import ServerProtocol from '../../services/ServerProtocol';
 import style from './style.module.css';
-import { configAtom, modelAtom, studentDataAtom } from '../../atoms/state';
+import { configAtom, modelAtom, studentDataAtom, usersAtom } from '../../atoms/state';
 import { useEffect, useState } from 'react';
 import { Button, useID } from '@knicos/genai-base';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
-import { PauseButton } from '../../components/Buttons/PauseButton';
 import { loadModel } from '../../services/loadModel';
 import { NativeSelect } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { DatasetGallery } from '../../components/DatasetGallery/DatasetGallery';
+import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { close } from '../../components/Buttons/buttonStyles';
+import MenuPanel from '../AppMenu/AppMenu';
+import StartDialog from '../StartDialog/StartDialog';
 
 export default function Teacher() {
     useLeaveWarning(true);
@@ -23,15 +23,18 @@ export default function Teacher() {
     const [word, setWord] = useState('');
     const MYCODE = useID(5);
     const [studentData] = useAtom(studentDataAtom);
+    const [users] = useAtom(usersAtom);
     const [model, setModel] = useAtom(modelAtom);
-    const [pause, setPause] = useState(true);
+    const [pause] = useState(true);
     const [openImage, setOpenImage] = useState<string | null>(null);
+    const [allLabels, setAllLabels] = useState<string[]>([]);
 
     // Load model if needed and set initial term, also pause the students
     useEffect(() => {
         if (!model) {
             loadModel().then((loadedModel) => {
                 setModel(loadedModel);
+                setAllLabels(loadedModel.getLabels());
             });
         }
         setWord(model?.getLabels()[0] || '');
@@ -186,14 +189,17 @@ export default function Teacher() {
     // Komennot lähetetään muokkaamalla config-atomia
     return (
         <div className={style.container}>
+            <div className={style.galleryContainer}>{config?.data && <DatasetGallery allLabels={allLabels} />}</div>
+            <div className={style.sideMenu}>
+                <MenuPanel />
+            </div>
+            <StartDialog
+                users={users}
+                code={MYCODE}
+            />
             <div className={style.serverProtocolContainer}>
                 <ServerProtocol code={MYCODE} />
             </div>
-            <Header
-                title={'Teacher'}
-                block={true}
-            />
-            <p>{`address: ${MYCODE}`}</p>
             <div className={style.innerContainer}>
                 <div className={style.studentControlContainer}>
                     <NativeSelect
@@ -202,7 +208,7 @@ export default function Teacher() {
                         variant="outlined"
                         style={{ padding: '4px' }}
                     >
-                        {model?.getLabels().map((lbl) => (
+                        {allLabels.map((lbl) => (
                             <option
                                 key={lbl}
                                 value={lbl}
@@ -211,16 +217,6 @@ export default function Teacher() {
                             </option>
                         ))}
                     </NativeSelect>
-                    <PauseButton
-                        pause={pause}
-                        setPause={setPause}
-                        setConfig={setConfig}
-                        data={word}
-                    />
-                </div>
-                {}
-                <div className={style.galleryContainer}>
-                    <DatasetGallery config={config} />
                 </div>
 
                 <div className={style.resultsContainer}>{renderStudentImages()}</div>

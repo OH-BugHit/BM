@@ -6,6 +6,19 @@
     gap: 0.3rem;
     color: #aaa;
     background-color: #ffffffbb;
-    border-top-left-radius: 20px;
     padding: 2px 10px 0px 6px;
+}
+
+.langBottomRight {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.langTopRight {
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }

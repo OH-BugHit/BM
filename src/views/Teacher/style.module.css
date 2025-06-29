@@ -10,6 +10,13 @@
     align-items: center;
 }
 
+.sideMenu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
 .innerContainer {
     max-width: 1400px;
     display: flex;

@@ -2,7 +2,7 @@ import style from './style.module.css';
 import { useAtom } from 'jotai';
 import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { availableUsersAtom } from '../../atoms/state';
+import { availableUsernamesAtom } from '../../atoms/state';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { LargeButton } from '@knicos/genai-base';
@@ -20,7 +20,7 @@ export default function EnterUsername({ onUsername }: Props) {
     const { t } = useTranslation();
     const ref = useRef<HTMLInputElement>(null);
     // const [errors, setErrors] = useState<FormErrors>({});
-    const [users] = useAtom(availableUsersAtom);
+    const [users] = useAtom(availableUsernamesAtom);
     const [showRestore, setShowRestore] = useState(false);
     const [errors, setErrors] = useState<FormErrors>({});
 

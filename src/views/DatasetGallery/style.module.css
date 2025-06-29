@@ -1,21 +1,20 @@
 .container {
+    position: absolute;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
-    font-size: 1rem;
     align-items: center;
     background-color: rgba(255,
             255,
             255,
             0.421);
-    padding: 0.5rem 1rem 1rem 1rem;
+    padding: 1.5rem 1rem 2rem 1rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 20px 0;
+    margin: 100px 100px;
     backdrop-filter: blur(10px);
-}
-
-.hidden {
-    display: none;
+    z-index: 10;
 }
 
 .headerToggle {

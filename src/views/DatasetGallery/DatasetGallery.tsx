@@ -4,7 +4,7 @@ import { fetchImages } from '../../services/ImageService';
 import { Button } from '@knicos/genai-base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
-import { close } from '../../components/Buttons/buttonStyles';
+import { close, closeGallery } from '../../components/Buttons/buttonStyles';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useAtom } from 'jotai';
@@ -85,15 +85,15 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
         <div>
             {open && (
                 <div className={style.container}>
-                    <Button
-                        onClick={() => setOpen(false)}
-                        style={close}
-                        title={t('common.close')}
-                        aria-label="Sulje"
-                    >
-                        <CloseSharpIcon />
-                    </Button>
                     <div className={style.headerToggle}>
+                        <Button
+                            onClick={() => setOpen(false)}
+                            title={t('common.close')}
+                            aria-label="Sulje"
+                            style={closeGallery}
+                        >
+                            <CloseSharpIcon />
+                        </Button>
                         <h1>{t('common.dataset')}</h1>
                     </div>
                     <Autocomplete

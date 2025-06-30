@@ -161,9 +161,11 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                 setPause={setPause}
                 remotePause={remotePause}
             />
-            <div className={style.galleryContainer}>
-                <DatasetGallery allLabels={allLabels} />
-            </div>
+            {allLabels.length !== 0 && (
+                <div className={style.galleryContainer}>
+                    <DatasetGallery allLabels={allLabels} />
+                </div>
+            )}
             <div className={style.container}>
                 <div className={style.innerContainer}>
                     <div className={style.gameContainer}>

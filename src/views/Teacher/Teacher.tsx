@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react';
 import { Button, useID } from '@knicos/genai-base';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import { loadModel } from '../../services/loadModel';
-import { NativeSelect } from '@mui/material';
+import { TextField } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import { useTranslation } from 'react-i18next';
 import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
@@ -40,12 +41,6 @@ export default function Teacher() {
         setWord(model?.getLabels()[0] || '');
         setConfig({ data: model?.getLabels()[0] || '', pause: true });
     }, [model, setModel, setConfig]);
-
-    const handleChangeTerm = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const newWord = event.target.value;
-        setWord(newWord);
-        setConfig({ data: newWord, pause: pause });
-    };
 
     // Renderöi opiskelijoiden kuvat
     const renderStudentImages = () => {
@@ -201,23 +196,31 @@ export default function Teacher() {
                 <ServerProtocol code={MYCODE} />
             </div>
             <div className={style.innerContainer}>
-                <div className={style.studentControlContainer}>
-                    <NativeSelect
-                        value={word}
-                        onChange={handleChangeTerm}
-                        variant="outlined"
-                        style={{ padding: '4px' }}
-                    >
-                        {allLabels.map((lbl) => (
-                            <option
-                                key={lbl}
-                                value={lbl}
-                            >
-                                {lbl}
-                            </option>
-                        ))}
-                    </NativeSelect>
-                </div>
+                {allLabels.length !== 0 && (
+                    <div className={style.studentControlContainer}>
+                        <Autocomplete
+                            options={allLabels || []}
+                            value={word}
+                            style={{
+                                padding: '4px',
+                                margin: '1rem',
+                                minWidth: '400px',
+                                maxWidth: '600px',
+                                width: '100%',
+                            }}
+                            onChange={(_, newValue) => {
+                                setWord(newValue || '');
+                                setConfig({ data: newValue || '', pause: pause });
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label={t('common.selectLabel')}
+                                />
+                            )}
+                        />
+                    </div>
+                )}
 
                 <div className={style.resultsContainer}>{renderStudentImages()}</div>
             </div>

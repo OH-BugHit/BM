@@ -18,7 +18,13 @@
     align-items: center;
 }
 
+.canvasContainer {
+    display: flex;
+    justify-content: center;
+}
+
 .heatmapContainer {
+    position: absolute;
     display: flex;
     justify-content: center;
 }
@@ -58,8 +64,7 @@
 }
 
 .webcamWrapper {
-    position: relative;
-    display: inline-block;
+    border: 2px solid #fff;
 }
 
 /*For displaying text that camera is not active on top of the webcam component*/

@@ -23,6 +23,7 @@
     composes: bottomNav;
     flex-direction: row;
     justify-content: center;
+    align-items: anchor-center;
     gap: 1rem;
 }
 

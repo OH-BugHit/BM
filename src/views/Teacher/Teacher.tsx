@@ -26,7 +26,6 @@ export default function Teacher() {
     const [studentData] = useAtom(studentDataAtom);
     const [users] = useAtom(usersAtom);
     const [model, setModel] = useAtom(modelAtom);
-    const [pause] = useState(true);
     const [openImage, setOpenImage] = useState<string | null>(null);
     const [allLabels, setAllLabels] = useState<string[]>([]);
 
@@ -37,9 +36,11 @@ export default function Teacher() {
                 setModel(loadedModel);
                 setAllLabels(loadedModel.getLabels());
             });
+        } else {
+            setAllLabels(model.getLabels());
         }
         setWord(model?.getLabels()[0] || '');
-        setConfig({ data: model?.getLabels()[0] || '', pause: true });
+        setConfig({ data: model?.getLabels()[0] || '', pause: true, heatmap: false, gallery: false });
     }, [model, setModel, setConfig]);
 
     // Renderöi opiskelijoiden kuvat
@@ -210,7 +211,12 @@ export default function Teacher() {
                             }}
                             onChange={(_, newValue) => {
                                 setWord(newValue || '');
-                                setConfig({ data: newValue || '', pause: pause });
+                                setConfig({
+                                    data: newValue || '',
+                                    pause: true,
+                                    heatmap: config.heatmap,
+                                    gallery: config.gallery,
+                                });
                             }}
                             renderInput={(params) => (
                                 <TextField

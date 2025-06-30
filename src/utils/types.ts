@@ -19,7 +19,12 @@ export type StudentScores = {
     data: Map<string, StudentScore>;
 };
 
-export type SpoofConfig = { data: string; pause: boolean };
+export type SpoofConfig = {
+    data: string;
+    pause: boolean;
+    heatmap: boolean;
+    gallery: boolean;
+};
 export type ScoreData = {
     studentId: string;
     classname: string;

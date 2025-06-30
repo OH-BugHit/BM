@@ -30,7 +30,7 @@ export const modelAtom = atom<ClassifierApp | null>(null);
 
 export const classificationResultAtom = atom<{ className: string; probability: number }[] | null>(null);
 
-export const configAtom = atom<SpoofConfig>({ data: '', pause: false });
+export const configAtom = atom<SpoofConfig>({ data: '', pause: false, heatmap: false, gallery: false });
 
 export const scoresAtom = atom<Scores>([]);
 

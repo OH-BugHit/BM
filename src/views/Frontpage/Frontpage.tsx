@@ -21,10 +21,7 @@ export default function Frontpage() {
         if (model === null) {
             loadModel().then((loadedModel) => {
                 setModel(loadedModel);
-                console.log('Model loaded');
             });
-        } else {
-            console.log('Model already loaded');
         }
     }, [model, setModel]);
 
@@ -46,7 +43,6 @@ export default function Frontpage() {
 
     const toggleMode = (mode: number) => {
         setModeSelection((prev) => (prev === mode ? 0 : mode));
-        console.log(mode);
     };
 
     return (

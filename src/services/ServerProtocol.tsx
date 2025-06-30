@@ -29,7 +29,12 @@ export default function ServerProtocol({ code }: { code: string }) {
                 console.log('Join command');
                 conn.send({
                     event: 'eter:config',
-                    configuration: { data: config.data, pause: config.pause },
+                    configuration: {
+                        data: config.data,
+                        pause: config.pause,
+                        heatmap: config.heatmap,
+                        gallery: config.gallery,
+                    },
                 });
                 conn.send({
                     event: 'eter:userlist',
@@ -92,7 +97,7 @@ export default function ServerProtocol({ code }: { code: string }) {
                 })();
             }
         },
-        [setStudent, setUsers, setAllUsers, allUsers, users, config.data, config.pause]
+        [setStudent, setUsers, setAllUsers, allUsers, users, config]
     );
 
     const { ready, send, peer } = usePeer({

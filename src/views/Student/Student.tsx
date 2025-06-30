@@ -4,7 +4,13 @@ import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
 import { useAtom } from 'jotai';
 import { SpoofConfig } from '../../utils/types';
-import { classificationResultAtom, configAtom, modelAtom, usernameAtom } from '../../atoms/state';
+import {
+    classificationResultAtom,
+    configAtom,
+    menuShowTrainingDataAtom,
+    modelAtom,
+    usernameAtom,
+} from '../../atoms/state';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { loadModel } from '../../services/loadModel';
@@ -28,6 +34,10 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
     const [lastSentScore, setLastSentScore] = useState<number>(0);
     const [pause, setPause] = useState<boolean>(false);
     const [remotePause, setRemotePause] = useState<boolean>(false);
+    const [heatmap, setHeatmap] = useState<boolean>(false);
+    const [remoteHeatmap, setRemoteHeatmap] = useState<boolean>(false);
+    const [remoteGallery, setRemoteGallery] = useState<boolean>(false);
+    const [, setShowGallery] = useAtom(menuShowTrainingDataAtom);
     const topCanvasRef = useRef<HTMLCanvasElement | null>(null);
     const topHeatmapRef = useRef<HTMLCanvasElement | null>(null);
     const [webcamSize, setWebcamSize] = useState<number>(
@@ -52,7 +62,15 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
         if (config.pause !== undefined) {
             setRemotePause(config.pause);
         }
-    }, [config, model]); // Update classify term and model class when config
+        if (config.heatmap !== undefined) {
+            setRemoteHeatmap(config.heatmap);
+            if (!config.heatmap) setHeatmap(false);
+        }
+        if (config.gallery !== undefined) {
+            setRemoteGallery(config.gallery);
+            if (!config.gallery) setShowGallery(false);
+        }
+    }, [config, model, setShowGallery]); // Update classify term and model class when config
 
     useEffect(() => {
         if (!sentRef.current && doSendUsername && username) {
@@ -160,6 +178,10 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                 pause={pause}
                 setPause={setPause}
                 remotePause={remotePause}
+                heatmap={heatmap}
+                setHeatmap={setHeatmap}
+                remoteHeatmap={remoteHeatmap}
+                remoteGallery={remoteGallery}
             />
             {allLabels.length !== 0 && (
                 <div className={style.galleryContainer}>
@@ -194,41 +216,39 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                                 <span data-label={currentScore}></span>
                             </div>
                         </div>
-                        <div className={`${style.webcamWrapper} ${pause ? style.baseline : style.filtered}`}>
-                            {(pause || remotePause) && <div className={style.overlayText}>Game paused</div>}
-                            <Webcam
-                                size={webcamSize}
-                                interval={100}
-                                capture={!pause || !remotePause}
-                                disable={pause || remotePause}
-                                onCapture={handleCapture}
-                                hidden={false}
-                                onActivated={setIsCameraActive}
-                                onFatal={() => console.error('Webcam failure')}
-                            />
-                        </div>
-                        <div style={{ display: 'none' }}>
-                            <canvas
-                                ref={heatmapRef}
-                                width={224}
-                                height={224}
-                            />
-                        </div>
-                        <div className={style.heatmapContainer}>
-                            <canvas
-                                ref={enlargedHeatmapRef}
-                                width={webcamSize}
-                                height={webcamSize}
-                                className={style.heatmapCanvas}
-                            />
+                        <div className={style.canvasContainer}>
+                            <div style={{ display: 'none' }}>
+                                <canvas
+                                    ref={heatmapRef}
+                                    width={224}
+                                    height={224}
+                                />
+                            </div>
+                            <div className={`${style.webcamWrapper} ${pause ? style.baseline : style.filtered}`}>
+                                {(pause || remotePause) && <div className={style.overlayText}>Game paused</div>}
+                                <Webcam
+                                    size={webcamSize}
+                                    interval={100}
+                                    capture={!pause || !remotePause}
+                                    disable={pause || remotePause}
+                                    onCapture={handleCapture}
+                                    hidden={false}
+                                    onActivated={setIsCameraActive}
+                                    onFatal={() => console.error('Webcam failure')}
+                                />
+                            </div>
+                            {heatmap && (
+                                <div className={style.heatmapContainer}>
+                                    <canvas
+                                        ref={enlargedHeatmapRef}
+                                        width={webcamSize}
+                                        height={webcamSize}
+                                        className={style.heatmapCanvas}
+                                    />
+                                </div>
+                            )}
                         </div>
                         <ClassificationResults />
-                        {/*
-                            <PauseButton
-                                pause={pause || remotePause}
-                                setPause={setPause}
-                                disable={remotePause}
-                            />*/}
                     </div>
                 </div>
             </div>

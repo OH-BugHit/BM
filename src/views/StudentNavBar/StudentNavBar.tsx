@@ -4,6 +4,7 @@ import style from './style.module.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PsychologyIcon from '@mui/icons-material/Psychology';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import IconMenuItem from '../../components/IconMenu/Items';
@@ -15,9 +16,21 @@ interface Props {
     pause: boolean;
     remotePause: boolean;
     setPause: Dispatch<SetStateAction<boolean>>;
+    heatmap: boolean;
+    remoteHeatmap: boolean;
+    setHeatmap: Dispatch<SetStateAction<boolean>>;
+    remoteGallery: boolean;
 }
 
-export default function StudentNavBar({ pause, setPause, remotePause }: Props) {
+export default function StudentNavBar({
+    pause,
+    setPause,
+    remotePause,
+    heatmap,
+    remoteHeatmap,
+    setHeatmap,
+    remoteGallery,
+}: Props) {
     const { t } = useTranslation();
     const [showTraining, setShowTraining] = useAtom(menuShowTrainingDataAtom);
     const [open, setOpen] = useState(false);
@@ -70,9 +83,28 @@ export default function StudentNavBar({ pause, setPause, remotePause }: Props) {
                     aria-label={t('common.labels.datasetTip')}
                     size="large"
                     variant="text"
+                    disabled={!remoteGallery}
                 >
                     <PsychologyIcon fontSize="large" />
                     {open ? t('common.labels.datasetTip') : ''}
+                </MenuButton>
+            </IconMenuItem>
+
+            <IconMenuItem
+                tooltip={t('student.labels.heatmap')}
+                hideTip={open}
+                selected={heatmap}
+            >
+                <MenuButton
+                    color="inherit"
+                    onClick={() => setHeatmap((old) => !old)}
+                    aria-label={t('student.labels.heatmap')}
+                    size="large"
+                    variant="text"
+                    disabled={!remoteHeatmap}
+                >
+                    <LocalFireDepartmentIcon fontSize="large" />
+                    {open ? t('student.labels.heatmap') : ''}
                 </MenuButton>
             </IconMenuItem>
             {!open && <div style={{ flexGrow: 1 }} />}

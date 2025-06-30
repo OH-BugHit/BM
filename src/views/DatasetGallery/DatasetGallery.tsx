@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import style from './style.module.css';
-import { fetchImages } from '../../services/ImageService';
+import { fetchImageUrls, fetchModelNames } from '../../services/ImageService';
 import { Button } from '@knicos/genai-base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
@@ -30,6 +30,8 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
     const limit = 10;
     const [selected, setSelected] = useState('');
     const [open, setOpen] = useAtom(menuShowTrainingDataAtom);
+    const [imagePaths, setImagePaths] = useState<Record<string, string[]>>({});
+    const loaded = useRef(false);
 
     const loadMore = useCallback(() => {
         if (loading || noMoreData) return;
@@ -48,22 +50,33 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
         }
     }, [allImages, offset, loading, noMoreData]);
 
+    // Fetches all paths for labelimages
     useEffect(() => {
-        if (!selected) return;
+        if (!loaded.current)
+            fetchModelNames().then((data) => {
+                if (data.length !== 0)
+                    fetchImageUrls({ dataset: data[0] }).then((data) => {
+                        setImagePaths(data);
+                    });
+            });
+        loaded.current = true;
+    }, []);
+
+    useEffect(() => {
+        if (!selected || !imagePaths[selected]) return;
         setLoading(true);
         setImages([]);
         setAllImages([]);
         setOffset(0);
         setNoMoreData(false);
 
-        fetchImages({ dataset: 'model1', label: selected }).then((data) => {
-            setAllImages(data);
-            setImages(data.slice(0, limit));
-            setOffset(data.length > limit ? limit : data.length);
-            setNoMoreData(data.length <= limit);
-            setLoading(false);
-        });
-    }, [selected]);
+        const data = imagePaths[selected] as string[];
+        setAllImages(data);
+        setImages(data.slice(0, limit));
+        setOffset(data.length > limit ? limit : data.length);
+        setNoMoreData(data.length <= limit);
+        setLoading(false);
+    }, [selected, imagePaths]);
 
     //scroll event listener
     useEffect(() => {

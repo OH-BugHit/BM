@@ -6,6 +6,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import MenuIcon from '@mui/icons-material/Menu';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useAtom } from 'jotai';
 import { configAtom, menuShowShareAtom, menuShowTrainingDataAtom } from '../../atoms/state';
 import IconMenuItem from '../../components/IconMenu/Items';
@@ -95,6 +96,44 @@ export default function MenuPanel() {
                 >
                     {config?.pause ? <PlayCircleIcon fontSize="large" /> : <PauseIcon fontSize="large" />}
                     {open ? t('teacher.labels.disableApp') : ''}
+                </MenuButton>
+            </IconMenuItem>
+
+            <IconMenuItem
+                tooltip={t('teacher.labels.disableHeatmap')}
+                hideTip={open}
+                selected={config?.heatmap}
+                fullWidth
+            >
+                <MenuButton
+                    color="inherit"
+                    onClick={() => setConfig((old) => ({ ...old, heatmap: !old.heatmap }))}
+                    aria-label={t('teacher.labels.disableHeatmap')}
+                    size="large"
+                    variant="text"
+                    fullWidth
+                >
+                    <LocalFireDepartmentIcon fontSize="large" />
+                    {open ? t('teacher.labels.disableHeatmap') : ''}
+                </MenuButton>
+            </IconMenuItem>
+
+            <IconMenuItem
+                tooltip={t('teacher.labels.disableDataGallery')}
+                hideTip={open}
+                selected={config?.gallery}
+                fullWidth
+            >
+                <MenuButton
+                    color="inherit"
+                    onClick={() => setConfig((old) => ({ ...old, gallery: !old.gallery }))}
+                    aria-label={t('teacher.labels.disableDataGallery')}
+                    size="large"
+                    variant="text"
+                    fullWidth
+                >
+                    <PsychologyIcon fontSize="large" />
+                    {open ? t('teacher.labels.disableDataGallery') : ''}
                 </MenuButton>
             </IconMenuItem>
 

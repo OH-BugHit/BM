@@ -18,7 +18,7 @@ export async function fetchImageUrls({ dataset }: FetchImageUrlsParams): Promise
         for (const label in dataJSON.labels) {
             const allFiles = dataJSON.labels[label];
             result[label] = allFiles.thumbnails.map(
-                (filename: string) => `/spoof/${dataset.name}/${label}/${filename}`
+                (filename: string) => `${API_BASE_URL}/spoof/${dataset.name}/${label}/${filename}`
             );
         }
 

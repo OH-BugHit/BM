@@ -46,6 +46,7 @@
         ]
     },
     "common": {
+        "cancel": "Cancel",
         "close": "Close",
         "createNew": "Create new",
         "dataset": "Dataset",
@@ -54,24 +55,33 @@
         "noTeachingData": "No data available",
         "or": "or",
         "selectLabel": "Select label",
+        "selectModel": "Select model",
         "start": "Start",
         "show": "Show",
         "showInfo": "Show info",
         "title": "Spoof Game",
         "labels": {
+            "teachableMachine": "Teachable Machine",
             "disableApp": "Pause",
             "datasetTip": "Examine the training data"
         }
     },
     "enterUsername": {
-        "actions": { "enterUser": "Enter" },
+        "actions": {
+            "enterUser": "Enter",
+            "changePicture": "Change Picture",
+            "takePicture": "Take Picture"
+        },
         "labels": { "enterUsername": "Enter Username" },
         "messages": {
             "usernameError": {
                 "missing": "A username is required",
                 "long": "The username is too long",
-                "short": "The username must be 3 or more characters"
-            }
+                "short": "The username must be 3 or more characters",
+                "taken": "The username is already taken",
+                "takenFree": "The username is already taken. If you are trying to reconnect, press button below \"Enter\""
+            },
+            "imageRequired": "Profile picture required"
         }
     },
     "frontpage": {
@@ -104,6 +114,29 @@
             "play": "Play",
             "playDescription": "Play with ready images.",
             "playButton": "Play"
+        }
+    },
+    "library": {
+        "title": "Select content",
+        "animals": {
+            "title": "Animals",
+            "description": "Collection contains 11 different animals. Lorem ipsumia käytetään näyttämään, miltä esimerkiksi kirjasin tai julkaisun tekstin asettelu näyttävät"
+        },
+        "animals2": {
+            "title": "Animal poses",
+            "description": "Teaching data contains AI-generated pictures of human posing animal. Lorem ipsumia käytetään näyttämään, miltä esimerkiksi kirjasin tai julkaisun tekstin asettelu näyttävät"
+        },
+        "jobs": {
+            "title": "Jobs",
+            "description": "Collection on five different jobs. Lorem ipsumia käytetään näyttämään, miltä esimerkiksi kirjasin tai julkaisun tekstin asettelu näyttävät"
+        },
+        "own": {
+            "title": "Own model",
+            "description": "Upload your own model created with Gen-AI Teachable Machine"
+        },
+        "testimalli1": {
+            "title": "Testmodel",
+            "description": "Lorem ipsum on 1500-luvulta lähtien olemassa ollut teksti, jota käytetään usein täytetekstinä ulkoasun testaamiseen graafisessa suunnittelussa, kun oikeata tekstisisältöä ei vielä ole."
         }
     },
     "loader": {
@@ -154,7 +187,22 @@
             "exit": "Quit session (All data is lost)"
         },
         "vis": {
-            "usergrid": "User Grid"
+            "category": "Results by category",
+            "home": "Home",
+            "term": "Select classifying term",
+            "usergrid": "Results by users"
+        }
+    },
+    "messageDisplay": {
+        "title": {
+            "usernameTaken": "Username taken"
+        },
+        "reload": {
+            "true": "Browser will reload shortly",
+            "false": "Session will continue shortly"
+        },
+        "message": {
+            "usernameTaken": "Username was taken, try again after reload..."
         }
     },
     "scores": {
@@ -163,7 +211,8 @@
     },
     "student": {
         "labels": {
-            "disableApp": "Pause camera"
+            "disableApp": "Pause camera",
+            "heatmap": "Heatmap"
         }
     },
     "teacher": {
@@ -171,19 +220,31 @@
             "mainMenu": "Open or close the main side menu"
         },
         "actions": {
+            "loadingModel": "Loading model",
+            "setModel": "Set Model",
             "start": "Start"
         },
         "labels": {
+            "changeModel": "Change classifier model",
+            "currentModel": "Current model",
             "disableApp": "Pause all users",
+            "disableDataGallery": "Allow teaching data browsing",
+            "disableHeatmap": "Allow heatmap",
+            "from": "from",
             "shareTip": "Show join code"
         },
         "messages": {
-            "connection": "Go to the address below and enter the code <Code>{{codeText}}</Code>, or use the QR code.",
+            "connection": "Or go to the address below and enter the code <Code>{{codeText}}</Code>",
             "waitingPeople": "Waiting for people...",
             "onePerson": "{{count}} person has joined.",
-            "manyPeople": "{{count}} people have joined."
+            "orGoStraight": "Or go straight to the address:",
+            "manyPeople": "{{count}} people have joined.",
+            "scanQR": "Scan the QR code to join",
+            "selectModelGenAI": "Select model from Gen-AI",
+            "selectOwnModel": "Or upload your own model created with Gen-AI <Link>Teachable Machine</Link> as a zip file."
         },
         "titles": {
+            "changeModel": "Change Model",
             "connectUsers": "Connect Users"
         }
     },

@@ -1,9 +1,19 @@
-import { ConnectionStatus, usePeer } from '@knicos/genai-base';
+import { Connection, ConnectionStatus, usePeer } from '@knicos/genai-base';
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
 import { EventProtocol } from './protocol';
-import { ImageData, ScoreData } from '../utils/types';
+import { ImageData, ModelInfo, ModelOrigin, RegisterData } from '../utils/types';
 import { useAtom } from 'jotai';
-import { availableUsernamesAtom, configAtom, Username } from '../atoms/state';
+import {
+    availableUsernamesAtom,
+    configAtom,
+    modelAtom,
+    profilePictureAtom,
+    studentBouncerAtom,
+    takenUsernamesAtom,
+    termTransferAtom,
+    usernameAtom,
+} from '../atoms/state';
+import { loadModel } from './loadModel';
 
 interface Props extends PropsWithChildren {
     server?: string;
@@ -11,9 +21,8 @@ interface Props extends PropsWithChildren {
 }
 
 interface ProtocolContextType {
-    doSendScore?: (data: ScoreData) => void; // Send score
     doSendImages?: (data: ImageData) => void; // Send Image + heatmap image
-    doSendUsername?: (data: Username) => void; // Send username
+    doRegister?: (data: RegisterData) => void; // Send username and profilepicture
 }
 
 const ProtocolContext = createContext<ProtocolContextType>({});
@@ -23,23 +32,83 @@ export function useSpoofProtocol() {
     return useContext(ProtocolContext);
 }
 export default function StudentProtocol({ server, mycode, children }: Props) {
-    const [, setConfig] = useAtom(configAtom);
+    const [config, setConfig] = useAtom(configAtom);
+    const [, setTermData] = useAtom(termTransferAtom);
     const [, setAvailableUsernames] = useAtom(availableUsernamesAtom);
+    const [, setTakenUsernames] = useAtom(takenUsernamesAtom);
+    const [, setModel] = useAtom(modelAtom);
+    const [, setBouncer] = useAtom(studentBouncerAtom);
+    const [, setProfilePicture] = useAtom(profilePictureAtom);
+    const [ownUsername] = useAtom(usernameAtom);
     // conn: Connection<EventProtocol>
     const dataHandler = useCallback(
-        (data: EventProtocol) => {
+        async (data: EventProtocol, conn: Connection<EventProtocol>) => {
             if (data.event === 'eter:join') {
                 console.log('Join command');
                 // Send
+            }
+            if (data.event === 'ping') {
+                console.log('ping');
+            } else if (data.event === 'eter:termData') {
+                console.log('new termdata:', data.data);
+                if (data.data.recipient.username === 'a' || data.data.recipient.username === ownUsername)
+                    setTermData(data.data);
             } else if (data.event === 'eter:config') {
                 console.log('New config received: ', data.configuration);
+                if (data.configuration.modelData) {
+                    if (
+                        data.configuration.modelData.name !== config.modelData.name ||
+                        data.configuration.modelData.origin !== config.modelData.origin
+                    ) {
+                        if (data.configuration.modelData.origin === 'Gen-AI') {
+                            try {
+                                const model = await loadModel(data.configuration.modelData);
+                                setModel(model);
+                            } catch (e) {
+                                console.error('Failed to load model', e);
+                            }
+                        } else {
+                            conn.send({
+                                event: 'eter:modelRequest',
+                            });
+                        }
+                    }
+                }
                 setConfig(data.configuration);
             } else if (data.event === 'eter:userlist') {
-                console.log('käyttäjälista saatu', data);
-                setAvailableUsernames(data.data);
+                setAvailableUsernames(data.available);
+                setTakenUsernames(data.taken);
+            } else if (data.event === 'eter:modelTransfer') {
+                const receivedZip = new Blob([data.data], { type: 'application/zip' });
+                const url = URL.createObjectURL(receivedZip);
+                const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };
+                try {
+                    const model = await loadModel(modelLoadingObject);
+                    setModel(model);
+                } catch (err) {
+                    console.error('Failed to load model', err);
+                } finally {
+                    URL.revokeObjectURL(url);
+                }
+            } else if (data.event === 'eter:messageUser') {
+                console.warn(data.message);
+                setBouncer({ message: data.message, reload: data.reload });
+            } else if (data.event === 'eter:profilePicture') {
+                console.log('profilepic received');
+                setProfilePicture(data.data.profilePicture);
             }
         },
-        [setConfig, setAvailableUsernames]
+        [
+            setConfig,
+            setAvailableUsernames,
+            config.modelData,
+            setModel,
+            setTakenUsernames,
+            setBouncer,
+            setProfilePicture,
+            setTermData,
+            ownUsername,
+        ]
     );
     const [hasBeenReady, setHasBeenReady] = useState(false);
 
@@ -58,19 +127,7 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
     }, [ready]);
 
     /**
-     * Sends score to the teacher
-     */
-    const doSendScore = useCallback(
-        (score: ScoreData) => {
-            if (send) {
-                send({ event: 'eter:score', data: score });
-            }
-        },
-        [send]
-    );
-
-    /**
-     * Sends heatmap and normal image to the teacher
+     * Sends heatmap and normal image and score to the teacher
      */
     const doSendImages = useCallback(
         (images: ImageData) => {
@@ -82,9 +139,9 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
     );
 
     const doRegister = useCallback(
-        (username: Username) => {
+        (registerData: RegisterData) => {
             if (send) {
-                send({ event: 'eter:register', data: username });
+                send({ event: 'eter:register', data: registerData });
             }
         },
         [send]
@@ -93,9 +150,8 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
     return (
         <ProtocolContext.Provider
             value={{
-                doSendScore,
                 doSendImages,
-                doSendUsername: doRegister,
+                doRegister,
             }}
         >
             {hasBeenReady && children}

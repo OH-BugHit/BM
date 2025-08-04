@@ -1,14 +1,9 @@
 import { BuiltinEvent, PeerEvent } from '@knicos/genai-base';
-import { ImageData, ScoreData, SpoofConfig } from '../utils/types';
-import { Username } from '../atoms/state';
+import { ImageData, RegisterData, SpoofConfig, SpoofData } from '../utils/types';
+import { Username } from '../utils/types';
 export interface ConfigurationEvent extends PeerEvent {
     event: 'eter:config';
     configuration: SpoofConfig;
-}
-
-export interface ScoreEvent extends PeerEvent {
-    event: 'eter:score';
-    data: ScoreData;
 }
 
 export interface ImageEvent extends PeerEvent {
@@ -18,7 +13,7 @@ export interface ImageEvent extends PeerEvent {
 
 export interface RegisterEvent extends PeerEvent {
     event: 'eter:register';
-    data: Username;
+    data: RegisterData;
 }
 
 export interface CloseEvent extends PeerEvent {
@@ -28,14 +23,44 @@ export interface CloseEvent extends PeerEvent {
 
 export interface UserListEvent extends PeerEvent {
     event: 'eter:userlist';
-    data: Username[];
+    available: Username[];
+    taken: Username[];
+}
+
+export interface ModelRequestEvent extends PeerEvent {
+    event: 'eter:modelRequest';
+}
+
+export interface ModelTransferEvent extends PeerEvent {
+    event: 'eter:modelTransfer';
+    data: Blob;
+}
+
+export interface MessageUserEvent extends PeerEvent {
+    event: 'eter:messageUser';
+    message: string;
+    reload: boolean;
+}
+
+export interface ProfilePictureEvent extends PeerEvent {
+    event: 'eter:profilePicture';
+    data: RegisterData;
+}
+
+export interface TermDataEvent extends PeerEvent {
+    event: 'eter:termData';
+    data: SpoofData;
 }
 
 export type EventProtocol =
     | BuiltinEvent
     | ConfigurationEvent
-    | ScoreEvent
     | ImageEvent
     | RegisterEvent
     | CloseEvent
-    | UserListEvent;
+    | UserListEvent
+    | ModelRequestEvent
+    | ModelTransferEvent
+    | MessageUserEvent
+    | ProfilePictureEvent
+    | TermDataEvent;

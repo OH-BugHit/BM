@@ -1,82 +1,130 @@
 import style from './style.module.css';
 import { useAtom } from 'jotai';
-import { useCallback, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { availableUsernamesAtom } from '../../atoms/state';
+import { availableUsernamesAtom, takenUsernamesAtom } from '../../atoms/state';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
-import { LargeButton } from '@knicos/genai-base';
+import { LargeButton, Webcam } from '@knicos/genai-base';
 
 interface Props {
-    onUsername: (name: string) => void;
-    autoUsername?: boolean;
+    registerStudent: (name: string, image: string) => void;
 }
 
 interface FormErrors {
-    username?: 'missing' | 'long' | 'short';
+    username?: 'missing' | 'long' | 'short' | 'takenFree' | 'taken';
+    image?: 'missing';
 }
 
-export default function EnterUsername({ onUsername }: Props) {
+export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
     const { t } = useTranslation();
-    const ref = useRef<HTMLInputElement>(null);
-    // const [errors, setErrors] = useState<FormErrors>({});
     const [users] = useAtom(availableUsernamesAtom);
+    const [takenUsernames] = useAtom(takenUsernamesAtom);
+
     const [showRestore, setShowRestore] = useState(false);
     const [errors, setErrors] = useState<FormErrors>({});
+    const [capture, setCapture] = useState(false);
+    const [image, setImage] = useState<string | null>(null);
+    const [username, setUsername] = useState('');
 
-    const doUsernameKey = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === 'Enter') {
-                const name = (e.target as HTMLInputElement).value;
-                onUsername(name);
-            }
-        },
-        [onUsername]
-    );
+    const handleCapture = (canvas: HTMLCanvasElement) => {
+        setImage(canvas.toDataURL('image/png'));
+        setCapture(false);
+        setErrors((prev) => ({ ...prev, image: undefined }));
+    };
 
-    const doSelect = useCallback(
-        (e: SelectChangeEvent) => {
-            const name = e.target.value;
-            const item = users.find((u) => u.username === name);
-            if (item) {
-                onUsername(item.username);
-            }
-        },
-        [onUsername, users]
-    );
+    const toggleCapture = () => {
+        if (image) {
+            setImage(null);
+        } else {
+            setCapture(true);
+        }
+    };
+
+    const handleSubmit = () => {
+        const trimmed = username.trim();
+        const errs: FormErrors = {};
+
+        if (!image) {
+            errs.image = 'missing';
+        }
+
+        if (!trimmed) {
+            errs.username = 'missing';
+        } else if (trimmed.length < 3) {
+            errs.username = 'short';
+        } else if (trimmed.length > 30) {
+            errs.username = 'long';
+        } else if (users.find((u) => u.username === trimmed)) {
+            errs.username = 'takenFree';
+        } else if (takenUsernames.find((u) => u.username === trimmed)) {
+            errs.username = 'taken';
+        }
+
+        if (Object.keys(errs).length > 0) {
+            setErrors(errs);
+            return;
+        }
+
+        if (image) onUsername(trimmed, image);
+    };
+
+    const handleSelect = (e: SelectChangeEvent) => {
+        const name = e.target.value;
+        const item = users.find((u) => u.username === name);
+        if (item) {
+            setErrors((prev) => ({ ...prev, username: undefined }));
+            onUsername(e.target.value, '');
+        }
+    };
 
     return (
         <div className={style.userContainer}>
+            <LargeButton
+                onClick={toggleCapture}
+                variant="contained"
+            >
+                {image ? t('enterUsername.actions.changePicture') : t('enterUsername.actions.takePicture')}
+            </LargeButton>
+
+            {!image && (
+                <Webcam
+                    size={400}
+                    capture={capture}
+                    onCapture={handleCapture}
+                    interval={1}
+                    direct
+                />
+            )}
+
+            {image && (
+                <img
+                    src={image}
+                    alt="Otettu kuva"
+                    style={{ maxWidth: '100%', marginTop: '1rem' }}
+                />
+            )}
+
+            {errors.image && <p style={{ color: 'red' }}>{t('enterUsername.messages.imageRequired')}</p>}
+
             <TextField
-                inputRef={ref}
                 label={t('enterUsername.labels.enterUsername')}
-                onKeyDown={doUsernameKey}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 error={!!errors.username}
                 helperText={errors.username ? t(`enterUsername.messages.usernameError.${errors.username}`) : undefined}
+                fullWidth
+                margin="normal"
             />
+
             <LargeButton
-                onClick={() => {
-                    if (ref.current) {
-                        if (!ref.current.value) {
-                            setErrors({ username: 'missing' });
-                            return;
-                        }
-                        if (ref.current.value.length > 30) {
-                            setErrors({ username: 'long' });
-                            return;
-                        }
-                        if (ref.current.value.length < 3) {
-                            setErrors({ username: 'short' });
-                            return;
-                        }
-                        onUsername(ref.current.value);
-                    }
-                }}
+                onClick={handleSubmit}
                 variant="contained"
             >
                 {t('enterUsername.actions.enterUser')}
             </LargeButton>
+
             {!showRestore && (
                 <div>
                     <IconButton onClick={() => setShowRestore(true)}>
@@ -84,10 +132,13 @@ export default function EnterUsername({ onUsername }: Props) {
                     </IconButton>
                 </div>
             )}
+
             {showRestore && (
                 <Select
                     value=""
-                    onChange={doSelect}
+                    onChange={handleSelect}
+                    displayEmpty
+                    fullWidth
                 >
                     {users.map((u) => (
                         <MenuItem

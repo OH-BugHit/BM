@@ -18,7 +18,7 @@ export const closeGallery: CSSProperties = {
     position: 'absolute',
     top: '0.1rem',
     right: '0.1rem',
-    zIndex: 1100,
+    zIndex: 900,
     border: 'none',
     width: 32,
     height: 32,

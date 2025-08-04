@@ -1,6 +1,7 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
-import { menuShowShareAtom, UserInfo } from '../../atoms/state';
+import { menuShowShareAtom } from '../../atoms/state';
+import { UserInfo } from '../../utils/types';
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
@@ -26,13 +27,16 @@ export default function StartDialog({ users, code }: Props) {
             <DialogTitle className={style.title}>{t('teacher.titles.connectUsers')}</DialogTitle>
             <DialogContent>
                 <div className={style.connectMessage}>
-                    <QRCode
-                        url={`${window.location.origin}/student/${code}/main`}
-                        size="large"
-                        label={t('teacher.aria.linkForFeed')}
-                    />
                     <div className={style.column}>
-                        <div style={{ textAlign: 'center' }}>
+                        {t('teacher.messages.scanQR')}
+                        <QRCode
+                            url={`${window.location.origin}/student/${code}/main`}
+                            size="large"
+                            label={t('teacher.aria.linkForFeed')}
+                        />
+                    </div>
+                    <div className={style.column}>
+                        <div>
                             <Trans
                                 values={{ codeText: code }}
                                 i18nKey="teacher.messages.connection"
@@ -42,11 +46,21 @@ export default function StartDialog({ users, code }: Props) {
                             />
                         </div>
                         <a
-                            href={`${window.location.origin}`}
+                            style={{ wordBreak: 'break-all' }}
+                            href={window.location.host}
                             target="_blank"
                             rel="noreferrer"
                         >
                             {window.location.host}
+                        </a>
+                        {t('teacher.messages.orGoStraight')}
+                        <a
+                            style={{ wordBreak: 'break-all' }}
+                            href={`${window.location.origin}/student/${code}/main`}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {`${window.location.host}/student/${code}/main`}
                         </a>
                     </div>
                 </div>
@@ -57,11 +71,11 @@ export default function StartDialog({ users, code }: Props) {
                     <div className={style.buttonGroup}>
                         <LargeButton
                             variant="contained"
-                            color="secondary"
+                            color="primary"
                             data-testid="teacher-start-button"
                             onClick={doClose}
                         >
-                            {t('teacher.actions.start')}
+                            {t('common.close')}
                         </LargeButton>
                     </div>
                 </div>

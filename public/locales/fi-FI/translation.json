@@ -20,14 +20,23 @@
         }
     },
     "enterUsername": {
-        "actions": { "enterUser": "Aloita" },
-        "labels": { "enterUsername": "Anna käyttäjänimesi" },
+        "actions": {
+            "enterUser": "Aloita",
+            "changePicture": "Vaihda kuvaa",
+            "takePicture": "Ota kuva"
+        },
+        "labels": {
+            "enterUsername": "Anna käyttäjänimesi"
+        },
         "messages": {
             "usernameError": {
                 "missing": "Käyttäjänimi puuttuu",
                 "long": "Käyttäjänimi on liian pitkä",
-                "short": "Käyttäjänimen pitää olla ainakin 3 merkkiä"
-            }
+                "short": "Käyttäjänimen pitää olla ainakin 3 merkkiä",
+                "taken": "Käyttäjänimi on jo käytössä",
+                "takenFree": "Käyttäjänimi on jo käytössä, jos yhteytesi katkesi voit palata samalla käyttäjällä \"Aloita\" painikkeen alta."
+            },
+            "imageRequired": "Profiilikuva vaaditaan"
         }
     },
     "frontpage": {
@@ -92,7 +101,22 @@
             "exit": "Lopeta (Kaikki tiedot menetetään)"
         },
         "vis": {
-            "usergrid": "Käyttäjäruudukko"
+            "category": "Tulokset luokittelutermeittäin",
+            "home": "Kotinäkymä",
+            "term": "Luokittelutermin valinta",
+            "usergrid": "Tulokset käyttäjittäin"
+        }
+    },
+    "messageDisplay": {
+        "title": {
+            "usernameTaken": "Käyttäjänimi varattu"
+        },
+        "reload": {
+            "true": "Selain lataa sivun uudelleen pian",
+            "false": "Istunto jatkuu pian"
+        },
+        "message": {
+            "usernameTaken": "Käyttäjänimi oli varattu, yritä uudelleen sivuston latauduttua..."
         }
     },
     "scores": {
@@ -101,7 +125,8 @@
     },
     "student": {
         "labels": {
-            "disableApp": "Pysäytä kamera"
+            "disableApp": "Pysäytä kamera",
+            "heatmap": "Lämpökartta"
         }
     },
     "teacher": {
@@ -112,14 +137,21 @@
             "start": "Aloita"
         },
         "labels": {
+            "changeModel": "Vaihda luokittelumalli",
+            "currentModel": "Nykyinen malli",
             "disableApp": "Pysäytä käyttäjien apit",
+            "disableDataGallery": "Salli opetusdatan selaaminen",
+            "disableHeatmap": "Salli lämpökartta",
+            "from": "Lähde:",
             "shareTip": "Näytä QR-koodi liittymistä varten"
         },
         "messages": {
-            "connection": "Mene allaolevaan www-osoitteeseen ja syötä koodi <Code>{{codeText}}</Code>, tai käytä QR -koodia.",
+            "connection": "Tai mene alla olevaan www-osoitteeseen ja syötä koodi <Code>{{codeText}}</Code>.",
             "waitingPeople": "Odotetaan käyttäjiä...",
             "onePerson": "{{count}} käyttäjä on liittynyt mukaan.",
-            "manyPeople": "{{count}} käyttäjää on liittynyt mukaan."
+            "orGoStraight": "Voit myös mennä suoraan osoitteeseen:",
+            "manyPeople": "{{count}} käyttäjää on liittynyt mukaan.",
+            "scanQR": "Lue QR-koodi liittyäksesi"
         },
         "titles": {
             "connectUsers": "Yhdistä käyttäjiä"

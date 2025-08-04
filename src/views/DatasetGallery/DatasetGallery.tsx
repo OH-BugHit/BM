@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import style from './style.module.css';
-import { fetchImageUrls, fetchModelNames } from '../../services/ImageService';
+import { fetchImageUrls } from '../../services/ImageService';
 import { Button } from '@knicos/genai-base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
@@ -8,7 +8,7 @@ import { close, closeGallery } from '../../components/Buttons/buttonStyles';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useAtom } from 'jotai';
-import { menuShowTrainingDataAtom } from '../../atoms/state';
+import { configAtom, menuShowCategoryViewAtom, menuShowTrainingDataAtom } from '../../atoms/state';
 
 interface DatasetGalleryProps {
     allLabels: string[] | undefined;
@@ -29,7 +29,9 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
     const [openImage, setOpenImage] = useState<string | null>(null);
     const limit = 10;
     const [selected, setSelected] = useState('');
-    const [open, setOpen] = useAtom(menuShowTrainingDataAtom);
+    const [, setOpen] = useAtom(menuShowTrainingDataAtom);
+    const [, setHomeOpen] = useAtom(menuShowCategoryViewAtom);
+    const [config] = useAtom(configAtom);
     const [imagePaths, setImagePaths] = useState<Record<string, string[]>>({});
     const loaded = useRef(false);
 
@@ -50,17 +52,21 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
         }
     }, [allImages, offset, loading, noMoreData]);
 
-    // Fetches all paths for labelimages
     useEffect(() => {
-        if (!loaded.current)
-            fetchModelNames().then((data) => {
-                if (data.length !== 0)
-                    fetchImageUrls({ dataset: data[0] }).then((data) => {
-                        setImagePaths(data);
-                    });
+        if (loaded.current) return;
+        if (config.modelData.name.length > 0) {
+            fetchImageUrls({ dataset: config.modelData }).then((data) => {
+                setImagePaths(data);
             });
+        }
         loaded.current = true;
-    }, []);
+    }, [config.modelData]);
+
+    useEffect(() => {
+        setSelected('');
+        setImages([]);
+        loaded.current = false;
+    }, [config.modelData.name]);
 
     useEffect(() => {
         if (!selected || !imagePaths[selected]) return;
@@ -96,76 +102,78 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
 
     return (
         <div>
-            {open && (
-                <div className={style.container}>
-                    <div className={style.headerToggle}>
+            <div className={style.container}>
+                <div className={style.headerToggle}>
+                    <Button
+                        onClick={() => {
+                            setOpen(false);
+                            setHomeOpen(true);
+                        }}
+                        title={t('common.close')}
+                        aria-label="Sulje"
+                        style={closeGallery}
+                    >
+                        <CloseSharpIcon />
+                    </Button>
+                    <h1>{t('common.dataset')}</h1>
+                </div>
+                <Autocomplete
+                    options={(allLabels || [])
+                        .slice()
+                        .sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))}
+                    value={selected}
+                    style={{ padding: '4px', margin: '1rem', maxWidth: '600px', width: '100%' }}
+                    onChange={(_, newValue) => setSelected(newValue || '')}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label={t('common.selectLabel')}
+                        />
+                    )}
+                />
+                {images.length === 0 && !loading && selected.length !== 0 && (
+                    <em className={style.noData}>{t('common.noTeachingData')}</em>
+                )}
+                {images.length !== 0 && (
+                    <>
+                        <div
+                            className={style.datasetContainer}
+                            ref={containerRef}
+                        >
+                            {images.map((src, index) => (
+                                <img
+                                    key={index}
+                                    src={src}
+                                    alt={`Kuva ${index}`}
+                                    className={style.image}
+                                    onClick={() => setOpenImage(src)}
+                                />
+                            ))}
+                        </div>
+                    </>
+                )}
+            </div>
+            {openImage && (
+                <div
+                    className={style.openImageOverlay}
+                    onClick={() => setOpenImage(null)}
+                >
+                    <div>
                         <Button
-                            onClick={() => setOpen(false)}
+                            onClick={() => setOpenImage(null)}
+                            style={close}
                             title={t('common.close')}
                             aria-label="Sulje"
-                            style={closeGallery}
                         >
                             <CloseSharpIcon />
                         </Button>
-                        <h1>{t('common.dataset')}</h1>
+                        <img
+                            src={openImage.replace('_thumb', '')}
+                            alt="isompi kuva"
+                            style={{ maxWidth: '70vw', maxHeight: '70vh', boxShadow: '0 0 24px #000' }}
+                            onClick={(e) => e.stopPropagation()}
+                        />
                     </div>
-                    <Autocomplete
-                        options={allLabels || []}
-                        value={selected}
-                        style={{ padding: '4px', margin: '1rem', maxWidth: '600px', width: '100%' }}
-                        onChange={(_, newValue) => setSelected(newValue || '')}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label={t('common.selectLabel')}
-                            />
-                        )}
-                    />
-                    {images.length === 0 && !loading && selected.length !== 0 && (
-                        <em className={style.noData}>{t('common.noTeachingData')}</em>
-                    )}
-                    {images.length !== 0 && (
-                        <>
-                            <div
-                                className={style.datasetContainer}
-                                ref={containerRef}
-                            >
-                                {images.map((src, index) => (
-                                    <img
-                                        key={index}
-                                        src={src}
-                                        alt={`Kuva ${index}`}
-                                        className={style.image}
-                                        onClick={() => setOpenImage(src)}
-                                    />
-                                ))}
-                            </div>
-                        </>
-                    )}
-
-                    {openImage && (
-                        <div
-                            className={style.openImageOverlay}
-                            onClick={() => setOpenImage(null)}
-                        >
-                            <div className={style.imageWrapper}>
-                                <Button
-                                    onClick={() => setOpenImage(null)}
-                                    style={close}
-                                    title={t('common.close')}
-                                    aria-label="Sulje"
-                                >
-                                    <CloseSharpIcon />
-                                </Button>
-                                <img
-                                    src={openImage}
-                                    alt="isompi kuva"
-                                    style={{ maxWidth: '90vw', maxHeight: '90vh', boxShadow: '0 0 24px #000' }}
-                                    onClick={(e) => e.stopPropagation()}
-                                />
-                            </div>
-                        </div>
-                    )}
                 </div>
             )}
         </div>

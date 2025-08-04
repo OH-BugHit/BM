@@ -4,30 +4,17 @@ import { Button } from '@knicos/genai-base';
 import { useNavigate } from 'react-router-dom';
 import LangSelect from '../../components/LangSelect/LangSelect';
 import Footer from '../../components/Footer/Footer';
-import { useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
-import { modelAtom } from '../../atoms/state';
-import { loadModel } from '../../services/loadModel';
+
+import { useState } from 'react';
 import { TextField } from '@mui/material';
+import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 
 export default function Frontpage() {
+    useModelNamesLoader();
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const [model, setModel] = useAtom(modelAtom);
     const [modeSelection, setModeSelection] = useState<number>(0);
     const [inputCode, setInputCode] = useState<string>('');
-
-    useEffect(() => {
-        if (model === null) {
-            loadModel().then((loadedModel) => {
-                setModel(loadedModel);
-            });
-        }
-    }, [model, setModel]);
-
-    const toReadyGame = () => {
-        navigate('/game/ready');
-    };
 
     const toOwnGame = () => {
         navigate('/game/own');
@@ -38,7 +25,7 @@ export default function Frontpage() {
     };
 
     const toTeacher = () => {
-        navigate('/teacher/');
+        navigate('/library/');
     };
 
     const toggleMode = (mode: number) => {
@@ -76,17 +63,10 @@ export default function Frontpage() {
                         >
                             <Button
                                 sx={{ fontSize: '14pt', minWidth: '140px' }}
-                                onClick={toReadyGame}
-                                variant="contained"
-                            >
-                                {t('frontpage.readyImages')}
-                            </Button>
-                            <Button
-                                sx={{ fontSize: '14pt', minWidth: '140px' }}
                                 onClick={toOwnGame}
                                 variant="contained"
                             >
-                                {t('frontpage.ownImages')}
+                                {t('common.start')}
                             </Button>
                         </div>
                     </div>

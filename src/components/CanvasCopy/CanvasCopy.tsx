@@ -2,7 +2,7 @@
 import { useRef, useEffect } from 'react';
 
 type CanvasCopyProps = {
-    sourceCanvas: HTMLCanvasElement;
+    sourceCanvas: HTMLCanvasElement | null;
     maxWidth?: number;
 };
 

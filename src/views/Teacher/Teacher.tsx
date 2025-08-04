@@ -1,47 +1,78 @@
 import { useAtom } from 'jotai';
 import Footer from '../../components/Footer/Footer';
-import { useLeaveWarning } from '../../hooks/leaveBlocker';
+import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import ServerProtocol from '../../services/ServerProtocol';
 import style from './style.module.css';
-import { configAtom, modelAtom, studentDataAtom, usersAtom } from '../../atoms/state';
-import { useEffect, useState } from 'react';
+import {
+    configAtom,
+    menuShowTermChangeAtom,
+    menuShowCategoryViewAtom,
+    menuShowTrainingDataAtom,
+    menuShowUsersAtom,
+    modelAtom,
+    studentDataAtom,
+    usersAtom,
+    termTransferAtom,
+} from '../../atoms/state';
+import { useEffect, useRef, useState } from 'react';
 import { Button, useID } from '@knicos/genai-base';
-import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
-import { loadModel } from '../../services/loadModel';
-import { TextField } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
 import { useTranslation } from 'react-i18next';
 import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { close } from '../../components/Buttons/buttonStyles';
 import MenuPanel from '../AppMenu/AppMenu';
 import StartDialog from '../StartDialog/StartDialog';
+import ModelDialog from '../ModelDialog/ModelDialog';
+import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
+import PointCard from './PointCard';
+import UserGrid from '../UserGrid/UserGrid';
+import TermChange from '../TermChange/TermChange';
 
 export default function Teacher() {
-    useLeaveWarning(true);
+    const blockRef = useRef(true);
+    useLeaveWarning(blockRef);
     const { t } = useTranslation();
     const [config, setConfig] = useAtom(configAtom);
-    const [word, setWord] = useState('');
+    const [termData, setTermData] = useAtom(termTransferAtom);
     const MYCODE = useID(5);
     const [studentData] = useAtom(studentDataAtom);
     const [users] = useAtom(usersAtom);
     const [model, setModel] = useAtom(modelAtom);
     const [openImage, setOpenImage] = useState<string | null>(null);
     const [allLabels, setAllLabels] = useState<string[]>([]);
+    const [openKeys, setOpenKeys] = useState<Set<string>>(new Set());
+    const [labelChangeOpen] = useAtom(menuShowTermChangeAtom);
+    const [categoryViewOpen] = useAtom(menuShowCategoryViewAtom);
+    const [galleryOpen] = useAtom(menuShowTrainingDataAtom);
+    const [usersOpen] = useAtom(menuShowUsersAtom);
+
+    const toggleMenu = (key: string) => {
+        setOpenKeys((prev) => {
+            const newSet = new Set(prev);
+            if (newSet.has(key)) {
+                newSet.delete(key);
+            } else {
+                newSet.add(key);
+            }
+            return newSet;
+        });
+    };
 
     // Load model if needed and set initial term, also pause the students
+    useModelNamesLoader();
     useEffect(() => {
-        if (!model) {
-            loadModel().then((loadedModel) => {
-                setModel(loadedModel);
-                setAllLabels(loadedModel.getLabels());
-            });
-        } else {
+        if (model) {
             setAllLabels(model.getLabels());
         }
-        setWord(model?.getLabels()[0] || '');
-        setConfig({ data: model?.getLabels()[0] || '', pause: true, heatmap: false, gallery: false });
-    }, [model, setModel, setConfig]);
+        setConfig((old) => ({
+            pause: true,
+            heatmap: false,
+            gallery: false,
+            modelData: old.modelData,
+            gameMode: old.gameMode,
+        }));
+        setTermData({ term: model?.getLabels()[0] || '', recipient: { username: 'a' } });
+    }, [model, setModel, setConfig, config.modelData, setTermData]);
 
     // Renderöi opiskelijoiden kuvat
     const renderStudentImages = () => {
@@ -57,7 +88,7 @@ export default function Teacher() {
 
         // Renderöidään jokainen termi
         return (
-            <div>
+            <>
                 {[...allClassnames].sort().map((classname) => {
                     // Kerätään kaikki studentit, joilla on tämä classname
                     const studentsWithTerm: {
@@ -82,153 +113,92 @@ export default function Teacher() {
                     // Lajitellaan scorejen mukaan laskevasti
                     studentsWithTerm.sort((a, b) => b.score - a.score);
 
-                    // Kaksi parasta
+                    // Kaksi parasta esitellään scoreilla
                     const topTwo = studentsWithTerm.slice(0, 2);
                     const others = studentsWithTerm.slice(2);
 
                     return (
-                        <div key={classname}>
+                        <div
+                            className={style.termItem}
+                            key={classname}
+                        >
                             <h3>{classname}</h3>
-                            <div className={style.topStudentsContainer}>
-                                {topTwo.map((entry) => (
-                                    <div
-                                        key={entry.studentId}
-                                        className={style.topStudentItem}
-                                    >
-                                        <div>
-                                            <b>Name:</b> {entry.studentId}
+                            <Button
+                                variant="contained"
+                                onClick={() => toggleMenu(classname)}
+                                sx={{ minHeight: '60px', marginBottom: '1rem' }}
+                            >
+                                {openKeys.has(classname) ? t('common.hideInfo') : t('common.showInfo')}
+                            </Button>
+                            <div
+                                className={
+                                    openKeys.has(classname) ? style.termItemContainerOpen : style.termItemContainer
+                                }
+                            >
+                                <div className={style.topStudentsContainer}>
+                                    {topTwo.map((entry) => (
+                                        <div
+                                            key={entry.studentId}
+                                            className={style.topStudentItem}
+                                        >
+                                            <PointCard
+                                                place="top"
+                                                entry={entry}
+                                                setOpenImage={setOpenImage}
+                                            />
                                         </div>
-                                        <div>
-                                            <b>Score:</b> {entry.score}
-                                        </div>
-                                        {entry.topCanvas && (
-                                            <div
-                                                onClick={() => {
-                                                    const dataUrl = entry.topCanvas?.toDataURL();
-                                                    if (dataUrl) setOpenImage(dataUrl);
-                                                }}
-                                                style={{ cursor: 'pointer' }}
-                                            >
-                                                <h4>{t('scores.bestImage')}</h4>
-                                                <CanvasCopy
-                                                    sourceCanvas={entry.topCanvas}
-                                                    maxWidth={200}
-                                                />
-                                            </div>
-                                        )}
-                                        {entry.topHeatmap && (
-                                            <div>
+                                    ))}
+                                </div>
+                                {others.length > 0 && (
+                                    <div className={style.topStudentsContainer}>
+                                        <div style={{ display: 'flex', gap: 16 }}>
+                                            {others.map((entry) => (
                                                 <div
-                                                    onClick={() => {
-                                                        const dataUrl = entry.topHeatmap?.toDataURL();
-                                                        if (dataUrl) setOpenImage(dataUrl);
-                                                    }}
-                                                    style={{ cursor: 'pointer' }}
+                                                    key={entry.studentId}
+                                                    className={style.otherStudentItem}
                                                 >
-                                                    <h4>Heatmap</h4>
-                                                    <CanvasCopy
-                                                        sourceCanvas={entry.topHeatmap}
-                                                        maxWidth={200}
+                                                    <PointCard
+                                                        place="rest"
+                                                        entry={entry}
+                                                        setOpenImage={setOpenImage}
                                                     />
                                                 </div>
-                                            </div>
-                                        )}
+                                            ))}
+                                        </div>
                                     </div>
-                                ))}
+                                )}
                             </div>
-                            {others.length > 0 && (
-                                <>
-                                    <p>muut:</p>
-                                    <div style={{ display: 'flex', gap: 16 }}>
-                                        {others.map((entry) => (
-                                            <div
-                                                key={entry.studentId}
-                                                style={{ border: '1px solid #eee', padding: 6 }}
-                                            >
-                                                <div>
-                                                    <b>ID:</b> {entry.studentId}
-                                                </div>
-                                                {entry.topCanvas && (
-                                                    <div
-                                                        onClick={() => {
-                                                            const dataUrl = entry.topCanvas?.toDataURL();
-                                                            if (dataUrl) setOpenImage(dataUrl);
-                                                        }}
-                                                        style={{ cursor: 'pointer' }}
-                                                    >
-                                                        <CanvasCopy sourceCanvas={entry.topCanvas} />
-                                                    </div>
-                                                )}
-                                                {entry.topHeatmap && (
-                                                    <div
-                                                        onClick={() => {
-                                                            const dataUrl = entry.topHeatmap?.toDataURL();
-                                                            if (dataUrl) setOpenImage(dataUrl);
-                                                        }}
-                                                        style={{ cursor: 'pointer' }}
-                                                    >
-                                                        <CanvasCopy sourceCanvas={entry.topHeatmap} />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </>
-                            )}
                         </div>
                     );
                 })}
-            </div>
+            </>
         );
     };
 
     // Komennot lähetetään muokkaamalla config-atomia
     return (
         <div className={style.container}>
-            <div className={style.galleryContainer}>{config?.data && <DatasetGallery allLabels={allLabels} />}</div>
-            <div className={style.sideMenu}>
-                <MenuPanel />
+            <div className={style.serverProtocolContainer}>
+                <ServerProtocol code={MYCODE} />
             </div>
             <StartDialog
                 users={users}
                 code={MYCODE}
             />
-            <div className={style.serverProtocolContainer}>
-                <ServerProtocol code={MYCODE} />
+            <ModelDialog />
+            <div className={style.sideMenu}>
+                <MenuPanel />
             </div>
-            <div className={style.innerContainer}>
-                {allLabels.length !== 0 && (
-                    <div className={style.studentControlContainer}>
-                        <Autocomplete
-                            options={allLabels || []}
-                            value={word}
-                            style={{
-                                padding: '4px',
-                                margin: '1rem',
-                                minWidth: '400px',
-                                maxWidth: '600px',
-                                width: '100%',
-                            }}
-                            onChange={(_, newValue) => {
-                                setWord(newValue || '');
-                                setConfig({
-                                    data: newValue || '',
-                                    pause: true,
-                                    heatmap: config.heatmap,
-                                    gallery: config.gallery,
-                                });
-                            }}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label={t('common.selectLabel')}
-                                />
-                            )}
-                        />
+            <div className={style.content}>
+                {galleryOpen && termData?.term && <DatasetGallery allLabels={allLabels} />}
+                {usersOpen && studentData && <UserGrid />}
+                {labelChangeOpen && <TermChange allLabels={allLabels} />}
+
+                {categoryViewOpen && (
+                    <div className={style.innerContainer}>
+                        <div className={style.resultsContainer}>{renderStudentImages()}</div>
                     </div>
                 )}
-
-                <div className={style.resultsContainer}>{renderStudentImages()}</div>
             </div>
             {openImage && (
                 <div

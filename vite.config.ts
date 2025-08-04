@@ -9,7 +9,7 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '/static': 'http://localhost:3001',
+            '/spoof': 'http://localhost:3001',
             '/api': 'http://localhost:3001',
         },
     },

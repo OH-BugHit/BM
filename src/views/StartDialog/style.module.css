@@ -1,14 +1,5 @@
 @value bgSubdued1, borderBrightBlue, textDark from "@knicos/genai-base/css/colours.module.css";
 
-.groupedItems {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 700px;
-    box-sizing: border-box;
-    z-index: 2;
-}
-
 .connectMessage {
     font-size: 1.6rem;
     color: textDark;
@@ -46,6 +37,7 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    text-align: center;
 }
 
 .title {

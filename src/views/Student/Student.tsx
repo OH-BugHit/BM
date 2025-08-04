@@ -1,5 +1,5 @@
 import { Webcam } from '@knicos/genai-base';
-import { useLeaveWarning } from '../../hooks/leaveBlocker';
+import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
 import { useAtom } from 'jotai';
@@ -9,11 +9,13 @@ import {
     configAtom,
     menuShowTrainingDataAtom,
     modelAtom,
+    profilePictureAtom,
+    studentBouncerAtom,
+    termTransferAtom,
     usernameAtom,
 } from '../../atoms/state';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { loadModel } from '../../services/loadModel';
 import { classifyImage } from '../../utils/classifyImage';
 import { ClassificationResults } from '../../components/ClassificationResults/ClassificationResults';
 import { canvasToBase64 } from '../../utils/canvasToBase64';
@@ -21,12 +23,15 @@ import { cloneCanvas } from '../../utils/cloneCanvas';
 import { validateCanvas } from '../../utils/validateCanvas';
 import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
 import StudentNavBar from '../StudentNavBar/StudentNavBar';
+import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
+import MessageDisplay from '../MessageDisplay/MessageDisplay';
 
-export default function Student({ MYCODE }: { MYCODE: string }) {
+export default function Student({ serverCode }: { serverCode: string }) {
     const { t } = useTranslation();
-    const [model, setModel] = useAtom(modelAtom);
+    const [model] = useAtom(modelAtom);
     const [, setClassificationResult] = useAtom(classificationResultAtom);
     const [username] = useAtom(usernameAtom);
+    const [profilePicture] = useAtom(profilePictureAtom);
     const [classifyTerm, setClassifyTerm] = useState<string>('');
     const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
     const [currentScore, setCurrentScore] = useState<number>(0);
@@ -43,21 +48,27 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
     const [webcamSize, setWebcamSize] = useState<number>(
         Math.min(Math.floor(window.innerWidth * 0.7), Math.floor(window.innerHeight * 0.6) * 0.7, 800)
     ); // Size of the webcam component
-    const { doSendScore, doSendImages, doSendUsername } = useSpoofProtocol();
+    const { doSendImages, doRegister } = useSpoofProtocol();
     const [config] = useAtom<SpoofConfig>(configAtom);
+    const [termData] = useAtom(termTransferAtom);
     const heatmapRef = useRef<HTMLCanvasElement | null>(null);
     const enlargedHeatmapRef = useRef<HTMLCanvasElement | null>(null);
     const sentRef = useRef(false);
     const [allLabels, setAllLabels] = useState<string[]>([]);
+    const [trainingDataOpen] = useAtom(menuShowTrainingDataAtom);
+    const [bouncer] = useAtom(studentBouncerAtom);
+    const blockRef = useRef(true);
+    const [showError, setShowError] = useState(false);
 
-    useLeaveWarning(true); // Blocks unintended leaving
+    useLeaveWarning(blockRef); // Blocks unintended leaving
+    useModelNamesLoader(); // Loads model names
 
     useEffect(() => {
-        if (config.data) {
-            setClassifyTerm(config.data);
+        if (termData.term) {
+            setClassifyTerm(termData.term);
             setScore(0);
             setLastSentScore(0); // Reset last sent score when config changes
-            model?.setXAIClass(config.data);
+            model?.setXAIClass(termData.term);
         }
         if (config.pause !== undefined) {
             setRemotePause(config.pause);
@@ -70,25 +81,19 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
             setRemoteGallery(config.gallery);
             if (!config.gallery) setShowGallery(false);
         }
-    }, [config, model, setShowGallery]); // Update classify term and model class when config
+    }, [config, model, setShowGallery, termData]); // Update classify term and model class when config
 
     useEffect(() => {
-        if (!sentRef.current && doSendUsername && username) {
-            doSendUsername({ username });
+        if (model) {
+            setAllLabels(model.getLabels());
+        }
+    }, [model]);
+    useEffect(() => {
+        if (!sentRef.current && doRegister && username) {
+            doRegister({ username, profilePicture });
             sentRef.current = true;
         }
-    }, [doSendUsername, username]);
-
-    // Load model if needed
-    useEffect(() => {
-        if (!model) {
-            loadModel().then((loadedModel) => {
-                setModel(loadedModel);
-                setAllLabels(loadedModel.getLabels());
-            });
-        }
-        setScore(0);
-    }, [model, setModel]);
+    }, [doRegister, username, profilePicture]);
 
     useEffect(() => {
         if (model && heatmapRef.current) {
@@ -125,6 +130,16 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
         return () => clearInterval(interval);
     }, [doSendImages, classifyTerm, lastSentScore, score, username]);
 
+    useEffect(() => {
+        if (bouncer.reload) {
+            blockRef.current = false;
+            setShowError(true);
+            setTimeout(() => {
+                window.location.href = `/student/${serverCode}/main`;
+            }, 5000);
+        }
+    }, [bouncer.reload, serverCode]);
+
     // Classify from canvas
     const handleCapture = async (canvas: HTMLCanvasElement) => {
         if (!model || classifyTerm.length === 0 || pause || remotePause) return;
@@ -144,9 +159,6 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                                 topCanvasRef.current = canvas; // Save topCanvas topHeatmap to be sent at the next interval
                                 if (heatmapRef.current) {
                                     topHeatmapRef.current = cloneCanvas(heatmapRef.current);
-                                }
-                                if (doSendScore) {
-                                    doSendScore({ studentId: MYCODE, classname: classifyTerm, score: currentScore });
                                 }
                                 return currentScore;
                             }
@@ -173,6 +185,7 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
 
     return (
         <>
+            <MessageDisplay open={showError} />
             <StudentNavBar
                 title={`${username}`}
                 pause={pause}
@@ -183,7 +196,7 @@ export default function Student({ MYCODE }: { MYCODE: string }) {
                 remoteHeatmap={remoteHeatmap}
                 remoteGallery={remoteGallery}
             />
-            {allLabels.length !== 0 && (
+            {termData?.term && trainingDataOpen && allLabels.length !== 0 && (
                 <div className={style.galleryContainer}>
                     <DatasetGallery allLabels={allLabels} />
                 </div>

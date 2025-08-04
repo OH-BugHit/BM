@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import { menuShowTrainingDataAtom } from '../../atoms/state';
+import { menuShowTrainingDataAtom, profilePictureAtom, usernameAtom } from '../../atoms/state';
 import style from './style.module.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -36,6 +36,8 @@ export default function StudentNavBar({
     const [open, setOpen] = useState(false);
     const doShowBottomMenu = useCallback(() => setOpen((s) => !s), [setOpen]);
     const doShowTraining = useCallback(() => setShowTraining((s) => !s), [setShowTraining]);
+    const [profilePicture] = useAtom(profilePictureAtom);
+    const [username] = useAtom(usernameAtom);
 
     return (
         <nav className={open ? style.bottomNav : style.bottomNavClosed}>
@@ -53,7 +55,6 @@ export default function StudentNavBar({
                 )}
                 <div style={{ flexGrow: 1 }} />
             </div>
-            {!open && <div style={{ flexGrow: 1 }} />}
             <IconMenuItem
                 tooltip={t('student.labels.disableApp')}
                 hideTip={open}
@@ -107,7 +108,27 @@ export default function StudentNavBar({
                     {open ? t('student.labels.heatmap') : ''}
                 </MenuButton>
             </IconMenuItem>
-            {!open && <div style={{ flexGrow: 1 }} />}
+            {open && (
+                <IconMenuItem
+                    tooltip={username}
+                    hideTip={open}
+                >
+                    <MenuButton
+                        color="primary"
+                        aria-label={'username'}
+                        size="large"
+                        variant="text"
+                    >
+                        <img
+                            src={profilePicture}
+                            height={'40'}
+                            width={'40'}
+                            style={{ borderRadius: '20px' }}
+                        />
+                        {open ? username : ''}
+                    </MenuButton>
+                </IconMenuItem>
+            )}
             {!open && (
                 <div>
                     <MenuIcon

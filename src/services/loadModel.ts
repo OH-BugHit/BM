@@ -1,6 +1,6 @@
 import TMClassifier from '@genai-fi/classifier';
 import { ModelInfo, ModelOrigin } from '../utils/types';
-const API_BASE_URL = import.meta.env.VITE_APP_BASE_URL || '';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 async function fetchModel(name: string): Promise<Blob | null> {
     try {

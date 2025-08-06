@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
@@ -26,7 +26,12 @@ export default function UserTermDialog({ allLabels }: { allLabels: string[] }) {
             onClose={doClose}
             maxWidth="md"
         >
-            <DialogTitle className={style.title}>Muuta ryhmän '{selectedUser.username}' luokittelusanaa </DialogTitle>
+            <DialogTitle className={style.title}>
+                <Trans
+                    values={{ user: selectedUser.username }}
+                    i18nKey="termSelect.titles.change"
+                />
+            </DialogTitle>
             <DialogContent>
                 <div className={style.selectModelMessage}>
                     <div className={style.columnItem}>

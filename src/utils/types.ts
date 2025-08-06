@@ -78,3 +78,9 @@ export type Bouncer = {
     message: string;
     reload: boolean;
 };
+
+export type MessageData = {
+    message: string;
+    reload: boolean;
+    recipient?: Username;
+};

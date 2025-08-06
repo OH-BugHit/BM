@@ -10,6 +10,7 @@ import {
     modelDataAtom,
     profilePicturesAtom,
     termTransferAtom,
+    messageTransferAtom,
 } from '../atoms/state';
 import { SpoofConfig } from '../utils/types';
 import { base64ToCanvas } from '../utils/base64toCanvas';
@@ -23,6 +24,7 @@ export default function ServerProtocol({ code }: { code: string }) {
     const [allUNs, setAllUNs] = useAtom(takenUsernamesAtom);
     const [modelFile] = useAtom(modelDataAtom);
     const [termData] = useAtom(termTransferAtom);
+    const [messageData] = useAtom(messageTransferAtom);
 
     // CLOSE HANDLER: whenever a Connection is closed (either via 'eter:close' or network drop),
     // remove that user from your usersAtom.
@@ -59,7 +61,7 @@ export default function ServerProtocol({ code }: { code: string }) {
                 const idx = users.findIndex((u) => u.username === data.data.username);
                 if (idx !== -1) {
                     // Dublicate user!
-                    console.log('users have tried to enter with same username. No dublicates allowed.');
+                    console.log('users have tried to enter with same username. No dublicates allowed.'); // Sends reload command back to same connection, not by username as it is dublicate in this case!
                     conn.send({
                         event: 'eter:messageUser',
                         message: 'usernameTaken',
@@ -165,6 +167,10 @@ export default function ServerProtocol({ code }: { code: string }) {
     useEffect(() => {
         if (send) send({ event: 'eter:termData', data: termData });
     }, [termData, send]);
+
+    useEffect(() => {
+        if (send) send({ event: 'eter:messageUser', ...messageData });
+    }, [messageData, send]);
 
     return (
         <ConnectionStatus

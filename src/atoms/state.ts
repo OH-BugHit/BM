@@ -9,6 +9,7 @@ import {
     UserInfo,
     Username,
     UserItemData,
+    MessageData,
 } from '../utils/types';
 
 export type Scores = {
@@ -42,6 +43,12 @@ export const configAtom = atom<SpoofConfig>({
 export const termTransferAtom = atom<SpoofData>({
     term: '',
     recipient: { username: 'a' },
+});
+
+export const messageTransferAtom = atom<MessageData>({
+    message: '',
+    reload: false,
+    recipient: { username: '' },
 });
 
 export const scoresAtom = atom<Scores>([]);

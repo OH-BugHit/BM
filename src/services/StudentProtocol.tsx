@@ -92,7 +92,9 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
                 }
             } else if (data.event === 'eter:messageUser') {
                 console.warn(data.message);
-                setBouncer({ message: data.message, reload: data.reload });
+                if (!data.recipient || data.recipient.username === ownUsername) {
+                    setBouncer({ message: data.message, reload: data.reload });
+                }
             } else if (data.event === 'eter:profilePicture') {
                 console.log('profilepic received');
                 setProfilePicture(data.data.profilePicture);

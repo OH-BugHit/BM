@@ -248,6 +248,26 @@
             "connectUsers": "Connect Users"
         }
     },
+    "termSelect": {
+        "actions": {
+            "all": "Send new classifying term to all",
+            "single": "Send new classifying term to single user"
+        },
+        "titles": {
+            "all": "One word for all players",
+            "change": "Change label for {{user}}",
+            "single": "Different words for players"
+        }
+    },
+    "userGrid": {
+        "actions": {
+            "kickUser": "Kick user",
+            "deleteUser": "Delete user from game"
+        },
+        "titles": {
+            "users": "Users"
+        }
+    },
     "webcam": {
         "notAvailable": "Camera loading"
     }

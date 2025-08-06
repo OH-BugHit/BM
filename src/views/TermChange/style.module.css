@@ -20,6 +20,7 @@
     margin-top: 10px;
     text-align: center;
     gap: 2rem;
+    padding: 2rem 2rem 2rem;
 }
 
 .modeContainer {
@@ -48,7 +49,6 @@
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
-    cursor: pointer;
     min-height: 300px;
     padding: 10px;
     color: black;
@@ -61,10 +61,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     gap: 0.5rem;
     backdrop-filter: blur(10px);
-}
-
-.modeItem:hover {
-    transform: scale(1.02);
 }
 
 
@@ -91,25 +87,8 @@
     gap: 1.5rem;
     overflow: hidden;
     transition: max-height 0.4s ease;
-    opacity: 1;
-    padding: 1rem;
-}
-
-.collapsed {
-    max-height: 0;
-    height: 0;
-    width: 300px;
-    opacity: 0;
-}
-
-.expanded {
     min-height: 230px;
     min-width: 200px;
     max-height: 500px;
-    opacity: 1;
-}
-
-.selected {
-    border: 8px solid rgba(138, 232, 113, 0.752);
-    border-radius: 10px;
+    padding: 1rem;
 }

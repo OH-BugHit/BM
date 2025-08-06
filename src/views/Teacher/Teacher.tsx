@@ -27,6 +27,8 @@ import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 import PointCard from './PointCard';
 import UserGrid from '../UserGrid/UserGrid';
 import TermChange from '../TermChange/TermChange';
+import UserMenu from '../UserMenu/UserMenu';
+import TermMenu from '../TermMenu/TermMenu';
 
 export default function Teacher() {
     const blockRef = useRef(true);
@@ -191,8 +193,20 @@ export default function Teacher() {
             </div>
             <div className={style.content}>
                 {galleryOpen && termData?.term && <DatasetGallery allLabels={allLabels} />}
-                {usersOpen && studentData && <UserGrid />}
-                {labelChangeOpen && <TermChange allLabels={allLabels} />}
+                {usersOpen && studentData && (
+                    <>
+                        <UserMenu />
+                        <div style={{ paddingTop: '6rem' }} />
+                        <UserGrid />
+                    </>
+                )}
+                {labelChangeOpen && (
+                    <>
+                        <TermMenu />
+                        <div style={{ paddingTop: '6rem' }} />
+                        <TermChange allLabels={allLabels} />
+                    </>
+                )}
 
                 {categoryViewOpen && (
                     <div className={style.innerContainer}>

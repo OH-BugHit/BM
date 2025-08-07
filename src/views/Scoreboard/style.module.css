@@ -1,3 +1,5 @@
+@value secondary from "@knicos/genai-base/css/colours.module.css";
+
 .overallScoreContainer {
     margin-top: 24px;
     min-width: 300px;
@@ -178,6 +180,117 @@
     font-size: 0.8em;
     background-color: rgb(240, 237, 34);
     color: #000000;
+}
+
+.innerContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.termNamesContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.resultsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.termItem {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgba(255,
+            255,
+            255,
+            0.421);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 0 2rem 0rem 2rem;
+    cursor: pointer;
+}
+
+.selectedTermItem {
+    composes: termItem;
+    background: rgba(174, 37, 174, 0.328);
+}
+
+.termItem:hover {
+    /*transform: scale(1.1, 1.1);*/
+    box-shadow: 0 0 8px secondary;
+}
+
+.termItem:focus {
+    /*transform: scale(1.1, 1.1);*/
+    box-shadow: 0 0 8px secondary;
+}
+
+.termItemContainerOpen {
+    opacity: 1;
+    padding: 2rem;
+    transition: opacity 0.7s ease;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(255,
+            255,
+            255,
+            0.421);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+    gap: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.topStudentsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4rem;
+}
+
+.topStudentItem {
+    border: 3px solid #d2ac00;
+    padding: 8
+}
+
+.otherStudentItem {
+    border: 3px solid #ccc;
+    padding: 8
+}
+
+.openImageOverlay {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.imageWrapper {
+    position: relative;
+    display: inline-block;
 }
 
 @keyframes scoreBarAfter {

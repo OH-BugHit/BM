@@ -59,7 +59,7 @@
         "start": "Start",
         "show": "Show",
         "showInfo": "Show info",
-        "title": "Spoof Game",
+        "title": "Spoofing Game",
         "labels": {
             "teachableMachine": "Teachable Machine",
             "disableApp": "Pause",
@@ -122,10 +122,6 @@
             "title": "Animals",
             "description": "Collection contains 11 different animals. Lorem ipsumia käytetään näyttämään, miltä esimerkiksi kirjasin tai julkaisun tekstin asettelu näyttävät"
         },
-        "animals2": {
-            "title": "Animal poses",
-            "description": "Teaching data contains AI-generated pictures of human posing animal. Lorem ipsumia käytetään näyttämään, miltä esimerkiksi kirjasin tai julkaisun tekstin asettelu näyttävät"
-        },
         "jobs": {
             "title": "Jobs",
             "description": "Collection on five different jobs. Lorem ipsumia käytetään näyttämään, miltä esimerkiksi kirjasin tai julkaisun tekstin asettelu näyttävät"
@@ -133,10 +129,6 @@
         "own": {
             "title": "Own model",
             "description": "Upload your own model created with Gen-AI Teachable Machine"
-        },
-        "testimalli1": {
-            "title": "Testmodel",
-            "description": "Lorem ipsum on 1500-luvulta lähtien olemassa ollut teksti, jota käytetään usein täytetekstinä ulkoasun testaamiseen graafisessa suunnittelussa, kun oikeata tekstisisältöä ei vielä ole."
         }
     },
     "loader": {
@@ -187,10 +179,9 @@
             "exit": "Quit session (All data is lost)"
         },
         "vis": {
-            "category": "Results by category",
-            "home": "Home",
+            "results": "Results",
             "term": "Select classifying term",
-            "usergrid": "Results by users"
+            "usergrid": "User grid"
         }
     },
     "messageDisplay": {
@@ -205,9 +196,13 @@
             "usernameTaken": "Username was taken, try again after reload..."
         }
     },
-    "scores": {
-        "bestImage": "Best image",
-        "overall": "Overall score"
+    "scoreboard": {
+        "labels": {
+            "scores": "Scores",
+            "standings": "Standings",
+            "resultPictures": "Result Pictures",
+            "leaderboard": "Leaderboard"
+        }
     },
     "student": {
         "labels": {

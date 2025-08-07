@@ -1,11 +1,10 @@
-import { useAtom } from 'jotai';
-import style from './style.module.css';
-import { scoresAtom } from '../../atoms/state';
-import { Score } from '../../utils/types';
-import { useTranslation } from 'react-i18next';
+//import { useAtom } from 'jotai';
+//import style from './style.module.css';
+//import { useTranslation } from 'react-i18next';
 
 export default function OverallScore() {
-    const { t } = useTranslation();
+    //const { t } = useTranslation();
+    /*
     const [scores] = useAtom<Score[]>(scoresAtom);
 
     const overallScore = () => {
@@ -46,4 +45,5 @@ export default function OverallScore() {
             )}
         </div>
     );
+    */
 }

@@ -1,12 +1,4 @@
-export type Score = {
-    className: string;
-    lowScore: number;
-    topScore: number;
-    topCanvas: HTMLCanvasElement | null;
-    topHeatmap: HTMLCanvasElement | null;
-};
-
-type StudentScore = {
+export type StudentScore = {
     score?: number;
     topCanvas?: HTMLCanvasElement | null;
     topHeatmap?: HTMLCanvasElement | null;

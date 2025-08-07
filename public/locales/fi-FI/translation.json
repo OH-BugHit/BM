@@ -101,10 +101,9 @@
             "exit": "Lopeta (Kaikki tiedot menetetään)"
         },
         "vis": {
-            "category": "Tulokset luokittelutermeittäin",
-            "home": "Kotinäkymä",
+            "results": "Tulokset",
             "term": "Luokittelutermin valinta",
-            "usergrid": "Tulokset käyttäjittäin"
+            "usergrid": "Käyttäjäruudukko"
         }
     },
     "messageDisplay": {
@@ -119,9 +118,13 @@
             "usernameTaken": "Käyttäjänimi oli varattu, yritä uudelleen sivuston latauduttua..."
         }
     },
-    "scores": {
-        "bestImage": "Paras kuva",
-        "overall": "Kokonaispisteet"
+    "scoreboard": {
+        "labels": {
+            "scores": "Tulokset",
+            "standings": "Tulokset",
+            "resultPictures": "Paras kuva",
+            "leaderboard": "Kokonaistilanne"
+        }
     },
     "student": {
         "labels": {

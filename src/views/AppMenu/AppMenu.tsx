@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import CategoryIcon from '@mui/icons-material/Category';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import AbcIcon from '@mui/icons-material/Abc';
 import { useAtom } from 'jotai';
 import {
@@ -18,6 +18,7 @@ import {
     menuShowTermChangeAtom,
     menuShowTrainingDataAtom,
     menuShowUsersAtom,
+    selectedUserAtom,
 } from '../../atoms/state';
 import IconMenuItem from '../../components/IconMenu/Items';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -39,41 +40,47 @@ export default function MenuPanel() {
     const [showCategory, setShowCategory] = useAtom(menuShowCategoryViewAtom);
     const [showTermView, setShowTermView] = useAtom(menuShowTermChangeAtom);
     const [config, setConfig] = useAtom(configAtom);
+    const [, setSelectedUser] = useAtom(selectedUserAtom);
 
     const doShowShare = useCallback(() => setShowShare((s) => !s), [setShowShare]);
     const doShowModel = useCallback(() => setShowModel((s) => !s), [setShowModel]);
     const doShowSubview = useCallback(
-        (subview: 'users' | 'trainingData' | 'category' | 'term') => {
+        (subview: 'users' | 'trainingData' | 'results' | 'term') => {
             switch (subview) {
                 case 'users':
                     setShowUsers((s) => !s);
                     setShowTraining(false);
                     setShowCategory(false);
                     setShowTermView(false);
+                    setSelectedUser({ username: '', profilePicture: null });
                     break;
                 case 'trainingData':
                     setShowTraining((s) => !s);
                     setShowUsers(false);
                     setShowCategory(false);
                     setShowTermView(false);
+                    setSelectedUser({ username: '', profilePicture: null });
                     break;
-                case 'category':
+                case 'results':
                     setShowCategory(true);
                     setShowUsers(false);
                     setShowTraining(false);
                     setShowTermView(false);
+                    setSelectedUser({ username: '', profilePicture: null });
                     break;
                 case 'term':
                     setShowCategory(false);
                     setShowUsers(false);
                     setShowTraining(false);
                     setShowTermView(true);
+                    setSelectedUser({ username: '', profilePicture: null });
                     break;
                 default:
                     console.warn('Unknown subview:', subview);
+                    break;
             }
         },
-        [setShowUsers, setShowTraining, setShowCategory, setShowTermView]
+        [setShowUsers, setShowTraining, setShowCategory, setShowTermView, setSelectedUser]
     );
 
     const toMain = () => {
@@ -203,20 +210,20 @@ export default function MenuPanel() {
                     </MenuButton>
                 </IconMenuItem>
                 <IconMenuItem
-                    tooltip={t('menu.vis.category')}
+                    tooltip={t('menu.vis.results')}
                     fullWidth
                     selected={showCategory}
                 >
                     <MenuButton
                         color="inherit"
-                        aria-label={t('menu.vis.category')}
+                        aria-label={t('menu.vis.results')}
                         size="large"
                         variant="text"
                         fullWidth
-                        onClick={() => doShowSubview('category')}
+                        onClick={() => doShowSubview('results')}
                     >
-                        <CategoryIcon fontSize="large" />
-                        {open ? t('menu.vis.category') : ''}
+                        <EmojiEventsIcon fontSize="large" />
+                        {open ? t('menu.vis.results') : ''}
                     </MenuButton>
                 </IconMenuItem>
                 <IconMenuItem

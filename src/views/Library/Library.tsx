@@ -19,7 +19,7 @@ export default function Library() {
     const navigate = useNavigate();
 
     // Handler for clicking a ContentItem
-    const handleItemClick = async (type: 'testimalli1' | 'jobs' | 'animals' | 'animals2' | 'own') => {
+    const handleItemClick = async (type: 'jobs' | 'animals' | 'own') => {
         if (type === 'own') {
             // Open file dialog for own model
             fileInputRef.current?.click();
@@ -68,22 +68,10 @@ export default function Library() {
                 </header>
                 <ul className={style.grid}>
                     <ContentItem
-                        title={t('library.testimalli1.title')}
-                        image="/images/library/testimalli1.png"
-                        description={t('library.testimalli1.description')}
-                        onClick={() => handleItemClick('testimalli1')}
-                    />
-                    <ContentItem
                         title={t('library.animals.title')}
                         image="/images/library/animals.png"
                         description={t('library.animals.description')}
                         onClick={() => handleItemClick('animals')}
-                    />
-                    <ContentItem
-                        title={t('library.animals2.title')}
-                        image="/images/library/animals2.png"
-                        description={t('library.animals2.description')}
-                        onClick={() => handleItemClick('animals2')}
                     />
                     <ContentItem
                         title={t('library.jobs.title')}

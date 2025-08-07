@@ -1,13 +1,28 @@
-// Komponentti, joka kopioi annetun canvasin sisällön näkyvään canvas-elementtiin
 import { useRef, useEffect } from 'react';
 
 type CanvasCopyProps = {
-    sourceCanvas: HTMLCanvasElement | null;
+    sourceCanvas: HTMLCanvasElement | null | undefined;
     maxWidth?: number;
+    shape?: 'round' | 'leftRound';
+    width?: number;
+    height?: number;
 };
 
-export function CanvasCopy({ sourceCanvas, maxWidth = 160 }: CanvasCopyProps) {
+export function CanvasCopy({ sourceCanvas, maxWidth = 160, shape, width, height }: CanvasCopyProps) {
     const ref = useRef<HTMLCanvasElement | null>(null);
+
+    const canvasStyle: React.CSSProperties = {
+        maxWidth,
+        width,
+        height,
+        border: '1px solid #ccc',
+        display: 'block',
+        overflow: shape ? 'hidden' : undefined,
+        aspectRatio: shape === 'round' ? '1 / 1' : undefined,
+        borderRadius: shape === 'round' ? '50%' : undefined,
+        borderTopLeftRadius: shape === 'leftRound' ? '50%' : undefined,
+        borderBottomLeftRadius: shape === 'leftRound' ? '50%' : undefined,
+    };
 
     useEffect(() => {
         if (ref.current && sourceCanvas) {
@@ -20,11 +35,11 @@ export function CanvasCopy({ sourceCanvas, maxWidth = 160 }: CanvasCopyProps) {
             }
         }
     }, [sourceCanvas]);
-
+    if (sourceCanvas === undefined) return;
     return (
         <canvas
             ref={ref}
-            style={{ maxWidth: maxWidth, border: '1px solid #ccc' }}
+            style={canvasStyle}
         />
     );
 }

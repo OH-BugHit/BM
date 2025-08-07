@@ -1,3 +1,4 @@
+/*
 import style from './style.module.css';
 import { useState } from 'react';
 import { useAtom } from 'jotai';
@@ -6,8 +7,10 @@ import { Button } from '@knicos/genai-base';
 import { useTranslation } from 'react-i18next';
 import OverallScore from './OverallScore';
 import { Score } from '../../utils/types';
+*/
 
 export default function ScoreList() {
+    /*
     const { t } = useTranslation();
     const [openIndices, setOpenIndices] = useState<{ [key: number]: boolean }>({});
     const [scores] = useAtom<Score[]>(scoresAtom);
@@ -93,4 +96,5 @@ export default function ScoreList() {
             ))}
         </div>
     );
+*/
 }

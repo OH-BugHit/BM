@@ -51,8 +51,6 @@ export const messageTransferAtom = atom<MessageData>({
     recipient: { username: '' },
 });
 
-export const scoresAtom = atom<Scores>([]);
-
 export const studentDataAtom = atom<StudentData>({ students: new Map() });
 
 export const usersAtom = atom<UserInfo[]>([]);

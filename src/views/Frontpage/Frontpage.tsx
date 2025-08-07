@@ -13,12 +13,7 @@ export default function Frontpage() {
     useModelNamesLoader();
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const [modeSelection, setModeSelection] = useState<number>(0);
     const [inputCode, setInputCode] = useState<string>('');
-
-    const toOwnGame = () => {
-        navigate('/game/own');
-    };
 
     const toStudent = () => {
         navigate(`/student/${inputCode}/main`);
@@ -26,10 +21,6 @@ export default function Frontpage() {
 
     const toTeacher = () => {
         navigate('/library/');
-    };
-
-    const toggleMode = (mode: number) => {
-        setModeSelection((prev) => (prev === mode ? 0 : mode));
     };
 
     return (
@@ -42,78 +33,31 @@ export default function Frontpage() {
                     height={192}
                 />
                 <h1>{t('common.title')}</h1>
-                <div className={style.modeContainer}>
-                    <div
-                        className={style.modeItem}
-                        onClick={() => toggleMode(1)}
+                <div className={style.startBox}>
+                    <TextField
+                        label={t('frontpage.labels.enterCode')}
+                        value={inputCode}
+                        fullWidth
+                        className={style.textbox}
+                        onChange={(e) => setInputCode(e.target.value)}
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                    <Button
+                        sx={{ fontSize: '14pt', minWidth: '140px' }}
+                        onClick={toStudent}
+                        variant="contained"
+                        disabled={inputCode.length < 5}
                     >
-                        <div className={modeSelection === 1 ? style.initialClosed : style.initialOpen}>
-                            <img
-                                src="/logo192_bw.png"
-                                alt="logo"
-                                width={160}
-                                height={160}
-                            />
-                            <h2>{t('frontpage.singleplayer')}</h2>
-                        </div>
-                        <div
-                            className={`${style.collapsibleContent} ${
-                                modeSelection === 1 ? style.expanded : style.collapsed
-                            }`}
-                        >
-                            <Button
-                                sx={{ fontSize: '14pt', minWidth: '140px' }}
-                                onClick={toOwnGame}
-                                variant="contained"
-                            >
-                                {t('common.start')}
-                            </Button>
-                        </div>
-                    </div>
-                    <div
-                        className={style.modeItem}
-                        onClick={() => toggleMode(2)}
+                        {t('common.start')}
+                    </Button>
+                    <div className={style.or}>{t('common.or')}</div>
+                    <Button
+                        sx={{ fontSize: '14pt', minWidth: '140px' }}
+                        onClick={toTeacher}
+                        variant="outlined"
                     >
-                        <div className={modeSelection === 2 ? style.initialClosed : style.initialOpen}>
-                            <img
-                                src="/logo192_bw.png"
-                                alt="logo"
-                                width={160}
-                                height={160}
-                            />
-                            <h2>{t('frontpage.multiplayer')}</h2>
-                        </div>
-                        <div
-                            className={`${style.collapsibleContent} ${
-                                modeSelection === 2 ? style.expanded : style.collapsed
-                            }`}
-                        >
-                            <TextField
-                                label={t('frontpage.labels.enterCode')}
-                                value={inputCode}
-                                fullWidth
-                                className={style.textbox}
-                                onChange={(e) => setInputCode(e.target.value)}
-                                onClick={(e) => e.stopPropagation()}
-                            />
-                            <Button
-                                sx={{ fontSize: '14pt', minWidth: '140px' }}
-                                onClick={toStudent}
-                                variant="contained"
-                                disabled={inputCode.length < 5}
-                            >
-                                {t('common.start')}
-                            </Button>
-                            <div className={style.or}>{t('common.or')}</div>
-                            <Button
-                                sx={{ fontSize: '14pt', minWidth: '140px' }}
-                                onClick={toTeacher}
-                                variant="outlined"
-                            >
-                                {t('common.createNew')}
-                            </Button>
-                        </div>
-                    </div>
+                        {t('common.createNew')}
+                    </Button>
                 </div>
                 <LangSelect />
             </div>

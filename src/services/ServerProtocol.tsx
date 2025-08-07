@@ -51,6 +51,13 @@ export default function ServerProtocol({ code }: { code: string }) {
                     },
                 });
                 conn.send({
+                    event: 'eter:termData',
+                    data: {
+                        term: termData.term,
+                        recipient: { username: 'a' },
+                    },
+                });
+                conn.send({
                     event: 'eter:userlist',
                     available: allUNs.filter((u) => !users.some((user) => user.username === u.username)), // Filters users dropped from the users
                     taken: allUNs.filter((u) => users.some((user) => user.username === u.username)), // Filters users still connected
@@ -147,7 +154,18 @@ export default function ServerProtocol({ code }: { code: string }) {
                 })();
             }
         },
-        [setStudent, setUsers, setAllUNs, setProfilePictures, profilePictures, allUNs, users, config, modelFile]
+        [
+            setStudent,
+            setUsers,
+            setAllUNs,
+            setProfilePictures,
+            termData.term,
+            profilePictures,
+            allUNs,
+            users,
+            config,
+            modelFile,
+        ]
     );
 
     const { ready, send, peer } = usePeer({

@@ -204,10 +204,33 @@
             "leaderboard": "Leaderboard"
         }
     },
+    "settings": {
+        "titles": {
+            "general": "General",
+            "pictureSettings": "Picture settings",
+            "settings": "Settings"
+        },
+        "labels": {
+            "allowHidePicture": "Allow students to hide result pictures",
+            "allowStartTermAgain": "Allow students to reset score on term",
+            "hideResultPictures": "Hide all result pictures",
+            "pauseOnChange": "Pause game when term is changed",
+            "showFullScoreboard": "Show all scores on scoreboard",
+            "scoreboardLimit": "Limit scoreboard to {{limit}} best scores"
+        }
+    },
     "student": {
+        "titles": {
+            "results": "Results"
+        },
         "labels": {
             "disableApp": "Pause camera",
             "heatmap": "Heatmap"
+        },
+        "actions": {
+            "deleteProgress": "Delete progress",
+            "hide": "Hide picture",
+            "show": "Show picture"
         }
     },
     "teacher": {

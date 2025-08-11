@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 type CanvasCopyProps = {
     sourceCanvas: HTMLCanvasElement | null | undefined;
     maxWidth?: number;
-    shape?: 'round' | 'leftRound';
+    shape?: 'round' | 'leftRound' | 'squircle';
     width?: number;
     height?: number;
 };
@@ -17,11 +17,10 @@ export function CanvasCopy({ sourceCanvas, maxWidth = 160, shape, width, height 
         height,
         border: '1px solid #ccc',
         display: 'block',
-        overflow: shape ? 'hidden' : undefined,
         aspectRatio: shape === 'round' ? '1 / 1' : undefined,
-        borderRadius: shape === 'round' ? '50%' : undefined,
-        borderTopLeftRadius: shape === 'leftRound' ? '50%' : undefined,
-        borderBottomLeftRadius: shape === 'leftRound' ? '50%' : undefined,
+        borderRadius: shape === 'round' ? '50%' : shape === 'squircle' ? '1rem' : undefined,
+        borderTopLeftRadius: shape === 'leftRound' ? '50%' : shape === 'squircle' ? '1rem' : undefined,
+        borderBottomLeftRadius: shape === 'leftRound' ? '50%' : shape === 'squircle' ? '1rem' : undefined,
     };
 
     useEffect(() => {

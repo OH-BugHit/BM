@@ -4,7 +4,7 @@ export const close: CSSProperties = {
     position: 'absolute',
     top: '1rem',
     right: '1rem',
-    zIndex: 1100,
+    zIndex: 3,
     background: '#ffffff99',
     border: 'none',
     width: 32,

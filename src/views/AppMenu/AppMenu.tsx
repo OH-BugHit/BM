@@ -8,16 +8,18 @@ import PauseIcon from '@mui/icons-material/Pause';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import SettingsIcon from '@mui/icons-material/Settings';
 import AbcIcon from '@mui/icons-material/Abc';
 import { useAtom } from 'jotai';
 import {
     configAtom,
-    menuShowCategoryViewAtom,
+    menuShowLeaderboardAtom,
     menuShowModelChangeAtom,
+    showSettingsDialogAtom,
     menuShowShareAtom,
     menuShowTermChangeAtom,
     menuShowTrainingDataAtom,
-    menuShowUsersAtom,
+    menuShowUserGridAtom,
     selectedUserAtom,
 } from '../../atoms/state';
 import IconMenuItem from '../../components/IconMenu/Items';
@@ -36,14 +38,16 @@ export default function MenuPanel() {
     const [showShare, setShowShare] = useAtom(menuShowShareAtom);
     const [showTraining, setShowTraining] = useAtom(menuShowTrainingDataAtom);
     const [showModel, setShowModel] = useAtom(menuShowModelChangeAtom);
-    const [showUsers, setShowUsers] = useAtom(menuShowUsersAtom);
-    const [showCategory, setShowCategory] = useAtom(menuShowCategoryViewAtom);
+    const [showUsers, setShowUsers] = useAtom(menuShowUserGridAtom);
+    const [showCategory, setShowCategory] = useAtom(menuShowLeaderboardAtom);
     const [showTermView, setShowTermView] = useAtom(menuShowTermChangeAtom);
+    const [showSettings, setShowSettings] = useAtom(showSettingsDialogAtom);
     const [config, setConfig] = useAtom(configAtom);
     const [, setSelectedUser] = useAtom(selectedUserAtom);
 
     const doShowShare = useCallback(() => setShowShare((s) => !s), [setShowShare]);
     const doShowModel = useCallback(() => setShowModel((s) => !s), [setShowModel]);
+    const doShowSettings = useCallback(() => setShowSettings((s) => !s), [setShowSettings]);
     const doShowSubview = useCallback(
         (subview: 'users' | 'trainingData' | 'results' | 'term') => {
             switch (subview) {
@@ -284,25 +288,48 @@ export default function MenuPanel() {
             </div>
 
             <div style={{ flexGrow: 1 }} />
-            <IconMenuItem
-                tooltip={t('menu.labels.exit')}
-                hideTip={open}
-                selected={false}
-                fullWidth
-            >
-                <MenuButton
-                    color="inherit"
-                    onClick={toMain}
-                    aria-label={t('menu.aria.exit')}
-                    size="large"
-                    variant="text"
+
+            <div className={style.sideNavSection}>
+                <IconMenuItem
+                    tooltip={t('menu.labels.settings')}
+                    hideTip={open}
+                    selected={showSettings}
                     fullWidth
                 >
-                    <LogoutIcon fontSize="large" />
-                    {open ? t('menu.labels.exit') : ''}
-                </MenuButton>
-            </IconMenuItem>
-            <div style={{ paddingBottom: '40px' }} />
+                    <MenuButton
+                        color="inherit"
+                        onClick={doShowSettings}
+                        aria-label={t('menu.aria.settings')}
+                        size="large"
+                        variant="text"
+                        fullWidth
+                    >
+                        <SettingsIcon fontSize="large" />
+                        {open ? t('menu.labels.settings') : ''}
+                    </MenuButton>
+                </IconMenuItem>
+            </div>
+            <div className={style.sideNavSection}>
+                <IconMenuItem
+                    tooltip={t('menu.labels.exit')}
+                    hideTip={open}
+                    selected={false}
+                    fullWidth
+                >
+                    <MenuButton
+                        color="inherit"
+                        onClick={toMain}
+                        aria-label={t('menu.aria.exit')}
+                        size="large"
+                        variant="text"
+                        fullWidth
+                    >
+                        <LogoutIcon fontSize="large" />
+                        {open ? t('menu.labels.exit') : ''}
+                    </MenuButton>
+                </IconMenuItem>
+            </div>
+            <div style={{ paddingBottom: '32px' }} />
         </nav>
     );
 }

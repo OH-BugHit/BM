@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import { configAtom, selectedTermAtom, selectedUserAtom, termTransferAtom } from '../../atoms/state';
+import { configAtom, selectedTermAtom, selectedUserAtom, settingAtom, termTransferAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 
 export default function TermSelector({ allLabels }: { allLabels: string[] }) {
@@ -11,6 +11,7 @@ export default function TermSelector({ allLabels }: { allLabels: string[] }) {
     const [word, setWord] = useAtom(selectedTermAtom);
     const [config, setConfig] = useAtom(configAtom);
     const [selectedUser] = useAtom(selectedUserAtom);
+    const [settings] = useAtom(settingAtom);
 
     return (
         <Autocomplete
@@ -26,11 +27,8 @@ export default function TermSelector({ allLabels }: { allLabels: string[] }) {
             onChange={(_, newValue) => {
                 setWord(newValue || '');
                 setConfig({
-                    pause: config.gameMode === 'all' ? true : config.pause,
-                    heatmap: config.heatmap,
-                    gallery: config.gallery,
-                    modelData: config.modelData,
-                    gameMode: config.gameMode,
+                    ...config,
+                    pause: config.pause || settings.pauseOnChange,
                 });
                 setTerm({
                     term: newValue || '',

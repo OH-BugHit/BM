@@ -8,7 +8,7 @@ import { close, closeGallery } from '../../components/Buttons/buttonStyles';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useAtom } from 'jotai';
-import { configAtom, menuShowCategoryViewAtom, menuShowTrainingDataAtom } from '../../atoms/state';
+import { configAtom, menuShowLeaderboardAtom, menuShowTrainingDataAtom } from '../../atoms/state';
 
 interface DatasetGalleryProps {
     allLabels: string[] | undefined;
@@ -30,7 +30,7 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
     const limit = 10;
     const [selected, setSelected] = useState('');
     const [, setOpen] = useAtom(menuShowTrainingDataAtom);
-    const [, setHomeOpen] = useAtom(menuShowCategoryViewAtom);
+    const [, setHomeOpen] = useAtom(menuShowLeaderboardAtom);
     const [config] = useAtom(configAtom);
     const [imagePaths, setImagePaths] = useState<Record<string, string[]>>({});
     const loaded = useRef(false);
@@ -170,7 +170,7 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
                         <img
                             src={openImage.replace('_thumb', '')}
                             alt="isompi kuva"
-                            style={{ maxWidth: '70vw', maxHeight: '70vh', boxShadow: '0 0 24px #000' }}
+                            className={style.openImage}
                             onClick={(e) => e.stopPropagation()}
                         />
                     </div>

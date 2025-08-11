@@ -157,13 +157,15 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
             }}
         >
             {hasBeenReady && children}
-            <ConnectionStatus
-                api={import.meta.env.VITE_APP_APIURL}
-                appName={'spoofgame'}
-                ready={ready}
-                peer={peer}
-                visibility={3}
-            />
+            <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem' }}>
+                <ConnectionStatus
+                    api={import.meta.env.VITE_APP_APIURL}
+                    appName={'spoofgame'}
+                    ready={ready}
+                    peer={peer}
+                    visibility={3}
+                />
+            </div>
         </ProtocolContext.Provider>
     );
 }

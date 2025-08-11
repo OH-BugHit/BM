@@ -12,7 +12,7 @@ import {
     termTransferAtom,
     messageTransferAtom,
 } from '../atoms/state';
-import { SpoofConfig } from '../utils/types';
+import { SpoofConfig, StudentScores } from '../utils/types';
 import { base64ToCanvas } from '../utils/base64toCanvas';
 import { canvasToBase64 } from '../utils/canvasToBase64';
 
@@ -48,6 +48,7 @@ export default function ServerProtocol({ code }: { code: string }) {
                         gallery: config.gallery,
                         modelData: config.modelData,
                         gameMode: config.gameMode,
+                        settings: config.settings,
                     },
                 });
                 conn.send({
@@ -123,6 +124,14 @@ export default function ServerProtocol({ code }: { code: string }) {
                     console.log('Modelfile not found when requested by student');
                 }
             } else if (data.event === 'eter:image') {
+                if (data.data.image === 'delete') {
+                    setStudent((prev) => {
+                        const newData = prev?.students ?? new Map();
+                        const studentScores: StudentScores = newData.get(data.data.studentId) ?? { data: new Map() };
+                        studentScores.data.delete(data.data.classname);
+                        return { students: newData };
+                    });
+                }
                 (async () => {
                     const topCanvas = await base64ToCanvas(data.data.image);
                     const topHeatmap = await base64ToCanvas(data.data.heatmap);
@@ -135,19 +144,18 @@ export default function ServerProtocol({ code }: { code: string }) {
 
                         const existing = studentScores.data.get(data.data.classname);
                         if (existing) {
-                            if (existing.score < score) {
-                                existing.score = score;
-                                existing.topCanvas = topCanvas;
-                                existing.topHeatmap = topHeatmap;
-                            }
+                            existing.score = score;
+                            existing.topCanvas = topCanvas;
+                            existing.topHeatmap = topHeatmap;
+                            existing.hidden = data.data.hidden;
                         } else {
                             studentScores.data.set(data.data.classname, {
                                 score,
                                 topCanvas,
                                 topHeatmap,
+                                hidden: data.data.hidden,
                             });
                         }
-
                         prevStudents.set(id, studentScores);
                         return { students: prevStudents };
                     });

@@ -2,7 +2,6 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@knicos/genai-base';
 import { useNavigate } from 'react-router-dom';
-import LangSelect from '../../components/LangSelect/LangSelect';
 import Footer from '../../components/Footer/Footer';
 
 import { useState } from 'react';
@@ -23,14 +22,16 @@ export default function Frontpage() {
         navigate('/library/');
     };
 
+    const logoSize = Math.min(192, window.innerWidth * 0.3);
+
     return (
         <div className={style.container}>
             <div className={style.innerContainer}>
                 <img
                     src="/logo192_bw.png"
                     alt="logo"
-                    width={192}
-                    height={192}
+                    width={logoSize}
+                    height={logoSize}
                 />
                 <h1>{t('common.title')}</h1>
                 <div className={style.startBox}>
@@ -59,9 +60,8 @@ export default function Frontpage() {
                         {t('common.createNew')}
                     </Button>
                 </div>
-                <LangSelect />
             </div>
-            <Footer hideLang={true} />
+            <Footer hideLang={false} />
         </div>
     );
 }

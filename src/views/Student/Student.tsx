@@ -1,23 +1,24 @@
-import { Webcam } from '@knicos/genai-base';
+import { Button, Webcam } from '@knicos/genai-base';
 import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
 import { useAtom } from 'jotai';
-import { SpoofConfig } from '../../utils/types';
+import { SpoofConfig, StudentScore } from '../../utils/types';
 import {
     classificationResultAtom,
     configAtom,
     menuShowTrainingDataAtom,
     modelAtom,
     profilePictureAtom,
+    showOwnResultsAtom,
     studentBouncerAtom,
+    studentResultsAtom,
     termTransferAtom,
     usernameAtom,
 } from '../../atoms/state';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { classifyImage } from '../../utils/classifyImage';
-import { ClassificationResults } from '../../components/ClassificationResults/ClassificationResults';
 import { canvasToBase64 } from '../../utils/canvasToBase64';
 import { cloneCanvas } from '../../utils/cloneCanvas';
 import { validateCanvas } from '../../utils/validateCanvas';
@@ -25,39 +26,43 @@ import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
 import StudentNavBar from '../StudentNavBar/StudentNavBar';
 import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 import MessageDisplay from '../MessageDisplay/MessageDisplay';
+import OwnResults from './OwnResults';
+
+const hidePicture = false; // CHANGE TO COME FROM SETTINGS WHEN IMPLEMENTED
 
 export default function Student({ serverCode }: { serverCode: string }) {
     const { t } = useTranslation();
+    const { doSendImages, doRegister } = useSpoofProtocol();
     const [model] = useAtom(modelAtom);
+    const [config] = useAtom<SpoofConfig>(configAtom);
     const [, setClassificationResult] = useAtom(classificationResultAtom);
+    const [, setShowGallery] = useAtom(menuShowTrainingDataAtom);
+    const [termData] = useAtom(termTransferAtom);
     const [username] = useAtom(usernameAtom);
     const [profilePicture] = useAtom(profilePictureAtom);
+    const [trainingDataOpen] = useAtom(menuShowTrainingDataAtom);
+    const [, setShowOwnResults] = useAtom(showOwnResultsAtom);
+    const [bouncer] = useAtom(studentBouncerAtom);
+    const [results, setResults] = useAtom(studentResultsAtom);
+    const topCanvasRef = useRef<HTMLCanvasElement | null>(null);
+    const topHeatmapRef = useRef<HTMLCanvasElement | null>(null);
+    const heatmapRef = useRef<HTMLCanvasElement | null>(null);
+    const enlargedHeatmapRef = useRef<HTMLCanvasElement | null>(null);
+    const sentRef = useRef(false);
+    const blockRef = useRef(true);
     const [classifyTerm, setClassifyTerm] = useState<string>('');
     const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
     const [currentScore, setCurrentScore] = useState<number>(0);
-    const [score, setScore] = useState<number>(0);
-    const [lastSentScore, setLastSentScore] = useState<number>(0);
+    const [topScore, setScore] = useState<number>(0);
     const [pause, setPause] = useState<boolean>(false);
     const [remotePause, setRemotePause] = useState<boolean>(false);
     const [heatmap, setHeatmap] = useState<boolean>(false);
     const [remoteHeatmap, setRemoteHeatmap] = useState<boolean>(false);
     const [remoteGallery, setRemoteGallery] = useState<boolean>(false);
-    const [, setShowGallery] = useAtom(menuShowTrainingDataAtom);
-    const topCanvasRef = useRef<HTMLCanvasElement | null>(null);
-    const topHeatmapRef = useRef<HTMLCanvasElement | null>(null);
     const [webcamSize, setWebcamSize] = useState<number>(
         Math.min(Math.floor(window.innerWidth * 0.7), Math.floor(window.innerHeight * 0.6) * 0.7, 800)
     ); // Size of the webcam component
-    const { doSendImages, doRegister } = useSpoofProtocol();
-    const [config] = useAtom<SpoofConfig>(configAtom);
-    const [termData] = useAtom(termTransferAtom);
-    const heatmapRef = useRef<HTMLCanvasElement | null>(null);
-    const enlargedHeatmapRef = useRef<HTMLCanvasElement | null>(null);
-    const sentRef = useRef(false);
     const [allLabels, setAllLabels] = useState<string[]>([]);
-    const [trainingDataOpen] = useAtom(menuShowTrainingDataAtom);
-    const [bouncer] = useAtom(studentBouncerAtom);
-    const blockRef = useRef(true);
     const [showError, setShowError] = useState(false);
 
     useLeaveWarning(blockRef); // Blocks unintended leaving
@@ -66,8 +71,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
     useEffect(() => {
         if (termData.term) {
             setClassifyTerm(termData.term);
-            setScore(0);
-            setLastSentScore(0); // Reset last sent score when config changes
+            setScore(results.data.get(termData.term)?.score ?? 0);
             model?.setXAIClass(termData.term);
         }
         if (config.pause !== undefined) {
@@ -81,7 +85,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
             setRemoteGallery(config.gallery);
             if (!config.gallery) setShowGallery(false);
         }
-    }, [config, model, setShowGallery, termData]); // Update classify term and model class when config
+    }, [config, model, results, setShowGallery, termData]); // Update classify term and model class when config
 
     useEffect(() => {
         if (model) {
@@ -113,22 +117,35 @@ export default function Student({ serverCode }: { serverCode: string }) {
     }, []);
 
     useEffect(() => {
+        const currentScore = results.data.get(classifyTerm)?.score ?? 0;
         const interval = setInterval(() => {
-            if (score > lastSentScore && topCanvasRef.current && topHeatmapRef.current && doSendImages) {
+            if (topScore > currentScore && topCanvasRef.current && topHeatmapRef.current && doSendImages) {
                 const imageBase64 = canvasToBase64(topCanvasRef.current);
                 const heatmapBase64 = canvasToBase64(topHeatmapRef.current);
+                // Send result to teacher
                 doSendImages({
                     studentId: username,
                     classname: classifyTerm,
                     image: imageBase64,
                     heatmap: heatmapBase64,
-                    score: score,
+                    score: topScore,
+                    hidden: false,
                 });
-                setLastSentScore(score);
+                // Save to own results
+                setResults((old: { data: Map<string, StudentScore> }) => {
+                    const newData = new Map(old.data);
+                    newData.set(classifyTerm, {
+                        score: topScore,
+                        topHeatmap: topHeatmapRef.current,
+                        topCanvas: topCanvasRef.current,
+                        hidden: hidePicture,
+                    });
+                    return { data: newData };
+                });
             }
         }, 2000);
         return () => clearInterval(interval);
-    }, [doSendImages, classifyTerm, lastSentScore, score, username]);
+    }, [doSendImages, setResults, results.data, classifyTerm, topScore, username]);
 
     useEffect(() => {
         if (bouncer.reload) {
@@ -196,6 +213,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
                 remoteHeatmap={remoteHeatmap}
                 remoteGallery={remoteGallery}
             />
+            <OwnResults />
             {termData?.term && trainingDataOpen && allLabels.length !== 0 && (
                 <div className={style.galleryContainer}>
                     <DatasetGallery allLabels={allLabels} />
@@ -213,14 +231,14 @@ export default function Student({ serverCode }: { serverCode: string }) {
                                 <span style={{ width: `${Math.round(currentScore)}%` }}></span>
                             </div>
                             <div className={style.scoreBar}>
-                                <span style={{ width: `${Math.round(score)}%` }}></span>
+                                <span style={{ width: `${Math.round(topScore)}%` }}></span>
                             </div>
 
                             <div
                                 className={style.scoreBarToolTip}
-                                style={{ width: `${Math.round(score)}%` }}
+                                style={{ width: `${Math.round(topScore)}%` }}
                             >
-                                <span data-label={score}></span>
+                                <span data-label={topScore}></span>
                             </div>
                             <div
                                 className={style.scoreBarCurrentToolTip}
@@ -261,7 +279,12 @@ export default function Student({ serverCode }: { serverCode: string }) {
                                 </div>
                             )}
                         </div>
-                        <ClassificationResults />
+                        <Button
+                            onClick={() => setShowOwnResults((s) => !s)}
+                            variant="contained"
+                        >
+                            Your results
+                        </Button>
                     </div>
                 </div>
             </div>

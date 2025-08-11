@@ -6,9 +6,9 @@ import style from './style.module.css';
 import {
     configAtom,
     menuShowTermChangeAtom,
-    menuShowCategoryViewAtom,
+    menuShowLeaderboardAtom,
     menuShowTrainingDataAtom,
-    menuShowUsersAtom,
+    menuShowUserGridAtom,
     modelAtom,
     studentDataAtom,
     usersAtom,
@@ -26,6 +26,7 @@ import TermChange from '../TermChange/TermChange';
 import UserMenu from '../UserMenu/UserMenu';
 import TermMenu from '../TermMenu/TermMenu';
 import Scoreboard from '../Scoreboard/Scoreboard';
+import Settings from '../Settings/Settings';
 
 export default function Teacher() {
     const blockRef = useRef(true);
@@ -38,9 +39,9 @@ export default function Teacher() {
     const [model, setModel] = useAtom(modelAtom);
     const [allLabels, setAllLabels] = useState<string[]>([]);
     const [labelChangeOpen] = useAtom(menuShowTermChangeAtom);
-    const [categoryViewOpen] = useAtom(menuShowCategoryViewAtom);
+    const [categoryViewOpen] = useAtom(menuShowLeaderboardAtom);
     const [galleryOpen] = useAtom(menuShowTrainingDataAtom);
-    const [usersOpen] = useAtom(menuShowUsersAtom);
+    const [usersOpen] = useAtom(menuShowUserGridAtom);
 
     // Load model if needed and set initial term, also pause the students
     useModelNamesLoader();
@@ -49,11 +50,10 @@ export default function Teacher() {
             setAllLabels(model.getLabels());
         }
         setConfig((old) => ({
+            ...old,
             pause: true,
             heatmap: false,
             gallery: false,
-            modelData: old.modelData,
-            gameMode: old.gameMode,
         }));
         setTermData({ term: model?.getLabels()[0] || '', recipient: { username: 'a' } });
     }, [model, setModel, setConfig, config.modelData, setTermData]);
@@ -70,6 +70,7 @@ export default function Teacher() {
                 users={users}
                 code={MYCODE}
             />
+            <Settings />
             <ModelDialog />
             <div className={style.sideMenu}>
                 <MenuPanel />

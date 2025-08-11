@@ -1,8 +1,40 @@
 .userContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    overflow: auto;
+    gap: 1.5rem;
+    height: 100%;
+}
+
+.imageContainer {
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.infoText {
+    max-width: 90%;
+}
+
+.textField {
+    width: 80%;
+}
+
+.restoreButton {
+    display: flex;
+    cursor: pointer;
     gap: 1rem;
-    max-width: 300px;
+}
+
+
+.restore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 38px;
+    height: 100%;
+    width: 80%;
 }

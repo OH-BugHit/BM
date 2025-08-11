@@ -1,7 +1,6 @@
 @value workspaceBg, primary, secondary, backgroundDark from "@knicos/genai-base/css/colours.module.css";
 
 .userGridContainer {
-    height: 100vh;
     width: 100%;
 }
 

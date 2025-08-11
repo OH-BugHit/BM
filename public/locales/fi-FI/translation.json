@@ -126,10 +126,33 @@
             "leaderboard": "Kokonaistilanne"
         }
     },
+    "settings": {
+        "titles": {
+            "general": "Yleiset asetukset",
+            "pictureSettings": "Kuvien asetukset",
+            "settings": "Asetukset"
+        },
+        "labels": {
+            "allowHidePicture": "Käyttäjä voi piilottaa kuvan (ei profiilikuvaa)",
+            "allowStartTermAgain": "Käyttäjä voi poistaa tuloksensa",
+            "hideResultPictures": "Piilota kaikki tuloskuvat",
+            "pauseOnChange": "Aloita uusi luokittelutermi pysäytetystilassa",
+            "showFullScoreboard": "Näytä kaikki tulokset pisteiden taulukossa",
+            "scoreboardLimit": "Näytä tulokset vain {{limit}} parhaalle"
+        }
+    },
     "student": {
+        "titles": {
+            "results": "Tulokset"
+        },
         "labels": {
             "disableApp": "Pysäytä kamera",
             "heatmap": "Lämpökartta"
+        },
+        "actions": {
+            "deleteProgress": "Poista edistyminen",
+            "hide": "Piilota kuva",
+            "show": "Näytä kuva"
         }
     },
     "teacher": {

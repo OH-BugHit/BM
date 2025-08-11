@@ -1,4 +1,3 @@
-import style from './style.module.css';
 import { useAtom } from 'jotai';
 import StudentProtocol from '../../services/StudentProtocol';
 import Student from './Student';
@@ -6,7 +5,6 @@ import { configAtom, profilePictureAtom, usernameAtom } from '../../atoms/state'
 import { useID } from '@knicos/genai-base';
 import EnterUserInfo from '../../components/EnterUsername/EnterUsername';
 import Footer from '../../components/Footer/Footer';
-import Header from '../../components/Header/Header';
 import { useParams } from 'react-router-dom';
 
 export default function StudentWrapper() {
@@ -28,10 +26,7 @@ export default function StudentWrapper() {
         >
             {config && !username && (
                 <div style={{ justifyItems: 'center', width: '100%', height: '100%' }}>
-                    <Header />
-                    <div className={style.usernameInput}>
-                        <EnterUserInfo registerStudent={registerStudent} />
-                    </div>
+                    <EnterUserInfo registerStudent={registerStudent} />
                     <Footer />
                 </div>
             )}

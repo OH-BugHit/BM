@@ -4,7 +4,7 @@ import style from './style.module.css';
 import LanguageIcon from '@mui/icons-material/Language';
 
 interface Props {
-    position?: string | null;
+    position?: 'topRight' | null;
 }
 
 export default function LangSelect({ position }: Props) {

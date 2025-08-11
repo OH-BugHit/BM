@@ -2,6 +2,7 @@ export type StudentScore = {
     score?: number;
     topCanvas?: HTMLCanvasElement | null;
     topHeatmap?: HTMLCanvasElement | null;
+    hidden: boolean;
 };
 
 /**
@@ -22,6 +23,10 @@ export type SpoofConfig = {
     gallery: boolean;
     modelData: ModelInfo;
     gameMode: 'all' | 'single';
+    settings: {
+        allowHidePicture: boolean;
+        allowResetTerm: boolean;
+    };
 };
 
 export type SpoofData = {
@@ -32,9 +37,10 @@ export type SpoofData = {
 export type ImageData = {
     studentId: string;
     classname: string;
-    image: string;
-    heatmap: string;
-    score: number;
+    image: string | 'delete';
+    heatmap: string | 'delete';
+    score: number | 'delete';
+    hidden: boolean | 'delete';
 }; // TODO: Vaihda imaget
 /**
  * Maps a student ID to their scores (K = student ID, V = StudentScores)
@@ -75,4 +81,15 @@ export type MessageData = {
     message: string;
     reload: boolean;
     recipient?: Username;
+};
+
+export type Settings = {
+    pauseOnChange: boolean;
+    allowHidePicture: boolean;
+    teacherHideResultPicture: boolean;
+    allowStartTermAgain: boolean;
+    limitScoreboard: {
+        limit: number;
+        showAll: boolean;
+    };
 };

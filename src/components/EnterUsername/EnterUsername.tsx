@@ -80,6 +80,27 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
 
     return (
         <div className={style.userContainer}>
+            <div className={style.imageContainer}>
+                {!image && (
+                    <Webcam
+                        size={Math.min(window.innerWidth - 16, window.innerHeight * 0.5)}
+                        capture={capture}
+                        onCapture={handleCapture}
+                        interval={1}
+                        direct
+                    />
+                )}
+
+                {image && (
+                    <img
+                        src={image}
+                        alt="Otettu kuva"
+                        style={{ maxWidth: '100%' }}
+                    />
+                )}
+            </div>
+
+            {errors.image && <p style={{ color: 'red' }}>{t('enterUsername.messages.imageRequired')}</p>}
             <LargeButton
                 onClick={toggleCapture}
                 variant="contained"
@@ -87,69 +108,55 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
                 {image ? t('enterUsername.actions.changePicture') : t('enterUsername.actions.takePicture')}
             </LargeButton>
 
-            {!image && (
-                <Webcam
-                    size={400}
-                    capture={capture}
-                    onCapture={handleCapture}
-                    interval={1}
-                    direct
+            <div className={style.textField}>
+                <TextField
+                    label={t('enterUsername.labels.enterUsername')}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    error={!!errors.username}
+                    helperText={
+                        errors.username ? t(`enterUsername.messages.usernameError.${errors.username}`) : undefined
+                    }
+                    fullWidth
+                    margin="normal"
                 />
-            )}
-
-            {image && (
-                <img
-                    src={image}
-                    alt="Otettu kuva"
-                    style={{ maxWidth: '100%', marginTop: '1rem' }}
-                />
-            )}
-
-            {errors.image && <p style={{ color: 'red' }}>{t('enterUsername.messages.imageRequired')}</p>}
-
-            <TextField
-                label={t('enterUsername.labels.enterUsername')}
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                error={!!errors.username}
-                helperText={errors.username ? t(`enterUsername.messages.usernameError.${errors.username}`) : undefined}
-                fullWidth
-                margin="normal"
-            />
-
+            </div>
             <LargeButton
                 onClick={handleSubmit}
                 variant="contained"
             >
                 {t('enterUsername.actions.enterUser')}
             </LargeButton>
-
-            {!showRestore && (
-                <div>
-                    <IconButton onClick={() => setShowRestore(true)}>
+            <div className={style.restore}>
+                {!showRestore && (
+                    <IconButton
+                        onClick={() => setShowRestore(true)}
+                        className={style.restoreButton}
+                    >
+                        <em>Palaa peliin</em>
                         <RestoreIcon />
                     </IconButton>
-                </div>
-            )}
+                )}
 
-            {showRestore && (
-                <Select
-                    value=""
-                    onChange={handleSelect}
-                    displayEmpty
-                    fullWidth
-                >
-                    {users.map((u) => (
-                        <MenuItem
-                            key={u.username}
-                            value={u.username}
-                        >
-                            {u.username}
-                        </MenuItem>
-                    ))}
-                </Select>
-            )}
+                {showRestore && (
+                    <Select
+                        value=""
+                        onChange={handleSelect}
+                        displayEmpty
+                        fullWidth
+                    >
+                        {users.map((u) => (
+                            <MenuItem
+                                key={u.username}
+                                value={u.username}
+                            >
+                                {u.username}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                )}
+            </div>
         </div>
     );
 }

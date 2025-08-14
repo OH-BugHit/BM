@@ -40,6 +40,7 @@ export default function UserMenu() {
                             setKickUser({
                                 message: t('userGrid.messages.kick'),
                                 reload: true,
+                                action: 'bouncer',
                                 recipient: { username: selectedUser.username },
                             });
                             setUsers((old) => old.filter((o) => o.username !== selectedUser.username));
@@ -56,6 +57,7 @@ export default function UserMenu() {
                             setKickUser({
                                 message: t('userGrid.messages.remove'),
                                 reload: true,
+                                action: 'bouncer',
                                 recipient: { username: selectedUser.username },
                             });
                             setUsers((old) => old.filter((o) => o.username !== selectedUser.username));

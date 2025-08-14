@@ -108,6 +108,12 @@
     },
     "messageDisplay": {
         "title": {
+            "userGrid": {
+                "messages": {
+                    "kick": "Huomio",
+                    "remove": "Huomio"
+                }
+            },
             "usernameTaken": "Käyttäjänimi varattu"
         },
         "reload": {
@@ -115,6 +121,12 @@
             "false": "Istunto jatkuu pian"
         },
         "message": {
+            "userGrid": {
+                "messages": {
+                    "kick": "Sinut on poistettu pelistä. Voit liittyä uudelleen. Kysy opettajaltasi lisätietoja.",
+                    "remove": "Sinut on poistettu pelistä. Profiilisi ja edistymisesi on poistettu. Kysy opettajaltasi lisätietoja."
+                }
+            },
             "usernameTaken": "Käyttäjänimi oli varattu, yritä uudelleen sivuston latauduttua..."
         }
     },

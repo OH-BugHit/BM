@@ -71,6 +71,7 @@ export default function ServerProtocol() {
                     event: 'eter:messageUser',
                     message: 'usernameTaken',
                     reload: true,
+                    action: 'bouncer',
                 });
                 return;
             }

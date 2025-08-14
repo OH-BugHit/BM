@@ -186,6 +186,12 @@
     },
     "messageDisplay": {
         "title": {
+            "userGrid": {
+                "messages": {
+                    "kick": "Warning",
+                    "remove": "Cauction"
+                }
+            },
             "usernameTaken": "Username taken"
         },
         "reload": {
@@ -193,6 +199,12 @@
             "false": "Session will continue shortly"
         },
         "message": {
+            "userGrid": {
+                "messages": {
+                    "kick": "You have been removed from the game. You can rejoin. Please ask your teacher for more details.",
+                    "remove": "You have been removed from the game. Your profile and progress has been removed. Please ask your teacher for more details."
+                }
+            },
             "usernameTaken": "Username was taken, try again after reload..."
         }
     },

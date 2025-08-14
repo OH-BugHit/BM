@@ -40,6 +40,7 @@ export interface MessageUserEvent extends PeerEvent {
     event: 'eter:messageUser';
     message: string;
     reload: boolean;
+    action: 'resetResult' | 'bouncer';
     recipient?: Username;
 }
 

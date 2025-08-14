@@ -80,6 +80,7 @@ export type Bouncer = {
 export type MessageData = {
     message: string;
     reload: boolean;
+    action: 'resetResult' | 'bouncer'; // bouncer handles kicking students, resetResults handles resetting result for term
     recipient?: Username;
 };
 

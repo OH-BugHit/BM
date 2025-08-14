@@ -63,6 +63,11 @@ export default function Student({ serverCode }: { serverCode: string }) {
     const [allLabels, setAllLabels] = useState<string[]>([]);
     const [showError, setShowError] = useState(false);
 
+    // Score circle buffer
+    const scoreBufferRef = useRef<number[]>(Array(10).fill(0));
+    const scoreIndexRef = useRef(0);
+    const scoreSumRef = useRef(0);
+
     useLeaveWarning(blockRef); // Blocks unintended leaving
     useModelNamesLoader(); // Loads model names
 
@@ -151,9 +156,29 @@ export default function Student({ serverCode }: { serverCode: string }) {
             setShowError(true);
             setTimeout(() => {
                 window.location.href = `/student/${serverCode}/main`;
-            }, 5000);
+            }, 8000);
         }
     }, [bouncer.reload, serverCode]);
+
+    /**
+     * Updates circular buffer.
+     * @param newScore New score from classifier
+     * @returns The mean of 10 last scores
+     */
+    function updateScoreBuffer(newScore: number): number {
+        const buffer = scoreBufferRef.current;
+        const idx = scoreIndexRef.current;
+        const oldValue = buffer[idx];
+
+        // scoreSum is updated with removing the oldest and adding most resent score
+        scoreSumRef.current = scoreSumRef.current - oldValue + newScore;
+        // we add the newScore to buffer
+        buffer[idx] = newScore;
+        // and move index
+        scoreIndexRef.current = (idx + 1) % buffer.length;
+        // returns the
+        return Math.round((scoreSumRef.current / buffer.length) * 100) / 1000;
+    }
 
     // Classify from canvas
     const handleCapture = useCallback(
@@ -168,15 +193,18 @@ export default function Student({ serverCode }: { serverCode: string }) {
                             r.className.toLowerCase().includes(`${classifyTerm.toLowerCase()}`)
                         );
                         if (result.length > 0) {
-                            const currentScore = Math.floor(result[0].probability * 10000) / 100;
-                            setCurrentScore(currentScore);
+                            const rawScore = Math.floor(result[0].probability * 1000);
+                            const smoothedScore = updateScoreBuffer(rawScore);
+
+                            setCurrentScore(smoothedScore);
+
                             setScore((prevScore) => {
-                                if (currentScore > prevScore) {
-                                    topCanvasRef.current = canvas; // Save topCanvas topHeatmap to be sent at the next interval
+                                if (smoothedScore > prevScore) {
+                                    topCanvasRef.current = canvas;
                                     if (heatmapRef.current) {
                                         topHeatmapRef.current = cloneCanvas(heatmapRef.current);
                                     }
-                                    return currentScore;
+                                    return smoothedScore;
                                 }
                                 return prevScore;
                             });
@@ -239,13 +267,13 @@ export default function Student({ serverCode }: { serverCode: string }) {
                                 className={style.scoreBarToolTip}
                                 style={{ width: `${Math.round(topScore)}%` }}
                             >
-                                <span data-label={topScore}></span>
+                                <span data-label={topScore.toFixed(2)}></span>
                             </div>
                             <div
                                 className={style.scoreBarCurrentToolTip}
                                 style={{ width: `${Math.round(currentScore)}%` }}
                             >
-                                <span data-label={currentScore}></span>
+                                <span data-label={currentScore.toFixed(2)}></span>
                             </div>
                         </div>
                         <div className={style.canvasContainer}>

@@ -9,6 +9,7 @@ import {
     modelAtom,
     profilePictureAtom,
     studentBouncerAtom,
+    studentResultsAtom,
     takenUsernamesAtom,
     termTransferAtom,
     usernameAtom,
@@ -35,21 +36,19 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
     const [, setModel] = useAtom(modelAtom);
     const [, setBouncer] = useAtom(studentBouncerAtom);
     const [, setProfilePicture] = useAtom(profilePictureAtom);
+    const [, setResults] = useAtom(studentResultsAtom);
     const [ownUsername] = useAtom(usernameAtom);
     // conn: Connection<EventProtocol>
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
         if (data.event === 'eter:join') {
-            console.log('Join command');
             // Send
         }
         if (data.event === 'ping') {
             console.log('ping');
         } else if (data.event === 'eter:termData') {
-            console.log('new termdata:', data.data);
             if (data.data.recipient.username === 'a' || data.data.recipient.username === ownUsername)
                 setTermData(data.data);
         } else if (data.event === 'eter:config') {
-            console.log('New config received: ', data.configuration);
             if (data.configuration.modelData) {
                 if (
                     data.configuration.modelData.name !== config.modelData.name ||
@@ -86,12 +85,18 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                 URL.revokeObjectURL(url);
             }
         } else if (data.event === 'eter:messageUser') {
-            console.warn(data.message);
             if (!data.recipient || data.recipient.username === ownUsername) {
-                setBouncer({ message: data.message, reload: data.reload });
+                if (data.action === 'resetResult') {
+                    setResults((old) => {
+                        const newResults = { ...old };
+                        newResults.data.delete(data.message);
+                        return newResults;
+                    });
+                } else if (data.action === 'bouncer') {
+                    setBouncer({ message: data.message, reload: data.reload });
+                }
             }
         } else if (data.event === 'eter:profilePicture') {
-            console.log('profilepic received');
             setProfilePicture(data.data.profilePicture);
         }
     });

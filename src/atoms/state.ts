@@ -40,6 +40,7 @@ export const termTransferAtom = atom<SpoofData>({
 export const messageTransferAtom = atom<MessageData>({
     message: '',
     reload: false,
+    action: 'bouncer',
     recipient: { username: '' },
 });
 

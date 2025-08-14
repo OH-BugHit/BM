@@ -111,7 +111,12 @@
 .visButton {
     margin-right: 1rem;
     cursor: pointer;
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    height: fit-content;
 }
+
 
 .hiddenByStudent {
     margin-right: 1rem;

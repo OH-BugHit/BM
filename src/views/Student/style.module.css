@@ -159,16 +159,14 @@ rgba(110, 175, 124, 0.114);
     content: '';
     border-radius: 10px;
     background-size: 100%;
-    background-image: linear-gradient(
-        45deg,
-        #fff 25%,
-        rgba(0, 0, 0, 0) 25%,
-        rgba(0, 0, 0, 0) 50%,
-        #fff 50%,
-        #fff 75%,
-        rgba(0, 0, 0, 0) 75%,
-        rgba(0, 0, 0, 0)
-    );
+    background-image: linear-gradient(45deg,
+            #fff 25%,
+            rgba(0, 0, 0, 0) 25%,
+            rgba(0, 0, 0, 0) 50%,
+            #fff 50%,
+            #fff 75%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0, 0, 0, 0));
     background-size: 30px 30px;
     opacity: 0.4;
     animation: scoreBarAfter 0.7s infinite linear;
@@ -201,16 +199,14 @@ rgba(110, 175, 124, 0.114);
     content: '';
     border-radius: 10px 0 0 10px;
     background-size: 100%;
-    background-image: linear-gradient(
-        45deg,
-        #fff 25%,
-        rgba(0, 0, 0, 0) 25%,
-        rgba(0, 0, 0, 0) 50%,
-        #ffffff 50%,
-        #ffffff 75%,
-        rgba(0, 0, 0, 0) 75%,
-        rgba(0, 0, 0, 0)
-    );
+    background-image: linear-gradient(45deg,
+            #fff 25%,
+            rgba(0, 0, 0, 0) 25%,
+            rgba(0, 0, 0, 0) 50%,
+            #ffffff 50%,
+            #ffffff 75%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0, 0, 0, 0));
     background-size: 30px 30px;
     opacity: 0.4;
     animation: scoreBarAfter 0.5s infinite linear;

@@ -1,4 +1,4 @@
-import { profilePicturesAtom, settingAtom, studentDataAtom } from '../../atoms/state';
+import { messageTransferAtom, profilePicturesAtom, settingAtom, studentDataAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 import style from './leaderboard.module.css';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
@@ -8,6 +8,7 @@ import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import BlockIcon from '@mui/icons-material/Block';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useTranslation } from 'react-i18next';
 import { close } from '../../components/Buttons/buttonStyles';
 import { motion } from 'framer-motion';
@@ -19,10 +20,11 @@ interface Props {
 export default function Leaderboard({ className }: Props) {
     const { t } = useTranslation();
 
-    const [studentData] = useAtom(studentDataAtom);
+    const [studentData, setStudentData] = useAtom(studentDataAtom);
     const [profilePics] = useAtom(profilePicturesAtom);
     const [maxSize, setMaxSize] = useState(Math.min(window.innerWidth * 0.2, window.innerHeight * 0.4));
     const [settings] = useAtom(settingAtom);
+    const [, setMessage] = useAtom(messageTransferAtom);
     const [hiddenByTeacher, setHiddenByTeacher] = useState<Map<string, string[]>>(new Map());
 
     const [openImage, setOpenImage] = useState<{ student: string; className: string } | null>({
@@ -62,6 +64,13 @@ export default function Leaderboard({ className }: Props) {
         );
     };
 
+    const removeResult = (student: string, className: string) => {
+        const newData = new Map(studentData.students);
+        newData.get(student)?.data.delete(className);
+        setStudentData({ students: newData });
+        setMessage({ reload: false, message: className, action: 'resetResult', recipient: { username: student } });
+    };
+
     const showClassImage = ({ className, student }: { className: string; student: string }) => {
         const studentEntry = studentData.students.get(student);
 
@@ -96,6 +105,18 @@ export default function Leaderboard({ className }: Props) {
                         <BlockIcon fontSize="large" />
                     </div>
                 )}
+                <div className={style.resetScore}>
+                    <Button
+                        onClick={() => removeResult(student, className)}
+                        title={t('common.close')}
+                        aria-label="Sulje"
+                    >
+                        <DeleteForeverIcon
+                            fontSize="large"
+                            color="error"
+                        />
+                    </Button>
+                </div>
                 {!hiddenByTeacher.get(student)?.includes(className) && (
                     <div
                         className={style.visButton}

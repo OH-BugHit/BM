@@ -1,4 +1,4 @@
-import { Connection, ConnectionStatus, usePeer } from '@knicos/genai-base';
+import { Connection, ConnectionStatus } from '@genai-fi/base';
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
 import { EventProtocol } from './protocol';
 import { ImageData, ModelInfo, ModelOrigin, RegisterData } from '../utils/types';
@@ -14,11 +14,7 @@ import {
     usernameAtom,
 } from '../atoms/state';
 import { loadModel } from './loadModel';
-
-interface Props extends PropsWithChildren {
-    server?: string;
-    mycode?: string;
-}
+import { usePeerData, usePeerSender, usePeerStatus } from '@genai-fi/base/hooks/peer';
 
 interface ProtocolContextType {
     doSendImages?: (data: ImageData) => void; // Send Image + heatmap image
@@ -31,7 +27,7 @@ const ProtocolContext = createContext<ProtocolContextType>({});
 export function useSpoofProtocol() {
     return useContext(ProtocolContext);
 }
-export default function StudentProtocol({ server, mycode, children }: Props) {
+export default function StudentProtocol({ children }: PropsWithChildren) {
     const [config, setConfig] = useAtom(configAtom);
     const [, setTermData] = useAtom(termTransferAtom);
     const [, setAvailableUsernames] = useAtom(availableUsernamesAtom);
@@ -41,88 +37,68 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
     const [, setProfilePicture] = useAtom(profilePictureAtom);
     const [ownUsername] = useAtom(usernameAtom);
     // conn: Connection<EventProtocol>
-    const dataHandler = useCallback(
-        async (data: EventProtocol, conn: Connection<EventProtocol>) => {
-            if (data.event === 'eter:join') {
-                console.log('Join command');
-                // Send
-            }
-            if (data.event === 'ping') {
-                console.log('ping');
-            } else if (data.event === 'eter:termData') {
-                console.log('new termdata:', data.data);
-                if (data.data.recipient.username === 'a' || data.data.recipient.username === ownUsername)
-                    setTermData(data.data);
-            } else if (data.event === 'eter:config') {
-                console.log('New config received: ', data.configuration);
-                if (data.configuration.modelData) {
-                    if (
-                        data.configuration.modelData.name !== config.modelData.name ||
-                        data.configuration.modelData.origin !== config.modelData.origin
-                    ) {
-                        if (data.configuration.modelData.origin === 'Gen-AI') {
-                            try {
-                                const model = await loadModel(data.configuration.modelData);
-                                setModel(model);
-                            } catch (e) {
-                                console.error('Failed to load model', e);
-                            }
-                        } else {
-                            conn.send({
-                                event: 'eter:modelRequest',
-                            });
+    usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
+        if (data.event === 'eter:join') {
+            console.log('Join command');
+            // Send
+        }
+        if (data.event === 'ping') {
+            console.log('ping');
+        } else if (data.event === 'eter:termData') {
+            console.log('new termdata:', data.data);
+            if (data.data.recipient.username === 'a' || data.data.recipient.username === ownUsername)
+                setTermData(data.data);
+        } else if (data.event === 'eter:config') {
+            console.log('New config received: ', data.configuration);
+            if (data.configuration.modelData) {
+                if (
+                    data.configuration.modelData.name !== config.modelData.name ||
+                    data.configuration.modelData.origin !== config.modelData.origin
+                ) {
+                    if (data.configuration.modelData.origin === 'Gen-AI') {
+                        try {
+                            const model = await loadModel(data.configuration.modelData);
+                            setModel(model);
+                        } catch (e) {
+                            console.error('Failed to load model', e);
                         }
+                    } else {
+                        conn.send({
+                            event: 'eter:modelRequest',
+                        });
                     }
                 }
-                setConfig(data.configuration);
-            } else if (data.event === 'eter:userlist') {
-                setAvailableUsernames(data.available);
-                setTakenUsernames(data.taken);
-            } else if (data.event === 'eter:modelTransfer') {
-                const receivedZip = new Blob([data.data], { type: 'application/zip' });
-                const url = URL.createObjectURL(receivedZip);
-                const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };
-                try {
-                    const model = await loadModel(modelLoadingObject);
-                    setModel(model);
-                } catch (err) {
-                    console.error('Failed to load model', err);
-                } finally {
-                    URL.revokeObjectURL(url);
-                }
-            } else if (data.event === 'eter:messageUser') {
-                console.warn(data.message);
-                if (!data.recipient || data.recipient.username === ownUsername) {
-                    setBouncer({ message: data.message, reload: data.reload });
-                }
-            } else if (data.event === 'eter:profilePicture') {
-                console.log('profilepic received');
-                setProfilePicture(data.data.profilePicture);
             }
-        },
-        [
-            setConfig,
-            setAvailableUsernames,
-            config.modelData,
-            setModel,
-            setTakenUsernames,
-            setBouncer,
-            setProfilePicture,
-            setTermData,
-            ownUsername,
-        ]
-    );
+            setConfig(data.configuration);
+        } else if (data.event === 'eter:userlist') {
+            setAvailableUsernames(data.available);
+            setTakenUsernames(data.taken);
+        } else if (data.event === 'eter:modelTransfer') {
+            const receivedZip = new Blob([data.data], { type: 'application/zip' });
+            const url = URL.createObjectURL(receivedZip);
+            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };
+            try {
+                const model = await loadModel(modelLoadingObject);
+                setModel(model);
+            } catch (err) {
+                console.error('Failed to load model', err);
+            } finally {
+                URL.revokeObjectURL(url);
+            }
+        } else if (data.event === 'eter:messageUser') {
+            console.warn(data.message);
+            if (!data.recipient || data.recipient.username === ownUsername) {
+                setBouncer({ message: data.message, reload: data.reload });
+            }
+        } else if (data.event === 'eter:profilePicture') {
+            console.log('profilepic received');
+            setProfilePicture(data.data.profilePicture);
+        }
+    });
     const [hasBeenReady, setHasBeenReady] = useState(false);
 
-    const { ready, send, peer } = usePeer({
-        host: import.meta.env.VITE_APP_PEER_SERVER,
-        secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
-        key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
-        port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
-        code: `spoof_${mycode}`,
-        onData: dataHandler,
-        server: `spoof_${server}`,
-    });
+    const ready = usePeerStatus() === 'ready';
+    const send = usePeerSender<EventProtocol>();
 
     useEffect(() => {
         setHasBeenReady(true);
@@ -161,8 +137,6 @@ export default function StudentProtocol({ server, mycode, children }: Props) {
                 <ConnectionStatus
                     api={import.meta.env.VITE_APP_APIURL}
                     appName={'spoofgame'}
-                    ready={ready}
-                    peer={peer}
                     visibility={3}
                 />
             </div>

@@ -1,4 +1,4 @@
-import { Button, Webcam } from '@knicos/genai-base';
+import { Button, Webcam } from '@genai-fi/base';
 import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
@@ -16,7 +16,7 @@ import {
     termTransferAtom,
     usernameAtom,
 } from '../../atoms/state';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { classifyImage } from '../../utils/classifyImage';
 import { canvasToBase64 } from '../../utils/canvasToBase64';
@@ -158,47 +158,50 @@ export default function Student({ serverCode }: { serverCode: string }) {
     }, [bouncer.reload, serverCode]);
 
     // Classify from canvas
-    const handleCapture = async (canvas: HTMLCanvasElement) => {
-        if (!model || classifyTerm.length === 0 || pause || remotePause) return;
-        if (validateCanvas(canvas)) {
-            try {
-                const results = await classifyImage(model, canvas);
-                if (results) {
-                    // working code continues
-                    const result = results.predictions.filter((r) =>
-                        r.className.toLowerCase().includes(`${classifyTerm.toLowerCase()}`)
-                    );
-                    if (result.length > 0) {
-                        const currentScore = Math.floor(result[0].probability * 10000) / 100;
-                        setCurrentScore(currentScore);
-                        setScore((prevScore) => {
-                            if (currentScore > prevScore) {
-                                topCanvasRef.current = canvas; // Save topCanvas topHeatmap to be sent at the next interval
-                                if (heatmapRef.current) {
-                                    topHeatmapRef.current = cloneCanvas(heatmapRef.current);
+    const handleCapture = useCallback(
+        async (canvas: HTMLCanvasElement) => {
+            if (!model || classifyTerm.length === 0 || pause || remotePause) return;
+            if (validateCanvas(canvas)) {
+                try {
+                    const results = await classifyImage(model, canvas);
+                    if (results) {
+                        // working code continues
+                        const result = results.predictions.filter((r) =>
+                            r.className.toLowerCase().includes(`${classifyTerm.toLowerCase()}`)
+                        );
+                        if (result.length > 0) {
+                            const currentScore = Math.floor(result[0].probability * 10000) / 100;
+                            setCurrentScore(currentScore);
+                            setScore((prevScore) => {
+                                if (currentScore > prevScore) {
+                                    topCanvasRef.current = canvas; // Save topCanvas topHeatmap to be sent at the next interval
+                                    if (heatmapRef.current) {
+                                        topHeatmapRef.current = cloneCanvas(heatmapRef.current);
+                                    }
+                                    return currentScore;
                                 }
-                                return currentScore;
+                                return prevScore;
+                            });
+                        }
+                        setClassificationResult(results.predictions.slice(0, 3)); // Top 3 storing (for TEMP view only)
+                        if (heatmapRef.current && enlargedHeatmapRef.current) {
+                            const src = heatmapRef.current;
+                            const dst = enlargedHeatmapRef.current;
+                            const ctx = dst.getContext('2d');
+                            if (ctx) {
+                                ctx.clearRect(0, 0, dst.width, dst.height);
+                                ctx.drawImage(src, 0, 0, src.width, src.height, 0, 0, dst.width, dst.height);
                             }
-                            return prevScore;
-                        });
-                    }
-                    setClassificationResult(results.predictions.slice(0, 3)); // Top 3 storing (for TEMP view only)
-                    if (heatmapRef.current && enlargedHeatmapRef.current) {
-                        const src = heatmapRef.current;
-                        const dst = enlargedHeatmapRef.current;
-                        const ctx = dst.getContext('2d');
-                        if (ctx) {
-                            ctx.clearRect(0, 0, dst.width, dst.height);
-                            ctx.drawImage(src, 0, 0, src.width, src.height, 0, 0, dst.width, dst.height);
                         }
                     }
+                } catch (err) {
+                    console.error('Luokittelu epäonnistui:', err);
+                    setClassificationResult(null);
                 }
-            } catch (err) {
-                console.error('Luokittelu epäonnistui:', err);
-                setClassificationResult(null);
             }
-        }
-    };
+        },
+        [model, classifyTerm, pause, remotePause, setClassificationResult]
+    );
 
     return (
         <>

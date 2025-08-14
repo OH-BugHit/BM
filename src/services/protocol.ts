@@ -1,4 +1,4 @@
-import { BuiltinEvent, PeerEvent } from '@knicos/genai-base';
+import { BuiltinEvent, PeerEvent } from '@genai-fi/base';
 import { ImageData, RegisterData, SpoofConfig, SpoofData } from '../utils/types';
 import { Username } from '../utils/types';
 export interface ConfigurationEvent extends PeerEvent {

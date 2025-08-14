@@ -1,11 +1,11 @@
 import style from './style.module.css';
 import { useAtom } from 'jotai';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { availableUsernamesAtom, takenUsernamesAtom } from '../../atoms/state';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
-import { LargeButton, Webcam } from '@knicos/genai-base';
+import { LargeButton, Webcam } from '@genai-fi/base';
 
 interface Props {
     registerStudent: (name: string, image: string) => void;
@@ -27,11 +27,11 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
     const [image, setImage] = useState<string | null>(null);
     const [username, setUsername] = useState('');
 
-    const handleCapture = (canvas: HTMLCanvasElement) => {
+    const handleCapture = useCallback((canvas: HTMLCanvasElement) => {
         setImage(canvas.toDataURL('image/png'));
         setCapture(false);
         setErrors((prev) => ({ ...prev, image: undefined }));
-    };
+    }, []);
 
     const toggleCapture = () => {
         if (image) {
@@ -83,10 +83,10 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
             <div className={style.imageContainer}>
                 {!image && (
                     <Webcam
-                        size={Math.min(window.innerWidth - 16, window.innerHeight * 0.5)}
+                        size={512}
                         capture={capture}
                         onCapture={handleCapture}
-                        interval={1}
+                        interval={200}
                         direct
                     />
                 )}

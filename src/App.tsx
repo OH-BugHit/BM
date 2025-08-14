@@ -2,7 +2,7 @@ import './App.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import { Suspense } from 'react';
-import { Spinner } from '@knicos/genai-base';
+import { Spinner } from '@genai-fi/base';
 
 function App() {
     return (

@@ -1,6 +1,6 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@knicos/genai-base';
+import { Button } from '@genai-fi/base';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 

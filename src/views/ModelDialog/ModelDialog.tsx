@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { useCallback, useRef, useState } from 'react';
 import { Autocomplete, Dialog, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import { LargeButton } from '@knicos/genai-base';
+import { LargeButton } from '@genai-fi/base';
 import { loadModel } from '../../services/loadModel';
 import { ModelInfo, ModelOrigin } from '../../utils/types';
 

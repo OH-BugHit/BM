@@ -4,7 +4,7 @@ import { showSettingsDialogAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 import { useCallback, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from '@mui/material';
-import { Button } from '@knicos/genai-base';
+import { Button } from '@genai-fi/base';
 import GeneralSettings from './GeneralSettings';
 import PictureSettings from './PictureSettings';
 

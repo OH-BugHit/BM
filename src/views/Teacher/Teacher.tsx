@@ -15,7 +15,7 @@ import {
     termTransferAtom,
 } from '../../atoms/state';
 import { useEffect, useRef, useState } from 'react';
-import { useID } from '@knicos/genai-base';
+import { useID } from '@genai-fi/base';
 import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
 import MenuPanel from '../AppMenu/AppMenu';
 import StartDialog from '../StartDialog/StartDialog';
@@ -27,6 +27,8 @@ import UserMenu from '../UserMenu/UserMenu';
 import TermMenu from '../TermMenu/TermMenu';
 import Scoreboard from '../Scoreboard/Scoreboard';
 import Settings from '../Settings/Settings';
+import { Peer } from '@genai-fi/base/hooks/peer';
+import PeerEnv from '../../env';
 
 export default function Teacher() {
     const blockRef = useRef(true);
@@ -62,38 +64,46 @@ export default function Teacher() {
 
     // Komennot lähetetään muokkaamalla config-atomia
     return (
-        <div className={style.container}>
-            <div className={style.serverProtocolContainer}>
-                <ServerProtocol code={MYCODE} />
+        <Peer
+            host={PeerEnv.host}
+            secure={PeerEnv.secure}
+            peerkey={PeerEnv.peerkey}
+            port={PeerEnv.port}
+            code={`spoof-${MYCODE}`}
+        >
+            <div className={style.container}>
+                <div className={style.serverProtocolContainer}>
+                    <ServerProtocol />
+                </div>
+                <StartDialog
+                    users={users}
+                    code={MYCODE}
+                />
+                <Settings />
+                <ModelDialog />
+                <div className={style.sideMenu}>
+                    <MenuPanel />
+                </div>
+                <div className={style.content}>
+                    {galleryOpen && termData?.term && <DatasetGallery allLabels={allLabels} />}
+                    {usersOpen && studentData && (
+                        <>
+                            <UserMenu />
+                            <div style={{ paddingTop: '6rem' }} />
+                            <UserGrid />
+                        </>
+                    )}
+                    {labelChangeOpen && (
+                        <>
+                            <TermMenu />
+                            <div style={{ paddingTop: '6rem' }} />
+                            <TermChange allLabels={allLabels} />
+                        </>
+                    )}
+                    {categoryViewOpen && <Scoreboard />}
+                </div>
+                <Footer />
             </div>
-            <StartDialog
-                users={users}
-                code={MYCODE}
-            />
-            <Settings />
-            <ModelDialog />
-            <div className={style.sideMenu}>
-                <MenuPanel />
-            </div>
-            <div className={style.content}>
-                {galleryOpen && termData?.term && <DatasetGallery allLabels={allLabels} />}
-                {usersOpen && studentData && (
-                    <>
-                        <UserMenu />
-                        <div style={{ paddingTop: '6rem' }} />
-                        <UserGrid />
-                    </>
-                )}
-                {labelChangeOpen && (
-                    <>
-                        <TermMenu />
-                        <div style={{ paddingTop: '6rem' }} />
-                        <TermChange allLabels={allLabels} />
-                    </>
-                )}
-                {categoryViewOpen && <Scoreboard />}
-            </div>
-            <Footer />
-        </div>
+        </Peer>
     );
 }

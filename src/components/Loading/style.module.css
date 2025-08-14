@@ -1,11 +1,10 @@
-@value primary, textDark from "@knicos/genai-base/css/colours.module.css";
+@value primary, textDark from "@genai-fi/base/css/colours.module.css";
 
 .container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
 }
 
 .container h1 {

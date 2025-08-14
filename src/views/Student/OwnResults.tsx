@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import style from './results.module.css';
 import { showOwnResultsAtom } from '../../atoms/state';
-import { Button } from '@knicos/genai-base';
+import { Button } from '@genai-fi/base';
 import { close } from '../../components/Buttons/buttonStyles';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { ResultsGallery } from './ResultsGallery';

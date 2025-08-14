@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import style from './leaderboard.module.css';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import { useEffect, useState } from 'react';
-import { Button } from '@knicos/genai-base';
+import { Button } from '@genai-fi/base';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';

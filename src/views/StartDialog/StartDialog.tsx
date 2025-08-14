@@ -5,7 +5,7 @@ import { UserInfo } from '../../utils/types';
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import { LargeButton, QRCode } from '@knicos/genai-base';
+import { LargeButton, QRCode } from '@genai-fi/base';
 
 interface Props {
     users: UserInfo[];

@@ -17,7 +17,7 @@ vi.mock('../../components/LangSelect/LangSelect', () => ({
 vi.mock('../../components/Footer/Footer', () => ({
     default: () => <div data-testid="footer" />,
 }));
-vi.mock('@knicos/genai-base', () => ({
+vi.mock('@genai-fi/base', () => ({
     Button: (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => <button {...props}>{props.children}</button>,
 }));
 vi.mock('@mui/material', () => ({

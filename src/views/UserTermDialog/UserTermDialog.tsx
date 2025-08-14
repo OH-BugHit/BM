@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
-import { LargeButton } from '@knicos/genai-base';
+import { LargeButton } from '@genai-fi/base';
 import { selectedUserAtom, showUserTermDialogAtom } from '../../atoms/state';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import TermSelector from '../../components/TermSelector/TermSelector';

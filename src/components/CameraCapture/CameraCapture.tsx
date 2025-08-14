@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Webcam, Button } from '@knicos/genai-base';
+import { Webcam, Button } from '@genai-fi/base';
 
 interface Props {
     onCapture: (img: HTMLCanvasElement) => void;

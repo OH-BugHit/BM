@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import style from './style.module.css';
 import { fetchImageUrls } from '../../services/ImageService';
-import { Button } from '@knicos/genai-base';
+import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { close, closeGallery } from '../../components/Buttons/buttonStyles';

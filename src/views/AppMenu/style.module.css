@@ -1,4 +1,4 @@
-@value bgColourful1 from "@knicos/genai-base/css/colours.module.css";
+@value bgColourful1 from "@genai-fi/base/css/colours.module.css";
 @value backgroundDark2: #444;
 @value backgroundDark3: #555;
 @value secondaryLight: #E996E9;
@@ -65,7 +65,6 @@
     box-sizing: border-box;
     overflow: hidden;
     flex: 0 0 280px;
-
 }
 
 .sideNavClosed {

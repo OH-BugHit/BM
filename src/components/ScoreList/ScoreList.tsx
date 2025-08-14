@@ -3,7 +3,7 @@ import style from './style.module.css';
 import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { scoresAtom } from '../../atoms/state';
-import { Button } from '@knicos/genai-base';
+import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import OverallScore from './OverallScore';
 import { Score } from '../../utils/types';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import style from './results.module.css';
-import { Button } from '@knicos/genai-base';
+import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { close } from '../../components/Buttons/buttonStyles';

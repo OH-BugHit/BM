@@ -32,7 +32,7 @@ export default function TermChange({ allLabels }: { allLabels: string[] }) {
                     {config.gameMode === 'all' && (
                         <div className={style.modeItem}>
                             <div className={style.collapsibleContent}>
-                                <h3>Vaihda sana kaikille</h3>
+                                <h3>Change the Challenge</h3>
                                 {allLabels.length !== 0 && (
                                     <div className={style.selectorItem}>
                                         <TermSelector allLabels={allLabels} />
@@ -43,7 +43,7 @@ export default function TermChange({ allLabels }: { allLabels: string[] }) {
                     )}
                     {config.gameMode === 'single' && (
                         <div className={style.modeItem}>
-                            <h3>Vaihda yksittäisen käyttäjän sana</h3>
+                            <h3>Set new challenge for one player</h3>
                             <div className={style.collapsibleContent}>
                                 <UserGrid />
                             </div>

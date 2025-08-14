@@ -134,7 +134,7 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
                         onClick={() => setShowRestore(true)}
                         className={style.restoreButton}
                     >
-                        <em>Palaa peliin</em>
+                        <em>Return to Game</em>
                         <RestoreIcon />
                     </IconButton>
                 )}

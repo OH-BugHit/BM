@@ -19,17 +19,6 @@
     backdrop-filter: blur(10px);
 }
 
-.leaderboard::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url('/logo192_bw.png');
-    background-repeat: repeat;
-    background-size: calc(100% / 11);
-    opacity: 0.1;
-    z-index: -1;
-}
-
 .leaderboardItem {
     display: flex;
     flex-direction: row;
@@ -87,7 +76,7 @@
     border-radius: 50% 0 0 50%;
     padding-right: 2rem;
     background: linear-gradient(45deg, rgba(53, 99, 251, 0.178), rgba(31, 212, 225, 0));
-    gap: 1.5rem
+    gap: 1.5rem;
 }
 
 .leaderboardInfo {
@@ -95,10 +84,7 @@
     flex-direction: row;
     padding: 1rem 3rem 1rem 3rem;
     border-radius: 2rem;
-    background-color: rgba(255,
-            255,
-            255,
-            0.421);
+    background-color: rgba(255, 255, 255, 0.421);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 10px;
     margin-top: 10px;
@@ -124,7 +110,6 @@
 
 .visButton {
     margin-right: 1rem;
-    ;
     cursor: pointer;
 }
 
@@ -135,7 +120,6 @@
 .allPics {
     display: none;
     max-width: 10dvw;
-    ;
     align-items: center;
     overflow-x: auto;
     gap: 0.5rem;
@@ -168,7 +152,6 @@
     display: flex;
     flex-direction: row;
     gap: 2rem;
-
 }
 
 /*For opened images*/

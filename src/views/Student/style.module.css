@@ -6,13 +6,14 @@
     height: 100%;
     align-self: center;
     overflow: auto;
-    background: #dee4e8;
+    background: white;
     align-items: center;
 }
 
 .canvasContainer {
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .heatmapContainer {
@@ -45,6 +46,8 @@
     align-items: center;
     margin-top: 16px;
     gap: 1rem;
+    width: 100%;
+    max-width: 512px;
 }
 
 .galleryContainer {
@@ -56,6 +59,11 @@
 
 .webcamWrapper {
     border: 2px solid #fff;
+    width: 100%;
+}
+
+.webcamWrapper canvas {
+    width: 100%;
 }
 
 /*For displaying text that camera is not active on top of the webcam component*/
@@ -101,7 +109,6 @@
     text-align: center;
     z-index: 2;
 }
-
 
 .scoreBarContainer {
     width: 50%;
@@ -149,16 +156,19 @@ rgba(110, 175, 124, 0.114);
     left: 0;
     right: 0;
     bottom: 0;
-    content: "";
+    content: '';
     border-radius: 10px;
     background-size: 100%;
-    background-image: linear-gradient(45deg, #fff 25%,
-            rgba(0, 0, 0, 0)25%,
-            rgba(0, 0, 0, 0)50%,
-            #fff 50%,
-            #fff 75%,
-            rgba(0, 0, 0, 0)75%,
-            rgba(0, 0, 0, 0));
+    background-image: linear-gradient(
+        45deg,
+        #fff 25%,
+        rgba(0, 0, 0, 0) 25%,
+        rgba(0, 0, 0, 0) 50%,
+        #fff 50%,
+        #fff 75%,
+        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 0)
+    );
     background-size: 30px 30px;
     opacity: 0.4;
     animation: scoreBarAfter 0.7s infinite linear;
@@ -188,16 +198,19 @@ rgba(110, 175, 124, 0.114);
     left: 0;
     right: 0;
     bottom: 0;
-    content: "";
+    content: '';
     border-radius: 10px 0 0 10px;
     background-size: 100%;
-    background-image: linear-gradient(45deg, #fff 25%,
-            rgba(0, 0, 0, 0)25%,
-            rgba(0, 0, 0, 0)50%,
-            #ffffff 50%,
-            #ffffff 75%,
-            rgba(0, 0, 0, 0)75%,
-            rgba(0, 0, 0, 0));
+    background-image: linear-gradient(
+        45deg,
+        #fff 25%,
+        rgba(0, 0, 0, 0) 25%,
+        rgba(0, 0, 0, 0) 50%,
+        #ffffff 50%,
+        #ffffff 75%,
+        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 0)
+    );
     background-size: 30px 30px;
     opacity: 0.4;
     animation: scoreBarAfter 0.5s infinite linear;
@@ -228,7 +241,7 @@ rgba(110, 175, 124, 0.114);
     border-right-width: 0;
     border-bottom-width: 0;
     border-top-color: rgb(255, 229, 28);
-    content: "";
+    content: '';
 }
 
 .scoreBarToolTip span::after {
@@ -256,7 +269,7 @@ rgba(110, 175, 124, 0.114);
     border-right-width: 0;
     border-bottom-width: 0;
     border-top-color: rgb(0, 0, 0);
-    content: "";
+    content: '';
 }
 
 .scoreBarCurrentToolTip span::after {
@@ -274,11 +287,11 @@ rgba(110, 175, 124, 0.114);
 }
 
 /* Change imported webcam style*/
-.webcamWrapper [class*="wrapContainer"] {
+.webcamWrapper [class*='wrapContainer'] {
     color: rgb(48, 189, 173);
 }
 
-.webcamWrapper [class*="Mui"] {
+.webcamWrapper [class*='Mui'] {
     position: absolute;
     right: 6px;
     top: 6px;
@@ -286,10 +299,9 @@ rgba(110, 175, 124, 0.114);
 
 /* Imported webcam style changer ends*/
 
-
 @keyframes scoreBar {
     0% {
-        width: 0%
+        width: 0%;
     }
 
     50% {

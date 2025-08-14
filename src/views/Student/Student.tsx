@@ -59,9 +59,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
     const [heatmap, setHeatmap] = useState<boolean>(false);
     const [remoteHeatmap, setRemoteHeatmap] = useState<boolean>(false);
     const [remoteGallery, setRemoteGallery] = useState<boolean>(false);
-    const [webcamSize, setWebcamSize] = useState<number>(
-        Math.min(Math.floor(window.innerWidth * 0.7), Math.floor(window.innerHeight * 0.6) * 0.7, 800)
-    ); // Size of the webcam component
+    const [webcamSize, setWebcamSize] = useState<number>(512); // Size of the webcam component
     const [allLabels, setAllLabels] = useState<string[]>([]);
     const [showError, setShowError] = useState(false);
 
@@ -225,7 +223,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
             <div className={style.container}>
                 <div className={style.innerContainer}>
                     <div className={style.gameContainer}>
-                        <h2>{classifyTerm && `Luokittelusana: \n${classifyTerm}`}</h2>
+                        <h2>{classifyTerm && `${classifyTerm}`}</h2>
                         {!isCameraActive && (
                             <div className={style.cameraNotActive}>{t('webcam.notAvailable', 'Kamera käynnistyy')}</div>
                         )}

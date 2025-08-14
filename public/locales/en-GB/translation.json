@@ -272,9 +272,9 @@
             "single": "Send new classifying term to single user"
         },
         "titles": {
-            "all": "One word for all players",
+            "all": "Common Challenge",
             "change": "Change label for {{user}}",
-            "single": "Different words for players"
+            "single": "Individual Challenges"
         }
     },
     "userGrid": {

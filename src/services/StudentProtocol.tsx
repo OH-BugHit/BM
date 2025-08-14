@@ -137,7 +137,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                 <ConnectionStatus
                     api={import.meta.env.VITE_APP_APIURL}
                     appName={'spoofgame'}
-                    visibility={3}
+                    visibility={1}
                 />
             </div>
         </ProtocolContext.Provider>

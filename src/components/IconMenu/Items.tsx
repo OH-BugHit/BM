@@ -15,7 +15,9 @@ export default function IconMenuItem({ fullWidth, tooltip, children, hideTip, se
 
     return hideTip ? (
         <div
-            style={{ width: fullWidth ? '100%' : undefined }}
+            style={{
+                width: fullWidth ? '100%' : undefined,
+            }}
             className={selected ? style.selectedItem : undefined}
         >
             {children}

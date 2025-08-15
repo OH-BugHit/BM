@@ -224,6 +224,7 @@ export default function MenuPanel() {
                         size="large"
                         variant="text"
                         fullWidth
+                        style={{ minHeight: '64px', minWidth: '64px' }}
                         onClick={() => doShowSubview('results')}
                     >
                         <EmojiEventsIcon fontSize="large" />

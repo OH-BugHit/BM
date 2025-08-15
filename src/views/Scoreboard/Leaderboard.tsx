@@ -113,7 +113,7 @@ export default function Leaderboard({ className }: Props) {
                     >
                         <DeleteForeverIcon
                             fontSize="large"
-                            color="error"
+                            color="action"
                         />
                     </Button>
                 </div>
@@ -129,7 +129,10 @@ export default function Leaderboard({ className }: Props) {
                             });
                         }}
                     >
-                        <VisibilityIcon fontSize="large" />
+                        <VisibilityIcon
+                            fontSize="large"
+                            color="action"
+                        />
                     </div>
                 )}
                 {hiddenByTeacher.get(student)?.includes(className) && (
@@ -147,7 +150,10 @@ export default function Leaderboard({ className }: Props) {
                             });
                         }}
                     >
-                        <VisibilityOffIcon fontSize="large" />
+                        <VisibilityOffIcon
+                            fontSize="large"
+                            color="action"
+                        />
                     </div>
                 )}
             </>

@@ -176,7 +176,8 @@
     },
     "menu": {
         "labels": {
-            "exit": "Quit session (All data is lost)"
+            "exit": "Quit session (All data is removed)",
+            "settings": "Settings"
         },
         "vis": {
             "results": "Results",

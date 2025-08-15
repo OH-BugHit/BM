@@ -98,7 +98,8 @@
     },
     "menu": {
         "labels": {
-            "exit": "Lopeta (Kaikki tiedot menetetään)"
+            "exit": "Lopeta (Kaikki tiedot poistetaan)",
+            "settings": "Asetukset"
         },
         "vis": {
             "results": "Tulokset",

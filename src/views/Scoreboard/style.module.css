@@ -132,16 +132,14 @@
     content: '';
     border-radius: 10px;
     background-size: 100%;
-    background-image: linear-gradient(
-        45deg,
-        #fff 25%,
-        rgba(0, 0, 0, 0) 25%,
-        rgba(0, 0, 0, 0) 50%,
-        #fff 50%,
-        #fff 75%,
-        rgba(0, 0, 0, 0) 75%,
-        rgba(0, 0, 0, 0)
-    );
+    background-image: linear-gradient(45deg,
+            #fff 25%,
+            rgba(0, 0, 0, 0) 25%,
+            rgba(0, 0, 0, 0) 50%,
+            #fff 50%,
+            #fff 75%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0, 0, 0, 0));
     background-size: 30px 30px;
     opacity: 0.4;
     animation: scoreBarAfter 0.7s infinite linear;
@@ -185,9 +183,10 @@
 .innerContainer {
     display: flex;
     flex-direction: row;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
     width: 100%;
+    height: 95%;
+
 }
 
 .termNamesContainer {
@@ -196,8 +195,7 @@
     justify-content: left;
     gap: 0.5rem;
     margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 1.5rem;
+
 }
 
 .resultsContainer {
@@ -303,5 +301,15 @@
 @media (max-width: 600px) {
     .termItemRow {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 1200px) {
+    h1 {
+        font-size: xx-large;
+    }
+
+    h3 {
+        font-size: medium;
     }
 }

@@ -8,4 +8,5 @@ export const MenuButton = styled(Button)({
     justifyContent: 'flex-start',
     textWrap: 'nowrap',
     overflow: 'hidden',
+    width: '100%',
 });

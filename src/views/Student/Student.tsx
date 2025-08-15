@@ -249,9 +249,12 @@ export default function Student({ serverCode }: { serverCode: string }) {
                 </div>
             )}
             <div className={style.container}>
-                <div className={style.innerContainer}>
+                <div
+                    className={style.innerContainer}
+                    style={{ maxHeight: `${window.innerHeight - 64}px` }}
+                >
                     <div className={style.gameContainer}>
-                        <h2>{classifyTerm && `${classifyTerm}`}</h2>
+                        <h1>{classifyTerm && `${classifyTerm}`}</h1>
                         {!isCameraActive && (
                             <div className={style.cameraNotActive}>{t('webcam.notAvailable', 'Kamera käynnistyy')}</div>
                         )}
@@ -288,13 +291,14 @@ export default function Student({ serverCode }: { serverCode: string }) {
                                 {(pause || remotePause) && <div className={style.overlayText}>Game paused</div>}
                                 <Webcam
                                     size={webcamSize}
-                                    interval={100}
+                                    interval={250}
                                     capture={!pause || !remotePause}
                                     disable={pause || remotePause}
                                     onCapture={handleCapture}
                                     hidden={false}
                                     onActivated={setIsCameraActive}
                                     onFatal={() => console.error('Webcam failure')}
+                                    direct
                                 />
                             </div>
                             {heatmap && (

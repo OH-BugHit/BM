@@ -112,7 +112,9 @@ export default function Student({ serverCode }: { serverCode: string }) {
     useEffect(() => {
         const handleResize = () => {
             setWebcamSize(
-                Math.min(Math.floor(window.innerWidth * 0.7), Math.floor(window.innerHeight * 0.6) * 0.7, 800)
+                Math.floor(
+                    Math.min(Math.floor(window.innerWidth * 0.7), Math.floor(window.innerHeight * 0.6) * 0.7, 800)
+                )
             );
         };
         window.addEventListener('resize', handleResize);
@@ -297,7 +299,6 @@ export default function Student({ serverCode }: { serverCode: string }) {
                                     onCapture={handleCapture}
                                     hidden={false}
                                     onActivated={setIsCameraActive}
-                                    onFatal={() => console.error('Webcam failure')}
                                     direct
                                 />
                             </div>

@@ -1,4 +1,6 @@
 .leaderboard {
+    container-name: board;
+    container-type: inline-size;
     display: flex;
     padding-top: 2rem;
     gap: 1rem;
@@ -12,9 +14,14 @@
     margin-bottom: 0.5rem;
     border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
     text-align: center;
     backdrop-filter: blur(10px);
+}
+
+.hidePictures {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
 }
 
 .leaderboardItem {
@@ -25,6 +32,8 @@
     padding: 0rem 0rem 0rem 0rem;
     border-radius: 2rem;
     margin-bottom: 10px;
+    width: 80%;
+    max-width: 80%;
     margin-top: 10px;
     text-align: center;
     background: linear-gradient(45deg, rgba(53, 99, 251, 0.677), rgba(31, 212, 225, 0.38));
@@ -63,9 +72,10 @@
 .scoreRow {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 50vw;
+    flex: 1;
+    min-width: 0;
     align-items: center;
+    justify-content: space-between;
 }
 
 .studentInfo {
@@ -93,20 +103,20 @@
 }
 
 .viewPhotoButton {
-    display: flex;
+    display: none;
     gap: 1rem;
     padding: 0.5rem;
     justify-content: center;
     align-self: center;
     align-items: center;
     margin-right: 1rem;
-    cursor: pointer;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 1rem 1rem 1rem 1rem;
 }
 
 .visButton {
+    display: none;
     margin-right: 1rem;
     cursor: pointer;
     align-self: center;
@@ -122,12 +132,13 @@
 
 .allPics {
     display: none;
-    max-width: 10dvw;
+    max-width: 50%;
+    flex-shrink: 1;
     align-items: center;
     overflow-x: auto;
     gap: 0.5rem;
-    justify-content: start;
     margin-right: 1.5rem;
+    white-space: nowrap;
     scrollbar-color: rgb(94, 148, 136) lightblue;
 }
 
@@ -146,43 +157,27 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.resetScore {
+    position: absolute;
+    top: -18px;
+    right: -26px;
+}
+
 .infoData {
     font-size: x-large;
     align-content: center;
 }
 
-.topPictureContainer {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-}
-
-/*For opened images*/
-.openImageOverlay {
-    display: flex;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    align-items: center;
-    justify-content: center;
-    z-index: 5;
-}
-
-@media (min-width: 1200px) {
-    .leaderboard::before {
-        background-size: calc(100% / 15);
-    }
-
+@container board (width > 700px) {
     .allPics {
         display: flex;
     }
-}
 
-@media (min-width: 1400px) {
-    .leaderboard::before {
-        background-size: calc(100% / 29);
+    .viewPhotoButton {
+        display: flex;
+    }
+
+    .visButton {
+        display: flex;
     }
 }

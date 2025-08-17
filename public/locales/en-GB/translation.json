@@ -252,6 +252,7 @@
         },
         "actions": {
             "loadingModel": "Loading model",
+            "resetScore": "Reset score",
             "setModel": "Set Model",
             "start": "Start"
         },

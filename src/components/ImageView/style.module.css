@@ -1,0 +1,19 @@
+/*For opened images*/
+.openImageOverlay {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.topPictureContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}

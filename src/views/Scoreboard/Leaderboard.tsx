@@ -4,15 +4,13 @@ import style from './leaderboard.module.css';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import { useEffect, useState } from 'react';
 import { Button } from '@genai-fi/base';
-import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import BlockIcon from '@mui/icons-material/Block';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useTranslation } from 'react-i18next';
-import { close } from '../../components/Buttons/buttonStyles';
-import { motion } from 'framer-motion';
-
+import { motion, AnimatePresence } from 'framer-motion';
+import ImageView from '../../components/ImageView/ImageView';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 interface Props {
     className: string | null;
 }
@@ -23,14 +21,14 @@ export default function Leaderboard({ className }: Props) {
     const [studentData, setStudentData] = useAtom(studentDataAtom);
     const [profilePics] = useAtom(profilePicturesAtom);
     const [maxSize, setMaxSize] = useState(Math.min(window.innerWidth * 0.2, window.innerHeight * 0.4));
-    const [settings] = useAtom(settingAtom);
+    const [settings, setSettings] = useAtom(settingAtom);
     const [, setMessage] = useAtom(messageTransferAtom);
+    // K = student, V = list of classnames for pictures to be hidden (by teacher).
     const [hiddenByTeacher, setHiddenByTeacher] = useState<Map<string, string[]>>(new Map());
 
-    const [openImage, setOpenImage] = useState<{ student: string; className: string } | null>({
-        student: '',
-        className: '',
-    });
+    const [openImage, setOpenImage] = useState<
+        { student: string; className: string } | null | HTMLCanvasElement | undefined
+    >(null);
 
     useEffect(() => {
         const handleResize = () => setMaxSize(Math.min(window.innerWidth * 0.2, window.innerHeight * 0.4));
@@ -41,15 +39,21 @@ export default function Leaderboard({ className }: Props) {
 
     const allStudentPics = ({ student }: { student: string }) => {
         const studentEntry = studentData.students.get(student);
-        const pics = Array.from(studentEntry?.data.values() || [])
-            .filter((entry) => !entry.hidden)
-            .map((entry) => entry.topCanvas);
+        const pics = Array.from(studentEntry?.data.entries() || [])
+            .filter(([className, entry]) => !entry.hidden && !hiddenByTeacher.get(student)?.includes(className))
+            .map(([, entry]) => entry.topCanvas);
         return (
             <div className={style.viewPhotoButton}>
                 {pics.map((pic, idx) => (
                     <div
                         className={style.image}
                         key={idx}
+                        onClick={() => {
+                            setOpenImage(pic);
+                        }}
+                        style={{
+                            cursor: 'pointer',
+                        }}
                     >
                         <CanvasCopy
                             sourceCanvas={pic}
@@ -91,6 +95,7 @@ export default function Leaderboard({ className }: Props) {
                         onClick={() => {
                             setOpenImage({ student: student, className: className });
                         }}
+                        style={{ cursor: 'pointer' }}
                     >
                         <CanvasCopy
                             sourceCanvas={classEntry.topCanvas}
@@ -105,18 +110,7 @@ export default function Leaderboard({ className }: Props) {
                         <BlockIcon fontSize="large" />
                     </div>
                 )}
-                <div className={style.resetScore}>
-                    <Button
-                        onClick={() => removeResult(student, className)}
-                        title={t('common.close')}
-                        aria-label="Sulje"
-                    >
-                        <DeleteForeverIcon
-                            fontSize="large"
-                            color="action"
-                        />
-                    </Button>
-                </div>
+
                 {!hiddenByTeacher.get(student)?.includes(className) && (
                     <div
                         className={style.visButton}
@@ -159,6 +153,7 @@ export default function Leaderboard({ className }: Props) {
             </>
         );
     };
+
     const scores: {
         totalScore: number;
         studentId: string;
@@ -188,89 +183,110 @@ export default function Leaderboard({ className }: Props) {
 
     return (
         <div className={style.leaderboard}>
+            <div className={style.hidePictures}>
+                {settings.teacherHideResultPicture && (
+                    <VisibilityOffIcon
+                        fontSize="large"
+                        color="action"
+                        onClick={() => {
+                            setSettings((old) => ({
+                                ...old,
+                                teacherHideResultPicture: false,
+                            }));
+                        }}
+                    />
+                )}
+                {!settings.teacherHideResultPicture && (
+                    <VisibilityIcon
+                        fontSize="large"
+                        color="action"
+                        onClick={() => {
+                            setSettings((old) => ({
+                                ...old,
+                                teacherHideResultPicture: true,
+                            }));
+                        }}
+                    />
+                )}
+            </div>
             <h1>{t('scoreboard.labels.standings')}</h1>
-            {scores.map((student, index) => (
-                <motion.div
-                    layout
-                    key={student.studentId}
-                    className={style.leaderboardItem}
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                >
-                    <div className={style.leaderboardPlace}>
-                        <div className={style.infoData}>{index + 1}</div>
-                    </div>
-                    <div className={style.scoreRow}>
-                        <div className={style.studentInfo}>
-                            <div className={style.avatarWrapper}>
-                                {index === 0 && (
-                                    <img
-                                        src="/aiKruunuSmall.png"
-                                        className={style.crownImg}
-                                        height="60"
-                                    />
+            <AnimatePresence>
+                {scores.map((student, index) => (
+                    <motion.div
+                        layout
+                        initial={{ opacity: 0, scale: 0.7 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.7 }}
+                        key={student.studentId}
+                        className={style.leaderboardItem}
+                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    >
+                        <div className={style.leaderboardPlace}>
+                            <div className={style.infoData}>{index + 1}</div>
+                        </div>
+                        <div className={style.scoreRow}>
+                            <div className={style.studentInfo}>
+                                <div className={style.avatarWrapper}>
+                                    {index === 0 && (
+                                        <img
+                                            src="/aiKruunuSmall.png"
+                                            className={style.crownImg}
+                                            height="60"
+                                        />
+                                    )}
+                                    {student.studentPic && (
+                                        <CanvasCopy
+                                            sourceCanvas={student.studentPic}
+                                            maxWidth={100}
+                                            shape="leftRound"
+                                        />
+                                    )}
+                                </div>
+                                <div className={style.infoData}>{student.studentId}</div>
+                            </div>
+                            <div style={{ flexGrow: 1 }} />
+                            {!settings.teacherHideResultPicture && className !== null && (
+                                <>{showClassImage({ className: className, student: student.studentId })}</>
+                            )}
+                            {!settings.teacherHideResultPicture && className === null && (
+                                <>
+                                    <div className={style.allPics}>
+                                        {allStudentPics({ student: student.studentId })}
+                                    </div>
+                                </>
+                            )}
+                            <div className={style.score}>
+                                {(settings.limitScoreboard.showAll || index < settings.limitScoreboard.limit) && (
+                                    <div className={style.infoData}>{student.totalScore.toFixed(2)}</div>
                                 )}
-                                {student.studentPic && (
-                                    <CanvasCopy
-                                        sourceCanvas={student.studentPic}
-                                        maxWidth={100}
-                                        shape="leftRound"
-                                    />
+                                {!settings.limitScoreboard.showAll && index >= settings.limitScoreboard.limit && (
+                                    <div className={style.infoData}>???</div>
+                                )}
+                                {className && (
+                                    <div className={style.resetScore}>
+                                        <Button
+                                            onClick={() => removeResult(student.studentId, className)}
+                                            title={t('teacher.actions.resetScore')}
+                                            aria-label={t('teacher.actions.resetScore')}
+                                        >
+                                            <RestartAltIcon
+                                                fontSize="large"
+                                                color="action"
+                                            />
+                                        </Button>
+                                    </div>
                                 )}
                             </div>
-                            <div className={style.infoData}>{student.studentId}</div>
                         </div>
-                        <div style={{ flexGrow: 1 }} />
-                        {!settings.teacherHideResultPicture && className !== null && (
-                            <>{showClassImage({ className: className, student: student.studentId })}</>
-                        )}
-                        {!settings.teacherHideResultPicture && className === null && (
-                            <>
-                                <div className={style.allPics}>{allStudentPics({ student: student.studentId })}</div>
-                            </>
-                        )}
-                        <div className={style.score}>
-                            {(settings.limitScoreboard.showAll || index < settings.limitScoreboard.limit) && (
-                                <div className={style.infoData}>{student.totalScore.toFixed(2)}</div>
-                            )}
-                            {!settings.limitScoreboard.showAll && index >= settings.limitScoreboard.limit && (
-                                <div className={style.infoData}>???</div>
-                            )}
-                        </div>
-                    </div>
-                </motion.div>
-            ))}
-            {openImage?.className && (
-                <div
-                    className={style.openImageOverlay}
-                    onClick={() => setOpenImage(null)}
-                >
-                    <div className={style.topPictureContainer}>
-                        <Button
-                            onClick={() => setOpenImage(null)}
-                            style={close}
-                            title={t('common.close')}
-                            aria-label="Sulje"
-                        >
-                            <CloseSharpIcon />
-                        </Button>
-                        <CanvasCopy
-                            sourceCanvas={
-                                studentData.students.get(openImage.student)?.data.get(openImage.className)?.topCanvas
-                            }
-                            maxWidth={maxSize}
-                            width={maxSize}
-                            height={maxSize}
-                        />
-                        <CanvasCopy
-                            sourceCanvas={
-                                studentData.students.get(openImage.student)?.data.get(openImage.className)?.topHeatmap
-                            }
-                            maxWidth={maxSize}
-                            width={maxSize}
-                            height={maxSize}
-                        />
-                    </div>
-                </div>
+                    </motion.div>
+                ))}
+            </AnimatePresence>
+            {openImage && (
+                <ImageView
+                    maxSize={maxSize}
+                    openImage={openImage}
+                    setOpenImage={setOpenImage}
+                />
             )}
         </div>
     );

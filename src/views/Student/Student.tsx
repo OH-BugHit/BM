@@ -72,8 +72,13 @@ export default function Student({ serverCode }: { serverCode: string }) {
     useModelNamesLoader(); // Loads model names
 
     useEffect(() => {
-        if (termData.term) {
+        if (termData.term !== classifyTerm) {
             setClassifyTerm(termData.term);
+            // Reset score
+            scoreSumRef.current = 0;
+            scoreBufferRef.current = Array(10).fill(0);
+            console.log('term change');
+            setCurrentScore(0);
             setScore(results.data.get(termData.term)?.score ?? 0);
             model?.setXAIClass(termData.term);
         }
@@ -88,7 +93,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
             setRemoteGallery(config.gallery);
             if (!config.gallery) setShowGallery(false);
         }
-    }, [config, model, results, setShowGallery, termData]); // Update classify term and model class when config
+    }, [config, model, results, setShowGallery, termData, classifyTerm]); // Update classify term and model class when config
 
     useEffect(() => {
         if (model) {

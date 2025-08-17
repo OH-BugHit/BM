@@ -23,12 +23,9 @@
 }
 
 .heatmapCanvas {
-    border: 2px solid #fff;
     background: #4646aec1;
-    width: 100%;
-    /* skaalaa tarvittaessa */
-    max-width: 800px;
-    height: auto;
+    width: 512px;
+    max-width: 100%;
 }
 
 .innerContainer {

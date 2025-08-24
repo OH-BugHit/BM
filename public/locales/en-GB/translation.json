@@ -261,7 +261,9 @@
         },
         "labels": {
             "disableApp": "Pause camera",
-            "heatmap": "Heatmap"
+            "enableApp": "Continue game",
+            "heatmap": "Heatmap",
+            "ownResults": "Results"
         },
         "actions": {
             "deleteProgress": "Delete progress",

@@ -8,16 +8,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AbcIcon from '@mui/icons-material/Abc';
 import { useAtom } from 'jotai';
-import {
-    menuShowLeaderboardAtom,
-    menuShowModelChangeAtom,
-    showSettingsDialogAtom,
-    menuShowShareAtom,
-    menuShowTermChangeAtom,
-    menuShowTrainingDataAtom,
-    menuShowUserGridAtom,
-    selectedUserAtom,
-} from '../../atoms/state';
+import { selectedUserAtom, activeViewAtom } from '../../atoms/state';
 import IconMenuItem from '../../components/IconMenu/Items';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { MenuButton } from '../../components/Buttons/MenuButton';
@@ -26,54 +17,30 @@ import QrCode2Icon from '@mui/icons-material/QrCode2';
 import AppsIcon from '@mui/icons-material/Apps';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import { useNavigate } from 'react-router-dom';
+import { TeacherDialogs, TeacherViews } from '../../utils/types';
 
 export default function MenuPanel() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
-    const [showShare, setShowShare] = useAtom(menuShowShareAtom);
-    const [showTraining, setShowTraining] = useAtom(menuShowTrainingDataAtom);
-    const [showModel, setShowModel] = useAtom(menuShowModelChangeAtom);
-    const [showUsers, setShowUsers] = useAtom(menuShowUserGridAtom);
-    const [showCategory, setShowCategory] = useAtom(menuShowLeaderboardAtom);
-    const [showTermView, setShowTermView] = useAtom(menuShowTermChangeAtom);
-    const [showSettings, setShowSettings] = useAtom(showSettingsDialogAtom);
+    const [activeView, setActiveView] = useAtom(activeViewAtom);
     const [, setSelectedUser] = useAtom(selectedUserAtom);
 
-    const doShowShare = useCallback(() => setShowShare((s) => !s), [setShowShare]);
-    const doShowModel = useCallback(() => setShowModel((s) => !s), [setShowModel]);
-    const doShowSettings = useCallback(() => setShowSettings((s) => !s), [setShowSettings]);
-    const doShowTrainingData = useCallback(() => setShowTraining((s) => !s), [setShowTraining]);
-    const doShowSubview = useCallback(
-        (subview: 'users' | 'results' | 'term') => {
-            switch (subview) {
-                case 'users':
-                    setShowUsers(true);
-                    setShowTraining(false);
-                    setShowCategory(false);
-                    setShowTermView(false);
-                    setSelectedUser({ username: '', profilePicture: null });
-                    break;
-                case 'results':
-                    setShowCategory(true);
-                    setShowUsers(false);
-                    setShowTraining(false);
-                    setShowTermView(false);
-                    setSelectedUser({ username: '', profilePicture: null });
-                    break;
-                case 'term':
-                    setShowCategory(false);
-                    setShowUsers(false);
-                    setShowTraining(false);
-                    setShowTermView(true);
-                    setSelectedUser({ username: '', profilePicture: null });
-                    break;
-                default:
-                    console.warn('Unknown subview:', subview);
-                    break;
-            }
+    const doShowDialog = useCallback(
+        (dialog: TeacherDialogs) => {
+            if (activeView.overlay === dialog) {
+                setActiveView((old) => ({ ...old, overlay: 'none' }));
+            } else setActiveView((old) => ({ ...old, overlay: dialog }));
         },
-        [setShowUsers, setShowTraining, setShowCategory, setShowTermView, setSelectedUser]
+        [activeView, setActiveView]
+    );
+
+    const doShowView = useCallback(
+        (view: TeacherViews) => {
+            setSelectedUser({ username: '', profilePicture: null });
+            setActiveView((old) => ({ ...old, active: view }));
+        },
+        [setSelectedUser, setActiveView]
     );
 
     const toMain = () => {
@@ -109,12 +76,12 @@ export default function MenuPanel() {
                 <IconMenuItem
                     tooltip={t('teacher.labels.shareTip')}
                     hideTip={open}
-                    selected={showShare}
+                    selected={activeView.overlay === 'share'}
                     fullWidth
                 >
                     <MenuButton
                         color="inherit"
-                        onClick={doShowShare}
+                        onClick={() => doShowDialog('share')}
                         aria-label={t('teacher.labels.shareTip')}
                         size="large"
                         variant="text"
@@ -132,7 +99,7 @@ export default function MenuPanel() {
                 <IconMenuItem
                     tooltip={t('menu.vis.term')}
                     fullWidth
-                    selected={showTermView}
+                    selected={activeView.active === 'termChange'}
                 >
                     <MenuButton
                         color="inherit"
@@ -140,7 +107,7 @@ export default function MenuPanel() {
                         size="large"
                         variant="text"
                         fullWidth
-                        onClick={() => doShowSubview('term')}
+                        onClick={() => doShowView('termChange')}
                     >
                         <AbcIcon fontSize="large" />
                         {open ? t('menu.vis.term') : ''}
@@ -149,7 +116,7 @@ export default function MenuPanel() {
                 <IconMenuItem
                     tooltip={t('menu.vis.results')}
                     fullWidth
-                    selected={showCategory}
+                    selected={activeView.active === 'default'}
                 >
                     <MenuButton
                         color="inherit"
@@ -158,7 +125,7 @@ export default function MenuPanel() {
                         variant="text"
                         fullWidth
                         style={{ minHeight: '64px', minWidth: '64px' }}
-                        onClick={() => doShowSubview('results')}
+                        onClick={() => doShowView('default')}
                     >
                         <EmojiEventsIcon fontSize="large" />
                         {open ? t('menu.vis.results') : ''}
@@ -167,7 +134,7 @@ export default function MenuPanel() {
                 <IconMenuItem
                     tooltip={t('menu.vis.usergrid')}
                     fullWidth
-                    selected={showUsers}
+                    selected={activeView.active === 'userGrid'}
                 >
                     <MenuButton
                         color="inherit"
@@ -175,7 +142,7 @@ export default function MenuPanel() {
                         size="large"
                         variant="text"
                         fullWidth
-                        onClick={() => doShowSubview('users')}
+                        onClick={() => doShowView('userGrid')}
                     >
                         <AppsIcon fontSize="large" />
                         {open ? t('menu.vis.usergrid') : ''}
@@ -184,12 +151,12 @@ export default function MenuPanel() {
                 <IconMenuItem
                     tooltip={t('common.labels.datasetTip')}
                     hideTip={open}
-                    selected={showTraining}
+                    selected={activeView.overlay === 'trainingData'}
                     fullWidth
                 >
                     <MenuButton
                         color="inherit"
-                        onClick={() => doShowTrainingData()}
+                        onClick={() => doShowDialog('trainingData')}
                         aria-label={t('common.labels.datasetTip')}
                         size="large"
                         variant="text"
@@ -204,12 +171,12 @@ export default function MenuPanel() {
                 <IconMenuItem
                     tooltip={t('teacher.labels.changeModel')}
                     hideTip={open}
-                    selected={showModel}
+                    selected={activeView.overlay === 'modelChange'}
                     fullWidth
                 >
                     <MenuButton
                         color="inherit"
-                        onClick={doShowModel}
+                        onClick={() => doShowDialog('modelChange')}
                         aria-label={t('teacher.labels.changeModel')}
                         size="large"
                         variant="text"
@@ -227,12 +194,12 @@ export default function MenuPanel() {
                 <IconMenuItem
                     tooltip={t('menu.labels.settings')}
                     hideTip={open}
-                    selected={showSettings}
+                    selected={activeView.overlay === 'settings'}
                     fullWidth
                 >
                     <MenuButton
                         color="inherit"
-                        onClick={doShowSettings}
+                        onClick={() => doShowDialog('settings')}
                         aria-label={t('menu.aria.settings')}
                         size="large"
                         variant="text"

@@ -1,23 +1,17 @@
-.userContainer {
+.enterUserInfo {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: auto;
+    height: 100dvh;
     gap: 1.5rem;
-    height: 100%;
+    background-color: white;
 }
 
 .noPicContainer {
-    composes: userContainer;
+    composes: enterUserInfo;
     gap: 3rem;
-
-}
-
-.imageContainer {
-    margin-top: 8px;
-    margin-left: 8px;
-    margin-right: 8px;
 }
 
 .textField {
@@ -31,7 +25,6 @@
     gap: 1rem;
 }
 
-
 .restore {
     display: flex;
     flex-direction: column;
@@ -39,4 +32,21 @@
     justify-content: center;
     margin-bottom: 38px;
     width: 80%;
+    max-width: 600px;
+}
+
+.imageContainer canvas {
+    width: 100%;
+}
+
+/* Change imported webcam style*/
+.imageContainer [class*='wrapContainer'] {
+    color: rgb(48, 189, 173);
+}
+
+.imageContainer [class*='Mui'] {
+    position: absolute;
+    right: 6px;
+    z-index: 2000;
+    top: 6px;
 }

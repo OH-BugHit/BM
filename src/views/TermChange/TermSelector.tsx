@@ -1,21 +1,21 @@
 import style from '../../views/TermChange/style.module.css';
 import { useTranslation } from 'react-i18next';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { configAtom, settingAtom, termTransferAtom } from '../../atoms/state';
+import { configAtom, modelAtom, settingAtom, termTransferAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 
 interface Props {
-    allLabels: string[];
     toUsers?: string[];
 }
 
-export default function TermSelector({ allLabels, toUsers }: Props) {
+export default function TermSelector({ toUsers }: Props) {
     const { t } = useTranslation();
     const [, setTerm] = useAtom(termTransferAtom);
     const [word, setWord] = useState('');
     const [config, setConfig] = useAtom(configAtom);
     const [settings] = useAtom(settingAtom);
+    const [model] = useAtom(modelAtom);
 
     function delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
@@ -58,7 +58,7 @@ export default function TermSelector({ allLabels, toUsers }: Props) {
                 value={word || ''}
                 onChange={(e) => handleTermChange(e.target.value)}
             >
-                {(allLabels || [])
+                {(model?.getLabels() || [])
                     .slice()
                     .sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))
                     .map((label) => (

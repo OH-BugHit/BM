@@ -27,12 +27,14 @@ export default function Frontpage() {
     return (
         <div className={style.frontpage}>
             <div className={style.content}>
-                <img
-                    src="/logo192_bw.png"
-                    alt="logo"
-                    width={logoSize}
-                    height={logoSize}
-                />
+                <div className={style.logo}>
+                    <img
+                        src="/logo192_bw.png"
+                        alt="logo"
+                        width={logoSize}
+                        height={logoSize}
+                    />
+                </div>
                 <h1>{t('common.title')}</h1>
                 <div className={style.startBox}>
                     <TextField

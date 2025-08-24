@@ -3,7 +3,7 @@ import StudentProtocol from '../../services/StudentProtocol';
 import Student from './Student';
 import { configAtom, profilePictureAtom, usernameAtom } from '../../atoms/state';
 import { useID } from '@genai-fi/base';
-import EnterUserInfo from '../../components/EnterUsername/EnterUsername';
+import EnterUserInfo from '../EnterUsername/EnterUsername';
 import Footer from '../../components/Footer/Footer';
 import { useParams } from 'react-router-dom';
 import { Peer } from '@genai-fi/base/hooks/peer';

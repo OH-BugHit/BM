@@ -1,6 +1,6 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
-import { configAtom, menuShowModelChangeAtom, modelAtom, modelDataAtom, modelListAtom } from '../../atoms/state';
+import { activeViewAtom, configAtom, modelAtom, modelDataAtom, modelListAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 import { useCallback, useRef, useState } from 'react';
 import { Autocomplete, Dialog, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
@@ -12,7 +12,6 @@ import { currentModelName, handleFileChange } from './utils';
 
 export default function ModelDialog() {
     const { t } = useTranslation();
-    const [showDialog, setShowDialog] = useAtom(menuShowModelChangeAtom);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [, setModel] = useAtom(modelAtom);
@@ -21,8 +20,9 @@ export default function ModelDialog() {
     const [modelList] = useAtom(modelListAtom);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedModel, setSelectedModel] = useState('');
+    const [activeView, setActiveView] = useAtom(activeViewAtom);
 
-    const doClose = useCallback(() => setShowDialog(false), [setShowDialog]);
+    const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
 
     const openFile = useCallback(() => {
         fileInputRef.current?.click();
@@ -64,7 +64,7 @@ export default function ModelDialog() {
 
     return (
         <Dialog
-            open={showDialog}
+            open={activeView.overlay === 'modelChange'}
             onClose={doClose}
             maxWidth="md"
         >

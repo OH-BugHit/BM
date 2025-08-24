@@ -1,6 +1,6 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import { showSettingsDialogAtom } from '../../atoms/state';
+import { activeViewAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 import { useCallback, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from '@mui/material';
@@ -10,14 +10,14 @@ import PictureSettings from './PictureSettings';
 
 export default function Settings() {
     const { t } = useTranslation();
-    const [showDialog, setShowDialog] = useAtom(showSettingsDialogAtom);
+    const [showDialog, setActiveView] = useAtom(activeViewAtom);
     const [tabNumber, setTabNumber] = useState(0);
 
-    const doClose = useCallback(() => setShowDialog(false), [setShowDialog]);
+    const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
 
     return (
         <Dialog
-            open={showDialog}
+            open={showDialog.overlay === 'settings'}
             onClose={doClose}
             maxWidth="md"
             scroll="paper"

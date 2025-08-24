@@ -58,6 +58,10 @@
     max-height: 500px;
 }
 
+.logo {
+    display: block;
+}
+
 @media (max-width: 600px) {
     .frontpage h1 {
         font-size: 2rem;
@@ -65,5 +69,19 @@
 
     .startBox {
         box-shadow: none;
+    }
+}
+
+@media (max-height: 600px) {
+    .logo {
+        display: none;
+    }
+
+    .startBox {
+        box-shadow: none;
+        padding: 0;
+        justify-content: space-evenly;
+        height: 100%;
+        gap: 0
     }
 }

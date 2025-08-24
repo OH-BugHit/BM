@@ -5,21 +5,16 @@ import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { closeGallery } from '../../components/Buttons/buttonStyles';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
 import { useAtom } from 'jotai';
-import { configAtom, menuShowTrainingDataAtom } from '../../atoms/state';
+import { activeViewAtom, configAtom, modelAtom } from '../../atoms/state';
 import OpenedImage from '../../components/ImageView/OpenedImage';
-
-interface DatasetGalleryProps {
-    allLabels: string[] | undefined;
-}
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 /**
  * Component shows a gallery of images from a dataset
  * @returns
  */
-export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
+export function DatasetGallery() {
     const { t } = useTranslation();
     const [allImages, setAllImages] = useState<string[]>([]);
     const [images, setImages] = useState<string[]>([]);
@@ -31,9 +26,10 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
     const limit = 10;
     const [config] = useAtom(configAtom);
     const [selected, setSelected] = useState('');
-    const [, setOpen] = useAtom(menuShowTrainingDataAtom);
+    const [, setActiveView] = useAtom(activeViewAtom);
     const [imagePaths, setImagePaths] = useState<Record<string, string[]>>({});
     const loaded = useRef(false);
+    const [model] = useAtom(modelAtom);
 
     /**
      * Loads more images with offset.
@@ -54,6 +50,7 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
             setNoMoreData(true);
         }
     }, [allImages, offset, loading, noMoreData]);
+    const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
 
     useEffect(() => {
         if (loaded.current) return;
@@ -108,9 +105,7 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
             <div className={style.datasetGallery}>
                 <div className={style.titleRow}>
                     <Button
-                        onClick={() => {
-                            setOpen(false);
-                        }}
+                        onClick={doClose}
                         title={t('common.close')}
                         aria-label="Sulje"
                         style={closeGallery}
@@ -119,20 +114,26 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
                     </Button>
                     <h1>{t('common.dataset')}</h1>
                 </div>
-                <Autocomplete
-                    options={(allLabels || [])
-                        .slice()
-                        .sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))}
-                    value={selected}
-                    style={{ padding: '4px', margin: '1rem', maxWidth: '600px', width: '100%' }}
-                    onChange={(_, newValue) => setSelected(newValue || '')}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            label={t('common.selectLabel')}
-                        />
-                    )}
-                />
+                <FormControl className={style.selector}>
+                    <InputLabel id="term-label">{t('common.selectLabel')}</InputLabel>
+                    <Select
+                        labelId="term-label"
+                        value={selected}
+                        onChange={(e) => setSelected(e.target.value || '')}
+                    >
+                        {(model?.getLabels() || [])
+                            .slice()
+                            .sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))
+                            .map((label) => (
+                                <MenuItem
+                                    key={label}
+                                    value={label}
+                                >
+                                    {label}
+                                </MenuItem>
+                            ))}
+                    </Select>
+                </FormControl>
                 {images.length === 0 && !loading && selected.length !== 0 && (
                     <em className={style.noData}>{t('common.noTeachingData')}</em>
                 )}

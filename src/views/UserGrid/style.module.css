@@ -1,4 +1,6 @@
 @value workspaceBg, primary, secondary, backgroundDark from "@genai-fi/base/css/colours.module.css";
+@value selectedColor: rgba(45, 236, 239, 0.309);
+@value unSelectedColor: rgba(45, 236, 239, 0.309);
 
 .userGridContainer {
     overflow: auto;
@@ -10,20 +12,22 @@
     display: grid;
     grid-auto-flow: row;
     min-height: 0;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     align-items: center;
     justify-items: center;
-    gap: 1.5rem;
+    gap: 2.2rem;
     box-sizing: border-box;
     padding: 2rem 2rem 2rem;
 }
 
 .gridItem {
-    background: workspaceBg;
+    /*background: workspaceBg;*/
+    background: linear-gradient(45deg, rgba(16, 15, 63, 0.677), rgba(80, 120, 195, 0.68));
+    min-width: max-content;
     overflow: hidden;
     border-radius: 4px;
     padding: 1rem;
-    box-shadow: 2px 2px 5px #bbb;
+    box-shadow: 2px 2px 5px #2a2a2b;
     color: inherit;
     border: none;
     font: inherit;
@@ -33,11 +37,11 @@
 }
 
 .gridItem:hover {
-    box-shadow: 0 0 8px secondary;
+    box-shadow: 0 0 8px selectedColor;
 }
 
 .gridItem:focus {
-    box-shadow: 0 0 8px secondary;
+    box-shadow: 0 0 8px selectedColor;
 }
 
 .userImageContainer {
@@ -78,7 +82,7 @@
 
 .userNameContainer {
     padding: 0.3rem;
-    background: primary;
+    background: rgba(13, 73, 74, 0.309);
     color: white;
     font-weight: bold;
     text-overflow: ellipsis;
@@ -93,7 +97,7 @@
 
 .selectedUserNameContainer {
     composes: userNameContainer;
-    background: secondary;
+    background: selectedColor;
 }
 
 .word {

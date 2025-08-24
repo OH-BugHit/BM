@@ -1,6 +1,6 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
-import { menuShowShareAtom } from '../../atoms/state';
+import { activeViewAtom } from '../../atoms/state';
 import { UserInfo } from '../../utils/types';
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
@@ -14,13 +14,13 @@ interface Props {
 
 export default function StartDialog({ users, code }: Props) {
     const { t } = useTranslation();
-    const [showDialog, setShowDialog] = useAtom(menuShowShareAtom);
+    const [showDialog, setActiveView] = useAtom(activeViewAtom);
 
-    const doClose = useCallback(() => setShowDialog(false), [setShowDialog]);
+    const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
 
     return (
         <Dialog
-            open={showDialog}
+            open={showDialog.overlay === 'share'}
             onClose={doClose}
             maxWidth="md"
         >

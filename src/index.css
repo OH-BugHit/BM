@@ -1,9 +1,6 @@
 body {
   margin: 0;
-  /*font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;*/
-  font-family: 'Andika', sans-serif;
+  font-family: 'Tektur', 'Andika', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,7 +8,7 @@ body {
 /*background: #dee4e8;*/
 
 #root {
-  background: #dee4e8;
+  background: #344957;
   position: absolute;
   top: 0;
   bottom: 0;

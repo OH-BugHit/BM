@@ -12,14 +12,29 @@ import {
     MessageData,
     Settings,
     StudentScores,
+    StudentControls,
+    Views,
 } from '../utils/types';
 
+/**
+ * Convains info of active view and ovelay
+ */
+export const activeViewAtom = atom<Views>({ active: 'default', overlay: 'none' });
+
+/**
+ * Current model
+ */
 export const modelAtom = atom<ClassifierApp | null>(null);
 
-export const classificationResultAtom = atom<{ className: string; probability: number }[] | null>(null);
-
+/**
+ * List of models available at GenAI Store
+ */
 export const modelListAtom = atom<string[]>([]);
 
+/**
+ * Contains configuration of the game
+ * Teacher can send new configuration by modifying this atom
+ */
 export const configAtom = atom<SpoofConfig>({
     pause: false,
     heatmap: false,
@@ -33,11 +48,18 @@ export const configAtom = atom<SpoofConfig>({
     },
 });
 
+/**
+ * Teacher can send classifying term by modifying this atom
+ * if recipient: username === 'a', every student changes to this term
+ */
 export const termTransferAtom = atom<SpoofData>({
     term: '',
     recipient: { username: 'a' },
 });
 
+/**
+ * Teacher can send messages by updating this atom
+ */
 export const messageTransferAtom = atom<MessageData>({
     message: '',
     reload: false,
@@ -45,27 +67,40 @@ export const messageTransferAtom = atom<MessageData>({
     recipient: { username: '' },
 });
 
+/**
+ * Contains game data from students (top results)
+ */
 export const studentDataAtom = atom<StudentData>({ students: new Map() });
 
+/**
+ * List of active players
+ */
 export const usersAtom = atom<UserInfo[]>([]);
 
+/**
+ * All player names
+ */
 export const takenUsernamesAtom = atom<Username[]>([]);
 
-/*Users that have left the session*/
+/* Users that have left the session (for returning player). Only used by student*/
 export const availableUsernamesAtom = atom<Username[]>([]);
 
 /**
- * Contains students username
+ * Contains students own username
+ * Only used by student
  */
 export const usernameAtom = atom<string>('');
 
 /**
  * Contains students own profilepicture
+ * Only used by student
  */
 export const profilePictureAtom = atom<string | null>(null);
 
 /**
- * Controls students game. Reload = true will kick student from session by reloading the page.
+ * Controls students game and can set messages for player by teacher.
+ * Reload = true will kick student from session by reloading the page.
+ * Only used by student
  */
 export const studentBouncerAtom = atom<Bouncer>({ message: '', reload: false });
 
@@ -76,33 +111,27 @@ export const studentBouncerAtom = atom<Bouncer>({ message: '', reload: false });
 export const profilePicturesAtom = atom<Map<string, HTMLCanvasElement>>(new Map());
 
 /**
- * Contains the current word for everyone. (used by teachers components) or current term for student (used by student components)
+ * Contains the current word for everyone.
+ * Used only by teacher
  */
 export const selectedTermAtom = atom<string>('');
 
 /**
  * Contains selected user in usergrid view
+ * Only used by teacher
  */
 export const selectedUserAtom = atom<UserItemData>({ username: '', profilePicture: null });
 
 /**
- * Following atoms are used to store what component is shown.
+ * Contains students own results
+ * Only used by student
  */
-export const menuShowShareAtom = atom<boolean>(false);
-export const menuShowTrainingDataAtom = atom<boolean>(false);
-export const menuShowModelChangeAtom = atom<boolean>(false);
-export const menuShowUserGridAtom = atom<boolean>(false);
-export const menuShowLeaderboardAtom = atom<boolean>(true);
-export const menuShowTermChangeAtom = atom<boolean>(false);
-
-export const showUserTermDialogAtom = atom<boolean>(false);
-export const showSettingsDialogAtom = atom<boolean>(false);
-export const showOwnResultsAtom = atom<boolean>(false);
-
 export const studentResultsAtom = atom<StudentScores>({ data: new Map() });
 
 /**
  * //TODO: Include profilePicture needed
+ * Contains game settings
+ * Only used by teacher
  */
 export const settingAtom = atom<Settings>({
     pauseOnChange: false,
@@ -113,14 +142,25 @@ export const settingAtom = atom<Settings>({
 });
 
 /**
- * modelDataAtom is used for storing the model file uploaded by the teacher. This file is sent to the student at request.
+ * modelDataAtom is used for storing the model-file uploaded by the teacher.
+ * This file is sent to the student at model request event.
  */
 export const modelDataAtom = atom<File | null>(null);
-// K = student, V = list of classnames for pictures to be hidden (by teacher).
+
+/**
+ * Contains information, which pictures should be hidden from scoreboard
+ * K = student, V = list of classnames for pictures to be hidden (by teacher).
+ */
 export const teacherHidesAtom = atom<Map<string, string[]>>(new Map());
 
 /**
- * Contains top images shown at user grid
- * K = students name (username) V = current terms topImage
+ * Contains last received top images shown at user grid view
+ * K = students name (username) V = last image receiced
  */
 export const studentActivityAtom = atom<Map<string, HTMLCanvasElement | null>>(new Map());
+
+/**
+ * Contains data of student's selected controls.
+ * Dataset view stuff is toggled with different logic as the same component is also used by teacher
+ */
+export const studentControlsAtom = atom<StudentControls>({ pause: false, heatmap: false });

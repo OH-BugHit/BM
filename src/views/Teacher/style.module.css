@@ -5,7 +5,15 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background: #dee4e8;
+    background: #1c252c;
+}
+
+h1 {
+    color: white
+}
+
+h3 {
+    color: white
 }
 
 .content {

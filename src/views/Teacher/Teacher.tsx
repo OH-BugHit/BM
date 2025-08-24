@@ -3,18 +3,8 @@ import Footer from '../../components/Footer/Footer';
 import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import ServerProtocol from '../../services/ServerProtocol';
 import style from './style.module.css';
-import {
-    configAtom,
-    menuShowTermChangeAtom,
-    menuShowLeaderboardAtom,
-    menuShowTrainingDataAtom,
-    menuShowUserGridAtom,
-    modelAtom,
-    studentDataAtom,
-    usersAtom,
-    termTransferAtom,
-} from '../../atoms/state';
-import { useEffect, useRef, useState } from 'react';
+import { configAtom, modelAtom, studentDataAtom, usersAtom, termTransferAtom, activeViewAtom } from '../../atoms/state';
+import { useEffect, useRef } from 'react';
 import { useID } from '@genai-fi/base';
 import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
 import MenuPanel from '../AppMenu/AppMenu';
@@ -35,23 +25,16 @@ export default function Teacher() {
     const blockRef = useRef(true);
     useLeaveWarning(blockRef);
     const [config, setConfig] = useAtom(configAtom);
-    const [termData, setTermData] = useAtom(termTransferAtom);
+    const [, setTermData] = useAtom(termTransferAtom);
     const MYCODE = useID(5);
     const [studentData] = useAtom(studentDataAtom);
     const [users] = useAtom(usersAtom);
     const [model, setModel] = useAtom(modelAtom);
-    const [allLabels, setAllLabels] = useState<string[]>([]);
-    const [labelChangeOpen] = useAtom(menuShowTermChangeAtom);
-    const [scoreboardViewOpen] = useAtom(menuShowLeaderboardAtom);
-    const [galleryOpen] = useAtom(menuShowTrainingDataAtom);
-    const [usersOpen] = useAtom(menuShowUserGridAtom);
+    const [activeView] = useAtom(activeViewAtom);
 
     // Load model if needed and set initial term, also pause the students
     useModelNamesLoader();
     useEffect(() => {
-        if (model) {
-            setAllLabels(model.getLabels());
-        }
         setConfig((old) => ({
             ...old,
             pause: true,
@@ -83,20 +66,20 @@ export default function Teacher() {
                     <MenuPanel />
                 </div>
                 <div className={style.content}>
-                    {galleryOpen && termData?.term && <DatasetGallery allLabels={allLabels} />}
-                    {usersOpen && studentData && (
+                    {activeView.overlay === 'trainingData' && <DatasetGallery />}
+                    {activeView.active === 'userGrid' && studentData && (
                         <>
                             <UserMenu />
                             <UserGrid />
                         </>
                     )}
-                    {labelChangeOpen && (
+                    {activeView.active === 'termChange' && (
                         <>
                             <TermMenu />
-                            <TermChange allLabels={allLabels} />
+                            <TermChange />
                         </>
                     )}
-                    {scoreboardViewOpen && <Scoreboard />}
+                    {activeView.active === 'default' && <Scoreboard />}
                     <ControlMenu />
                 </div>
                 <Footer />

@@ -1,3 +1,10 @@
+export enum ModelOrigin {
+    GenAI = 'Gen-AI',
+    Local = 'local',
+    Teacher = 'teacher',
+    Default = 'default',
+}
+
 export type StudentScore = {
     score?: number;
     topCanvas?: HTMLCanvasElement | null;
@@ -42,7 +49,7 @@ export type ImageData = {
     heatmap: string | 'delete';
     score: number | 'delete';
     hidden: boolean | 'delete';
-}; // TODO: Vaihda imaget
+};
 /**
  * Maps a student ID to their scores (K = student ID, V = StudentScores)
  */
@@ -66,13 +73,6 @@ export type RegisterData = {
     profilePicture: string | null;
 };
 
-export enum ModelOrigin {
-    GenAI = 'Gen-AI',
-    Local = 'local',
-    Teacher = 'teacher',
-    Default = 'default',
-}
-
 export type Bouncer = {
     message: string;
     reload: boolean;
@@ -95,3 +95,30 @@ export type Settings = {
         showAll: boolean;
     };
 };
+
+/**
+ * Student controls.
+ * Dataset view stuff is toggled with different logic as it is also used by teacher
+ */
+export type StudentControls = {
+    pause: boolean;
+    heatmap: boolean;
+};
+
+/**
+ * Default teacher view = leaderboard
+ * Default student view = normal view (no other views currently)
+ */
+export type Views = {
+    active: TeacherViews;
+    overlay: 'none' | TeacherDialogs | StudentDialogs;
+};
+
+// Teacher's views
+export type TeacherViews = 'default' | 'userGrid' | 'termChange';
+
+// Teacher's dialogs
+export type TeacherDialogs = 'share' | 'modelChange' | 'trainingData' | 'settings';
+
+// Student's dialogs
+export type StudentDialogs = 'ownResults' | 'messageDialog';

@@ -1,0 +1,213 @@
+@value currentTooltipColor: rgb(164, 0, 0);
+@value topTooltipColor: rgb(255, 229, 28);
+
+/**
+old colors for tooltips
+@value currentTooltipColor: rgb(0, 0, 0);
+@value topTooltipColor: rgb(255, 229, 28);
+
+tooltip above scorebar:
+/*bottom: calc(100% + 5px);
+and set to ::before
+/*bottom: 100%;
+**/
+
+.scoreBarContainer {
+    width: 50%;
+    text-align: left;
+}
+
+/*Score bar container*/
+/*
+alternative colors:
+rgba(219, 240, 143, 0.354);
+rgba(89, 205, 100, 0.354);
+rgba(20, 190, 181, 0.114);
+rgba(97, 115, 125, 0.616);
+-> latest rgba(110, 175, 124, 0.114);
+*/
+.scoreBar {
+    position: relative;
+    display: block;
+    padding: 5px 5px 5px 5px;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 16px;
+    border-radius: 30px;
+    background: rgba(97, 115, 125, 0.616);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.279);
+}
+
+/*TopScore*/
+.scoreBar span {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    margin-left: -6px;
+    height: 20px;
+    border-radius: 10px 0 0 10px;
+    background-color: #ff87e1;
+    /*old: #f56982;*/
+    background-size: 100%;
+    background-image: linear-gradient(to bottom, #f9e31d, #fbff28);
+    /*background-image: linear-gradient(to bottom, #f9e31d, #fbff28);*/
+}
+
+.scoreBar span::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    border-radius: 10px;
+    background-size: 100%;
+    background-image: linear-gradient(45deg,
+            #fff 25%,
+            rgba(0, 0, 0, 0) 25%,
+            rgba(0, 0, 0, 0) 50%,
+            #fff 50%,
+            #fff 75%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0, 0, 0, 0));
+    background-size: 30px 30px;
+    opacity: 0.4;
+    animation: scoreBarAfter 0.7s infinite linear;
+}
+
+/*Score*/
+.currentScoreBar span {
+    z-index: 3;
+    opacity: 0.8;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    top: 25px;
+    margin-left: 0;
+    height: 20px;
+    border-radius: 10px 0 0 10px;
+    background-color: #f56982;
+    background-size: 100%;
+    background-image: linear-gradient(to bottom, #f2395a, #b90cb2);
+    /*background-image: linear-gradient(to bottom, #f2395a, #b90cb2);*/
+}
+
+.currentScoreBar span::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    border-radius: 10px 0 0 10px;
+    background-size: 100%;
+    background-image: linear-gradient(45deg,
+            #fff 25%,
+            rgba(0, 0, 0, 0) 25%,
+            rgba(0, 0, 0, 0) 50%,
+            #ffffff 50%,
+            #ffffff 75%,
+            rgba(0, 0, 0, 0) 75%,
+            rgba(0, 0, 0, 0));
+    background-size: 30px 30px;
+    opacity: 0.4;
+    animation: scoreBarAfter 0.5s infinite linear;
+}
+
+.scoreBarCurrentToolTip {
+    position: relative;
+    display: block;
+    top: -28px;
+    z-index: 2;
+}
+
+.scoreBarToolTip {
+    position: relative;
+    display: block;
+    top: -28px;
+    z-index: 1;
+}
+
+.scoreBarToolTip span::before {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-top-color: topTooltipColor;
+    content: '';
+}
+
+.scoreBarToolTip span::after {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 5px);
+    z-index: 1;
+    display: inline-block;
+    content: attr(data-label);
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    background-color: topTooltipColor;
+    color: #000000;
+}
+
+.scoreBarCurrentToolTip span::before {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% - 36px);
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-color: currentTooltipColor;
+    content: '';
+}
+
+.scoreBarCurrentToolTip span::after {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% - 61px);
+    z-index: 1;
+    display: inline-block;
+    content: attr(data-label);
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    background-color: currentTooltipColor;
+    color: #fff;
+}
+
+
+/* Imported webcam style changer ends*/
+
+@keyframes scoreBar {
+    0% {
+        width: 0%;
+    }
+
+    50% {
+        width: 60%;
+    }
+
+    100% {
+        width: 0%;
+    }
+}
+
+@keyframes scoreBarAfter {
+    0% {
+        background-position: 0 100%;
+    }
+
+    100% {
+        background-position: 30px 100%;
+    }
+}

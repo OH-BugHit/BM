@@ -1,17 +1,18 @@
 import style from './style.module.css';
 import { useAtom } from 'jotai';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { availableUsernamesAtom, configAtom, takenUsernamesAtom } from '../../atoms/state';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
-import { LargeButton, Webcam } from '@genai-fi/base';
+import { LargeButton } from '@genai-fi/base';
+import ProfilePictureInput from './ProfilePictureInput';
 
 interface Props {
     registerStudent: (name: string, image: string | null) => void;
 }
 
-interface FormErrors {
+export interface RegisterFormErrors {
     username?: 'missing' | 'long' | 'short' | 'takenFree' | 'taken';
     image?: 'missing';
 }
@@ -22,29 +23,14 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
     const [takenUsernames] = useAtom(takenUsernamesAtom);
 
     const [showRestore, setShowRestore] = useState(false);
-    const [errors, setErrors] = useState<FormErrors>({});
-    const [capture, setCapture] = useState(false);
+    const [errors, setErrors] = useState<RegisterFormErrors>({});
     const [image, setImage] = useState<string | null>(null);
     const [username, setUsername] = useState('');
     const [config] = useAtom(configAtom);
 
-    const handleCapture = useCallback((canvas: HTMLCanvasElement) => {
-        setImage(canvas.toDataURL('image/png'));
-        setCapture(false);
-        setErrors((prev) => ({ ...prev, image: undefined }));
-    }, []);
-
-    const toggleCapture = () => {
-        if (image) {
-            setImage(null);
-        } else {
-            setCapture(true);
-        }
-    };
-
     const handleSubmit = () => {
         const trimmed = username.trim();
-        const errs: FormErrors = {};
+        const errs: RegisterFormErrors = {};
 
         if (!image && config.settings.profilePicture) {
             errs.image = 'missing';
@@ -80,41 +66,18 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
     };
 
     return (
-        <div className={config?.settings?.profilePicture ? style.userContainer : style.noPicContainer}>
-            {config.settings.profilePicture && (
-                <div className={style.imageContainer}>
-                    {!image && (
-                        <Webcam
-                            size={512}
-                            capture={capture}
-                            onCapture={handleCapture}
-                            interval={200}
-                            direct
-                        />
-                    )}
-
-                    {image && (
-                        <img
-                            src={image}
-                            alt="Otettu kuva"
-                            style={{ maxWidth: '100%' }}
-                        />
-                    )}
-                </div>
-            )}
-            {errors.image && <p style={{ color: 'red' }}>{t('enterUsername.messages.imageRequired')}</p>}
-            {config.settings.profilePicture && (
-                <LargeButton
-                    onClick={toggleCapture}
-                    variant="contained"
-                >
-                    {image ? t('enterUsername.actions.changePicture') : t('enterUsername.actions.takePicture')}
-                </LargeButton>
-            )}
+        <div className={config?.settings?.profilePicture ? style.enterUserInfo : style.noPicContainer}>
+            <ProfilePictureInput
+                errors={errors}
+                setErrors={setErrors}
+                setImage={setImage}
+                image={image}
+            />
             <div className={style.textField}>
                 <TextField
                     label={t('enterUsername.labels.enterUsername')}
                     value={username}
+                    sx={{ color: 'white' }}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                     error={!!errors.username}

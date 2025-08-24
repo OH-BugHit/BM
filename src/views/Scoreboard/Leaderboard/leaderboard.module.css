@@ -1,0 +1,80 @@
+.leaderboard {
+    container-name: board;
+    container-type: inline-size;
+    display: flex;
+    width: 100%;
+    padding-top: 2rem;
+    gap: 1rem;
+    overflow: auto;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(45deg, rgba(30, 249, 30, 0.178), rgba(243, 239, 38, 0.372));
+    /*background: linear-gradient(45deg, rgba(53, 99, 251, 0.178), rgba(31, 212, 225, 0.372));*/
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.hidePictures {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+.leaderboardItem {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    padding: 0;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
+    width: 80%;
+    max-width: 80%;
+    margin-top: 1rem;
+    background: linear-gradient(45deg, rgba(53, 99, 251, 0.677), rgba(31, 212, 225, 0.38));
+}
+
+.viewPhotoButton {
+    display: none;
+    gap: 1rem;
+    padding: 0.5rem;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    margin-right: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 1rem 1rem 1rem 1rem;
+}
+
+.visButton {
+    display: none;
+    margin-right: 1rem;
+    cursor: pointer;
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    height: fit-content;
+}
+
+
+.hiddenByStudent {
+    margin-right: 1rem;
+}
+
+
+@container board (width > 700px) {
+    .allPics {
+        display: flex;
+    }
+
+    .viewPhotoButton {
+        display: flex;
+    }
+
+    .visButton {
+        display: flex;
+    }
+}

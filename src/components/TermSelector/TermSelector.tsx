@@ -1,46 +1,75 @@
+import style from '../../views/TermChange/style.module.css';
 import { useTranslation } from 'react-i18next';
-
-import { TextField } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
-import { configAtom, selectedTermAtom, selectedUserAtom, settingAtom, termTransferAtom } from '../../atoms/state';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { configAtom, settingAtom, termTransferAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
+import { useState } from 'react';
 
-export default function TermSelector({ allLabels }: { allLabels: string[] }) {
+interface Props {
+    allLabels: string[];
+    toUsers?: string[];
+}
+
+export default function TermSelector({ allLabels, toUsers }: Props) {
     const { t } = useTranslation();
     const [, setTerm] = useAtom(termTransferAtom);
-    const [word, setWord] = useAtom(selectedTermAtom);
+    const [word, setWord] = useState('');
     const [config, setConfig] = useAtom(configAtom);
-    const [selectedUser] = useAtom(selectedUserAtom);
     const [settings] = useAtom(settingAtom);
 
+    function delay(ms: number) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    async function sendTerms(newValue: string, toUsers: string[]) {
+        for (const user of toUsers) {
+            setTerm({
+                term: newValue || '',
+                recipient: { username: user },
+            });
+            await delay(100); // delay for P2P connection to have time
+        }
+    }
+
+    const handleTermChange = async (newValue: string | null) => {
+        if (toUsers) {
+            await sendTerms(newValue || '', toUsers);
+        } else {
+            setWord(newValue || '');
+            setConfig({
+                ...config,
+                pause: config.pause || settings.pauseOnChange,
+            });
+            setTerm({
+                term: newValue || '',
+                recipient: { username: 'a' },
+            });
+        }
+    };
+
     return (
-        <Autocomplete
-            options={(allLabels || []).slice().sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))}
-            value={word}
-            style={{
-                padding: '4px',
-                margin: '1rem',
-                minWidth: '400px',
-                maxWidth: '600px',
-                width: '100%',
-            }}
-            onChange={(_, newValue) => {
-                setWord(newValue || '');
-                setConfig({
-                    ...config,
-                    pause: config.pause || settings.pauseOnChange,
-                });
-                setTerm({
-                    term: newValue || '',
-                    recipient: config.gameMode === 'all' ? { username: 'a' } : { username: selectedUser.username },
-                });
-            }}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label={t('common.selectLabel')}
-                />
-            )}
-        />
+        <FormControl
+            fullWidth
+            className={style.termSelector}
+        >
+            <InputLabel id="term-label">{t('common.selectLabel')}</InputLabel>
+            <Select
+                labelId="term-label"
+                value={word || ''}
+                onChange={(e) => handleTermChange(e.target.value)}
+            >
+                {(allLabels || [])
+                    .slice()
+                    .sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))
+                    .map((label) => (
+                        <MenuItem
+                            key={label}
+                            value={label}
+                        >
+                            {label}
+                        </MenuItem>
+                    ))}
+            </Select>
+        </FormControl>
     );
 }

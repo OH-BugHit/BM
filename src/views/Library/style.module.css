@@ -1,18 +1,6 @@
 @value textDark, bgSubdued1, primary, secondary from "@genai-fi/base/css/colours.module.css";
 
-.container {
-    background: white;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 3rem;
-    width: 90%;
-    max-width: 1000px;
-    border-radius: 2rem;
-}
-
-.outerContainer {
+.library {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -24,10 +12,23 @@
     overflow-y: auto;
 }
 
-.container ul {
+.content {
+    padding-top: 1rem;
+    background: white;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    gap: 2rem;
+    max-width: 1200px;
+    border-radius: 2rem;
+}
+
+.content ul {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 10px 20px;
+    max-width: 100dvw;
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
@@ -35,7 +36,7 @@
     padding-bottom: 2rem;
 }
 
-.container li {
+.content li {
     flex: 0 1 300px;
     min-height: 200px;
     background: white;
@@ -45,20 +46,21 @@
     cursor: pointer;
 }
 
-.container li:hover {
+.content li:hover {
     box-shadow: 0 0 4px secondary;
 }
 
 .imageContainer {
+    margin-top: 1rem;
     line-height: 0;
 }
 
-.container a {
+.content a {
     text-decoration: none;
     color: textDark;
 }
 
-.container h2 {
+.content h2 {
     margin: 0.5rem 1rem;
     font-size: 1.1rem;
 }
@@ -70,4 +72,18 @@
     font-style: italic;
     font-size: 0.9rem;
     flex-grow: 1;
+}
+
+@media (max-width: 440px) {
+    .content ul {
+        scale: 0.9;
+        padding: 0;
+        margin: 0;
+    }
+
+    .library {
+        background-color: white;
+        padding: 0;
+        margin: 0;
+    }
 }

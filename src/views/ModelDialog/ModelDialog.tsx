@@ -8,6 +8,7 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { LargeButton } from '@genai-fi/base';
 import { loadModel } from '../../services/loadModel';
 import { ModelInfo, ModelOrigin } from '../../utils/types';
+import { currentModelName, handleFileChange } from './utils';
 
 export default function ModelDialog() {
     const { t } = useTranslation();
@@ -26,25 +27,6 @@ export default function ModelDialog() {
     const openFile = useCallback(() => {
         fileInputRef.current?.click();
     }, []);
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setSelectedFile(e.target.files[0]);
-            setSelectedModel('');
-        }
-    };
-
-    const currentModelName = () => {
-        if (config.modelData.origin === ModelOrigin.GenAI) {
-            return `${t('teacher.labels.currentModel')}: ${config.modelData.name} ${t('teacher.labels.from')} ${
-                config.modelData.origin
-            }`;
-        } else if (config.modelData.origin === ModelOrigin.Teacher) {
-            return `${t('teacher.labels.currentModel')}: ${config.modelData.name.slice(0, -4)} ${t(
-                'teacher.labels.from'
-            )} ${config.modelData.origin}`;
-        } else return '';
-    };
 
     const handleAccept = async () => {
         if (!selectedFile && selectedModel.length === 0) return;
@@ -88,20 +70,14 @@ export default function ModelDialog() {
         >
             <DialogTitle className={style.title}>{t('teacher.titles.changeModel')}</DialogTitle>
             <DialogContent>
-                {currentModelName()}
+                {currentModelName({ config: config, t: t })}
                 <div className={style.selectModelMessage}>
                     <div className={style.columnItem}>
                         {t('teacher.messages.selectModelGenAI')}
                         <Autocomplete
                             options={modelList || []}
                             value={selectedModel}
-                            style={{
-                                padding: '4px',
-                                margin: '1rem',
-                                minWidth: '300px',
-                                maxWidth: '600px',
-                                width: '100%',
-                            }}
+                            className={style.textField}
                             onChange={(_, newValue) => {
                                 setSelectedModel(newValue || '');
                                 setSelectedFile(null);
@@ -129,7 +105,7 @@ export default function ModelDialog() {
                                 }}
                             />
                         </div>
-                        <div>
+                        <>
                             {selectedFile && (
                                 <span style={{ marginLeft: 8, marginRight: 8, fontStyle: 'italic' }}>
                                     {selectedFile.name}
@@ -141,9 +117,16 @@ export default function ModelDialog() {
                                 type="file"
                                 accept=".zip"
                                 style={{ display: 'none' }}
-                                onChange={handleFileChange}
+                                onChange={(e) =>
+                                    handleFileChange({
+                                        e: e,
+                                        setSelectedFile: setSelectedFile,
+                                        setSelectedModel: setSelectedModel,
+                                    })
+                                }
                             />
                             <IconButton
+                                title={t('teacher.actions.openFileExplorer')}
                                 onClick={openFile}
                                 color="secondary"
                                 size="large"
@@ -152,11 +135,12 @@ export default function ModelDialog() {
                             >
                                 <FolderOpenIcon fontSize="medium" />
                             </IconButton>
-                        </div>
+                        </>
                     </div>
                 </div>
                 <div className={style.buttonGroup}>
                     <LargeButton
+                        title={t('common.cancel')}
                         variant="contained"
                         color="primary"
                         onClick={doClose}
@@ -165,6 +149,7 @@ export default function ModelDialog() {
                         {t('common.cancel')}
                     </LargeButton>
                     <LargeButton
+                        title={loading ? t('teacher.actions.loadingModel') : t('teacher.actions.setModel')}
                         variant="contained"
                         color="secondary"
                         data-testid="teacher-start-button"

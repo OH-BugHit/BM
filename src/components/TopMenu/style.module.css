@@ -18,6 +18,16 @@
     color: rgba(255, 255, 255, 0.26);
 }
 
+.relative {
+    composes: menuContainer;
+    position: relative;
+    width: fit-content;
+    margin: auto;
+    margin-top: 1rem;
+    flex-direction: row;
+    padding-right: 1rem;
+}
+
 .free {
     composes: menuContainer;
     width: fit-content;
@@ -64,11 +74,22 @@
 
 .bottom {
     composes: menuContainer;
-    bottom: 0;
+    bottom: 0.5rem;
     left: 0;
     right: 0;
     width: fit-content;
     margin: auto;
+    margin-bottom: 1rem;
+    flex-direction: row;
+    padding-right: 1rem;
+}
+
+.relative-bottom {
+    composes: menuContainer;
+    position: fixed;
+    bottom: 0;
+    justify-self: center;
+    width: fit-content;
     margin-bottom: 1rem;
     flex-direction: row;
     padding-right: 1rem;

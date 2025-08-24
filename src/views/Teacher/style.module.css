@@ -1,4 +1,4 @@
-.container {
+.teacher {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -12,7 +12,7 @@
     flex-grow: 1;
 }
 
-.sideMenu {
+.sideMenuContainer {
     height: 100%;
     position: sticky;
     top: 0;

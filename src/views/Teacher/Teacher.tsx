@@ -29,6 +29,7 @@ import Scoreboard from '../Scoreboard/Scoreboard';
 import Settings from '../Settings/Settings';
 import { Peer } from '@genai-fi/base/hooks/peer';
 import PeerEnv from '../../env';
+import ControlMenu from '../ControlMenu/UserMenu';
 
 export default function Teacher() {
     const blockRef = useRef(true);
@@ -41,7 +42,7 @@ export default function Teacher() {
     const [model, setModel] = useAtom(modelAtom);
     const [allLabels, setAllLabels] = useState<string[]>([]);
     const [labelChangeOpen] = useAtom(menuShowTermChangeAtom);
-    const [categoryViewOpen] = useAtom(menuShowLeaderboardAtom);
+    const [scoreboardViewOpen] = useAtom(menuShowLeaderboardAtom);
     const [galleryOpen] = useAtom(menuShowTrainingDataAtom);
     const [usersOpen] = useAtom(menuShowUserGridAtom);
 
@@ -60,9 +61,6 @@ export default function Teacher() {
         setTermData({ term: model?.getLabels()[0] || '', recipient: { username: 'a' } });
     }, [model, setModel, setConfig, config.modelData, setTermData]);
 
-    // Renderöi opiskelijoiden kuvat
-
-    // Komennot lähetetään muokkaamalla config-atomia
     return (
         <Peer
             host={PeerEnv.host}
@@ -71,7 +69,7 @@ export default function Teacher() {
             port={PeerEnv.port}
             code={`spoof-${MYCODE}`}
         >
-            <div className={style.container}>
+            <div className={style.teacher}>
                 <div className={style.serverProtocolContainer}>
                     <ServerProtocol />
                 </div>
@@ -81,7 +79,7 @@ export default function Teacher() {
                 />
                 <Settings />
                 <ModelDialog />
-                <div className={style.sideMenu}>
+                <div className={style.sideMenuContainer}>
                     <MenuPanel />
                 </div>
                 <div className={style.content}>
@@ -89,18 +87,17 @@ export default function Teacher() {
                     {usersOpen && studentData && (
                         <>
                             <UserMenu />
-                            <div style={{ paddingTop: '6rem' }} />
                             <UserGrid />
                         </>
                     )}
                     {labelChangeOpen && (
                         <>
                             <TermMenu />
-                            <div style={{ paddingTop: '6rem' }} />
                             <TermChange allLabels={allLabels} />
                         </>
                     )}
-                    {categoryViewOpen && <Scoreboard />}
+                    {scoreboardViewOpen && <Scoreboard />}
+                    <ControlMenu />
                 </div>
                 <Footer />
             </div>

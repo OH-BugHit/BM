@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import style from './style.module.css';
 import { MouseEvent } from 'react';
-import { selectedUserAtom } from '../../atoms/state';
+import { selectedUserAtom, studentActivityAtom } from '../../atoms/state';
 
 interface Props {
     username: string;
@@ -12,10 +12,29 @@ interface Props {
 
 export default function UserGridItem({ username, alive, profilePicture }: Props) {
     const [selectedUser, setSelectedUser] = useAtom(selectedUserAtom);
+    const [currentActivity] = useAtom(studentActivityAtom);
+
+    const getPicture = () => {
+        const currentPic = currentActivity.get(username);
+        if (currentPic) {
+            return (
+                <CanvasCopy
+                    sourceCanvas={currentPic}
+                    maxWidth={200}
+                />
+            );
+        } else {
+            return (
+                <img
+                    src="/noPicture.png"
+                    width={200}
+                ></img>
+            );
+        }
+    };
+
     return (
         <button
-            tabIndex={0}
-            data-testid={`user-grid-item-${username}`}
             aria-pressed={selectedUser.username === username}
             className={style.gridItem}
             onClick={(e: MouseEvent) => {
@@ -27,14 +46,7 @@ export default function UserGridItem({ username, alive, profilePicture }: Props)
                 e.stopPropagation();
             }}
         >
-            <div className={style.userImageContainer}>
-                {profilePicture && (
-                    <CanvasCopy
-                        sourceCanvas={profilePicture}
-                        maxWidth={200}
-                    />
-                )}
-            </div>
+            <div className={style.userImageContainer}>{getPicture()}</div>
             <div
                 className={
                     selectedUser.username === username ? style.selectedUserNameContainer : style.userNameContainer

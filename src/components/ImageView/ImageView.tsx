@@ -24,6 +24,13 @@ interface ImageViewProps {
     >;
 }
 
+/**
+ *
+ * @param maxSize is maximum size of the picture
+ * @param openImage refers to image currently open
+ * @param setOpenImage setter for image to open
+ * @returns return view with opened image
+ */
 export default function ImageView({ maxSize, openImage, setOpenImage }: ImageViewProps) {
     const [studentData] = useAtom(studentDataAtom);
     const { t } = useTranslation();

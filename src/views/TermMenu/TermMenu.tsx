@@ -1,5 +1,5 @@
-import TopMenu from '../../components/TopMenu/TopMenu';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import FloatingMenu from '../../components/TopMenu/FloatingMenu';
+import FloatingMenuItem from '../../components/TopMenu/FloatingMenuItem';
 import { IconButton } from '@mui/material';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
@@ -35,16 +35,16 @@ export default function TermMenu() {
 
     return (
         <>
-            <TopMenu
+            <FloatingMenu
                 title={t('dashboard.aria.socialUserMenu')}
-                placement="top"
+                placement="relative"
                 label={
                     <div className={style.menuLogo}>
                         {config.gameMode === 'all' ? t('termSelect.titles.all') : t('termSelect.titles.single')}
                     </div>
                 }
             >
-                <TopMenuItem
+                <FloatingMenuItem
                     tooltip={t('termSelect.actions.all')}
                     selected={config.gameMode === 'all'}
                 >
@@ -57,8 +57,8 @@ export default function TermMenu() {
                     >
                         <Diversity3Icon />
                     </IconButton>
-                </TopMenuItem>
-                <TopMenuItem
+                </FloatingMenuItem>
+                <FloatingMenuItem
                     tooltip={t('termSelect.actions.single')}
                     selected={config.gameMode === 'single'}
                 >
@@ -71,8 +71,8 @@ export default function TermMenu() {
                     >
                         <EmojiPeopleIcon />
                     </IconButton>
-                </TopMenuItem>
-            </TopMenu>
+                </FloatingMenuItem>
+            </FloatingMenu>
         </>
     );
 }

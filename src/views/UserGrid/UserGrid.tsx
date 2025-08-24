@@ -11,13 +11,10 @@ export default function UserGrid() {
     const [allUNs] = useAtom(takenUsernamesAtom);
     const [profilePictures] = useAtom(profilePicturesAtom);
 
-    const COLS = 5;
-
     return (
         <div className={style.userGridContainer}>
             <div
                 className={style.grid}
-                style={{ gridTemplateColumns: `repeat(${COLS}, 1fr)` }}
                 data-testid="usergrid"
             >
                 {allUNs.length === 0 && (

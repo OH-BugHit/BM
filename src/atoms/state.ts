@@ -29,6 +29,7 @@ export const configAtom = atom<SpoofConfig>({
     settings: {
         allowHidePicture: true,
         allowResetTerm: true,
+        profilePicture: false,
     },
 });
 
@@ -61,7 +62,7 @@ export const usernameAtom = atom<string>('');
 /**
  * Contains students own profilepicture
  */
-export const profilePictureAtom = atom<string>('');
+export const profilePictureAtom = atom<string | null>(null);
 
 /**
  * Controls students game. Reload = true will kick student from session by reloading the page.
@@ -101,7 +102,7 @@ export const showOwnResultsAtom = atom<boolean>(false);
 export const studentResultsAtom = atom<StudentScores>({ data: new Map() });
 
 /**
- * //TODO: Include all settings and do settings for teacher
+ * //TODO: Include profilePicture needed
  */
 export const settingAtom = atom<Settings>({
     pauseOnChange: false,
@@ -115,3 +116,11 @@ export const settingAtom = atom<Settings>({
  * modelDataAtom is used for storing the model file uploaded by the teacher. This file is sent to the student at request.
  */
 export const modelDataAtom = atom<File | null>(null);
+// K = student, V = list of classnames for pictures to be hidden (by teacher).
+export const teacherHidesAtom = atom<Map<string, string[]>>(new Map());
+
+/**
+ * Contains top images shown at user grid
+ * K = students name (username) V = current terms topImage
+ */
+export const studentActivityAtom = atom<Map<string, HTMLCanvasElement | null>>(new Map());

@@ -4,11 +4,12 @@ import { fetchImageUrls } from '../../services/ImageService';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
-import { close, closeGallery } from '../../components/Buttons/buttonStyles';
+import { closeGallery } from '../../components/Buttons/buttonStyles';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useAtom } from 'jotai';
-import { configAtom, menuShowLeaderboardAtom, menuShowTrainingDataAtom } from '../../atoms/state';
+import { configAtom, menuShowTrainingDataAtom } from '../../atoms/state';
+import OpenedImage from '../../components/ImageView/OpenedImage';
 
 interface DatasetGalleryProps {
     allLabels: string[] | undefined;
@@ -28,13 +29,15 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
     const [noMoreData, setNoMoreData] = useState(false);
     const [openImage, setOpenImage] = useState<string | null>(null);
     const limit = 10;
+    const [config] = useAtom(configAtom);
     const [selected, setSelected] = useState('');
     const [, setOpen] = useAtom(menuShowTrainingDataAtom);
-    const [, setHomeOpen] = useAtom(menuShowLeaderboardAtom);
-    const [config] = useAtom(configAtom);
     const [imagePaths, setImagePaths] = useState<Record<string, string[]>>({});
     const loaded = useRef(false);
 
+    /**
+     * Loads more images with offset.
+     */
     const loadMore = useCallback(() => {
         if (loading || noMoreData) return;
 
@@ -102,12 +105,11 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
 
     return (
         <div>
-            <div className={style.container}>
-                <div className={style.headerToggle}>
+            <div className={style.datasetGallery}>
+                <div className={style.titleRow}>
                     <Button
                         onClick={() => {
                             setOpen(false);
-                            setHomeOpen(true);
                         }}
                         title={t('common.close')}
                         aria-label="Sulje"
@@ -134,48 +136,25 @@ export function DatasetGallery({ allLabels }: DatasetGalleryProps) {
                 {images.length === 0 && !loading && selected.length !== 0 && (
                     <em className={style.noData}>{t('common.noTeachingData')}</em>
                 )}
-                {images.length !== 0 && (
-                    <>
-                        <div
-                            className={style.datasetContainer}
-                            ref={containerRef}
-                        >
-                            {images.map((src, index) => (
-                                <img
-                                    key={index}
-                                    src={src}
-                                    alt={`Kuva ${index}`}
-                                    className={style.image}
-                                    onClick={() => setOpenImage(src)}
-                                />
-                            ))}
-                        </div>
-                    </>
-                )}
-            </div>
-            {openImage && (
                 <div
-                    className={style.openImageOverlay}
-                    onClick={() => setOpenImage(null)}
+                    className={style.imageGrid}
+                    ref={containerRef}
                 >
-                    <div>
-                        <Button
-                            onClick={() => setOpenImage(null)}
-                            style={close}
-                            title={t('common.close')}
-                            aria-label="Sulje"
-                        >
-                            <CloseSharpIcon />
-                        </Button>
+                    {images.map((src, index) => (
                         <img
-                            src={openImage.replace('_thumb', '')}
-                            alt="isompi kuva"
-                            className={style.openImage}
-                            onClick={(e) => e.stopPropagation()}
+                            key={index}
+                            src={src}
+                            alt={`Kuva ${index}`}
+                            className={style.image}
+                            onClick={() => setOpenImage(src)}
                         />
-                    </div>
+                    ))}
                 </div>
-            )}
+            </div>
+            <OpenedImage
+                setOpenImage={setOpenImage}
+                openImage={openImage ? openImage.replace('_thumb', '') : null}
+            />
         </div>
     );
 }

@@ -1,5 +1,5 @@
-import TopMenu from '../../components/TopMenu/TopMenu';
-import TopMenuItem from '../../components/TopMenu/TopMenuItem';
+import FloatingMenu from '../../components/TopMenu/FloatingMenu';
+import FloatingMenuItem from '../../components/TopMenu/FloatingMenuItem';
 import { IconButton } from '@mui/material';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -24,16 +24,16 @@ export default function UserMenu() {
 
     return (
         <div>
-            <TopMenu
+            <FloatingMenu
                 title={t('dashboard.aria.socialUserMenu')}
-                placement="top"
+                placement="relative"
                 label={
                     <div className={style.menuLogo}>
                         {selectedUser.username ? selectedUser.username : t('userGrid.titles.users')}
                     </div>
                 }
             >
-                <TopMenuItem tooltip={t('userGrid.actions.kickUser')}>
+                <FloatingMenuItem tooltip={t('userGrid.actions.kickUser')}>
                     <IconButton
                         color="inherit"
                         onClick={() => {
@@ -49,8 +49,8 @@ export default function UserMenu() {
                     >
                         <PersonRemoveIcon />
                     </IconButton>
-                </TopMenuItem>
-                <TopMenuItem tooltip={t('userGrid.actions.deleteUser')}>
+                </FloatingMenuItem>
+                <FloatingMenuItem tooltip={t('userGrid.actions.deleteUser')}>
                     <IconButton
                         color="inherit"
                         onClick={() => {
@@ -68,8 +68,8 @@ export default function UserMenu() {
                     >
                         <RemoveCircleIcon />
                     </IconButton>
-                </TopMenuItem>
-            </TopMenu>
+                </FloatingMenuItem>
+            </FloatingMenu>
         </div>
     );
 }

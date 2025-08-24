@@ -61,23 +61,21 @@ export default function Library() {
     };
 
     return (
-        <main className={style.outerContainer}>
-            <div className={style.container}>
-                <header>
-                    <h1>{t('library.title')}</h1>
-                </header>
+        <main className={style.library}>
+            <div className={style.content}>
+                <h1>{t('library.title')}</h1>
                 <ul className={style.grid}>
-                    <ContentItem
-                        title={t('library.animals.title')}
-                        image="/images/library/animals.png"
-                        description={t('library.animals.description')}
-                        onClick={() => handleItemClick('animals')}
-                    />
                     <ContentItem
                         title={t('library.jobs.title')}
                         image="/images/library/jobs.png"
                         description={t('library.jobs.description')}
                         onClick={() => handleItemClick('jobs')}
+                    />
+                    <ContentItem
+                        title={t('library.animals.title')}
+                        image="/images/library/animals.png"
+                        description={t('library.animals.description')}
+                        onClick={() => handleItemClick('animals')}
                     />
                     <ContentItem
                         title={t('library.own.title')}

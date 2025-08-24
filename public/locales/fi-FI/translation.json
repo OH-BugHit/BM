@@ -12,7 +12,7 @@
         "selectLabel": "Valitse luokittelusana",
         "start": "Aloita",
         "showInfo": "Näytä tiedot",
-        "title": "Spoofing Game",
+        "title": "Breakable Machine",
         "dataset": "Opetusdata",
         "labels": {
             "disableApp": "Pysäytä",
@@ -43,7 +43,7 @@
         "labels": {
             "enterCode": "Syötä koodi"
         },
-        "title": "Spoofing Game",
+        "title": "Breakable Machine",
         "readyImages": "Valmiit kuvat",
         "readyImagesDescription": "Pelaa valmiilla kuvilla",
         "multiplayer": "Luokkatila",
@@ -133,6 +133,7 @@
     },
     "scoreboard": {
         "labels": {
+            "hidden": "Piilotettu",
             "scores": "Tulokset",
             "standings": "Tulokset",
             "resultPictures": "Paras kuva",

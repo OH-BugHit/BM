@@ -29,7 +29,7 @@ export function useModelNamesLoader() {
             }
         };
 
-        // Käynnistä vain kerran mountissa
+        // Only do once on mount
         tryLoad();
 
         return () => {

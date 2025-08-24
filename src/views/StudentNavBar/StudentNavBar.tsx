@@ -119,13 +119,15 @@ export default function StudentNavBar({
                         size="large"
                         variant="text"
                     >
-                        <img
-                            src={profilePicture}
-                            height={'40'}
-                            width={'40'}
-                            style={{ borderRadius: '20px' }}
-                        />
-                        {open ? username : ''}
+                        {profilePicture && (
+                            <img
+                                src={profilePicture}
+                                height={'40'}
+                                width={'40'}
+                                style={{ borderRadius: '20px' }}
+                            />
+                        )}
+                        {username}
                     </MenuButton>
                 </IconMenuItem>
             )}

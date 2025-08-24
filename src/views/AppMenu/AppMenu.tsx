@@ -4,15 +4,11 @@ import style from './style.module.css';
 import { IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import MenuIcon from '@mui/icons-material/Menu';
-import PauseIcon from '@mui/icons-material/Pause';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AbcIcon from '@mui/icons-material/Abc';
 import { useAtom } from 'jotai';
 import {
-    configAtom,
     menuShowLeaderboardAtom,
     menuShowModelChangeAtom,
     showSettingsDialogAtom,
@@ -42,25 +38,18 @@ export default function MenuPanel() {
     const [showCategory, setShowCategory] = useAtom(menuShowLeaderboardAtom);
     const [showTermView, setShowTermView] = useAtom(menuShowTermChangeAtom);
     const [showSettings, setShowSettings] = useAtom(showSettingsDialogAtom);
-    const [config, setConfig] = useAtom(configAtom);
     const [, setSelectedUser] = useAtom(selectedUserAtom);
 
     const doShowShare = useCallback(() => setShowShare((s) => !s), [setShowShare]);
     const doShowModel = useCallback(() => setShowModel((s) => !s), [setShowModel]);
     const doShowSettings = useCallback(() => setShowSettings((s) => !s), [setShowSettings]);
+    const doShowTrainingData = useCallback(() => setShowTraining((s) => !s), [setShowTraining]);
     const doShowSubview = useCallback(
-        (subview: 'users' | 'trainingData' | 'results' | 'term') => {
+        (subview: 'users' | 'results' | 'term') => {
             switch (subview) {
                 case 'users':
-                    setShowUsers((s) => !s);
+                    setShowUsers(true);
                     setShowTraining(false);
-                    setShowCategory(false);
-                    setShowTermView(false);
-                    setSelectedUser({ username: '', profilePicture: null });
-                    break;
-                case 'trainingData':
-                    setShowTraining((s) => !s);
-                    setShowUsers(false);
                     setShowCategory(false);
                     setShowTermView(false);
                     setSelectedUser({ username: '', profilePicture: null });
@@ -135,62 +124,6 @@ export default function MenuPanel() {
                         {open ? t('teacher.labels.shareTip') : ''}
                     </MenuButton>
                 </IconMenuItem>
-                <IconMenuItem
-                    tooltip={t('teacher.labels.disableApp')}
-                    hideTip={open}
-                    selected={config?.pause}
-                    fullWidth
-                >
-                    <MenuButton
-                        color="inherit"
-                        onClick={() => setConfig((old) => ({ ...old, pause: !old.pause }))}
-                        aria-label={t('teacher.labels.disableApp')}
-                        size="large"
-                        variant="text"
-                        fullWidth
-                    >
-                        {config?.pause ? <PlayCircleIcon fontSize="large" /> : <PauseIcon fontSize="large" />}
-                        {open ? t('teacher.labels.disableApp') : ''}
-                    </MenuButton>
-                </IconMenuItem>
-
-                <IconMenuItem
-                    tooltip={t('teacher.labels.disableHeatmap')}
-                    hideTip={open}
-                    selected={config?.heatmap}
-                    fullWidth
-                >
-                    <MenuButton
-                        color="inherit"
-                        onClick={() => setConfig((old) => ({ ...old, heatmap: !old.heatmap }))}
-                        aria-label={t('teacher.labels.disableHeatmap')}
-                        size="large"
-                        variant="text"
-                        fullWidth
-                    >
-                        <LocalFireDepartmentIcon fontSize="large" />
-                        {open ? t('teacher.labels.disableHeatmap') : ''}
-                    </MenuButton>
-                </IconMenuItem>
-
-                <IconMenuItem
-                    tooltip={t('teacher.labels.disableDataGallery')}
-                    hideTip={open}
-                    selected={config?.gallery}
-                    fullWidth
-                >
-                    <MenuButton
-                        color="inherit"
-                        onClick={() => setConfig((old) => ({ ...old, gallery: !old.gallery }))}
-                        aria-label={t('teacher.labels.disableDataGallery')}
-                        size="large"
-                        variant="text"
-                        fullWidth
-                    >
-                        <PsychologyIcon fontSize="large" />
-                        {open ? t('teacher.labels.disableDataGallery') : ''}
-                    </MenuButton>
-                </IconMenuItem>
             </div>
             {/*showTree && <MenuTree open={open} />*/}
 
@@ -256,7 +189,7 @@ export default function MenuPanel() {
                 >
                     <MenuButton
                         color="inherit"
-                        onClick={() => doShowSubview('trainingData')}
+                        onClick={() => doShowTrainingData()}
                         aria-label={t('common.labels.datasetTip')}
                         size="large"
                         variant="text"

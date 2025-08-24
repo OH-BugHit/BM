@@ -16,7 +16,7 @@ export default function StudentWrapper() {
     const [username, setUsername] = useAtom(usernameAtom);
     const [, setProfilePicture] = useAtom(profilePictureAtom);
 
-    const registerStudent = async (name: string, image: string) => {
+    const registerStudent = async (name: string, image: string | null) => {
         setUsername(name);
         setProfilePicture(image);
     };
@@ -32,10 +32,10 @@ export default function StudentWrapper() {
         >
             <StudentProtocol>
                 {config && !username && (
-                    <div style={{ justifyItems: 'center', width: '100%', height: '100%' }}>
+                    <>
                         <EnterUserInfo registerStudent={registerStudent} />
                         <Footer />
-                    </div>
+                    </>
                 )}
                 {config && username && serverCode && <Student serverCode={serverCode} />}
             </StudentProtocol>

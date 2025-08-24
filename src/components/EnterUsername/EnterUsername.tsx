@@ -2,13 +2,13 @@ import style from './style.module.css';
 import { useAtom } from 'jotai';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { availableUsernamesAtom, takenUsernamesAtom } from '../../atoms/state';
+import { availableUsernamesAtom, configAtom, takenUsernamesAtom } from '../../atoms/state';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { LargeButton, Webcam } from '@genai-fi/base';
 
 interface Props {
-    registerStudent: (name: string, image: string) => void;
+    registerStudent: (name: string, image: string | null) => void;
 }
 
 interface FormErrors {
@@ -26,6 +26,7 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
     const [capture, setCapture] = useState(false);
     const [image, setImage] = useState<string | null>(null);
     const [username, setUsername] = useState('');
+    const [config] = useAtom(configAtom);
 
     const handleCapture = useCallback((canvas: HTMLCanvasElement) => {
         setImage(canvas.toDataURL('image/png'));
@@ -45,7 +46,7 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
         const trimmed = username.trim();
         const errs: FormErrors = {};
 
-        if (!image) {
+        if (!image && config.settings.profilePicture) {
             errs.image = 'missing';
         }
 
@@ -53,7 +54,7 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
             errs.username = 'missing';
         } else if (trimmed.length < 3) {
             errs.username = 'short';
-        } else if (trimmed.length > 30) {
+        } else if (trimmed.length > 16) {
             errs.username = 'long';
         } else if (users.find((u) => u.username === trimmed)) {
             errs.username = 'takenFree';
@@ -66,7 +67,7 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
             return;
         }
 
-        if (image) onUsername(trimmed, image);
+        onUsername(trimmed, image);
     };
 
     const handleSelect = (e: SelectChangeEvent) => {
@@ -79,35 +80,37 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
     };
 
     return (
-        <div className={style.userContainer}>
-            <div className={style.imageContainer}>
-                {!image && (
-                    <Webcam
-                        size={512}
-                        capture={capture}
-                        onCapture={handleCapture}
-                        interval={200}
-                        direct
-                    />
-                )}
+        <div className={config?.settings?.profilePicture ? style.userContainer : style.noPicContainer}>
+            {config.settings.profilePicture && (
+                <div className={style.imageContainer}>
+                    {!image && (
+                        <Webcam
+                            size={512}
+                            capture={capture}
+                            onCapture={handleCapture}
+                            interval={200}
+                            direct
+                        />
+                    )}
 
-                {image && (
-                    <img
-                        src={image}
-                        alt="Otettu kuva"
-                        style={{ maxWidth: '100%' }}
-                    />
-                )}
-            </div>
-
+                    {image && (
+                        <img
+                            src={image}
+                            alt="Otettu kuva"
+                            style={{ maxWidth: '100%' }}
+                        />
+                    )}
+                </div>
+            )}
             {errors.image && <p style={{ color: 'red' }}>{t('enterUsername.messages.imageRequired')}</p>}
-            <LargeButton
-                onClick={toggleCapture}
-                variant="contained"
-            >
-                {image ? t('enterUsername.actions.changePicture') : t('enterUsername.actions.takePicture')}
-            </LargeButton>
-
+            {config.settings.profilePicture && (
+                <LargeButton
+                    onClick={toggleCapture}
+                    variant="contained"
+                >
+                    {image ? t('enterUsername.actions.changePicture') : t('enterUsername.actions.takePicture')}
+                </LargeButton>
+            )}
             <div className={style.textField}>
                 <TextField
                     label={t('enterUsername.labels.enterUsername')}

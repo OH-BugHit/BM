@@ -31,10 +31,15 @@ p {
 }
 
 h1 {
-  font-family: 'Tektur';
+  font-family: 'Tektur', 'Andika';
   font-weight: bold;
   font-size: 3rem;
   margin: 0;
+}
+
+h3 {
+  font-family: 'Tektur',
+    'Andika';
 }
 
 @media (max-width: 600px) {

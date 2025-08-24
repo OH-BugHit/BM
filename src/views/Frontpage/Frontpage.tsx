@@ -25,8 +25,8 @@ export default function Frontpage() {
     const logoSize = Math.min(192, window.innerWidth * 0.3);
 
     return (
-        <div className={style.container}>
-            <div className={style.innerContainer}>
+        <div className={style.frontpage}>
+            <div className={style.content}>
                 <img
                     src="/logo192_bw.png"
                     alt="logo"
@@ -39,7 +39,6 @@ export default function Frontpage() {
                         label={t('frontpage.labels.enterCode')}
                         value={inputCode}
                         fullWidth
-                        className={style.textbox}
                         onChange={(e) => setInputCode(e.target.value)}
                         onClick={(e) => e.stopPropagation()}
                     />

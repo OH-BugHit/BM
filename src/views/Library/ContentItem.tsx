@@ -18,8 +18,8 @@ export default function ContentItem({ title, image, description, onClick }: Prop
                     <img
                         src={image}
                         alt={title}
-                        width={300}
-                        height={200}
+                        width={280}
+                        height={180}
                     />
                 </div>
             )}

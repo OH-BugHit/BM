@@ -7,7 +7,7 @@
         "title": "Generation AI",
         "privacyTitle": "Privacy",
         "privacy": [
-            "Welcome to our Privacy Notice, designed to inform you about how we handle your personal data following the General Data Protection Regulation (GDPR) when you use our website featuring the GenAI Spoofing Game.",
+            "Welcome to our Privacy Notice, designed to inform you about how we handle your personal data following the General Data Protection Regulation (GDPR) when you use our website featuring the GenAI Breakable Machine.",
             "To make the subject matter of this notice clearer, let us define some terms from the GDPR. The \"controller\" refers to us, as we decide how and why your personal data is used, which also makes us responsible for protecting your personal data. \"Personal data\" includes any information that can identify you directly or indirectly, like your IP address. \"Processing\" covers all actions done with your data, such as collecting, storing, using, and deleting it.",
             "It is important to read this notice to understand what data we collect from you, why we collect it, what we do with it, and what rights you have regarding your data.",
             "If you have any questions about this notice, please reach out to the controller:",
@@ -59,11 +59,24 @@
         "start": "Start",
         "show": "Show",
         "showInfo": "Show info",
-        "title": "Spoofing Game",
+        "title": "Breakable Machine",
         "labels": {
             "teachableMachine": "Teachable Machine",
             "disableApp": "Pause",
             "datasetTip": "Examine the training data"
+        }
+    },
+    "controlMenu": {
+        "actions": {
+            "disableApp": "Pause all users",
+            "disableDataGallery": "Disable teching data browsing",
+            "disableHeatmap": "Block heatmap",
+            "enableApp": "Continue game",
+            "enableDataGallery": "Allow teaching data browsing",
+            "enableHeatmap": "Allow heatmap"
+        },
+        "titles": {
+            "controlMenu": "Game controls"
         }
     },
     "enterUsername": {
@@ -88,7 +101,7 @@
         "labels": {
             "enterCode": "Enter code"
         },
-        "title": "Spoofing Game",
+        "title": "Breakable Machine",
         "readyImages": "Ready images",
         "readyImagesDescription": "Play with ready images",
         "multiplayer": "Multiplayer",
@@ -120,11 +133,11 @@
         "title": "Select content",
         "animals": {
             "title": "Animals",
-            "description": "Collection contains 11 different animals. Lorem ipsumia käytetään näyttämään, miltä esimerkiksi kirjasin tai julkaisun tekstin asettelu näyttävät"
+            "description": "Classifier is finetuned with 11 different animals. Harder model to spoof."
         },
         "jobs": {
             "title": "Jobs",
-            "description": "Collection on five different jobs. Lorem ipsumia käytetään näyttämään, miltä esimerkiksi kirjasin tai julkaisun tekstin asettelu näyttävät"
+            "description": "Classifier is finetuned with collection of seven different occupations."
         },
         "own": {
             "title": "Own model",
@@ -210,11 +223,21 @@
         }
     },
     "scoreboard": {
+        "actions": {
+            "open": {
+                "image": "Open image"
+            }
+        },
         "labels": {
-            "scores": "Scores",
-            "standings": "Standings",
+            "hidden": "Hidden",
+            "forAll": "Standings",
+            "forClass": "Standings for",
+            "hideResultPictures": "Hide result pictures",
+            "leaderboard": "Leaderboard",
             "resultPictures": "Result Pictures",
-            "leaderboard": "Leaderboard"
+            "scores": "Scores",
+            "showResultPictures": "Show result pictures",
+            "standings": "Standings"
         }
     },
     "settings": {
@@ -252,6 +275,7 @@
         },
         "actions": {
             "loadingModel": "Loading model",
+            "openFileExplorer": "Open File Explorer",
             "resetScore": "Reset score",
             "setModel": "Set Model",
             "start": "Start"
@@ -259,10 +283,8 @@
         "labels": {
             "changeModel": "Change classifier model",
             "currentModel": "Current model",
-            "disableApp": "Pause all users",
-            "disableDataGallery": "Allow teaching data browsing",
-            "disableHeatmap": "Allow heatmap",
             "from": "from",
+            "noModel": "no model selected",
             "shareTip": "Show join code"
         },
         "messages": {
@@ -288,6 +310,9 @@
         "titles": {
             "all": "Common Challenge",
             "change": "Change label for {{user}}",
+            "changeChallenge": "Change the Challenge",
+            "selectUsers": "Select users",
+            "setSingle": "Set new challenge for individual players",
             "single": "Individual Challenges"
         }
     },

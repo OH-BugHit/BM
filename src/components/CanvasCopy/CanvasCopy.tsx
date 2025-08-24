@@ -6,16 +6,17 @@ type CanvasCopyProps = {
     shape?: 'round' | 'leftRound' | 'squircle';
     width?: number;
     height?: number;
+    noBorder?: boolean;
 };
 
-export function CanvasCopy({ sourceCanvas, maxWidth = 160, shape, width, height }: CanvasCopyProps) {
+export function CanvasCopy({ sourceCanvas, maxWidth = 160, shape, width, height, noBorder }: CanvasCopyProps) {
     const ref = useRef<HTMLCanvasElement | null>(null);
 
     const canvasStyle: React.CSSProperties = {
         maxWidth,
         width,
         height,
-        border: '1px solid #ccc',
+        border: noBorder ? 'none' : '1px solid #ccc',
         display: 'block',
         aspectRatio: shape === 'round' ? '1 / 1' : undefined,
         borderRadius: shape === 'round' ? '50%' : shape === 'squircle' ? '1rem' : undefined,

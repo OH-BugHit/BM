@@ -8,11 +8,11 @@ type FooterProps = {
 
 export default function Footer({ hideLang }: FooterProps) {
     return (
-        <div className={style.container}>
-            <footer>
+        <footer>
+            <div className={style.privacy}>
                 <Privacy />
-            </footer>
-            {!hideLang && <LangSelect />}
-        </div>
+            </div>
+            <div className={style.langSelect}>{!hideLang && <LangSelect />}</div>
+        </footer>
     );
 }

@@ -11,6 +11,7 @@ import {
     profilePicturesAtom,
     termTransferAtom,
     messageTransferAtom,
+    studentActivityAtom,
 } from '../atoms/state';
 import { SpoofConfig, StudentScores } from '../utils/types';
 import { base64ToCanvas } from '../utils/base64toCanvas';
@@ -26,6 +27,7 @@ export default function ServerProtocol() {
     const [modelFile] = useAtom(modelDataAtom);
     const [termData] = useAtom(termTransferAtom);
     const [messageData] = useAtom(messageTransferAtom);
+    const [, setCurrentActivity] = useAtom(studentActivityAtom);
 
     // CLOSE HANDLER: whenever a Connection is closed (either via 'eter:close' or network drop),
     // remove that user from your usersAtom.
@@ -37,7 +39,9 @@ export default function ServerProtocol() {
 
     usePeerData((data: EventProtocol, conn: Connection<EventProtocol>) => {
         if (data.event === 'eter:join') {
+            // This event is triggered by student before register
             conn.send({
+                // We send current configuration
                 event: 'eter:config',
                 configuration: {
                     pause: config.pause,
@@ -49,6 +53,7 @@ export default function ServerProtocol() {
                 },
             });
             conn.send({
+                // Also we send current term
                 event: 'eter:termData',
                 data: {
                     term: termData.term,
@@ -56,17 +61,20 @@ export default function ServerProtocol() {
                 },
             });
             conn.send({
+                // And we send list of taken usernames and those that have dropped
                 event: 'eter:userlist',
                 available: allUNs.filter((u) => !users.some((user) => user.username === u.username)), // Filters users dropped from the users
                 taken: allUNs.filter((u) => users.some((user) => user.username === u.username)), // Filters users still connected
             });
         } else if (data.event === 'eter:drop') {
+            // not in use
             setUsers((old) => old.filter((o) => o.username !== data.data.username));
         } else if (data.event === 'eter:register') {
+            // User has given username (and maybe profile pic too?) and register
             const idx = users.findIndex((u) => u.username === data.data.username);
             if (idx !== -1) {
                 // Dublicate user!
-                console.log('users have tried to enter with same username. No dublicates allowed.'); // Sends reload command back to same connection, not by username as it is dublicate in this case!
+                console.log('users have tried to enter with same username. No dublicates allowed.'); // Sends reload command back to same connection
                 conn.send({
                     event: 'eter:messageUser',
                     message: 'usernameTaken',
@@ -83,23 +91,27 @@ export default function ServerProtocol() {
                 },
             ]);
             setAllUNs((old) => {
-                // Lisää vain jos käyttäjänimi ei ole jo listassa
+                // Only add if there is not already one with same name
                 if (old.some((u) => u.username === data.data.username)) {
                     return old;
                 }
                 return [...old, { username: data.data.username }];
             });
-            if (data.data.profilePicture.length > 0) {
+            // If registering with new profilePicture!
+            if (data.data.profilePicture && data.data.profilePicture.length > 0) {
                 (async () => {
-                    const profilePic = await base64ToCanvas(data.data.profilePicture);
-                    setProfilePictures((prev) => {
-                        const id = data.data.username;
-                        const prevMap = new Map(prev);
-                        prevMap.set(id, profilePic);
-                        return prevMap;
-                    });
+                    if (data.data.profilePicture) {
+                        const profilePic = await base64ToCanvas(data.data.profilePicture);
+                        setProfilePictures((prev) => {
+                            const id = data.data.username;
+                            const prevMap = new Map(prev);
+                            prevMap.set(id, profilePic);
+                            return prevMap;
+                        });
+                    }
                 })();
             } else {
+                // If rejoining and there was already profilepic, then we send it back to student
                 const canvas = profilePictures.get(data.data.username);
                 if (canvas) {
                     const profilePic = canvasToBase64(canvas);
@@ -110,7 +122,7 @@ export default function ServerProtocol() {
                             profilePicture: profilePic,
                         },
                     });
-                }
+                } // TODO: Here is one good place to implement random profile picture if we would like one? Just memo note here..
             }
         } else if (data.event === 'eter:modelRequest') {
             if (modelFile) {
@@ -122,6 +134,26 @@ export default function ServerProtocol() {
                 console.log('Modelfile not found when requested by student');
             }
         } else if (data.event === 'eter:image') {
+            // If peer connection has stability issues, it might drop from active "users" -list and not rejoin it with register
+            // In that case we register also here
+            const userExists = users.some((u) => u.username === data.data.studentId);
+            if (!userExists && data.data.studentId) {
+                // Auto register on image-event
+                setUsers((old) => [
+                    ...old,
+                    {
+                        username: data.data.studentId,
+                        connectionId: conn.connectionId,
+                    },
+                ]);
+                setAllUNs((old) => {
+                    if (old.some((u) => u.username === data.data.studentId)) {
+                        return old;
+                    }
+                    return [...old, { username: data.data.studentId }];
+                });
+            }
+            // If student wishes to remove image, it is done here
             if (data.data.image === 'delete') {
                 setStudent((prev) => {
                     const newData = prev?.students ?? new Map();
@@ -129,35 +161,44 @@ export default function ServerProtocol() {
                     studentScores.data.delete(data.data.classname);
                     return { students: newData };
                 });
+            } else {
+                // Add image to results (studentDataAtom)
+                (async () => {
+                    const topCanvas = await base64ToCanvas(data.data.image);
+                    const topHeatmap = await base64ToCanvas(data.data.heatmap);
+                    const score = data.data.score;
+                    // Here we set the image received as current activity of student shown in user grid:
+                    setCurrentActivity((prev) => {
+                        const id = data.data.studentId;
+                        const prevActivity = prev ?? new Map();
+                        prevActivity.set(id, topCanvas);
+                        return prevActivity;
+                    });
+
+                    setStudent((prev) => {
+                        const id = data.data.studentId;
+                        const prevStudents = prev?.students ?? new Map();
+                        const studentScores = prevStudents.get(id) ?? { data: new Map() };
+
+                        const existing = studentScores.data.get(data.data.classname);
+                        if (existing) {
+                            existing.score = score;
+                            existing.topCanvas = topCanvas;
+                            existing.topHeatmap = topHeatmap;
+                            existing.hidden = data.data.hidden;
+                        } else {
+                            studentScores.data.set(data.data.classname, {
+                                score,
+                                topCanvas,
+                                topHeatmap,
+                                hidden: data.data.hidden,
+                            });
+                        }
+                        prevStudents.set(id, studentScores);
+                        return { students: prevStudents };
+                    });
+                })();
             }
-            (async () => {
-                const topCanvas = await base64ToCanvas(data.data.image);
-                const topHeatmap = await base64ToCanvas(data.data.heatmap);
-                const score = data.data.score;
-
-                setStudent((prev) => {
-                    const id = data.data.studentId;
-                    const prevStudents = prev?.students ?? new Map();
-                    const studentScores = prevStudents.get(id) ?? { data: new Map() };
-
-                    const existing = studentScores.data.get(data.data.classname);
-                    if (existing) {
-                        existing.score = score;
-                        existing.topCanvas = topCanvas;
-                        existing.topHeatmap = topHeatmap;
-                        existing.hidden = data.data.hidden;
-                    } else {
-                        studentScores.data.set(data.data.classname, {
-                            score,
-                            topCanvas,
-                            topHeatmap,
-                            hidden: data.data.hidden,
-                        });
-                    }
-                    prevStudents.set(id, studentScores);
-                    return { students: prevStudents };
-                });
-            })();
         }
     });
 

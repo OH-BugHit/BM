@@ -1,4 +1,4 @@
-.container {
+.frontpage {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -11,14 +11,14 @@
     align-items: center;
 }
 
-.container h1 {
+.frontpage h1 {
     font-family: 'Tektur';
     font-weight: bold;
     font-size: 3rem;
     margin: 0;
 }
 
-.innerContainer {
+.content {
     max-width: 700px;
     display: flex;
     flex-direction: column;
@@ -50,11 +50,20 @@
     margin-bottom: 10px;
     margin-top: 10px;
     text-align: center;
-    backdrop-filter: blur(10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     gap: 1.5rem;
     padding: 3rem;
     min-height: 230px;
     min-width: 200px;
     max-height: 500px;
+}
+
+@media (max-width: 600px) {
+    .frontpage h1 {
+        font-size: 2rem;
+    }
+
+    .startBox {
+        box-shadow: none;
+    }
 }

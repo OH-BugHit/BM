@@ -10,7 +10,7 @@ interface Props extends PropsWithChildren {
     fullWidth?: boolean;
 }
 
-export default function TopMenuItem({ fullWidth, tooltip, children, hideTip, selected }: Props) {
+export default function FloatingMenuItem({ fullWidth, tooltip, children, hideTip, selected }: Props) {
     const placement = useContext(TopMenuContext);
 
     return hideTip ? (

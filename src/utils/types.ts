@@ -26,6 +26,7 @@ export type SpoofConfig = {
     settings: {
         allowHidePicture: boolean;
         allowResetTerm: boolean;
+        profilePicture: boolean;
     };
 };
 
@@ -62,7 +63,7 @@ export type UserItemData = {
 
 export type RegisterData = {
     username: string;
-    profilePicture: string;
+    profilePicture: string | null;
 };
 
 export enum ModelOrigin {

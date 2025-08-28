@@ -1,0 +1,31 @@
+@value bgSubdued1, borderBrightBlue, textDark from "@genai-fi/base/css/colours.module.css";
+
+.settingsButton {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+}
+
+.title {
+    background: bgSubdued1;
+    border-bottom: 2px solid borderBrightBlue;
+}
+
+.column {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 1rem;
+    padding: 1rem;
+    max-width: 50dvw;
+    width: 100%;
+}
+
+.label {
+    margin-top: 1rem;
+}
+
+.spacer {
+    width: 100%;
+    min-height: 1rem;
+}

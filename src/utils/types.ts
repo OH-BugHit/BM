@@ -23,6 +23,9 @@ export type ModelInfo = {
     origin: ModelOrigin;
     name: string;
 };
+export type Labels = {
+    labels: Map<string, string>;
+};
 
 export type SpoofConfig = {
     pause: boolean;
@@ -97,6 +100,13 @@ export type Settings = {
 };
 
 /**
+ * hidePictures = are pictures sent to teacher hidden by default
+ */
+export type StudentSettings = {
+    hidePictures: boolean;
+};
+
+/**
  * Student controls.
  * Dataset view stuff is toggled with different logic as it is also used by teacher
  */
@@ -122,3 +132,8 @@ export type TeacherDialogs = 'share' | 'modelChange' | 'trainingData' | 'setting
 
 // Student's dialogs
 export type StudentDialogs = 'ownResults' | 'messageDialog';
+
+export type ActivityPicture = {
+    picture: HTMLCanvasElement;
+    hidden: boolean;
+};

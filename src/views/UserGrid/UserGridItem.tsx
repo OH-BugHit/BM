@@ -3,6 +3,7 @@ import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import style from './style.module.css';
 import { MouseEvent } from 'react';
 import { selectedUserAtom, studentActivityAtom } from '../../atoms/state';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     username: string;
@@ -13,23 +14,34 @@ interface Props {
 export default function UserGridItem({ username, alive, profilePicture }: Props) {
     const [selectedUser, setSelectedUser] = useAtom(selectedUserAtom);
     const [currentActivity] = useAtom(studentActivityAtom);
+    const { i18n } = useTranslation();
 
     const getPicture = () => {
         const currentPic = currentActivity.get(username);
-        if (currentPic) {
+        if (currentPic && !currentPic.hidden) {
             return (
                 <CanvasCopy
-                    sourceCanvas={currentPic}
+                    sourceCanvas={currentPic.picture}
                     maxWidth={200}
                 />
             );
         } else {
-            return (
-                <img
-                    src="/noPicture.png"
-                    width={200}
-                ></img>
-            );
+            console.log(i18n.language);
+            if (i18n.language === 'fi-FI') {
+                return (
+                    <img
+                        src="/noPic_FI.png"
+                        width={200}
+                    ></img>
+                );
+            } else {
+                return (
+                    <img
+                        src="/noPic_EN.png"
+                        width={200}
+                    ></img>
+                );
+            }
         }
     };
 

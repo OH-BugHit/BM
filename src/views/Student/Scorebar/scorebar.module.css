@@ -29,6 +29,7 @@ rgba(97, 115, 125, 0.616);
 .scoreBar {
     position: relative;
     display: block;
+    width: 100%;
     padding: 5px 5px 5px 5px;
     overflow: hidden;
     font-size: 16px;
@@ -44,9 +45,10 @@ rgba(97, 115, 125, 0.616);
     display: inline-block;
     vertical-align: middle;
     overflow: hidden;
-    margin-left: -6px;
+    left: -1px;
+    top: 1px;
     height: 20px;
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 4px 4px 10px;
     background-color: #ff87e1;
     /*old: #f56982;*/
     background-size: 100%;
@@ -83,10 +85,10 @@ rgba(97, 115, 125, 0.616);
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    top: 25px;
-    margin-left: 0;
+    left: 4px;
+    top: 26px;
     height: 20px;
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 4px 4px 10px;
     background-color: #f56982;
     background-size: 100%;
     background-image: linear-gradient(to bottom, #f2395a, #b90cb2);
@@ -100,7 +102,7 @@ rgba(97, 115, 125, 0.616);
     right: 0;
     bottom: 0;
     content: '';
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 4px 4px 10px;
     background-size: 100%;
     background-image: linear-gradient(45deg,
             #fff 25%,

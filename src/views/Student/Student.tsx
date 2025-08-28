@@ -7,10 +7,12 @@ import { StudentScore } from '../../utils/types';
 import {
     activeViewAtom,
     configAtom,
+    labelsAtom,
     modelAtom,
     profilePictureAtom,
     studentBouncerAtom,
     studentResultsAtom,
+    studentSettingsAtom,
     termTransferAtom,
     usernameAtom,
 } from '../../atoms/state';
@@ -24,8 +26,7 @@ import MessageDisplay from '../MessageDisplay/MessageDisplay';
 import OwnResults from './OwnResults/OwnResults';
 import Scorebar from './Scorebar/Scorebar';
 import WebcamInput from './WebcamInput/WebcamInput';
-
-const hidePicture = false; // CHANGE TO COME FROM SETTINGS WHEN IMPLEMENTED
+import StudentSettings from './StudentSettings/StudentSettings';
 
 export default function Student({ serverCode }: { serverCode: string }) {
     const { t } = useTranslation();
@@ -41,12 +42,15 @@ export default function Student({ serverCode }: { serverCode: string }) {
     const sentRef = useRef(false);
     const blockRef = useRef(true);
     const [classifyTerm, setClassifyTerm] = useState<string>('');
+    const [translatedTerm, setTranslatedTerm] = useState<string>('');
     const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
     const [currentScore, setCurrentScore] = useState<number>(0);
     const [topScore, setScore] = useState<number>(0);
     const [showError, setShowError] = useState(false);
     const [activeView, setActiveView] = useAtom(activeViewAtom);
     const [config] = useAtom(configAtom);
+    const [studentSettings] = useAtom(studentSettingsAtom);
+    const [labels] = useAtom(labelsAtom);
 
     // Score circle buffer refs, buffer is in WebcamInput
     const scoreBufferRef = useRef<number[]>(Array(10).fill(0));
@@ -61,6 +65,8 @@ export default function Student({ serverCode }: { serverCode: string }) {
     useEffect(() => {
         if (termData.term !== classifyTerm) {
             setClassifyTerm(termData.term);
+            const label = labels.labels.get(termData.term);
+            setTranslatedTerm(label || termData.term);
             // Reset score
             scoreSumRef.current = 0;
             scoreBufferRef.current = Array(10).fill(0);
@@ -68,7 +74,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
             setScore(results.data.get(termData.term)?.score ?? 0);
             model?.setXAIClass(termData.term);
         }
-    }, [model, results, termData, classifyTerm]); // Update classify term and model class when config
+    }, [model, results, termData, classifyTerm, labels]); // Update classify term and model class when config
 
     /**
      * Registers first!
@@ -96,7 +102,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
                     image: imageBase64,
                     heatmap: heatmapBase64,
                     score: topScore,
-                    hidden: false,
+                    hidden: studentSettings.hidePictures,
                 });
                 // Save to own results
                 setResults((old: { data: Map<string, StudentScore> }) => {
@@ -105,14 +111,14 @@ export default function Student({ serverCode }: { serverCode: string }) {
                         score: topScore,
                         topHeatmap: topHeatmapRef.current,
                         topCanvas: topCanvasRef.current,
-                        hidden: hidePicture,
+                        hidden: studentSettings.hidePictures,
                     });
                     return { data: newData };
                 });
             }
         }, 2000);
         return () => clearInterval(interval);
-    }, [doSendImages, setResults, results.data, classifyTerm, topScore, username]);
+    }, [doSendImages, setResults, results.data, classifyTerm, topScore, username, studentSettings.hidePictures]);
 
     /**
      * Kicks user (by teacher)
@@ -129,6 +135,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
 
     return (
         <>
+            <StudentSettings />
             <MessageDisplay open={showError} />
             <StudentNavBar />
             <OwnResults
@@ -149,7 +156,7 @@ export default function Student({ serverCode }: { serverCode: string }) {
                 style={{ maxHeight: `${window.innerHeight - 64}px` }}
             >
                 <div className={style.gameContainer}>
-                    <h1 className={style.term}>{classifyTerm && `${classifyTerm}`}</h1>
+                    <h1 className={style.term}>{classifyTerm && `${translatedTerm}`}</h1>
                     {!isCameraActive && <div className={style.cameraNotActive}>{t('webcam.notAvailable')}</div>}
                     <Scorebar
                         currentScore={currentScore}

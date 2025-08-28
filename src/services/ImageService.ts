@@ -8,7 +8,7 @@ export interface FetchImageUrlsParams {
 
 export async function fetchImageUrls({ dataset }: FetchImageUrlsParams): Promise<Record<string, string[]>> {
     try {
-        const response = await fetch(`${API_BASE_URL}/spoof/${dataset.name}.json`);
+        const response = await fetch(`${API_BASE_URL}/spoof/${dataset.name}/${dataset.name}.json`);
         if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
         }

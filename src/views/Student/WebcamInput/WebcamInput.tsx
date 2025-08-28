@@ -6,6 +6,7 @@ import { Dispatch, RefObject, SetStateAction, useCallback, useEffect, useRef, us
 import { validateCanvas } from '../../../utils/validateCanvas';
 import { classifyImage } from '../../../utils/classifyImage';
 import { cloneCanvas } from '../../../utils/cloneCanvas';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     setIsCameraActive: Dispatch<SetStateAction<boolean>>;
@@ -37,6 +38,7 @@ export default function WebcamInput({
     const scoreIndexRef = useRef(0);
     const heatmapRef = useRef<HTMLCanvasElement | null>(null);
     const [controls] = useAtom(studentControlsAtom);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (model && heatmapRef.current) {
@@ -141,7 +143,7 @@ export default function WebcamInput({
                 />
             </div>
             <div className={`${style.webcamWrapper} ${controls.pause ? style.paused : style.filtered}`}>
-                {(controls.pause || config.pause) && <div className={style.overlayText}>Game paused</div>}
+                {(controls.pause || config.pause) && <div className={style.overlayText}>{t('common.paused')}</div>}
                 <Webcam
                     size={webcamSize}
                     interval={250}

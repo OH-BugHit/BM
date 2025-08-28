@@ -38,6 +38,7 @@ export default function Frontpage() {
                 <h1>{t('common.title')}</h1>
                 <div className={style.startBox}>
                     <TextField
+                        title={t('frontpage.labels.enterCode')}
                         label={t('frontpage.labels.enterCode')}
                         value={inputCode}
                         fullWidth
@@ -50,15 +51,16 @@ export default function Frontpage() {
                         variant="contained"
                         disabled={inputCode.length < 5}
                     >
-                        {t('common.start')}
+                        {t('frontpage.actions.start')}
                     </Button>
                     <div className={style.or}>{t('common.or')}</div>
                     <Button
                         sx={{ fontSize: '14pt', minWidth: '140px' }}
                         onClick={toTeacher}
                         variant="outlined"
+                        title={t('frontpage.actions.createNew')}
                     >
-                        {t('common.createNew')}
+                        {t('frontpage.actions.createNew')}
                     </Button>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { useAtom } from 'jotai';
 import {
     availableUsernamesAtom,
     configAtom,
+    labelsAtom,
     modelAtom,
     profilePictureAtom,
     studentBouncerAtom,
@@ -14,8 +15,9 @@ import {
     termTransferAtom,
     usernameAtom,
 } from '../atoms/state';
-import { loadModel } from './loadModel';
+import { loadLabels, loadModel } from './loadModel';
 import { usePeerData, usePeerSender, usePeerStatus } from '@genai-fi/base/hooks/peer';
+import { useTranslation } from 'react-i18next';
 
 interface ProtocolContextType {
     doSendImages?: (data: ImageData) => void; // Send Image + heatmap image
@@ -38,6 +40,8 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
     const [, setProfilePicture] = useAtom(profilePictureAtom);
     const [, setResults] = useAtom(studentResultsAtom);
     const [ownUsername] = useAtom(usernameAtom);
+    const [, setLabels] = useAtom(labelsAtom);
+    const { i18n } = useTranslation();
     // conn: Connection<EventProtocol>
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
         if (data.event === 'eter:join') {
@@ -57,7 +61,30 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                     if (data.configuration.modelData.origin === 'Gen-AI') {
                         try {
                             const model = await loadModel(data.configuration.modelData);
+                            const labels = await loadLabels({
+                                language: i18n.language,
+                                modelName: data.configuration.modelData.name,
+                            });
                             setModel(model);
+                            if (labels) {
+                                setLabels((old) => {
+                                    const newLabels = new Map<string, string>(old.labels);
+                                    Object.entries(labels).forEach(([label, translation]) => {
+                                        newLabels.set(label as string, translation as string);
+                                    });
+                                    return { labels: newLabels };
+                                });
+                            } else {
+                                setLabels((old) => {
+                                    // Default fallback to model.getLabels!
+                                    const newLabels = new Map<string, string>(old.labels);
+                                    const labelList = model?.getLabels() ?? [];
+                                    labelList.forEach((label) => {
+                                        newLabels.set(label, label);
+                                    });
+                                    return { labels: newLabels };
+                                });
+                            }
                         } catch (e) {
                             console.error('Failed to load model', e);
                         }
@@ -79,6 +106,15 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             try {
                 const model = await loadModel(modelLoadingObject);
                 setModel(model);
+                setLabels((old) => {
+                    // Default fallback to model.getLabels!
+                    const newLabels = new Map<string, string>(old.labels);
+                    const labelList = model?.getLabels() ?? [];
+                    labelList.forEach((label) => {
+                        newLabels.set(label, label);
+                    });
+                    return { labels: newLabels };
+                });
             } catch (err) {
                 console.error('Failed to load model', err);
             } finally {

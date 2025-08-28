@@ -2,6 +2,9 @@ import { NativeSelect } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
 import LanguageIcon from '@mui/icons-material/Language';
+import { useAtom } from 'jotai';
+import { configAtom, labelsAtom, modelAtom } from '../../atoms/state';
+import { loadLabels } from '../../services/loadModel';
 
 interface Props {
     position?: 'topRight' | null;
@@ -9,8 +12,37 @@ interface Props {
 
 export default function LangSelect({ position }: Props) {
     const { t, i18n } = useTranslation();
-    const doChangeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const [, setLabels] = useAtom(labelsAtom);
+    const [config] = useAtom(configAtom);
+    const [model] = useAtom(modelAtom);
+
+    const doChangeLanguage = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         i18n.changeLanguage(e.target.value || 'en-GB');
+        if (model) {
+            const labels = await loadLabels({
+                language: i18n.language,
+                modelName: config.modelData.name,
+            });
+            if (labels) {
+                setLabels(() => {
+                    const newLabels = new Map<string, string>();
+                    Object.entries(labels).forEach(([label, translation]) => {
+                        newLabels.set(label as string, translation as string);
+                    });
+                    return { labels: newLabels };
+                });
+            } else {
+                setLabels(() => {
+                    // Default fallback to model.getLabels!
+                    const newLabels = new Map<string, string>();
+                    const labelList = model?.getLabels() ?? [];
+                    labelList.forEach((label) => {
+                        newLabels.set(label, label);
+                    });
+                    return { labels: newLabels };
+                });
+            }
+        }
     };
 
     const supportedLanguages = Array.isArray(i18n.options.supportedLngs)

@@ -10,7 +10,7 @@ export default function Scorebar({ currentScore, topScore }: ScorebarProps) {
                 <span style={{ width: `${Math.round(currentScore)}%` }}></span>
             </div>
             <div className={style.scoreBar}>
-                <span style={{ width: `${Math.round(topScore) + 4}%` }}></span>
+                <span style={{ width: `calc(${Math.round(topScore)}%)` }}></span>
             </div>
 
             <div

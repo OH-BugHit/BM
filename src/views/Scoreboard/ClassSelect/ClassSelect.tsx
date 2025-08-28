@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useAtom } from 'jotai';
 import style from './classSelect.module.css';
-import { studentDataAtom } from '../../../atoms/state';
+import { labelsAtom, studentDataAtom } from '../../../atoms/state';
 import { getClassNames } from './getClassNames';
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
 export default function ClassSelect({ openResult, setOpenResult }: Props) {
     const { t } = useTranslation();
     const [studentData] = useAtom(studentDataAtom);
+    const [labels] = useAtom(labelsAtom);
 
     const allClassnames = getClassNames(studentData);
 
@@ -36,12 +37,12 @@ export default function ClassSelect({ openResult, setOpenResult }: Props) {
             </button>
             {[...allClassnames].sort().map((classname) => (
                 <button
-                    title={t('scoreboard.labels.forClass') + ' ' + classname}
+                    title={t('scoreboard.labels.forClass') + ' ' + labels.labels.get(classname)}
                     className={`${openResult === classname ? style.selectedTermItem : style.termItem}`}
                     key={classname}
                     onClick={() => toggleMenu(classname)}
                 >
-                    <h3>{classname}</h3>
+                    <h3>{labels.labels.get(classname)}</h3>
                 </button>
             ))}
         </div>

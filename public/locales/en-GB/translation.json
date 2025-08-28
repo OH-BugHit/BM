@@ -42,26 +42,20 @@
             "* Right to lodge a complaint: you can lodge a complaint to the supervisory authority if you think that your data is not processed following GDPR provisions.",
             "### 10. Updates to This Privacy Notice:",
             "We may update this notice to reflect changes in our data processing practices or legal requirements. We will notify you of any changes.",
-            "We value your privacy and we are committed to protect your data and ensuring GDPR compliance. If you have questions or want to exercise your rights, contact us at hilkolli@uef.fi."
+            "We value your privacy and we are committed to protect your data and ensuring GDPR compliance. If you have questions or want to exercise your rights, contact us at nicolas.pope@uef.fi."
         ]
     },
     "common": {
         "cancel": "Cancel",
         "close": "Close",
-        "createNew": "Create new",
         "dataset": "Dataset",
-        "hide": "Hide",
-        "hideInfo": "Hide info",
         "noTeachingData": "No data available",
         "or": "or",
+        "paused": "Game Paused",
         "selectLabel": "Select label",
         "selectModel": "Select model",
-        "start": "Start",
-        "show": "Show",
-        "showInfo": "Show info",
         "title": "Breakable Machine",
         "labels": {
-            "teachableMachine": "Teachable Machine",
             "disableApp": "Pause",
             "datasetTip": "Examine the training data"
         }
@@ -70,7 +64,7 @@
         "actions": {
             "disableApp": "Pause all users",
             "disableDataGallery": "Disable teching data browsing",
-            "disableHeatmap": "Block heatmap",
+            "disableHeatmap": "Disable heatmap",
             "enableApp": "Continue game",
             "enableDataGallery": "Allow teaching data browsing",
             "enableHeatmap": "Allow heatmap"
@@ -98,46 +92,24 @@
         }
     },
     "frontpage": {
+        "actions": {
+            "createNew": "Teacher - Create new",
+            "start": "Start"
+        },
         "labels": {
-            "enterCode": "Enter code"
-        },
-        "title": "Breakable Machine",
-        "readyImages": "Ready images",
-        "readyImagesDescription": "Play with ready images",
-        "multiplayer": "Multiplayer",
-        "ownImages": "Own images",
-        "ownImagesDescription": "Play with your own images",
-        "singleplayer": "Singleplayer"
-    },
-    "game": {
-        "own": {
-            "title": "Own images",
-            "description": "Upload your own images to play with them.",
-            "upload": "Upload",
-            "uploadDescription": "Upload your own images to play with them.",
-            "uploadButton": "Upload",
-            "uploadError": {
-                "title": "Error",
-                "description": "Please upload a valid image file."
-            }
-        },
-        "ready": {
-            "title": "Ready images",
-            "description": "Play with ready images.",
-            "play": "Play",
-            "playDescription": "Play with ready images.",
-            "playButton": "Play"
+            "enterCode": "Student - Enter code"
         }
     },
+
     "library": {
         "title": "Select content",
         "animals": {
             "title": "Animals",
-            "description": "Classifier is finetuned with 11 different animals. Harder model to spoof."
+            "description": "Classifier is fine-tuned with 11 different animals. Harder model to spoof."
         },
         "jobs": {
             "title": "Jobs",
-            "description": "Classifier is finetuned with collection of seven different occupations."
+            "description": "Classifier is fine-tuned with collection of seven different occupations."
         },
         "own": {
             "title": "Own model",
@@ -194,7 +166,7 @@
         },
         "vis": {
             "results": "Results",
-            "term": "Select classifying term",
+            "term": "Select classifying label",
             "usergrid": "User grid"
         }
     },
@@ -229,13 +201,15 @@
             }
         },
         "labels": {
-            "hidden": "Hidden",
             "forAll": "Standings",
             "forClass": "Standings for",
+            "hidden": "Hidden",
+            "hideResultPicture": "Hide result picture",
             "hideResultPictures": "Hide result pictures",
             "leaderboard": "Leaderboard",
             "resultPictures": "Result Pictures",
             "scores": "Scores",
+            "showResultPicture": "Show result picture",
             "showResultPictures": "Show result pictures",
             "standings": "Standings"
         }
@@ -247,8 +221,9 @@
             "settings": "Settings"
         },
         "labels": {
-            "allowHidePicture": "Allow students to hide result pictures",
-            "allowStartTermAgain": "Allow students to reset score on term",
+            "allowHidePicture": "Allow students to hide their result pictures",
+            "allowStartTermAgain": "Allow students to reset score on label",
+            "hideOnDefault": "Hide your result pictures",
             "hideResultPictures": "Hide all result pictures",
             "pauseOnChange": "Pause game when term is changed",
             "showFullScoreboard": "Show all scores on scoreboard",
@@ -278,7 +253,6 @@
         "actions": {
             "loadingModel": "Loading model",
             "openFileExplorer": "Open File Explorer",
-            "resetScore": "Reset score",
             "setModel": "Set Model",
             "start": "Start"
         },
@@ -306,8 +280,8 @@
     },
     "termSelect": {
         "actions": {
-            "all": "Send new classifying term to all",
-            "single": "Send new classifying term to single user"
+            "all": "Send new classifying label to all",
+            "single": "Send new classifying label to single user"
         },
         "titles": {
             "all": "Common Challenge",

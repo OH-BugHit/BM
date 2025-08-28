@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { closeGallery } from '../../components/Buttons/buttonStyles';
 import { useAtom } from 'jotai';
-import { activeViewAtom, configAtom, modelAtom } from '../../atoms/state';
+import { activeViewAtom, configAtom, labelsAtom, modelAtom } from '../../atoms/state';
 import OpenedImage from '../../components/ImageView/OpenedImage';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
@@ -29,6 +29,7 @@ export function DatasetGallery() {
     const [, setActiveView] = useAtom(activeViewAtom);
     const [imagePaths, setImagePaths] = useState<Record<string, string[]>>({});
     const loaded = useRef(false);
+    const [labels] = useAtom(labelsAtom);
     const [model] = useAtom(modelAtom);
 
     /**
@@ -121,15 +122,20 @@ export function DatasetGallery() {
                         value={selected}
                         onChange={(e) => setSelected(e.target.value || '')}
                     >
-                        {(model?.getLabels() || [])
+                        {(model?.getLabels() ?? [])
                             .slice()
-                            .sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))
+                            .sort((a, b) => {
+                                // Järjestä käännösten mukaan
+                                const va = labels?.labels?.get(a) ?? a;
+                                const vb = labels?.labels?.get(b) ?? b;
+                                return va.localeCompare(vb, 'fi', { sensitivity: 'base' });
+                            })
                             .map((label) => (
                                 <MenuItem
                                     key={label}
                                     value={label}
                                 >
-                                    {label}
+                                    {labels?.labels?.get(label) ?? label}
                                 </MenuItem>
                             ))}
                     </Select>

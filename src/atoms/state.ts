@@ -14,6 +14,9 @@ import {
     StudentScores,
     StudentControls,
     Views,
+    StudentSettings,
+    ActivityPicture,
+    Labels,
 } from '../utils/types';
 
 /**
@@ -25,6 +28,11 @@ export const activeViewAtom = atom<Views>({ active: 'default', overlay: 'none' }
  * Current model
  */
 export const modelAtom = atom<ClassifierApp | null>(null);
+
+/**
+ * Contains translations
+ */
+export const labelsAtom = atom<Labels>({ labels: new Map() });
 
 /**
  * List of models available at GenAI Store
@@ -141,6 +149,10 @@ export const settingAtom = atom<Settings>({
     limitScoreboard: { limit: 2, showAll: false },
 });
 
+export const studentSettingsAtom = atom<StudentSettings>({
+    hidePictures: false,
+});
+
 /**
  * modelDataAtom is used for storing the model-file uploaded by the teacher.
  * This file is sent to the student at model request event.
@@ -157,7 +169,7 @@ export const teacherHidesAtom = atom<Map<string, string[]>>(new Map());
  * Contains last received top images shown at user grid view
  * K = students name (username) V = last image receiced
  */
-export const studentActivityAtom = atom<Map<string, HTMLCanvasElement | null>>(new Map());
+export const studentActivityAtom = atom<Map<string, ActivityPicture | null>>(new Map());
 
 /**
  * Contains data of student's selected controls.

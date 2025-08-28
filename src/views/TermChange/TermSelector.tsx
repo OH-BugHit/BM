@@ -1,7 +1,7 @@
 import style from '../../views/TermChange/style.module.css';
 import { useTranslation } from 'react-i18next';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { configAtom, modelAtom, settingAtom, termTransferAtom } from '../../atoms/state';
+import { configAtom, labelsAtom, modelAtom, settingAtom, termTransferAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 
@@ -15,6 +15,7 @@ export default function TermSelector({ toUsers }: Props) {
     const [word, setWord] = useState('');
     const [config, setConfig] = useAtom(configAtom);
     const [settings] = useAtom(settingAtom);
+    const [labels] = useAtom(labelsAtom);
     const [model] = useAtom(modelAtom);
 
     function delay(ms: number) {
@@ -46,7 +47,8 @@ export default function TermSelector({ toUsers }: Props) {
             });
         }
     };
-
+    const labelOptions = model?.getLabels() ?? [];
+    const validWord = labelOptions.includes(word) ? word : '';
     return (
         <FormControl
             fullWidth
@@ -55,18 +57,22 @@ export default function TermSelector({ toUsers }: Props) {
             <InputLabel id="term-label">{t('common.selectLabel')}</InputLabel>
             <Select
                 labelId="term-label"
-                value={word || ''}
+                value={validWord}
                 onChange={(e) => handleTermChange(e.target.value)}
             >
-                {(model?.getLabels() || [])
+                {labelOptions
                     .slice()
-                    .sort((a, b) => a.localeCompare(b, 'fi', { sensitivity: 'base' }))
+                    .sort((a, b) => {
+                        const va = labels?.labels?.get(a) ?? a;
+                        const vb = labels?.labels?.get(b) ?? b;
+                        return va.localeCompare(vb, 'fi', { sensitivity: 'base' });
+                    })
                     .map((label) => (
                         <MenuItem
                             key={label}
                             value={label}
                         >
-                            {label}
+                            {labels?.labels?.get(label) ?? label}
                         </MenuItem>
                     ))}
             </Select>

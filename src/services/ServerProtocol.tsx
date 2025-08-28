@@ -171,7 +171,8 @@ export default function ServerProtocol() {
                     setCurrentActivity((prev) => {
                         const id = data.data.studentId;
                         const prevActivity = prev ?? new Map();
-                        prevActivity.set(id, topCanvas);
+                        if (data.data.hidden !== 'delete')
+                            prevActivity.set(id, { picture: topCanvas, hidden: data.data.hidden });
                         return prevActivity;
                     });
 

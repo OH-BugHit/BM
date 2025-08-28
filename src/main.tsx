@@ -6,8 +6,6 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import App from './App';
 import { theme } from '@genai-fi/base';
 
-console.log('THEME', theme);
-
 const spoofTheme = createTheme(theme, {
     components: {
         MuiInputLabel: {

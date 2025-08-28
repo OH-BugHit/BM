@@ -1,19 +1,20 @@
 import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import { configAtom, modelAtom } from '../../atoms/state';
+import { configAtom, labelsAtom, modelAtom } from '../../atoms/state';
 import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 import style from './style.module.css';
 import Footer from '../../components/Footer/Footer';
 import ContentItem from './ContentItem';
-import { loadModel } from '../../services/loadModel';
+import { loadLabels, loadModel } from '../../services/loadModel';
 import { ModelOrigin } from '../../utils/types';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Library() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [, setConfig] = useAtom(configAtom);
     const [, setModel] = useAtom(modelAtom);
+    const [, setLabels] = useAtom(labelsAtom);
     useModelNamesLoader();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
@@ -30,8 +31,16 @@ export default function Library() {
                 name: type,
             };
             const loadedModel = await loadModel(modelInfo);
+            const labels = await loadLabels({ language: i18n.language, modelName: modelInfo.name });
             if (loadedModel) {
                 setModel(loadedModel);
+                setLabels((old) => {
+                    const newLabels = new Map<string, string>(old.labels);
+                    Object.entries(labels).forEach(([label, translation]) => {
+                        newLabels.set(label as string, translation as string);
+                    });
+                    return { labels: newLabels };
+                });
                 setConfig((old) => ({
                     ...old,
                     modelData: modelInfo,
@@ -50,6 +59,15 @@ export default function Library() {
             const loadedModel = await loadModel({ origin: ModelOrigin.Local, name: url });
             if (loadedModel) {
                 setModel(loadedModel);
+                setLabels((old) => {
+                    // Default fallback for labels = model.getLabels
+                    const newLabels = new Map<string, string>(old.labels);
+                    const labelList = loadedModel?.getLabels() ?? [];
+                    labelList.forEach((label) => {
+                        newLabels.set(label, label);
+                    });
+                    return { labels: newLabels };
+                });
                 setConfig((old) => ({
                     ...old,
                     modelData: modelInfo,

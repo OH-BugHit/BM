@@ -38,7 +38,7 @@ export default function MenuPanel() {
     const doShowView = useCallback(
         (view: TeacherViews) => {
             setSelectedUser({ username: '', profilePicture: null });
-            setActiveView((old) => ({ ...old, active: view }));
+            setActiveView(() => ({ overlay: 'none', active: view }));
         },
         [setSelectedUser, setActiveView]
     );
@@ -60,7 +60,7 @@ export default function MenuPanel() {
                             height={48}
                             alt="Spoofgame logo"
                         />
-                        <h1>SpoofGame</h1>
+                        <h3>{t('common.title')}</h3>
                     </div>
                 )}
                 <IconButton
@@ -98,6 +98,7 @@ export default function MenuPanel() {
             <div className={style.sideNavSection}>
                 <IconMenuItem
                     tooltip={t('menu.vis.term')}
+                    hideTip={open}
                     fullWidth
                     selected={activeView.active === 'termChange'}
                 >
@@ -115,6 +116,7 @@ export default function MenuPanel() {
                 </IconMenuItem>
                 <IconMenuItem
                     tooltip={t('menu.vis.results')}
+                    hideTip={open}
                     fullWidth
                     selected={activeView.active === 'default'}
                 >
@@ -133,6 +135,7 @@ export default function MenuPanel() {
                 </IconMenuItem>
                 <IconMenuItem
                     tooltip={t('menu.vis.usergrid')}
+                    hideTip={open}
                     fullWidth
                     selected={activeView.active === 'userGrid'}
                 >

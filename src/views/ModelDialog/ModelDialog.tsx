@@ -1,17 +1,18 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
-import { activeViewAtom, configAtom, modelAtom, modelDataAtom, modelListAtom } from '../../atoms/state';
+import { activeViewAtom, configAtom, labelsAtom, modelAtom, modelDataAtom, modelListAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 import { useCallback, useRef, useState } from 'react';
 import { Autocomplete, Dialog, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { LargeButton } from '@genai-fi/base';
-import { loadModel } from '../../services/loadModel';
+import { loadLabels, loadModel } from '../../services/loadModel';
 import { ModelInfo, ModelOrigin } from '../../utils/types';
 import { currentModelName, handleFileChange } from './utils';
+import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 
 export default function ModelDialog() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [, setModel] = useAtom(modelAtom);
@@ -21,8 +22,10 @@ export default function ModelDialog() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedModel, setSelectedModel] = useState('');
     const [activeView, setActiveView] = useAtom(activeViewAtom);
+    const [, setLabels] = useAtom(labelsAtom);
 
     const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
+    useModelNamesLoader();
 
     const openFile = useCallback(() => {
         fileInputRef.current?.click();
@@ -36,6 +39,29 @@ export default function ModelDialog() {
             try {
                 const model = await loadModel(modelInfo);
                 setModel(model);
+                const labels = await loadLabels({
+                    language: i18n.language,
+                    modelName: modelInfo.name,
+                });
+                if (labels) {
+                    setLabels((old) => {
+                        const newLabels = new Map<string, string>(old.labels);
+                        Object.entries(labels).forEach(([label, translation]) => {
+                            newLabels.set(label as string, translation as string);
+                        });
+                        return { labels: newLabels };
+                    });
+                } else {
+                    setLabels((old) => {
+                        // Default fallback to model.getLabels!
+                        const newLabels = new Map<string, string>(old.labels);
+                        const labelList = model?.getLabels() ?? [];
+                        labelList.forEach((label) => {
+                            newLabels.set(label, label);
+                        });
+                        return { labels: newLabels };
+                    });
+                }
                 setConfig((old) => ({ ...old, modelData: { name: selectedModel, origin: ModelOrigin.GenAI } }));
                 doClose();
             } catch (e) {
@@ -51,6 +77,15 @@ export default function ModelDialog() {
             try {
                 const model = await loadModel(modelLoadingObject);
                 setModel(model);
+                setLabels((old) => {
+                    // Default fallback to model.getLabels!
+                    const newLabels = new Map<string, string>(old.labels);
+                    const labelList = model?.getLabels() ?? [];
+                    labelList.forEach((label) => {
+                        newLabels.set(label, label);
+                    });
+                    return { labels: newLabels };
+                });
                 setConfig((old) => ({ ...old, modelData: { name: selectedFile.name, origin: ModelOrigin.Teacher } }));
                 doClose();
             } catch (err) {

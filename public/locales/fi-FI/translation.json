@@ -4,19 +4,31 @@
         "privacyTitle": "Tietoturvaselvitys"
     },
     "common": {
+        "cancel": "Peruuta",
         "close": "Sulje",
-        "createNew": "Luo uusi",
-        "hideInfo": "Piilota tiedot",
+        "dataset": "Opetusdata",
         "noTeachingData": "Opetusdataa ei saatavilla",
         "or": "tai",
+        "paused": "Peli on pysäytetty",
         "selectLabel": "Valitse luokittelusana",
-        "start": "Aloita",
-        "showInfo": "Näytä tiedot",
+        "selectModel": "Valitse malli",
         "title": "Breakable Machine",
-        "dataset": "Opetusdata",
         "labels": {
             "disableApp": "Pysäytä",
             "datasetTip": "Tutki opetusdataa"
+        }
+    },
+    "controlMenu": {
+        "actions": {
+            "disableApp": "Pysäytä käyttäjien apit",
+            "disableDataGallery": "Estä opetusdatan selaaminen",
+            "disableHeatmap": "Estä lämpökartta",
+            "enableApp": "Jatka peliä",
+            "enableDataGallery": "Salli opetusdatan selaaminen",
+            "enableHeatmap": "Salli lämpökartta"
+        },
+        "titles": {
+            "controlMenu": "Pelaajien hallinta"
         }
     },
     "enterUsername": {
@@ -40,16 +52,28 @@
         }
     },
     "frontpage": {
-        "labels": {
-            "enterCode": "Syötä koodi"
+        "actions": {
+            "createNew": "Opettaja - Luo uusi",
+            "start": "Aloita"
         },
-        "title": "Breakable Machine",
-        "readyImages": "Valmiit kuvat",
-        "readyImagesDescription": "Pelaa valmiilla kuvilla",
-        "multiplayer": "Luokkatila",
-        "ownImages": "Omat kuvat",
-        "ownImagesDescription": "Pelaa omilla kuvilla",
-        "singleplayer": "Yksinpeli"
+        "labels": {
+            "enterCode": "Oppilas - Syötä koodi"
+        }
+    },
+    "library": {
+        "title": "Valitse sisältö",
+        "animals": {
+            "title": "Eläimet",
+            "description": "Luokittelijaa on opetettu 11 eri eläimellä. Vaikeampi luokittelija huijata."
+        },
+        "jobs": {
+            "title": "Ammatit",
+            "description": "Luokittelijaa on opetettu seitsemällä eri ammatilla."
+        },
+        "own": {
+            "title": "Oma malli",
+            "description": "Lataa Gen-AI Opettava kone -työkalulla luomasi malli."
+        }
     },
     "loader": {
         "messages": {
@@ -132,12 +156,23 @@
         }
     },
     "scoreboard": {
+        "actions": {
+            "open": {
+                "image": "Avaa kuva"
+            }
+        },
         "labels": {
+            "forAll": "Tulokset",
+            "forClass": "Tulokset luokalle",
             "hidden": "Piilotettu",
-            "scores": "Tulokset",
-            "standings": "Tulokset",
+            "hideResultPicture": "Piilota tuloskuva",
+            "hideResultPictures": "Piilota kaikki tuloskuvat",
+            "leaderboard": "Kokonaistilanne",
             "resultPictures": "Paras kuva",
-            "leaderboard": "Kokonaistilanne"
+            "showResultPicture": "Näytä tuloskuva",
+            "showResultPictures": "Näytä tuloskuvat",
+            "scores": "Tulokset",
+            "standings": "Tulokset"
         }
     },
     "settings": {
@@ -147,10 +182,11 @@
             "settings": "Asetukset"
         },
         "labels": {
-            "allowHidePicture": "Käyttäjä voi piilottaa kuvan (ei profiilikuvaa)",
+            "allowHidePicture": "Käyttäjä voi piilottaa kuvan (ei mahdollista profiilikuvaa)",
             "allowStartTermAgain": "Käyttäjä voi poistaa tuloksensa",
+            "hideOnDefault": "Piilota tuloskuvasi",
             "hideResultPictures": "Piilota kaikki tuloskuvat",
-            "pauseOnChange": "Aloita uusi luokittelutermi pysäytetystilassa",
+            "pauseOnChange": "Aloita uusi luokittelutermi pysäytystilassa",
             "showFullScoreboard": "Näytä kaikki tulokset pisteiden taulukossa",
             "scoreboardLimit": "Näytä tulokset vain {{limit}} parhaalle"
         }
@@ -161,7 +197,9 @@
         },
         "labels": {
             "disableApp": "Pysäytä kamera",
-            "heatmap": "Lämpökartta"
+            "enableApp": "Jatka peliä",
+            "heatmap": "Lämpökartta",
+            "ownResults": "Omat tulokset"
         },
         "actions": {
             "deleteProgress": "Poista edistyminen",
@@ -174,15 +212,16 @@
             "mainMenu": "Avaa tai sulje sivupäävalikko"
         },
         "actions": {
+            "loadingModel": "Mallia ladataan",
+            "openFileExplorer": "Avaa tiedosto",
+            "setModel": "Aseta malli",
             "start": "Aloita"
         },
         "labels": {
             "changeModel": "Vaihda luokittelumalli",
             "currentModel": "Nykyinen malli",
-            "disableApp": "Pysäytä käyttäjien apit",
-            "disableDataGallery": "Salli opetusdatan selaaminen",
-            "disableHeatmap": "Salli lämpökartta",
             "from": "Lähde:",
+            "noModel": "mallia ei ole valittu",
             "shareTip": "Näytä QR-koodi liittymistä varten"
         },
         "messages": {
@@ -191,10 +230,36 @@
             "onePerson": "{{count}} käyttäjä on liittynyt mukaan.",
             "orGoStraight": "Voit myös mennä suoraan osoitteeseen:",
             "manyPeople": "{{count}} käyttäjää on liittynyt mukaan.",
-            "scanQR": "Lue QR-koodi liittyäksesi"
+            "scanQR": "Lue QR-koodi liittyäksesi",
+            "selectModelGenAI": "Valitse malli Gen-AI:lta",
+            "selectOwnModel": "Tai lataa oma Gen-AI <Link>Opettava kone</Link> -mallisi zip-tiedostona."
         },
         "titles": {
+            "changeModel": "Vaihda malli",
             "connectUsers": "Yhdistä käyttäjiä"
+        }
+    },
+    "termSelect": {
+        "actions": {
+            "all": "Lähetä uusi luokittelutermi kaikille",
+            "single": "Lähetä uusi luokittelutermi yksittäiselle käyttäjälle"
+        },
+        "titles": {
+            "all": "Yhteinen haaste",
+            "change": "Vaihda luokittelutermi käyttäjälle {{user}}",
+            "changeChallenge": "Vaihda haastetta",
+            "selectUsers": "Valitse käyttäjät",
+            "setSingle": "Aseta uusi haaste yksittäisille pelaajille",
+            "single": "Yksilöhaasteet"
+        }
+    },
+    "userGrid": {
+        "actions": {
+            "kickUser": "Potki pelaaja pelistä",
+            "deleteUser": "Poista pelaaja pelistä"
+        },
+        "titles": {
+            "users": "Pelaajat"
         }
     },
     "webcam": {

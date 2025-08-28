@@ -1,6 +1,6 @@
 import style from './results.module.css';
 import { useAtom } from 'jotai';
-import { configAtom, studentResultsAtom, usernameAtom } from '../../../atoms/state';
+import { configAtom, labelsAtom, studentResultsAtom, usernameAtom } from '../../../atoms/state';
 import { CanvasCopy } from '../../../components/CanvasCopy/CanvasCopy';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Dispatch, RefObject, SetStateAction } from 'react';
@@ -30,6 +30,7 @@ export default function Results({ setOpenImage, currentData }: Props) {
     const [config] = useAtom(configAtom);
     const [, setResults] = useAtom(studentResultsAtom);
     const [username] = useAtom(usernameAtom);
+    const [labels] = useAtom(labelsAtom);
 
     const { doSendImages } = useSpoofProtocol();
 
@@ -82,7 +83,7 @@ export default function Results({ setOpenImage, currentData }: Props) {
             {Array.from(results.data.entries()).map(([term, { score, topHeatmap, topCanvas, hidden }]) => (
                 <div key={term}>
                     <h2>
-                        {term} {score}
+                        {labels.labels.get(term) || term} {score}
                     </h2>
                     <div className={style.imageColumn}>
                         <div className={style.imagesContainer}>

@@ -16,7 +16,7 @@ export default function VisibilityToggle() {
         <>
             {settings.teacherHideResultPicture && (
                 <IconButton
-                    title={t('scoreboard.labels.hideResultPictures')}
+                    title={t('scoreboard.labels.showResultPictures')}
                     onClick={() => {
                         setSettings((old) => ({
                             ...old,
@@ -32,7 +32,7 @@ export default function VisibilityToggle() {
             )}
             {!settings.teacherHideResultPicture && (
                 <IconButton
-                    title={t('scoreboard.labels.showResultPictures')}
+                    title={t('scoreboard.labels.hideResultPictures')}
                     onClick={() => {
                         setSettings((old) => ({
                             ...old,

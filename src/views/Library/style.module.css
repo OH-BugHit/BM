@@ -13,7 +13,7 @@
 }
 
 .content {
-    padding-top: 1rem;
+    padding: 1rem;
     background: white;
     height: fit-content;
     display: flex;

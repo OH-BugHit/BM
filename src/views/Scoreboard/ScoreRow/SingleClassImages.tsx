@@ -6,6 +6,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IconButton } from '@mui/material';
 
 interface Props {
     term: string;
@@ -98,10 +99,12 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                             });
                         }}
                     >
-                        <VisibilityIcon
-                            fontSize="large"
-                            color="action"
-                        />
+                        <IconButton title={t('scoreboard.labels.hideResultPicture')}>
+                            <VisibilityIcon
+                                fontSize="large"
+                                color="action"
+                            />
+                        </IconButton>
                     </div>
                 )}
                 {!classEntry.hidden && hiddenByTeacher.get(student)?.includes(term) && (
@@ -119,10 +122,12 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                             });
                         }}
                     >
-                        <VisibilityOffIcon
-                            fontSize="large"
-                            color="action"
-                        />
+                        <IconButton title={t('scoreboard.labels.showResultPicture')}>
+                            <VisibilityOffIcon
+                                fontSize="large"
+                                color="action"
+                            />
+                        </IconButton>
                     </div>
                 )}
             </div>

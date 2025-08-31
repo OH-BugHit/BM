@@ -4,8 +4,8 @@ import shutil
 from PIL import Image
 
 # Run this script in the same folder as 'samples' and 'metadata.json'
-# This script creates folders for labels, thumbnails and generates labels.json
-# Output JSON file is named after the current folder (e.g. testimalli1.json)
+# This script creates folders for labels, thumbnails, generates labels.json and translation
+# Output JSON file is named after the current folder (e.g. occupations.json)
 if not os.path.exists('samples'):
     print("Folder 'samples' not found. Place this script to folder containing samples-folder and metadata.json.")
     exit(1)
@@ -49,21 +49,42 @@ for fname in os.listdir('samples'):
             labels_obj[label]["thumbnails"].append(thumb_name)
 
 # Do filenames regarding modelname
-folder_name = os.path.basename(os.getcwd())
-json_filename = f"{folder_name}.json"
+json_filename = f"{model_name}.json"
+json_path = os.path.join(model_name, json_filename)
 
-with open(json_filename, 'w', encoding='utf-8') as f:
+with open(json_path, 'w', encoding='utf-8') as f:
     json.dump({'labels': labels_obj}, f, ensure_ascii=False, indent=2)
 
-# Create translations.json
-translations = {}
+# Create translations-folder
+translations_dir = os.path.join(model_name, "_locals")
+os.makedirs(translations_dir, exist_ok=True)
+
+# Create en-GB.json
+en_translations = {}
 for label in labels_obj.keys():
-    translations[label] = {
-        "en-GB": label,
-        "fi-FI": "NULL"
-    }
+    en_translations[label] = label
+with open(os.path.join(translations_dir, "en-GB.json"), 'w', encoding='utf-8') as f:
+    json.dump(en_translations, f, ensure_ascii=False, indent=2)
 
-with open('translations.json', 'w', encoding='utf-8') as f:
-    json.dump(translations, f, ensure_ascii=False, indent=2)
+print(f"Done! {json_path} and {os.path.join(translations_dir, 'en-GB.json')} generated and thumbnails created.")
 
-print(f"Done! {json_filename} and translations.json generated and thumbnails created.")
+# Delete samples folder
+try:
+    shutil.rmtree('samples')
+    print("Deleted 'samples' folder.")
+except Exception as e:
+    print(f"Could not delete 'samples' folder: {e}")
+
+# Delete metadata.json
+try:
+    os.remove('metadata.json')
+    print("Deleted 'metadata.json'.")
+except Exception as e:
+    print(f"Could not delete 'metadata.json': {e}")
+
+# Delete this script file
+try:
+    os.remove(__file__)
+    print(f"Deleted script file: {__file__}")
+except Exception as e:
+    print(f"Could not delete script file: {e}")

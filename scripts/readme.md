@@ -50,7 +50,7 @@ The model will include seven labels</em>
 ![Picture 4](./images/image-3.png)
 </br><em>picture 4</em>
 
-5. Save the model (no behaviors or samples) using same name that you used as a root folder.
+5. Save the model (no behaviors or samples). Use same name that you used as a root folder.
 
 ![Picture 5](./images/image-4.png)
 </br><em>picture 5</em>
@@ -60,7 +60,7 @@ The model will include seven labels</em>
  <p>
  Do not alter the saved zip file any way. It should contain three files:
  
- ![alt text](./images/image-6.png)
+ ![Picture 6](./images/image-6.png)
 
  </br>
  Make a <b>copy</b> of that metadata.json and place that inside the root folder.
@@ -70,7 +70,7 @@ The model will include seven labels</em>
  Also make a <b>copy</b> of generate_type2.py script (located at the same folder as this readme) and place that also to root folder. (picture 6)
  </p>
 
-![alt text](./images/image-5.png)
+![Picture 7](./images/image-5.png)
 </br><em>picture 6</em>
 
 7. Run the script (by double click) (assuming you have python installed)
@@ -79,7 +79,53 @@ The model will include seven labels</em>
 
 8. Do translations
 
-There is also translations.json -file created. It fills en-GB automatically with the label-names.
-Do translations to NULL (you can use notepad or what you prefer for that)
+Script creates translation file for en-GB.
+Do needed translations for other languages
 
 9. Delete metadata.json and generate_type2.py from root folder
+
+## Generating new model (generate_from_tm_export.py)
+
+<em>In this example we will be creating new model called 'occupations'.
+</br>
+The model will include two labels</em>
+
+1. Create root folder, name of the folder doesn't matter
+
+2. Make a model with https://tm.gen-ai.fi/image/general
+
+-   Save also the samples!
+
+![Picture 9](./images/img3.png)
+
+3.  Prepare for script execution
+
+        <em>
+        Saved zip-file should contain:
+
+        - folder "samples"
+        - metadata.json
+        - model.json
+        - weights.bin
+          </em>
+
+    W
+
+-   Copy metadata.json file to root folder
+-   Cut samples folder to root folder (copy and remove from zip-file)
+-   Copy generate_from_tm_export.py to root folder
+
+![Picture 10](./images/img4.png)
+
+4. Run script
+
+Script should run pretty fast.
+
+<em> If script fails (e.g. nothing happens), make sure the metadata.json file is readable actual text with notepad. If it is not, copy it again. </em>
+
+5. Do translations
+
+Script creates translation file for en-GB.
+Do the required translations for other languages
+
+6. Delete samples folder if exists (might get removed automatically and should be empty)

@@ -12,7 +12,7 @@ import { selectedUserAtom, activeViewAtom } from '../../atoms/state';
 import IconMenuItem from '../../components/IconMenu/Items';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { MenuButton } from '../../components/Buttons/MenuButton';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import CollectionsIcon from '@mui/icons-material/Collections';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import AppsIcon from '@mui/icons-material/Apps';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
@@ -165,7 +165,7 @@ export default function MenuPanel() {
                         variant="text"
                         fullWidth
                     >
-                        <PsychologyIcon fontSize="large" />
+                        <CollectionsIcon fontSize="large" />
                         {open ? t('common.labels.datasetTip') : ''}
                     </MenuButton>
                 </IconMenuItem>

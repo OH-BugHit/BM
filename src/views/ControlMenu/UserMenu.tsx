@@ -3,7 +3,7 @@ import FloatingMenuItem from '../../components/TopMenu/FloatingMenuItem';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import CollectionsIcon from '@mui/icons-material/Collections';
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
 import { useAtom } from 'jotai';
@@ -68,7 +68,7 @@ export default function ControlMenu() {
                     variant="text"
                     fullWidth
                 >
-                    <PsychologyIcon fontSize="large" />
+                    <CollectionsIcon fontSize="large" />
                 </MenuButton>
             </FloatingMenuItem>
         </FloatingMenu>

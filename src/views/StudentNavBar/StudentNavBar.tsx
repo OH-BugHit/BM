@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { activeViewAtom, configAtom, studentControlsAtom } from '../../atoms/state';
 import style from './style.module.css';
 import MenuIcon from '@mui/icons-material/Menu';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import CollectionsIcon from '@mui/icons-material/Collections';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -63,7 +63,7 @@ export default function StudentNavBar() {
                     variant="text"
                     disabled={!config.gallery}
                 >
-                    <PsychologyIcon fontSize="large" />
+                    <CollectionsIcon fontSize="large" />
                     {open ? t('common.labels.datasetTip') : ''}
                 </MenuButton>
             </IconMenuItem>

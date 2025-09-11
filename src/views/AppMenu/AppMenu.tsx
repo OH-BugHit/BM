@@ -16,12 +16,10 @@ import CollectionsIcon from '@mui/icons-material/Collections';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import AppsIcon from '@mui/icons-material/Apps';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
-import { useNavigate } from 'react-router-dom';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
 
 export default function MenuPanel() {
     const { t } = useTranslation();
-    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [activeView, setActiveView] = useAtom(activeViewAtom);
     const [, setSelectedUser] = useAtom(selectedUserAtom);
@@ -44,9 +42,8 @@ export default function MenuPanel() {
     );
 
     const toMain = () => {
-        const confirmLeave = window.confirm('Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua?');
-        if (!confirmLeave) return;
-        navigate('/');
+        window.location.href = `/`;
+        sessionStorage.clear();
     };
 
     return (

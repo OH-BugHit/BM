@@ -96,6 +96,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                 }
             }
             setConfig(data.configuration);
+            conn.send({ event: 'eter:alive', user: { username: ownUsername } }); // Alive signal
         } else if (data.event === 'eter:userlist') {
             setAvailableUsernames(data.available);
             setTakenUsernames(data.taken);
@@ -174,7 +175,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             }}
         >
             {hasBeenReady && children}
-            <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem' }}>
+            <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', pointerEvents: 'none' }}>
                 <ConnectionStatus
                     api={import.meta.env.VITE_APP_APIURL}
                     appName={'spoofgame'}

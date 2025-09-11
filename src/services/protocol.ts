@@ -54,6 +54,11 @@ export interface TermDataEvent extends PeerEvent {
     data: SpoofData;
 }
 
+export interface HeartbeatEvent extends PeerEvent {
+    event: 'eter:alive';
+    user: Username;
+}
+
 export type EventProtocol =
     | BuiltinEvent
     | ConfigurationEvent
@@ -65,4 +70,5 @@ export type EventProtocol =
     | ModelTransferEvent
     | MessageUserEvent
     | ProfilePictureEvent
-    | TermDataEvent;
+    | TermDataEvent
+    | HeartbeatEvent;

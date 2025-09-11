@@ -20,6 +20,8 @@ import Settings from '../Settings/Settings';
 import { Peer } from '@genai-fi/base/hooks/peer';
 import PeerEnv from '../../env';
 import ControlMenu from '../ControlMenu/UserMenu';
+import { useRestoreGameState } from '../../hooks/useRestoreGameStateHook';
+import { usePersistGameState } from '../../hooks/usePersistGameState';
 
 export default function Teacher() {
     const blockRef = useRef(true);
@@ -31,9 +33,11 @@ export default function Teacher() {
     const [users] = useAtom(usersAtom);
     const [model, setModel] = useAtom(modelAtom);
     const [activeView] = useAtom(activeViewAtom);
-
     // Load model if needed and set initial term, also pause the students
     useModelNamesLoader();
+    useRestoreGameState();
+    usePersistGameState();
+
     useEffect(() => {
         setConfig((old) => ({
             ...old,

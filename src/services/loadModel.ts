@@ -27,7 +27,7 @@ export async function loadModel({ name, origin }: ModelInfo) {
     } else if (origin === ModelOrigin.Teacher) {
         return await TMClassifier.load(name);
     } else {
-        return await TMClassifier.load('/testModels/testimalli1.zip');
+        return null;
     }
 }
 

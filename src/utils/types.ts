@@ -5,6 +5,10 @@ export enum ModelOrigin {
     Default = 'default',
 }
 
+export type SerializedStudentData = {
+    students: [string, { data: [string, number][] }][];
+};
+
 export type StudentScore = {
     score?: number;
     topCanvas?: HTMLCanvasElement | null;

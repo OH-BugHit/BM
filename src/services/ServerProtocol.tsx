@@ -38,7 +38,25 @@ export default function ServerProtocol() {
     });
 
     usePeerData((data: EventProtocol, conn: Connection<EventProtocol>) => {
-        if (data.event === 'eter:join') {
+        if (data.event === 'eter:alive') {
+            const userExists = users.some((u) => u.username === data.user.username);
+            if (!userExists && data.user.username) {
+                // Auto register on image-event
+                setUsers((old) => [
+                    ...old,
+                    {
+                        username: data.user.username,
+                        connectionId: conn.connectionId,
+                    },
+                ]);
+                setAllUNs((old) => {
+                    if (old.some((u) => u.username === data.user.username)) {
+                        return old;
+                    }
+                    return [...old, { username: data.user.username }];
+                });
+            }
+        } else if (data.event === 'eter:join') {
             // This event is triggered by student before register
             conn.send({
                 // We send current configuration

@@ -8,12 +8,14 @@
     position: absolute;
     display: flex;
     justify-content: center;
+    pointer-events: none;
 }
 
 .heatmapCanvas {
     background: #4646aec1;
     width: 512px;
     max-width: 100%;
+    pointer-events: none;
 }
 
 .webcamWrapper {

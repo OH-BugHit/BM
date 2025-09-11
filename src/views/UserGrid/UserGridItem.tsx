@@ -26,7 +26,6 @@ export default function UserGridItem({ username, alive, profilePicture }: Props)
                 />
             );
         } else {
-            console.log(i18n.language);
             if (i18n.language === 'fi-FI') {
                 return (
                     <img

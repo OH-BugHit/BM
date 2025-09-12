@@ -113,7 +113,7 @@ export function DatasetGallery() {
                     >
                         <CloseSharpIcon />
                     </Button>
-                    <h1>{t('common.dataset')}</h1>
+                    <h1 style={{ color: 'black' }}>{t('common.dataset')}</h1>
                 </div>
                 <FormControl className={style.selector}>
                     <InputLabel id="term-label">{t('common.selectLabel')}</InputLabel>

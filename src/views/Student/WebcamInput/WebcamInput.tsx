@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { configAtom, modelAtom, studentControlsAtom } from '../../../atoms/state';
 import style from './webcamInput.module.css';
-import { Webcam } from '@genai-fi/base';
+import { Spinner, Webcam } from '@genai-fi/base';
 import { Dispatch, RefObject, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { validateCanvas } from '../../../utils/validateCanvas';
 import { classifyImage } from '../../../utils/classifyImage';
@@ -39,6 +39,7 @@ export default function WebcamInput({
     const heatmapRef = useRef<HTMLCanvasElement | null>(null);
     const [controls] = useAtom(studentControlsAtom);
     const { t } = useTranslation();
+    const [ready, setReady] = useState(false); // TEST!!
 
     useEffect(() => {
         if (model && heatmapRef.current) {
@@ -143,6 +144,7 @@ export default function WebcamInput({
                 />
             </div>
             <div className={`${style.webcamWrapper} ${controls.pause ? style.paused : style.filtered}`}>
+                {!ready && <Spinner />}
                 {(controls.pause || config.pause) && <div className={style.overlayText}>{t('common.paused')}</div>}
                 <Webcam
                     size={webcamSize}
@@ -151,7 +153,10 @@ export default function WebcamInput({
                     disable={controls.pause || config.pause}
                     onCapture={handleCapture}
                     hidden={false}
-                    onActivated={setIsCameraActive}
+                    onActivated={(e) => {
+                        setIsCameraActive(e);
+                        setReady(e);
+                    }}
                     direct
                 />
             </div>

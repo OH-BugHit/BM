@@ -222,10 +222,10 @@
         },
         "labels": {
             "allowHidePicture": "Allow students to hide their result pictures",
-            "allowStartTermAgain": "Allow students to reset score on label",
+            "allowStartTermAgain": "Allow students to reset own scores",
             "hideOnDefault": "Hide your result pictures",
             "hideResultPictures": "Hide all result pictures",
-            "pauseOnChange": "Pause game when term is changed",
+            "pauseOnChange": "Pause game when label is changed",
             "showFullScoreboard": "Show all scores on scoreboard",
             "scoreboardLimit": "Limit scoreboard to {{limit}} best scores"
         }
@@ -236,7 +236,7 @@
         },
         "labels": {
             "disableApp": "Pause camera",
-            "enableApp": "Continue game",
+            "enableApp": "Continue",
             "heatmap": "Heatmap",
             "ownResults": "Results"
         },

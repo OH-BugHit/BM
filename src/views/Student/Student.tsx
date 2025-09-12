@@ -162,28 +162,31 @@ export default function Student({ serverCode }: { serverCode: string }) {
                         currentScore={currentScore}
                         topScore={topScore}
                     />
-                    <WebcamInput
-                        scoreBufferRef={scoreBufferRef}
-                        scoreSumRef={scoreSumRef}
-                        topCanvasRef={topCanvasRef}
-                        topHeatmapRef={topHeatmapRef}
-                        classifyTerm={classifyTerm}
-                        topScore={topScore}
-                        setScore={setScore}
-                        setCurrentScore={setCurrentScore}
-                        setIsCameraActive={setIsCameraActive}
-                    />
-                    <Button
-                        onClick={() =>
-                            setActiveView((old) => ({
-                                ...old,
-                                overlay: old.overlay === 'ownResults' ? 'none' : 'ownResults',
-                            }))
-                        }
-                        variant="contained"
-                    >
-                        {t('student.labels.ownResults')}
-                    </Button>
+                    <div className={style.inputContainer}>
+                        <WebcamInput
+                            scoreBufferRef={scoreBufferRef}
+                            scoreSumRef={scoreSumRef}
+                            topCanvasRef={topCanvasRef}
+                            topHeatmapRef={topHeatmapRef}
+                            classifyTerm={classifyTerm}
+                            topScore={topScore}
+                            setScore={setScore}
+                            setCurrentScore={setCurrentScore}
+                            setIsCameraActive={setIsCameraActive}
+                        />
+                    </div>
+                    <div className={style.gameLowerStuff}>
+                        <Button
+                            onClick={() =>
+                                setActiveView((old) => ({
+                                    ...old,
+                                    overlay: old.overlay === 'ownResults' ? 'none' : 'ownResults',
+                                }))
+                            }
+                        >
+                            <button className={style.resultButton}>{t('student.labels.ownResults')}</button>
+                        </Button>
+                    </div>
                 </div>
             </div>
         </>

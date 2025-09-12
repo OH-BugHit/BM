@@ -15,6 +15,7 @@ and set to ::before
 .scoreBarContainer {
     width: 50%;
     text-align: left;
+    font-family: 'Tektur';
 }
 
 /*Score bar container*/

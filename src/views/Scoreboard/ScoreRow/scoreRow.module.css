@@ -11,6 +11,7 @@
     font-weight: bolder;
     font-size: xx-large;
     color: #ffda35;
+    font-family: 'Tektur';
 }
 
 .infoData {
@@ -35,6 +36,7 @@
     padding-right: 2rem;
     background: linear-gradient(45deg, rgba(53, 99, 251, 0.178), rgba(31, 212, 225, 0));
     gap: 1.5rem;
+    color: white;
 }
 
 .avatarWrapper {
@@ -73,6 +75,7 @@
     border-radius: 0 2rem 2rem 0;
     background-color: rgb(255, 238, 82);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Tektur';
 }
 
 /**/

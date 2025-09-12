@@ -19,10 +19,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    margin-top: 1.5rem;
     height: 100%;
     width: 100%;
+    gap: 0.5rem;
     max-width: 512px;
+}
+
+.inputContainer {
+    width: 100%;
+}
+
+.gameLowerStuff {
+    align-content: center;
+    flex-grow: 1;
+    padding-bottom: 1rem;
 }
 
 .galleryContainer {
@@ -45,4 +56,95 @@
     padding: 4px 8px;
     backdrop-filter: blur(10px) brightness(150%);
     z-index: 10000;
+}
+
+.resultButton {
+    display: block;
+    position: absolute;
+}
+
+.imageWrapper {
+    position: relative;
+    display: inline-block
+}
+
+.imageWrapper img {
+    display: block;
+}
+
+.resultButton {
+    /* Perusmitat */
+    padding: 0.5rem 1.2rem;
+    min-width: 140px;
+
+    /* Pyöristetyt kulmat */
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+
+    /* Taustaväri + kiiltoefekti */
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.45) 2%,
+            rgba(255, 255, 255, 0.15) 25%,
+            rgba(7, 128, 146, 0.623) 26%,
+            rgba(7, 128, 146, 1) 80%,
+            rgb(0, 33, 49) 100%);
+
+
+    /* Sisäinen varjo yläreunaan, luo "glass look" */
+    box-shadow:
+        inset 0 8px 16px rgba(255, 255, 255, 0.3),
+        /* kiilto sisältä */
+        0 4px 8px rgba(0, 0, 0, 0.3);
+    /* ulkoinen varjo */
+
+    /* Typografia (jos haluat tekstiä) */
+    font-size: 1.2rem;
+    font-weight: bold;
+    white-space: nowrap;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.resultButton2:hover {
+    box-shadow: 0 0 8px rgba(45, 236, 239, 0.4);
+}
+
+
+
+.buttonText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -58%);
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    /* parantaa luettavuutta */
+}
+
+@media (min-height: 700px) {
+    .gameContainer {
+        gap: 1rem
+    }
+
+    .inputContainer {
+        margin-top: 1.5rem;
+    }
+
+    .resultButton {
+        padding: 1rem 2rem;
+        min-height: 50px;
+    }
+}
+
+
+@media (min-height: 800px) {
+    .gameContainer {
+        gap: 1.5rem
+    }
+
+    .inputContainer {
+        margin-top: 2rem;
+    }
 }

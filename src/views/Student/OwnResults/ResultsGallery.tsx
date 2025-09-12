@@ -29,7 +29,7 @@ export function ResultsGallery({ currentData }: Props) {
         <>
             <div className={style.resultGallery}>
                 <div className={style.headerToggle}>
-                    <h1>{t('student.titles.results')}</h1>
+                    <h1 style={{ color: '#282828' }}>{t('student.titles.results')}</h1>
                 </div>
                 <Results
                     setOpenImage={setOpenImage}

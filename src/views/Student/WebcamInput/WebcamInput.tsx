@@ -39,7 +39,6 @@ export default function WebcamInput({
     const heatmapRef = useRef<HTMLCanvasElement | null>(null);
     const [controls] = useAtom(studentControlsAtom);
     const { t } = useTranslation();
-    const [ready, setReady] = useState(false); // TEST!!
 
     useEffect(() => {
         if (model && heatmapRef.current) {
@@ -144,7 +143,18 @@ export default function WebcamInput({
                 />
             </div>
             <div className={`${style.webcamWrapper} ${controls.pause ? style.paused : style.filtered}`}>
-                {!ready && <Spinner />}
+                <span
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translateX(-50%) translateY(-50%)',
+                        zIndex: 0,
+                        width: '100%',
+                    }}
+                >
+                    <Spinner />
+                </span>
                 {(controls.pause || config.pause) && <div className={style.overlayText}>{t('common.paused')}</div>}
                 <Webcam
                     size={webcamSize}
@@ -155,7 +165,6 @@ export default function WebcamInput({
                     hidden={false}
                     onActivated={(e) => {
                         setIsCameraActive(e);
-                        setReady(e);
                     }}
                     direct
                 />

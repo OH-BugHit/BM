@@ -1,4 +1,3 @@
-import { Button } from '@genai-fi/base';
 import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
@@ -28,7 +27,11 @@ import Scorebar from './Scorebar/Scorebar';
 import WebcamInput from './WebcamInput/WebcamInput';
 import StudentSettings from './StudentSettings/StudentSettings';
 
-export default function Student({ serverCode }: { serverCode: string }) {
+interface StudentProps {
+    serverCode: string;
+}
+
+export default function Student({ serverCode }: StudentProps) {
     const { t } = useTranslation();
     const { doSendImages, doRegister } = useSpoofProtocol();
     const [model] = useAtom(modelAtom);
@@ -176,7 +179,8 @@ export default function Student({ serverCode }: { serverCode: string }) {
                         />
                     </div>
                     <div className={style.gameLowerStuff}>
-                        <Button
+                        <button
+                            className={style.resultButton}
                             onClick={() =>
                                 setActiveView((old) => ({
                                     ...old,
@@ -184,8 +188,8 @@ export default function Student({ serverCode }: { serverCode: string }) {
                                 }))
                             }
                         >
-                            <button className={style.resultButton}>{t('student.labels.ownResults')}</button>
-                        </Button>
+                            {t('student.labels.ownResults')}
+                        </button>
                     </div>
                 </div>
             </div>

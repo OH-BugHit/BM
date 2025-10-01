@@ -176,3 +176,10 @@ export const studentActivityAtom = atom<Map<string, ActivityPicture | null>>(new
  * Dataset view stuff is toggled with different logic as the same component is also used by teacher
  */
 export const studentControlsAtom = atom<StudentControls>({ pause: false, heatmap: false });
+
+/**
+ * Current score of student (only used by student)
+ */
+export const currentScoreAtom = atom<number>(0);
+
+export const topScoreAtom = atom<number>(0);

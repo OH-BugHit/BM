@@ -43,6 +43,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
     const [, setLabels] = useAtom(labelsAtom);
     const { i18n } = useTranslation();
     // conn: Connection<EventProtocol>
+
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
         if (data.event === 'eter:join') {
             // Send

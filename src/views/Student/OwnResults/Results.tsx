@@ -1,6 +1,6 @@
 import style from './results.module.css';
 import { useAtom } from 'jotai';
-import { configAtom, labelsAtom, studentResultsAtom, usernameAtom } from '../../../atoms/state';
+import { configAtom, labelsAtom, studentResultsAtom, topScoreAtom, usernameAtom } from '../../../atoms/state';
 import { CanvasCopy } from '../../../components/CanvasCopy/CanvasCopy';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Dispatch, RefObject, SetStateAction } from 'react';
@@ -15,7 +15,6 @@ interface Props {
         currentTerm: string;
         topCanv: RefObject<HTMLCanvasElement | null>;
         topHeat: RefObject<HTMLCanvasElement | null>;
-        setScore: Dispatch<SetStateAction<number>>;
     };
 }
 
@@ -28,6 +27,7 @@ export default function Results({ setOpenImage, currentData }: Props) {
     const { t } = useTranslation();
     const [results] = useAtom(studentResultsAtom);
     const [config] = useAtom(configAtom);
+    const [, setScore] = useAtom(topScoreAtom);
     const [, setResults] = useAtom(studentResultsAtom);
     const [username] = useAtom(usernameAtom);
     const [labels] = useAtom(labelsAtom);
@@ -144,7 +144,7 @@ export default function Results({ setOpenImage, currentData }: Props) {
                                             return { data: newData };
                                         });
                                         if (currentData.currentTerm === term) {
-                                            currentData.setScore(0);
+                                            setScore(0);
                                             currentData.topCanv.current = null;
                                             currentData.topHeat.current = null;
                                         }

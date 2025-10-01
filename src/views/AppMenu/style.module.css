@@ -69,8 +69,7 @@
 
 .sideNavClosed {
     composes: sideNav;
-    /*width: 57px;*/
-    flex: 0 0 57px;
+    width: 45px;
 }
 
 .treeItem {
@@ -111,4 +110,10 @@
     overflow-x: hidden;
     box-sizing: border-box;
     border-bottom: 3px solid backgroundDark3;
+}
+
+@media (min-height: 700px) {
+    .sideNavClosed {
+        width: 100%;
+    }
 }

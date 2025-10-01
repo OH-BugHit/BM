@@ -4,7 +4,7 @@ export function cloneCanvas(oldCanvas: HTMLCanvasElement | null): HTMLCanvasElem
     const newCanvas = document.createElement('canvas');
     newCanvas.width = oldCanvas.width;
     newCanvas.height = oldCanvas.height;
-    const ctx = newCanvas.getContext('2d');
+    const ctx = newCanvas.getContext('2d', { willReadFrequently: true });
     if (ctx) {
         ctx.drawImage(oldCanvas, 0, 0);
     }

@@ -3,7 +3,7 @@ import Footer from '../../components/Footer/Footer';
 import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import ServerProtocol from '../../services/ServerProtocol';
 import style from './style.module.css';
-import { configAtom, modelAtom, studentDataAtom, usersAtom, termTransferAtom, activeViewAtom } from '../../atoms/state';
+import { configAtom, modelAtom, termTransferAtom, activeViewAtom } from '../../atoms/state';
 import { useEffect, useRef } from 'react';
 import { useID } from '@genai-fi/base';
 import { DatasetGallery } from '../DatasetGallery/DatasetGallery';
@@ -29,8 +29,7 @@ export default function Teacher() {
     const [config, setConfig] = useAtom(configAtom);
     const [, setTermData] = useAtom(termTransferAtom);
     const MYCODE = useID(5);
-    const [studentData] = useAtom(studentDataAtom);
-    const [users] = useAtom(usersAtom);
+    //const [studentData] = useAtom(studentDataAtom);
     const [model, setModel] = useAtom(modelAtom);
     const [activeView] = useAtom(activeViewAtom);
     // Load model if needed and set initial term, also pause the students
@@ -60,10 +59,7 @@ export default function Teacher() {
                 <div className={style.serverProtocolContainer}>
                     <ServerProtocol />
                 </div>
-                <StartDialog
-                    users={users}
-                    code={MYCODE}
-                />
+                <StartDialog code={MYCODE} />
                 <Settings />
                 <ModelDialog />
                 <div className={style.sideMenuContainer}>
@@ -71,7 +67,7 @@ export default function Teacher() {
                 </div>
                 <div className={style.content}>
                     {activeView.overlay === 'trainingData' && <DatasetGallery />}
-                    {activeView.active === 'userGrid' && studentData && (
+                    {activeView.active === 'userGrid' /*&& studentData */ && (
                         <>
                             <UserMenu />
                             <UserGrid />

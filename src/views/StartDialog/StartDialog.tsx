@@ -1,20 +1,19 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
-import { activeViewAtom } from '../../atoms/state';
-import { UserInfo } from '../../utils/types';
+import { activeViewAtom, usersAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { LargeButton, QRCode } from '@genai-fi/base';
 
 interface Props {
-    users: UserInfo[];
     code: string;
 }
 
-export default function StartDialog({ users, code }: Props) {
+export default function StartDialog({ code }: Props) {
     const { t } = useTranslation();
     const [showDialog, setActiveView] = useAtom(activeViewAtom);
+    const [users] = useAtom(usersAtom);
 
     const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
 

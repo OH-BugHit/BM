@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
 import { IconButton } from '@mui/material';
@@ -23,6 +23,13 @@ export default function MenuPanel() {
     const [open, setOpen] = useState(false);
     const [activeView, setActiveView] = useAtom(activeViewAtom);
     const [, setSelectedUser] = useAtom(selectedUserAtom);
+    const [iconSize, setIconSize] = useState<'small' | 'medium' | 'large'>('large');
+
+    useEffect(() => {
+        const handleResize = () => setIconSize(window.innerHeight < 700 ? 'medium' : 'large');
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const doShowDialog = useCallback(
         (dialog: TeacherDialogs) => {
@@ -66,7 +73,7 @@ export default function MenuPanel() {
                     aria-label={t('teacher.aria.mainMenu')}
                     aria-pressed={open}
                 >
-                    {open ? <ArrowBackIosIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+                    {open ? <ArrowBackIosIcon fontSize={iconSize} /> : <MenuIcon fontSize={iconSize} />}
                 </IconButton>
             </div>
             <div className={style.sideNavSection}>
@@ -80,11 +87,11 @@ export default function MenuPanel() {
                         color="inherit"
                         onClick={() => doShowDialog('share')}
                         aria-label={t('teacher.labels.shareTip')}
-                        size="large"
+                        size={iconSize}
                         variant="text"
                         fullWidth
                     >
-                        <QrCode2Icon fontSize="large" />
+                        <QrCode2Icon fontSize={iconSize} />
                         {open ? t('teacher.labels.shareTip') : ''}
                     </MenuButton>
                 </IconMenuItem>
@@ -102,12 +109,12 @@ export default function MenuPanel() {
                     <MenuButton
                         color="inherit"
                         aria-label={t('menu.vis.term')}
-                        size="large"
+                        size={iconSize}
                         variant="text"
                         fullWidth
                         onClick={() => doShowView('termChange')}
                     >
-                        <AbcIcon fontSize="large" />
+                        <AbcIcon fontSize={iconSize} />
                         {open ? t('menu.vis.term') : ''}
                     </MenuButton>
                 </IconMenuItem>
@@ -120,13 +127,13 @@ export default function MenuPanel() {
                     <MenuButton
                         color="inherit"
                         aria-label={t('menu.vis.results')}
-                        size="large"
+                        size={iconSize}
                         variant="text"
                         fullWidth
                         style={{ minHeight: '64px', minWidth: '64px' }}
                         onClick={() => doShowView('default')}
                     >
-                        <EmojiEventsIcon fontSize="large" />
+                        <EmojiEventsIcon fontSize={iconSize} />
                         {open ? t('menu.vis.results') : ''}
                     </MenuButton>
                 </IconMenuItem>
@@ -139,12 +146,12 @@ export default function MenuPanel() {
                     <MenuButton
                         color="inherit"
                         aria-label={t('menu.vis.usergrid')}
-                        size="large"
+                        size={iconSize}
                         variant="text"
                         fullWidth
                         onClick={() => doShowView('userGrid')}
                     >
-                        <AppsIcon fontSize="large" />
+                        <AppsIcon fontSize={iconSize} />
                         {open ? t('menu.vis.usergrid') : ''}
                     </MenuButton>
                 </IconMenuItem>
@@ -158,11 +165,11 @@ export default function MenuPanel() {
                         color="inherit"
                         onClick={() => doShowDialog('trainingData')}
                         aria-label={t('common.labels.datasetTip')}
-                        size="large"
+                        size={iconSize}
                         variant="text"
                         fullWidth
                     >
-                        <CollectionsIcon fontSize="large" />
+                        <CollectionsIcon fontSize={iconSize} />
                         {open ? t('common.labels.datasetTip') : ''}
                     </MenuButton>
                 </IconMenuItem>
@@ -178,11 +185,11 @@ export default function MenuPanel() {
                         color="inherit"
                         onClick={() => doShowDialog('modelChange')}
                         aria-label={t('teacher.labels.changeModel')}
-                        size="large"
+                        size={iconSize}
                         variant="text"
                         fullWidth
                     >
-                        <ModelTrainingIcon fontSize="large" />
+                        <ModelTrainingIcon fontSize={iconSize} />
                         {open ? t('teacher.labels.changeModel') : ''}
                     </MenuButton>
                 </IconMenuItem>
@@ -198,14 +205,15 @@ export default function MenuPanel() {
                     fullWidth
                 >
                     <MenuButton
+                        style={{}}
                         color="inherit"
                         onClick={() => doShowDialog('settings')}
                         aria-label={t('menu.aria.settings')}
-                        size="large"
+                        size={iconSize}
                         variant="text"
                         fullWidth
                     >
-                        <SettingsIcon fontSize="large" />
+                        <SettingsIcon fontSize={iconSize} />
                         {open ? t('menu.labels.settings') : ''}
                     </MenuButton>
                 </IconMenuItem>
@@ -221,11 +229,11 @@ export default function MenuPanel() {
                         color="inherit"
                         onClick={toMain}
                         aria-label={t('menu.aria.exit')}
-                        size="large"
+                        size={iconSize}
                         variant="text"
                         fullWidth
                     >
-                        <LogoutIcon fontSize="large" />
+                        <LogoutIcon fontSize={iconSize} />
                         {open ? t('menu.labels.exit') : ''}
                     </MenuButton>
                 </IconMenuItem>

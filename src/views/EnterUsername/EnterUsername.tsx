@@ -66,63 +66,69 @@ export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
     };
 
     return (
-        <div className={config?.settings?.profilePicture ? style.enterUserInfo : style.noPicContainer}>
-            <ProfilePictureInput
-                errors={errors}
-                setErrors={setErrors}
-                setImage={setImage}
-                image={image}
-            />
-            <div className={style.textField}>
-                <TextField
-                    label={t('enterUsername.labels.enterUsername')}
-                    value={username}
-                    sx={{ color: 'white' }}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                    error={!!errors.username}
-                    helperText={
-                        errors.username ? t(`enterUsername.messages.usernameError.${errors.username}`) : undefined
-                    }
-                    fullWidth
-                    margin="normal"
-                />
-            </div>
-            <LargeButton
-                onClick={handleSubmit}
-                variant="contained"
-            >
-                {t('enterUsername.actions.enterUser')}
-            </LargeButton>
-            <div className={style.restore}>
-                {!showRestore && (
-                    <IconButton
-                        onClick={() => setShowRestore(true)}
-                        className={style.restoreButton}
+        <>
+            {config && (
+                <div className={config?.settings?.profilePicture ? style.enterUserInfo : style.noPicContainer}>
+                    <ProfilePictureInput
+                        errors={errors}
+                        setErrors={setErrors}
+                        setImage={setImage}
+                        image={image}
+                    />
+                    <div className={style.textField}>
+                        <TextField
+                            label={t('enterUsername.labels.enterUsername')}
+                            value={username}
+                            sx={{ color: 'white' }}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            error={!!errors.username}
+                            helperText={
+                                errors.username
+                                    ? t(`enterUsername.messages.usernameError.${errors.username}`)
+                                    : undefined
+                            }
+                            fullWidth
+                            margin="normal"
+                        />
+                    </div>
+                    <LargeButton
+                        onClick={handleSubmit}
+                        variant="contained"
                     >
-                        <em>Return to Game</em>
-                        <RestoreIcon />
-                    </IconButton>
-                )}
-
-                {showRestore && (
-                    <Select
-                        value=""
-                        onChange={handleSelect}
-                        displayEmpty
-                        fullWidth
-                    >
-                        {users.map((u) => (
-                            <MenuItem
-                                key={u.username}
-                                value={u.username}
+                        {t('enterUsername.actions.enterUser')}
+                    </LargeButton>
+                    <div className={style.restore}>
+                        {!showRestore && (
+                            <IconButton
+                                onClick={() => setShowRestore(true)}
+                                className={style.restoreButton}
                             >
-                                {u.username}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                )}
-            </div>
-        </div>
+                                <em>Return to Game</em>
+                                <RestoreIcon />
+                            </IconButton>
+                        )}
+
+                        {showRestore && (
+                            <Select
+                                value=""
+                                onChange={handleSelect}
+                                displayEmpty
+                                fullWidth
+                            >
+                                {users.map((u) => (
+                                    <MenuItem
+                                        key={u.username}
+                                        value={u.username}
+                                    >
+                                        {u.username}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        )}
+                    </div>
+                </div>
+            )}
+        </>
     );
 }

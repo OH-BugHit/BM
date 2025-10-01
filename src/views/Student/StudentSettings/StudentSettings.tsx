@@ -20,7 +20,7 @@ export default function StudentSettings() {
                 className={style.settingsButton}
                 color="inherit"
                 onClick={() => setActiveView((old) => ({ ...old, overlay: 'settings' }))}
-                aria-label={t('teacher.aria.mainMenu')}
+                aria-label={t('student.aria.settings')}
                 aria-pressed={showDialog.overlay === 'settings'}
                 sx={{ position: 'absolute' }}
             >

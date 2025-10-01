@@ -192,6 +192,9 @@
         }
     },
     "student": {
+        "aria": {
+            "settings": "Avaa tai sulje asetukset"
+        },
         "titles": {
             "results": "Tulokset"
         },

@@ -1,4 +1,4 @@
-import { Dispatch, RefObject, useState } from 'react';
+import { RefObject, useState } from 'react';
 import style from './results.module.css';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
@@ -6,14 +6,12 @@ import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { CanvasCopy } from '../../../components/CanvasCopy/CanvasCopy';
 import { close } from '../../../components/Buttons/buttonStyles';
 import Results from './Results';
-import { SetStateAction } from 'jotai';
 
 interface Props {
     currentData: {
         currentTerm: string;
         topCanv: RefObject<HTMLCanvasElement | null>;
         topHeat: RefObject<HTMLCanvasElement | null>;
-        setScore: Dispatch<SetStateAction<number>>;
     };
 }
 

@@ -231,6 +231,9 @@
         }
     },
     "student": {
+        "aria": {
+            "settings": "Open or close settings"
+        },
         "titles": {
             "results": "Results"
         },

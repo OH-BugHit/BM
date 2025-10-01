@@ -5,14 +5,13 @@ import { Button } from '@genai-fi/base';
 import { close } from '../../../components/Buttons/buttonStyles';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { ResultsGallery } from './ResultsGallery';
-import { Dispatch, RefObject, SetStateAction } from 'react';
+import { RefObject } from 'react';
 
 interface Props {
     currentData: {
         currentTerm: string;
         topCanv: RefObject<HTMLCanvasElement | null>;
         topHeat: RefObject<HTMLCanvasElement | null>;
-        setScore: Dispatch<SetStateAction<number>>;
     };
 }
 

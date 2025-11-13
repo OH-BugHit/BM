@@ -2,10 +2,24 @@
 @value selectedColor: rgba(45, 236, 239, 0.309);
 @value unSelectedColor: rgba(45, 236, 239, 0.309);
 
+.userGrid {
+    flex-direction: row;
+    display: flex;
+    gap: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+
 .userGridContainer {
+    background: linear-gradient(45deg, rgba(23, 83, 114, 0.94), rgba(36, 43, 44, 0.178));
+    /*background: linear-gradient(45deg, rgba(53, 99, 251, 0.178), rgba(31, 212, 225, 0.372));*/
+    border-radius: 1rem;
     overflow: auto;
-    max-width: calc(5 * 220px + 4 * 1rem);
+    max-width: calc(8 * 220px + 4 * 1rem);
     margin: 0 auto;
+    width: 100%;
+    overflow: visible;
 }
 
 .grid {
@@ -34,6 +48,7 @@
     cursor: pointer;
     outline: inherit;
     text-align: initial;
+    overflow: visible;
 }
 
 .gridItem:hover {
@@ -98,6 +113,18 @@
 .selectedUserNameContainer {
     composes: userNameContainer;
     background: selectedColor;
+}
+
+.crownWrapper {
+    position: relative;
+}
+
+.crownImg {
+    position: absolute;
+    top: -30px;
+    left: 31%;
+    pointer-events: none;
+    /*transform: rotate(-25deg); if rotate*/
 }
 
 .word {

@@ -19,6 +19,11 @@ interface Props {
     username: string;
 }
 
+/**
+ *
+ * @param param0
+ * @returns Renders nothing, just sends top score images at intervals
+ */
 export default function TopScoreSender({ classifyTerm, topCanvasRef, topHeatmapRef, doSendImages, username }: Props) {
     const [results, setResults] = useAtom(studentResultsAtom);
     const [studentSettings] = useAtom(studentSettingsAtom);

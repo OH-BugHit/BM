@@ -1,7 +1,14 @@
 import style from '../../views/TermChange/style.module.css';
 import { useTranslation } from 'react-i18next';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { configAtom, labelsAtom, modelAtom, settingAtom, termTransferAtom } from '../../atoms/state';
+import {
+    configAtom,
+    currentCommonChallengeAtom,
+    labelsAtom,
+    modelAtom,
+    settingAtom,
+    termTransferAtom,
+} from '../../atoms/state';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 
@@ -17,6 +24,7 @@ export default function TermSelector({ toUsers }: Props) {
     const [settings] = useAtom(settingAtom);
     const [labels] = useAtom(labelsAtom);
     const [model] = useAtom(modelAtom);
+    const [, setCurrentCommonTerm] = useAtom(currentCommonChallengeAtom);
 
     function delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
@@ -45,6 +53,7 @@ export default function TermSelector({ toUsers }: Props) {
                 term: newValue || '',
                 recipient: { username: 'a' },
             });
+            setCurrentCommonTerm(newValue || '');
         }
     };
     const labelOptions = model?.getLabels() ?? [];

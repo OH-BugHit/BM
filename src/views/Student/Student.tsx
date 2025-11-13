@@ -36,7 +36,7 @@ export default function Student({ serverCode }: StudentProps) {
     const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
     const [showError, setShowError] = useState(false);
 
-    // Score circle buffer refs, buffer is in WebcamInput
+    // Score circle buffer refs, buffer is in WebcamInput for scores
     const scoreBufferRef = useRef<number[]>(Array(64).fill(0));
     const scoreSumRef = useRef(0);
 
@@ -54,7 +54,7 @@ export default function Student({ serverCode }: StudentProps) {
     }, [doRegister, username, profilePicture]);
 
     /**
-     * Kicks user (by teacher)
+     * Kicks user (by teacher) if bouncer.reload is set
      */
     useEffect(() => {
         if (bouncer.reload) {

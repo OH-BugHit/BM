@@ -17,6 +17,7 @@ import {
     StudentSettings,
     ActivityPicture,
     Labels,
+    TopThreeResults,
 } from '../utils/types';
 
 /**
@@ -64,6 +65,16 @@ export const termTransferAtom = atom<SpoofData>({
     term: '',
     recipient: { username: 'a' },
 });
+
+/**
+ * Contains current common challenge term (for usergrid display)
+ */
+export const currentCommonChallengeAtom = atom<string>('');
+
+/**
+ * Contains top three scores for all terms
+ */
+export const topScoresAtom = atom<TopThreeResults>({ scores: new Map() });
 
 /**
  * Teacher can send messages by updating this atom
@@ -147,6 +158,8 @@ export const settingAtom = atom<Settings>({
     teacherHideResultPicture: false,
     allowStartTermAgain: true,
     limitScoreboard: { limit: 2, showAll: false },
+    userGridShowCrowns: true,
+    userGridMaxColumns: 6,
 });
 
 export const studentSettingsAtom = atom<StudentSettings>({
@@ -182,4 +195,7 @@ export const studentControlsAtom = atom<StudentControls>({ pause: false, heatmap
  */
 export const currentScoreAtom = atom<number>(0);
 
+/**
+ * Current top score (only used by student)
+ */
 export const topScoreAtom = atom<number>(0);

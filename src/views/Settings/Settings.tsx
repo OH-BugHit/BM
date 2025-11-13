@@ -7,6 +7,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from '@m
 import { Button } from '@genai-fi/base';
 import GeneralSettings from './GeneralSettings';
 import PictureSettings from './PictureSettings';
+import UserGridSettings from './UserGridSettings';
 
 export default function Settings() {
     const { t } = useTranslation();
@@ -35,9 +36,11 @@ export default function Settings() {
                 >
                     <Tab label={t('settings.titles.general')} />
                     <Tab label={t('settings.titles.pictureSettings')} />
+                    <Tab label={t('settings.titles.userGridSettings')} />
                 </Tabs>
                 {tabNumber === 0 && <GeneralSettings />}
                 {tabNumber === 1 && <PictureSettings />}
+                {tabNumber === 2 && <UserGridSettings />}
             </DialogContent>
             <DialogActions>
                 <Button

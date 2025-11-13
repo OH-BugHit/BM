@@ -17,6 +17,11 @@ interface Props {
     scoreSumRef: React.RefObject<number>;
 }
 
+/**
+ *
+ * @param param0
+ * @returns Renders nothing, just watches term changes and updates classifyTerm accordingly
+ */
 export default function TermWatcher({
     classifyTerm,
     setClassifyTerm,

@@ -4,14 +4,16 @@ import style from './style.module.css';
 import { MouseEvent } from 'react';
 import { selectedUserAtom, studentActivityAtom } from '../../atoms/state';
 import { useTranslation } from 'react-i18next';
+import Crown from './Crown';
 
 interface Props {
     username: string;
     alive: boolean;
     profilePicture: HTMLCanvasElement | null;
+    openResult: string | null;
 }
 
-export default function UserGridItem({ username, alive, profilePicture }: Props) {
+export default function UserGridItem({ username, alive, profilePicture, openResult }: Props) {
     const [selectedUser, setSelectedUser] = useAtom(selectedUserAtom);
     const [currentActivity] = useAtom(studentActivityAtom);
     const { i18n } = useTranslation();
@@ -57,6 +59,10 @@ export default function UserGridItem({ username, alive, profilePicture }: Props)
                 e.stopPropagation();
             }}
         >
+            <Crown
+                username={username}
+                openResult={openResult}
+            />
             <div className={style.userImageContainer}>{getPicture()}</div>
             <div
                 className={

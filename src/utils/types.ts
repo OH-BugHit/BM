@@ -5,6 +5,26 @@ export enum ModelOrigin {
     Default = 'default',
 }
 
+/**
+ * Contains top scores for all terms
+ * K = term, V = TopResult
+ */
+export type TopThreeResults = {
+    scores: Map<string, TopThree>;
+};
+
+// contains top score for single term
+export type TopThree = {
+    bestScore: Result | null;
+    secondScore: Result | null;
+    thirdScore: Result | null;
+};
+
+export type Result = {
+    score: number;
+    studentId: string;
+};
+
 export type SerializedStudentData = {
     students: [string, { data: [string, number][] }][];
 };
@@ -101,6 +121,8 @@ export type Settings = {
         limit: number;
         showAll: boolean;
     };
+    userGridShowCrowns: boolean;
+    userGridMaxColumns: number;
 };
 
 /**

@@ -218,7 +218,8 @@
         "titles": {
             "general": "General",
             "pictureSettings": "Picture settings",
-            "settings": "Settings"
+            "settings": "Settings",
+            "userGridSettings": "User grid view settings"
         },
         "labels": {
             "allowHidePicture": "Allow students to hide their result pictures",
@@ -227,7 +228,9 @@
             "hideResultPictures": "Hide all result pictures",
             "pauseOnChange": "Pause game when label is changed",
             "showFullScoreboard": "Show all scores on scoreboard",
-            "scoreboardLimit": "Limit scoreboard to {{limit}} best scores"
+            "scoreboardLimit": "Limit scoreboard to {{limit}} best scores",
+            "userGridMaxColumns": "User grid view columns",
+            "showCrowns": "Show crowns for top three"
         }
     },
     "student": {

@@ -179,7 +179,8 @@
         "titles": {
             "general": "Yleiset asetukset",
             "pictureSettings": "Kuvien asetukset",
-            "settings": "Asetukset"
+            "settings": "Asetukset",
+            "userGridSettings": "Käyttäjäruudukon asetukset"
         },
         "labels": {
             "allowHidePicture": "Käyttäjä voi piilottaa kuvan (ei mahdollista profiilikuvaa)",
@@ -188,7 +189,9 @@
             "hideResultPictures": "Piilota kaikki tuloskuvat",
             "pauseOnChange": "Aloita uusi luokittelutermi pysäytystilassa",
             "showFullScoreboard": "Näytä kaikki tulokset pisteiden taulukossa",
-            "scoreboardLimit": "Näytä tulokset vain {{limit}} parhaalle"
+            "scoreboardLimit": "Näytä tulokset vain {{limit}} parhaalle",
+            "userGridMaxColumns": "Käyttäjäruudukon leveys",
+            "showCrowns": "Näytä top-3 kruunut käyttäjäruudukossa"
         }
     },
     "student": {

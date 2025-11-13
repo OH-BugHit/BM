@@ -55,18 +55,22 @@ export default function WebcamInput({
                 />
             </div>
             <div className={`${style.webcamWrapper} ${controls.pause ? style.paused : style.filtered}`}>
-                <span
-                    style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translateX(-50%) translateY(-50%)',
-                        zIndex: 0,
-                        width: '100%',
-                    }}
-                >
-                    <Spinner />
-                </span>
+                {/*TODO: Test if this helps on loading spinner?*/}
+                {!model?.isReady() && (
+                    <span
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translateX(-50%) translateY(-50%)',
+                            zIndex: 1,
+                            width: '100%',
+                        }}
+                    >
+                        <Spinner />
+                    </span>
+                )}
+
                 {(controls.pause || config.pause) && <div className={style.overlayText}>{t('common.paused')}</div>}
                 <div className={style.canvasWrapper}>
                     <Webcam

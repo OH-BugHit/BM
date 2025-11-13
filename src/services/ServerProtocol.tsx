@@ -12,6 +12,7 @@ import {
     termTransferAtom,
     messageTransferAtom,
     studentActivityAtom,
+    topScoresAtom,
 } from '../atoms/state';
 import { SpoofConfig, StudentScores } from '../utils/types';
 import { base64ToCanvas } from '../utils/base64toCanvas';
@@ -28,6 +29,66 @@ export default function ServerProtocol() {
     const [termData] = useAtom(termTransferAtom);
     const [messageData] = useAtom(messageTransferAtom);
     const [, setCurrentActivity] = useAtom(studentActivityAtom);
+    const [topScores, setTopScores] = useAtom(topScoresAtom);
+
+    const checkTopScores = (classname: string, studentId: string, score: number | 'delete') => {
+        const currentTop = topScores.scores.get(classname);
+        if (score === 'delete') {
+            return; // delete not done for top scores, could be implemeted here. If so, add call to if (data.data.image === 'delete') part
+        }
+        if (currentTop === undefined) {
+            setTopScores((old) => {
+                const newScores = new Map(old.scores);
+                newScores.set(classname, {
+                    bestScore: { score: score, studentId: studentId },
+                    secondScore: null,
+                    thirdScore: null,
+                });
+                return { scores: newScores };
+            });
+        } else {
+            // Something is saved already for this classification term
+            if (currentTop.thirdScore !== null && currentTop.thirdScore.score > score) {
+                // No need to check if score is lower than top three
+                return;
+            }
+            if (currentTop.bestScore === null || score > currentTop.bestScore.score) {
+                // New best score
+                if (currentTop.bestScore?.studentId === studentId) {
+                    // Same student improved his own best score
+                    currentTop.bestScore.score = score;
+                } else {
+                    currentTop.thirdScore = currentTop.secondScore;
+                    currentTop.secondScore = currentTop.bestScore;
+                    currentTop.bestScore = { score: score, studentId: studentId };
+                }
+            } else if (currentTop.secondScore === null || score > currentTop.secondScore.score) {
+                // New second score
+                if (currentTop.secondScore?.studentId === studentId && currentTop.bestScore?.studentId !== studentId) {
+                    // Same student improved his own second score and is not best score holder and Update only if student is not already ranked higher
+                    currentTop.secondScore.score = score;
+                } else {
+                    currentTop.thirdScore = currentTop.secondScore;
+                    currentTop.secondScore = { score: score, studentId: studentId };
+                }
+            } else if (currentTop.thirdScore === null || score > currentTop.thirdScore.score) {
+                // New third score
+                if (currentTop.bestScore?.studentId !== studentId && currentTop.secondScore?.studentId !== studentId) {
+                    // Update only if student is not already ranked higher
+                    currentTop.thirdScore = { score: score, studentId: studentId };
+                }
+            }
+            setTopScores((old) => {
+                const newScores = new Map(old.scores);
+                newScores.set(classname, {
+                    bestScore: currentTop.bestScore,
+                    secondScore: currentTop.secondScore,
+                    thirdScore: currentTop.thirdScore,
+                });
+                return { scores: newScores };
+            });
+        }
+    };
 
     // CLOSE HANDLER: whenever a Connection is closed (either via 'eter:close' or network drop),
     // remove that user from your usersAtom.
@@ -152,8 +213,9 @@ export default function ServerProtocol() {
                 console.log('Modelfile not found when requested by student');
             }
         } else if (data.event === 'eter:image') {
+            // On new image from student. This also usually means new score.
             // If peer connection has stability issues, it might drop from active "users" -list and not rejoin it with register
-            // In that case we register also here
+            // In that case we register student also here
             const userExists = users.some((u) => u.username === data.data.studentId);
             if (!userExists && data.data.studentId) {
                 // Auto register on image-event
@@ -173,6 +235,7 @@ export default function ServerProtocol() {
             }
             // If student wishes to remove image, it is done here
             if (data.data.image === 'delete') {
+                // Deleting image from results. This does not alter top scores shown in usergrid however!
                 setStudent((prev) => {
                     const newData = prev?.students ?? new Map();
                     const studentScores: StudentScores = newData.get(data.data.studentId) ?? { data: new Map() };
@@ -180,6 +243,9 @@ export default function ServerProtocol() {
                     return { students: newData };
                 });
             } else {
+                // Check and update top-scores
+                checkTopScores(data.data.classname, data.data.studentId, data.data.score);
+
                 // Add image to results (studentDataAtom)
                 (async () => {
                     const topCanvas = await base64ToCanvas(data.data.image);
@@ -193,7 +259,6 @@ export default function ServerProtocol() {
                             prevActivity.set(id, { picture: topCanvas, hidden: data.data.hidden });
                         return prevActivity;
                     });
-
                     setStudent((prev) => {
                         const id = data.data.studentId;
                         const prevStudents = prev?.students ?? new Map();
@@ -218,7 +283,7 @@ export default function ServerProtocol() {
                     });
                 })();
             }
-        }
+        } // On student image event ends
     });
 
     const send = usePeerSender<EventProtocol>();

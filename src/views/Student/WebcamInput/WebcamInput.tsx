@@ -1,11 +1,12 @@
 import { useAtom } from 'jotai';
 import { configAtom, modelAtom, studentControlsAtom } from '../../../atoms/state';
 import style from './webcamInput.module.css';
-import { Spinner, Webcam } from '@genai-fi/base';
+import { Webcam } from '@genai-fi/base';
 import { Dispatch, RefObject, SetStateAction, useCallback, useEffect, useRef } from 'react';
 import { cloneCanvas } from '../../../utils/cloneCanvas';
 import { useTranslation } from 'react-i18next';
 import ScoreProcessor from './ScoreProcessor';
+import GameLoading from './GameLoading';
 
 interface Props {
     setIsCameraActive: Dispatch<SetStateAction<boolean>>;
@@ -56,21 +57,7 @@ export default function WebcamInput({
             </div>
             <div className={`${style.webcamWrapper} ${controls.pause ? style.paused : style.filtered}`}>
                 {/*TODO: Test if this helps on loading spinner?*/}
-                {!model?.isReady() && (
-                    <span
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translateX(-50%) translateY(-50%)',
-                            zIndex: 1,
-                            width: '100%',
-                        }}
-                    >
-                        <Spinner />
-                    </span>
-                )}
-
+                <GameLoading />
                 {(controls.pause || config.pause) && <div className={style.overlayText}>{t('common.paused')}</div>}
                 <div className={style.canvasWrapper}>
                     <Webcam

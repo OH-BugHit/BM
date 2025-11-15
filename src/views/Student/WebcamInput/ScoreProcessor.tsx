@@ -1,6 +1,13 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useAtom } from 'jotai';
-import { configAtom, currentScoreAtom, modelAtom, studentControlsAtom, topScoreAtom } from '../../../atoms/state';
+import {
+    configAtom,
+    currentScoreAtom,
+    gameStartedAtom,
+    modelAtom,
+    studentControlsAtom,
+    topScoreAtom,
+} from '../../../atoms/state';
 import { validateCanvas } from '../../../utils/validateCanvas';
 import { classifyImage } from '../../../utils/classifyImage';
 import { cloneCanvas } from '../../../utils/cloneCanvas';
@@ -37,6 +44,7 @@ export default function ScoreProcessor({
     const [config] = useAtom(configAtom);
     const [, setCurrentScore] = useAtom(currentScoreAtom);
     const [, setTopScore] = useAtom(topScoreAtom);
+    const [gameReady, setGameReady] = useAtom(gameStartedAtom);
     const scoreIndexRef = useRef(0);
     const isProseccing = useRef(false);
 
@@ -85,6 +93,10 @@ export default function ScoreProcessor({
                 const smoothedScore = updateScoreBuffer(rawScore);
 
                 setCurrentScore(smoothedScore);
+                // Test for loading spinner! First
+                if (!gameReady) {
+                    setGameReady(true);
+                }
 
                 setTopScore((prev) => {
                     if (smoothedScore > prev) {
@@ -123,6 +135,8 @@ export default function ScoreProcessor({
         topHeatmapRef,
         heatmapRef,
         enlargedHeatmapRef,
+        gameReady,
+        setGameReady,
     ]);
 
     useEffect(() => {

@@ -199,3 +199,8 @@ export const currentScoreAtom = atom<number>(0);
  * Current top score (only used by student)
  */
 export const topScoreAtom = atom<number>(0);
+
+/**
+ * Indicates that the classification has started (only used by student))
+ */
+export const gameStartedAtom = atom<boolean>(false);

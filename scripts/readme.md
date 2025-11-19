@@ -1,6 +1,6 @@
 # How to add new models to Breakable Machine
 
-This readme-file goes trough the process of adding new model to the game
+This readme-file goes trough the process of adding new model to the game (to the site, so this is for our own use).
 </br>
 
 These scripts will create thumbnail pictures and json-files. Also generate_type2.py will alter resolution of original pictures to have max 512px width and height.

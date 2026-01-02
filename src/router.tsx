@@ -1,10 +1,11 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 import Frontpage from './views/Frontpage/Frontpage';
+import ErrorComponent from './components/ErrorComponent/Error';
 
 const routes = createRoutesFromElements(
     <Route
         path="/"
-        errorElement={<div>Jotain meni pieleen</div>}
+        errorElement={<ErrorComponent />}
     >
         <Route
             index

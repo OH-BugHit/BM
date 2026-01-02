@@ -51,6 +51,16 @@
             "imageRequired": "Profiilikuva vaaditaan"
         }
     },
+    "errorPage": {
+        "notFound": {
+            "title": "Sivua ei löytynyt",
+            "info": "Etsimääsi sivua ei löytynyt. Tarkista URL osoite tai siirry <Link>etusivulle</Link>"
+        },
+        "somethingWrong": {
+            "title": "Jotain meni pieleen",
+            "info": "Ilmoita ongelmasta <Link>projektimme githubissa</Link> jos sinulla on aikaa. Sisällytä ilmoituksessi alla oleva tieto. Päivitä sivu yrittääksesi uudelleen."
+        }
+    },
     "frontpage": {
         "actions": {
             "createNew": "Opettaja - Luo uusi",

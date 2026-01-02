@@ -5,6 +5,7 @@
     },
     "about": {
         "title": "Generation AI",
+        "privacyStart": "The GenAI Breakable Machine was funded by the <Link>Strategic Research Council</Link> established within the Research Council of Finland (#352859, #352870, and #352876). The application is a part of the <Link2>Generation AI project</Link2>. The application was developed by Olli Hilke, as a research trainee at the University of Eastern Finland. If you have any enquiries regarding the tool you can send them to olli.hilke@uef.fi or to nicolas.pope@uef.fi<br/><br/>Copyright © 2025 Olli Hilke.",
         "privacyTitle": "Privacy",
         "privacy": [
             "Welcome to our Privacy Notice, designed to inform you about how we handle your personal data following the General Data Protection Regulation (GDPR) when you use our website featuring the GenAI Breakable Machine.",
@@ -89,6 +90,16 @@
                 "takenFree": "The username is already taken. If you are trying to reconnect, press button below \"Enter\""
             },
             "imageRequired": "Profile picture required"
+        }
+    },
+    "errorPage": {
+        "notFound": {
+            "title": "Page not found",
+            "info": "The page you are looking for does not exist. Please check the URL or go back to the <Link>home page</Link>"
+        },
+        "somethingWrong": {
+            "title": "Something went wrong",
+            "info": "Please report this issue to <Link>our project on github</Link> if you have time, including the information below. Refresh the page to try again."
         }
     },
     "frontpage": {

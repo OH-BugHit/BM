@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { configAtom, usersAtom, studentDataAtom, modelAtom, labelsAtom, takenUsernamesAtom } from '../atoms/state';
+import {
+    configAtom,
+    usersAtom,
+    studentDataAtom,
+    modelAtom,
+    labelsAtom,
+    takenUsernamesAtom,
+    termTransferAtom,
+} from '../atoms/state';
 import { deserializeStudentData } from '../utils/serializeStudentData';
 import { loadLabels, loadModel } from '../services/loadModel';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +21,7 @@ export function useRestoreGameState() {
     const [, setStudentData] = useAtom(studentDataAtom);
     const [, setModel] = useAtom(modelAtom);
     const [, setLabels] = useAtom(labelsAtom);
+    const [, setCurrentLabel] = useAtom(termTransferAtom);
     const { i18n } = useTranslation();
 
     useEffect(() => {
@@ -57,5 +66,13 @@ export function useRestoreGameState() {
 
         const rawScores = sessionStorage.getItem('gameScores');
         if (rawScores) setStudentData(deserializeStudentData(JSON.parse(rawScores)));
-    }, [setConfig, setUsers, setStudentData, setModel, setLabels, setAll, i18n]);
+
+        const rawCurrentLabel = sessionStorage.getItem('currentCommonLabel');
+        if (rawCurrentLabel) {
+            setCurrentLabel({
+                term: rawCurrentLabel,
+                recipient: { username: 'a' },
+            });
+        }
+    }, [setConfig, setUsers, setStudentData, setModel, setLabels, setAll, setCurrentLabel, i18n]);
 }

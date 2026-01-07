@@ -62,7 +62,11 @@ export default function ModelDialog() {
                         return { labels: newLabels };
                     });
                 }
-                setConfig((old) => ({ ...old, modelData: { name: selectedModel, origin: ModelOrigin.GenAI } }));
+                setConfig((old) => ({
+                    ...old,
+                    pause: true,
+                    modelData: { name: selectedModel, origin: ModelOrigin.GenAI },
+                }));
                 doClose();
             } catch (e) {
                 console.error('Mallin lataus epäonnistui', e);

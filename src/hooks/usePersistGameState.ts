@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
-import { configAtom, usersAtom, studentDataAtom, takenUsernamesAtom } from '../atoms/state';
+import { configAtom, usersAtom, studentDataAtom, takenUsernamesAtom, termTransferAtom } from '../atoms/state';
 import { serializeStudentData } from '../utils/serializeStudentData';
 import { SerializedStudentData, SpoofConfig, Username } from '../utils/types';
 
@@ -21,6 +21,9 @@ export function usePersistGameState() {
     const users = useAtomValue(usersAtom);
     const takenUsernames = useAtomValue(takenUsernamesAtom);
     const studentData = useAtomValue(studentDataAtom);
+    const currentLabel = useAtomValue(termTransferAtom);
+
+    const currentCommonLabelRef = useRef<string>(sessionStorage.getItem('currentCommonLabel') || '');
 
     const timers = useRef<Timers>({
         gameConfig: { lastSaved: 0, lastValue: null },
@@ -56,4 +59,11 @@ export function usePersistGameState() {
 
         return () => clearInterval(interval);
     }, [config, users, studentData, takenUsernames]);
+
+    useEffect(() => {
+        if (currentLabel.recipient.username === 'a') {
+            currentCommonLabelRef.current = currentLabel.term;
+        }
+        sessionStorage.setItem('currentCommonLabel', currentCommonLabelRef.current);
+    }, [currentLabel]);
 }

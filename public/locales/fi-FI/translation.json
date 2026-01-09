@@ -70,6 +70,36 @@
             "enterCode": "Oppilas - Syötä koodi"
         }
     },
+    "guide": {
+        "normal": {
+            "steps": {
+                "1": {
+                    "title": "Yhdistä"
+                },
+                "2": {
+                    "title": "Luokittelutermi"
+                },
+                "3": {
+                    "title": "Pelaa"
+                },
+                "4": {
+                    "title": "Lämpökartta"
+                },
+                "5": {
+                    "title": "Opetusdata"
+                },
+                "6": {
+                    "title": "Tulokset"
+                },
+                "7": {
+                    "title": "Valmis"
+                }
+            }
+        },
+        "common": {
+            "exit": "Poistu ohjauksesta"
+        }
+    },
     "library": {
         "title": "Valitse sisältö",
         "animals": {
@@ -136,6 +166,7 @@
             "settings": "Asetukset"
         },
         "vis": {
+            "guidance": "Ohjattu tila",
             "results": "Tulokset",
             "term": "Luokittelutermin valinta",
             "usergrid": "Käyttäjäruudukko"

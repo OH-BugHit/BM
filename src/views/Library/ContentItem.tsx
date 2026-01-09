@@ -20,6 +20,7 @@ export default function ContentItem({ title, image, description, onClick }: Prop
                         alt={title}
                         width={280}
                         height={180}
+                        style={{ border: '1px solid #888' }}
                     />
                 </div>
             )}

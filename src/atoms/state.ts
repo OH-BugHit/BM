@@ -21,9 +21,14 @@ import {
 } from '../utils/types';
 
 /**
- * Convains info of active view and ovelay
+ * Contains info of active view and ovelay
  */
-export const activeViewAtom = atom<Views>({ active: 'default', overlay: 'none' });
+export const activeViewAtom = atom<Views>({ active: 'userGridSimple', overlay: 'share' });
+
+/**
+ * Guidance status
+ */
+export const guidanceActiveAtom = atom<boolean>(false);
 
 /**
  * Current model

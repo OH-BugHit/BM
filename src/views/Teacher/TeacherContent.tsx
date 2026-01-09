@@ -9,16 +9,15 @@ import TermMenu from '../TermMenu/TermMenu';
 import Scoreboard from '../Scoreboard/Scoreboard';
 import ControlMenu from '../ControlMenu/UserMenu';
 export default function TeacherContent() {
-    console.log(`TeacherContent-module rerendered`);
     const [activeView] = useAtom(activeViewAtom);
 
     return (
         <div className={style.content}>
             {activeView.overlay === 'trainingData' && <DatasetGallery />}
-            {activeView.active === 'userGrid' /*&& studentData */ && (
+            {(activeView.active === 'userGrid' || activeView.active === 'userGridSimple') && (
                 <>
                     <UserMenu />
-                    <UserGrid />
+                    <UserGrid simpleMode={activeView.active === 'userGridSimple'} />
                 </>
             )}
             {activeView.active === 'termChange' && (

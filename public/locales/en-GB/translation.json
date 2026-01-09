@@ -5,7 +5,7 @@
     },
     "about": {
         "title": "Generation AI",
-        "privacyStart": "The GenAI Breakable Machine was funded by the <Link>Strategic Research Council</Link> established within the Research Council of Finland (#352859, #352870, and #352876). The application is a part of the <Link2>Generation AI project</Link2>. The application was developed by Olli Hilke, as a research trainee at the University of Eastern Finland. If you have any enquiries regarding the tool you can send them to olli.hilke@uef.fi or to nicolas.pope@uef.fi<br/><br/>Copyright © 2025 Olli Hilke.",
+        "privacyStart": "The GenAI Breakable Machine was funded by the <Link>Strategic Research Council (SRC)</Link> established within the Research Council of Finland, grants #352859, #352870, and #352876. The application is a part of the <Link2>Generation AI project</Link2>. The application was developed by Olli Hilke, as a research trainee at the University of Eastern Finland. If you have any enquiries regarding the tool you can send them to olli.hilke@uef.fi or to nicolas.pope@uef.fi<br/><br/>Copyright © 2025 Olli Hilke.",
         "privacyTitle": "Privacy",
         "privacy": [
             "Welcome to our Privacy Notice, designed to inform you about how we handle your personal data following the General Data Protection Regulation (GDPR) when you use our website featuring the GenAI Breakable Machine.",
@@ -111,6 +111,36 @@
             "enterCode": "Student - Enter code"
         }
     },
+    "guide": {
+        "normal": {
+            "steps": {
+                "1": {
+                    "title": "Connect"
+                },
+                "2": {
+                    "title": "Select"
+                },
+                "3": {
+                    "title": "Explore"
+                },
+                "4": {
+                    "title": "Heatmap"
+                },
+                "5": {
+                    "title": "Dataset"
+                },
+                "6": {
+                    "title": "Results"
+                },
+                "7": {
+                    "title": "Finish"
+                }
+            }
+        },
+        "common": {
+            "exit": "Exit guide"
+        }
+    },
 
     "library": {
         "title": "Select content",
@@ -176,6 +206,7 @@
             "settings": "Settings"
         },
         "vis": {
+            "guidance": "Guided Game",
             "results": "Results",
             "term": "Select classifying label",
             "usergrid": "User grid"
@@ -312,7 +343,7 @@
     "userGrid": {
         "actions": {
             "kickUser": "Kick user",
-            "deleteUser": "Delete user from game"
+            "deleteUser": "Remove user from game"
         },
         "titles": {
             "users": "Users"

@@ -13,7 +13,11 @@ import {
 import ClassSelect from '../Scoreboard/ClassSelect/ClassSelect';
 import { useEffect, useState } from 'react';
 
-export default function UserGrid() {
+type UserGridProps = {
+    simpleMode?: boolean;
+};
+
+export default function UserGrid({ simpleMode = false }: UserGridProps) {
     const { t } = useTranslation();
     const [users] = useAtom(usersAtom);
     const [allUNs] = useAtom(takenUsernamesAtom);
@@ -31,11 +35,13 @@ export default function UserGrid() {
     // TODO test rerendering and maybe limit?
     return (
         <div className={style.userGrid}>
-            <ClassSelect
-                openResult={openResult}
-                setOpenResult={setOpenResult}
-                blockOverall={true}
-            />
+            {!simpleMode && (
+                <ClassSelect
+                    openResult={openResult}
+                    setOpenResult={setOpenResult}
+                    blockOverall={true}
+                />
+            )}
 
             <div
                 className={allUNs.length === 0 ? 'none' : style.userGridContainer}

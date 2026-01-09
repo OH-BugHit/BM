@@ -4,7 +4,6 @@ import ServerProtocol from '../../services/ServerProtocol';
 import style from './style.module.css';
 import { useRef } from 'react';
 import { useID } from '@genai-fi/base';
-import MenuPanel from '../AppMenu/AppMenu';
 import StartDialog from '../StartDialog/StartDialog';
 import ModelDialog from '../ModelDialog/ModelDialog';
 import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
@@ -14,9 +13,9 @@ import PeerEnv from '../../env';
 import { useRestoreGameState } from '../../hooks/useRestoreGameStateHook';
 import { usePersistGameState } from '../../hooks/usePersistGameState';
 import TeacherContent from './TeacherContent';
+import SideNavSwitcher from './SideMenu/SideMenuSwitcher';
 
 export default function Teacher() {
-    console.log(`Teacher-module rerendered`);
     const blockRef = useRef(true);
     useLeaveWarning(blockRef);
     const MYCODE = useID(5);
@@ -40,9 +39,7 @@ export default function Teacher() {
                 <StartDialog code={MYCODE} />
                 <Settings />
                 <ModelDialog />
-                <div className={style.sideMenuContainer}>
-                    <MenuPanel />
-                </div>
+                <SideNavSwitcher />
                 <TeacherContent />
                 <Footer />
             </div>

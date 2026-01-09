@@ -8,7 +8,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AbcIcon from '@mui/icons-material/Abc';
 import { useAtom } from 'jotai';
-import { selectedUserAtom, activeViewAtom } from '../../atoms/state';
+import { selectedUserAtom, activeViewAtom, guidanceActiveAtom } from '../../atoms/state';
 import IconMenuItem from '../../components/IconMenu/Items';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { MenuButton } from '../../components/Buttons/MenuButton';
@@ -16,6 +16,7 @@ import CollectionsIcon from '@mui/icons-material/Collections';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import AppsIcon from '@mui/icons-material/Apps';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
 
 export default function MenuPanel() {
@@ -24,6 +25,7 @@ export default function MenuPanel() {
     const [activeView, setActiveView] = useAtom(activeViewAtom);
     const [, setSelectedUser] = useAtom(selectedUserAtom);
     const [iconSize, setIconSize] = useState<'small' | 'medium' | 'large'>('large');
+    const [, setGuidanceActive] = useAtom(guidanceActiveAtom);
 
     useEffect(() => {
         const handleResize = () => setIconSize(window.innerHeight < 700 ? 'medium' : 'large');
@@ -47,6 +49,11 @@ export default function MenuPanel() {
         },
         [setSelectedUser, setActiveView]
     );
+
+    const doShowGuidance = useCallback(() => {
+        console.log('show');
+        setGuidanceActive((prev) => !prev);
+    }, [setGuidanceActive]);
 
     const toMain = () => {
         window.location.href = `/`;
@@ -78,6 +85,26 @@ export default function MenuPanel() {
             </div>
             <div className={style.sideNavSection}>
                 <IconMenuItem
+                    tooltip={t('menu.vis.guidance')}
+                    hideTip={open}
+                    selected={true}
+                    fullWidth
+                >
+                    <MenuButton
+                        onClick={() => doShowGuidance()}
+                        aria-label={t('menu.vis.guidance')}
+                        size={iconSize}
+                        variant="text"
+                        fullWidth
+                        style={{ color: 'gold' }}
+                    >
+                        <TipsAndUpdatesIcon fontSize={iconSize} />
+                        {open ? t('menu.vis.guidance') : ''}
+                    </MenuButton>
+                </IconMenuItem>
+            </div>
+            <div className={style.sideNavSection}>
+                <IconMenuItem
                     tooltip={t('teacher.labels.shareTip')}
                     hideTip={open}
                     selected={activeView.overlay === 'share'}
@@ -96,9 +123,6 @@ export default function MenuPanel() {
                     </MenuButton>
                 </IconMenuItem>
             </div>
-            {/*showTree && <MenuTree open={open} />*/}
-
-            {/*showTools && <ToolsMenu />*/}
             <div className={style.sideNavSection}>
                 <IconMenuItem
                     tooltip={t('menu.vis.term')}
@@ -119,29 +143,10 @@ export default function MenuPanel() {
                     </MenuButton>
                 </IconMenuItem>
                 <IconMenuItem
-                    tooltip={t('menu.vis.results')}
-                    hideTip={open}
-                    fullWidth
-                    selected={activeView.active === 'default'}
-                >
-                    <MenuButton
-                        color="inherit"
-                        aria-label={t('menu.vis.results')}
-                        size={iconSize}
-                        variant="text"
-                        fullWidth
-                        style={{ minHeight: '64px', minWidth: '64px' }}
-                        onClick={() => doShowView('default')}
-                    >
-                        <EmojiEventsIcon fontSize={iconSize} />
-                        {open ? t('menu.vis.results') : ''}
-                    </MenuButton>
-                </IconMenuItem>
-                <IconMenuItem
                     tooltip={t('menu.vis.usergrid')}
                     hideTip={open}
                     fullWidth
-                    selected={activeView.active === 'userGrid'}
+                    selected={activeView.active === 'userGrid' || activeView.active === 'userGridSimple'}
                 >
                     <MenuButton
                         color="inherit"
@@ -171,6 +176,25 @@ export default function MenuPanel() {
                     >
                         <CollectionsIcon fontSize={iconSize} />
                         {open ? t('common.labels.datasetTip') : ''}
+                    </MenuButton>
+                </IconMenuItem>
+                <IconMenuItem
+                    tooltip={t('menu.vis.results')}
+                    hideTip={open}
+                    fullWidth
+                    selected={activeView.active === 'default'}
+                >
+                    <MenuButton
+                        color="inherit"
+                        aria-label={t('menu.vis.results')}
+                        size={iconSize}
+                        variant="text"
+                        fullWidth
+                        style={{ minHeight: '64px', minWidth: '64px' }}
+                        onClick={() => doShowView('default')}
+                    >
+                        <EmojiEventsIcon fontSize={iconSize} />
+                        {open ? t('menu.vis.results') : ''}
                     </MenuButton>
                 </IconMenuItem>
             </div>

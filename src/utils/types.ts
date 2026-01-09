@@ -146,12 +146,12 @@ export type StudentControls = {
  * Default student view = normal view (no other views currently)
  */
 export type Views = {
-    active: TeacherViews;
+    active: 'none' | TeacherViews;
     overlay: 'none' | TeacherDialogs | StudentDialogs;
 };
 
 // Teacher's views
-export type TeacherViews = 'default' | 'userGrid' | 'termChange';
+export type TeacherViews = 'default' | 'userGrid' | 'userGridSimple' | 'termChange';
 
 // Teacher's dialogs
 export type TeacherDialogs = 'share' | 'modelChange' | 'trainingData' | 'settings';

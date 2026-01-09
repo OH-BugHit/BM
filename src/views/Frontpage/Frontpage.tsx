@@ -29,7 +29,7 @@ export default function Frontpage() {
             <div className={style.content}>
                 <div className={style.logo}>
                     <img
-                        src="/logo192_bw.png"
+                        src="/logo192.png"
                         alt="logo"
                         width={logoSize}
                         height={logoSize}

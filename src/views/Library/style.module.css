@@ -1,6 +1,7 @@
-@value textDark, bgSubdued1, primary, secondary from "@genai-fi/base/css/colours.module.css";
+@value textDark, bgSubdued1, bgColourful1, primary, secondary from "@genai-fi/base/css/colours.module.css";
 
 .library {
+    background: linear-gradient(45deg, rgba(23, 83, 114, 0.94), rgba(36, 43, 44, 0.178));
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -12,9 +13,17 @@
     overflow-y: auto;
 }
 
+.library h1 {
+    color: white;
+}
+
+/*
+TODO: Background color tuning and theming of everything
+background:linear-gradient(45deg, rgba(45, 236, 239, 0.309), rgba(24, 249, 253, 0.519));
+background: linear-gradient(45deg, rgba(127, 126, 187, 0.677), rgba(19, 62, 123, 0.38));
+*/
 .content {
     padding: 1rem;
-    background: white;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -39,7 +48,7 @@
 .content li {
     flex: 0 1 300px;
     min-height: 200px;
-    background: white;
+    background: linear-gradient(45deg, rgb(218, 255, 255), rgb(235, 255, 255));
     border-radius: 6px;
     box-shadow: 0 0 4px #888;
     overflow: hidden;

@@ -1,5 +1,5 @@
-import FloatingMenu from '../../components/TopMenu/FloatingMenu';
-import FloatingMenuItem from '../../components/TopMenu/FloatingMenuItem';
+import FloatingMenu from '../../components/FloatingMenu/FloatingMenu';
+import FloatingMenuItem from '../../components/FloatingMenu/FloatingMenuItem';
 import { IconButton } from '@mui/material';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -23,53 +23,51 @@ export default function UserMenu() {
     const [profilePictures] = useAtom(profilePicturesAtom);
 
     return (
-        <div>
-            <FloatingMenu
-                title={t('dashboard.aria.socialUserMenu')}
-                placement="relative"
-                label={
-                    <div className={style.menuLogo}>
-                        {selectedUser.username ? selectedUser.username : t('userGrid.titles.users')}
-                    </div>
-                }
-            >
-                <FloatingMenuItem tooltip={t('userGrid.actions.kickUser')}>
-                    <IconButton
-                        color="inherit"
-                        onClick={() => {
-                            setKickUser({
-                                message: t('userGrid.messages.kick'),
-                                reload: true,
-                                action: 'bouncer',
-                                recipient: { username: selectedUser.username },
-                            });
-                            setUsers((old) => old.filter((o) => o.username !== selectedUser.username));
-                        }}
-                        aria-label={t('userGrid.actions.kickUser')}
-                    >
-                        <PersonRemoveIcon />
-                    </IconButton>
-                </FloatingMenuItem>
-                <FloatingMenuItem tooltip={t('userGrid.actions.deleteUser')}>
-                    <IconButton
-                        color="inherit"
-                        onClick={() => {
-                            setKickUser({
-                                message: t('userGrid.messages.remove'),
-                                reload: true,
-                                action: 'bouncer',
-                                recipient: { username: selectedUser.username },
-                            });
-                            setUsers((old) => old.filter((o) => o.username !== selectedUser.username));
-                            setAllUNs((old) => old.filter((o) => o.username !== selectedUser.username));
-                            profilePictures.delete(selectedUser.username);
-                        }}
-                        aria-label={t('userGrid.actions.deleteUser')}
-                    >
-                        <RemoveCircleIcon />
-                    </IconButton>
-                </FloatingMenuItem>
-            </FloatingMenu>
-        </div>
+        <FloatingMenu
+            title={t('dashboard.aria.socialUserMenu')}
+            placement="relative"
+            label={
+                <div className={style.menuLogo}>
+                    {selectedUser.username ? selectedUser.username : t('userGrid.titles.users')}
+                </div>
+            }
+        >
+            <FloatingMenuItem tooltip={t('userGrid.actions.kickUser')}>
+                <IconButton
+                    color="inherit"
+                    onClick={() => {
+                        setKickUser({
+                            message: t('userGrid.messages.kick'),
+                            reload: true,
+                            action: 'bouncer',
+                            recipient: { username: selectedUser.username },
+                        });
+                        setUsers((old) => old.filter((o) => o.username !== selectedUser.username));
+                    }}
+                    aria-label={t('userGrid.actions.kickUser')}
+                >
+                    <PersonRemoveIcon />
+                </IconButton>
+            </FloatingMenuItem>
+            <FloatingMenuItem tooltip={t('userGrid.actions.deleteUser')}>
+                <IconButton
+                    color="inherit"
+                    onClick={() => {
+                        setKickUser({
+                            message: t('userGrid.messages.remove'),
+                            reload: true,
+                            action: 'bouncer',
+                            recipient: { username: selectedUser.username },
+                        });
+                        setUsers((old) => old.filter((o) => o.username !== selectedUser.username));
+                        setAllUNs((old) => old.filter((o) => o.username !== selectedUser.username));
+                        profilePictures.delete(selectedUser.username);
+                    }}
+                    aria-label={t('userGrid.actions.deleteUser')}
+                >
+                    <RemoveCircleIcon />
+                </IconButton>
+            </FloatingMenuItem>
+        </FloatingMenu>
     );
 }

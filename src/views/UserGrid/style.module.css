@@ -8,12 +8,11 @@
     gap: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .userGridContainer {
     background: linear-gradient(45deg, rgba(23, 83, 114, 0.94), rgba(36, 43, 44, 0.178));
-    /*background: linear-gradient(45deg, rgba(53, 99, 251, 0.178), rgba(31, 212, 225, 0.372));*/
     border-radius: 1rem;
     overflow: auto;
     max-width: calc(8 * 220px + 4 * 1rem);
@@ -35,7 +34,6 @@
 }
 
 .gridItem {
-    /*background: workspaceBg;*/
     background: linear-gradient(45deg, rgba(16, 15, 63, 0.677), rgba(80, 120, 195, 0.68));
     min-width: max-content;
     overflow: hidden;
@@ -124,7 +122,6 @@
     top: -30px;
     left: 31%;
     pointer-events: none;
-    /*transform: rotate(-25deg); if rotate*/
 }
 
 .word {

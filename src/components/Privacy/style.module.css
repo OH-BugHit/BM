@@ -8,7 +8,6 @@
     display: flex;
     font-size: 0.7rem;
     box-sizing: border-box;
-    box-shadow: 0 0 6px #ddd;
     overflow: hidden;
     z-index: 99;
 }

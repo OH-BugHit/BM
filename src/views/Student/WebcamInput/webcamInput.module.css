@@ -12,14 +12,24 @@
 }
 
 .heatmapCanvas {
-    background: #4646aec1;
     width: 512px;
     max-width: 100%;
     pointer-events: none;
+    position: absolute;
+}
+
+.hiddenCanvas {
+    position: absolute;
+    visibility: hidden;
+    width: 224px;
+    height: 224px;
+    top: -10000px;
+    left: -10000px;
 }
 
 .webcamWrapper canvas {
     width: 100%;
+    position: relative;
 }
 
 

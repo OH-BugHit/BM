@@ -40,7 +40,7 @@ export default function Student({ serverCode }: StudentProps) {
     const scoreBufferRef = useRef<number[]>(Array(64).fill(0));
     const scoreSumRef = useRef(0);
 
-    useLeaveWarning(blockRef); // Blocks unintended leaving
+    useLeaveWarning(blockRef); // Blocks unintended leaving (refreshing)
     useModelNamesLoader(); // Loads model names
 
     /**

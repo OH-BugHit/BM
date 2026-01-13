@@ -16,15 +16,15 @@ interface Props {
     topCanvasRef: React.RefObject<HTMLCanvasElement | null>;
     topHeatmapRef: React.RefObject<HTMLCanvasElement | null>;
     heatmapRef: React.RefObject<HTMLCanvasElement | null>;
-    enlargedHeatmapRef: React.RefObject<HTMLCanvasElement | null>;
     scoreBufferRef: React.RefObject<number[]>;
     scoreSumRef: React.RefObject<number>;
     classifyTerm: string;
     interval?: number;
+    isProseccing: React.RefObject<boolean>;
 }
 
 /**
- * Process score and calls gor sending the score.
+ * Process score and calls for sending the score.
  * @param param0
  * @returns nothing to render so null
  */
@@ -34,10 +34,10 @@ export default function ScoreProcessor({
     topHeatmapRef,
     heatmapRef,
     scoreBufferRef,
-    enlargedHeatmapRef,
     scoreSumRef,
     classifyTerm,
     interval,
+    isProseccing,
 }: Props) {
     const [model] = useAtom(modelAtom);
     const [controls] = useAtom(studentControlsAtom);
@@ -46,7 +46,6 @@ export default function ScoreProcessor({
     const [, setTopScore] = useAtom(topScoreAtom);
     const [gameReady, setGameReady] = useAtom(gameStartedAtom);
     const scoreIndexRef = useRef(0);
-    const isProseccing = useRef(false);
 
     const updateScoreBuffer = useCallback(
         (newScore: number) => {
@@ -71,6 +70,7 @@ export default function ScoreProcessor({
                 return;
             }
             const canvas = canvasRef.current;
+            const heatmap = cloneCanvas(heatmapRef.current);
 
             if (!validateCanvas(canvas)) {
                 return;
@@ -93,29 +93,19 @@ export default function ScoreProcessor({
                 const smoothedScore = updateScoreBuffer(rawScore);
 
                 setCurrentScore(smoothedScore);
-                // Test for loading spinner! First
+                // For loading spinner!
                 if (!gameReady) {
                     setGameReady(true);
                 }
 
                 setTopScore((prev) => {
                     if (smoothedScore > prev) {
-                        topCanvasRef.current = cloneCanvas(canvas);
-                        topHeatmapRef.current = cloneCanvas(heatmapRef.current);
+                        topCanvasRef.current = canvas;
+                        topHeatmapRef.current = heatmap;
                         return smoothedScore;
                     }
                     return prev;
                 });
-
-                if (heatmapRef.current && enlargedHeatmapRef.current) {
-                    const src = heatmapRef.current;
-                    const dst = enlargedHeatmapRef.current;
-                    const ctx = dst.getContext('2d');
-                    if (ctx) {
-                        ctx.clearRect(0, 0, dst.width, dst.height);
-                        ctx.drawImage(src, 0, 0, src.width, src.height, 0, 0, dst.width, dst.height);
-                    }
-                }
             } catch (err) {
                 console.error('Luokittelu epäonnistui:', err);
             }
@@ -134,9 +124,9 @@ export default function ScoreProcessor({
         topCanvasRef,
         topHeatmapRef,
         heatmapRef,
-        enlargedHeatmapRef,
         gameReady,
         setGameReady,
+        isProseccing,
     ]);
 
     useEffect(() => {
@@ -156,7 +146,7 @@ export default function ScoreProcessor({
         return () => {
             cancelled = true;
         };
-    }, [process, interval]);
+    }, [process, interval, isProseccing]);
 
     return null; // Doesn not render anything
 }

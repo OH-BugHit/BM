@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AbcIcon from '@mui/icons-material/Abc';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { selectedUserAtom, activeViewAtom, guidanceActiveAtom } from '../../atoms/state';
 import IconMenuItem from '../../components/IconMenu/Items';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -25,7 +25,7 @@ export default function MenuPanel() {
     const [activeView, setActiveView] = useAtom(activeViewAtom);
     const [, setSelectedUser] = useAtom(selectedUserAtom);
     const [iconSize, setIconSize] = useState<'small' | 'medium' | 'large'>('large');
-    const [, setGuidanceActive] = useAtom(guidanceActiveAtom);
+    const setGuidanceActive = useSetAtom(guidanceActiveAtom);
 
     useEffect(() => {
         const handleResize = () => setIconSize(window.innerHeight < 700 ? 'medium' : 'large');

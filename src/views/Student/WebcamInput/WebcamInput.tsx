@@ -3,7 +3,6 @@ import { configAtom, modelAtom, studentControlsAtom } from '../../../atoms/state
 import style from './webcamInput.module.css';
 import { Webcam } from '@genai-fi/base';
 import { Dispatch, RefObject, SetStateAction, useCallback, useEffect, useRef } from 'react';
-import { cloneCanvas } from '../../../utils/cloneCanvas';
 import { useTranslation } from 'react-i18next';
 import ScoreProcessor from './ScoreProcessor';
 import GameLoading from './GameLoading';
@@ -29,34 +28,28 @@ export default function WebcamInput({
     const [model] = useAtom(modelAtom);
     const [controls] = useAtom(studentControlsAtom);
     const WEBCAMSIZE = Math.min(512, window.innerHeight - 264); // Size of the webcam component
-    const enlargedHeatmapRef = useRef<HTMLCanvasElement | null>(null);
     const webcamCanvasRef = useRef<HTMLCanvasElement | null>(null);
     const heatmapRef = useRef<HTMLCanvasElement | null>(null);
+    const isProseccing = useRef(false);
     const { t } = useTranslation();
-    const interval = 200;
+    const interval = 100;
 
     useEffect(() => {
         if (model && heatmapRef.current) {
             model.setXAICanvas(heatmapRef.current);
         }
-    }, [model, heatmapRef]);
+    }, [model]);
 
     // Classify from canvas
     const handleCapture = useCallback(async (canvas: HTMLCanvasElement) => {
-        webcamCanvasRef.current = cloneCanvas(canvas);
+        if (!isProseccing.current) {
+            webcamCanvasRef.current = canvas;
+        }
     }, []);
 
     return (
         <div className={style.canvasContainer}>
-            <div style={{ display: 'none' }}>
-                <canvas
-                    ref={heatmapRef}
-                    width={224}
-                    height={224}
-                />
-            </div>
             <div className={`${style.webcamWrapper} ${controls.pause ? style.paused : style.filtered}`}>
-                {/*TODO: Test if this helps on loading spinner?*/}
                 <GameLoading />
                 {(controls.pause || config.pause) && <div className={style.overlayText}>{t('common.paused')}</div>}
                 <div className={style.canvasWrapper}>
@@ -72,19 +65,17 @@ export default function WebcamInput({
                         }}
                         direct
                     />
-                    {config.heatmap && controls.heatmap && (
-                        <div className={style.heatmapContainer}>
-                            <canvas
-                                ref={enlargedHeatmapRef}
-                                width={WEBCAMSIZE}
-                                height={WEBCAMSIZE}
-                                className={style.heatmapCanvas}
-                            />
-                        </div>
-                    )}
+                    <div
+                        className={` ${config.heatmap && controls.heatmap ? style.heatmapCanvas : style.hiddenCanvas}`}
+                    >
+                        <canvas
+                            ref={heatmapRef}
+                            width={224}
+                            height={224}
+                        />
+                    </div>
                 </div>
                 <ScoreProcessor
-                    enlargedHeatmapRef={enlargedHeatmapRef}
                     canvasRef={webcamCanvasRef}
                     topCanvasRef={topCanvasRef}
                     topHeatmapRef={topHeatmapRef}
@@ -93,6 +84,7 @@ export default function WebcamInput({
                     scoreSumRef={scoreSumRef}
                     classifyTerm={classifyTerm}
                     interval={interval}
+                    isProseccing={isProseccing}
                 />
             </div>
         </div>

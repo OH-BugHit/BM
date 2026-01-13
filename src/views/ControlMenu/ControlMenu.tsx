@@ -1,5 +1,5 @@
-import FloatingMenu from '../../components/TopMenu/FloatingMenu';
-import FloatingMenuItem from '../../components/TopMenu/FloatingMenuItem';
+import FloatingMenu from '../../components/FloatingMenu/FloatingMenu';
+import FloatingMenuItem from '../../components/FloatingMenu/FloatingMenuItem';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';

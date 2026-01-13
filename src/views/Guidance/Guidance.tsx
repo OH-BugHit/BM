@@ -1,19 +1,21 @@
 import { MenuItem, MenuList } from '@mui/material';
 import style from './style.module.css';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { activeViewAtom, configAtom, guidanceActiveAtom } from '../../atoms/state';
-import { useRef } from 'react';
+import { useState } from 'react';
 import ActionButton from './ActionButton';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function Guidance() {
+    console.log('guide rerendered');
+
     const { t } = useTranslation();
-    const [, setCurrentView] = useAtom(activeViewAtom);
-    const [, setConfig] = useAtom(configAtom);
-    const [, setGuidanceActive] = useAtom(guidanceActiveAtom);
-    const currentSelected = useRef(1);
+    const setCurrentView = useSetAtom(activeViewAtom);
+    const setConfig = useSetAtom(configAtom);
+    const setGuidanceActive = useSetAtom(guidanceActiveAtom);
+    const [currentSelected, setCurrentSelected] = useState(1);
 
     const doAction = useCallback(
         (action: string) => {
@@ -37,7 +39,7 @@ export default function Guidance() {
                         heatmap: false,
                         gallery: false,
                     }));
-                    currentSelected.current = 2;
+                    setCurrentSelected(2);
                     break;
                 }
             }
@@ -125,10 +127,10 @@ export default function Guidance() {
             <MenuList>
                 {data.map((step) => (
                     <MenuItem
-                        selected={currentSelected.current === step.index}
+                        selected={currentSelected === step.index}
                         onClick={() => {
                             handleStepChage(step);
-                            currentSelected.current = step.index;
+                            setCurrentSelected(step.index);
                         }}
                         key={step.index}
                     >
@@ -139,12 +141,12 @@ export default function Guidance() {
 
             {currentSelected && (
                 <div className={style.actionContainer}>
-                    {data[currentSelected.current - 1].action !== 'none' && (
+                    {data[currentSelected - 1].action !== 'none' && (
                         <ActionButton
-                            action={data[currentSelected.current - 1].action}
+                            action={data[currentSelected - 1].action}
                             onAction={() => {
-                                if (data[currentSelected.current - 1].action) {
-                                    doAction(data[currentSelected.current - 1].action);
+                                if (data[currentSelected - 1].action) {
+                                    doAction(data[currentSelected - 1].action);
                                 }
                             }}
                         />

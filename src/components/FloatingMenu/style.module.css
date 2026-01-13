@@ -86,10 +86,12 @@
 
 .relative-bottom {
     composes: menuContainer;
-    position: fixed;
-    bottom: 0;
-    justify-self: center;
+    position: relative;
     width: fit-content;
+    margin: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
     margin-bottom: 1rem;
     flex-direction: row;
     padding-right: 1rem;

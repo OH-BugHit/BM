@@ -28,7 +28,7 @@ export const activeViewAtom = atom<Views>({ active: 'userGridSimple', overlay: '
 /**
  * Guidance status
  */
-export const guidanceActiveAtom = atom<boolean>(false);
+export const guidanceActiveAtom = atom<boolean>(true);
 
 /**
  * Current model

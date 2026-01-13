@@ -99,7 +99,6 @@ export default function ServerProtocol() {
     });
 
     usePeerData((data: EventProtocol, conn: Connection<EventProtocol>) => {
-        console.log('Teacher received data:', data);
         if (data.event === 'eter:alive') {
             const userExists = users.some((u) => u.username === data.user.username);
             if (!userExists && data.user.username) {

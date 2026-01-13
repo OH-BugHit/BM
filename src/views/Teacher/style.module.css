@@ -20,6 +20,20 @@ h3 {
     flex-grow: 1;
 }
 
+.controlLayer {
+    position: absolute;
+    width: -webkit-fill-available;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.controlLayer>* {
+    pointer-events: auto;
+    /* klikit takaisin */
+    margin-bottom: 1rem;
+}
+
 .serverProtocolContainer {
     position: absolute;
     right: 1.5rem;

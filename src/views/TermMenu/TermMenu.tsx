@@ -1,5 +1,5 @@
-import FloatingMenu from '../../components/TopMenu/FloatingMenu';
-import FloatingMenuItem from '../../components/TopMenu/FloatingMenuItem';
+import FloatingMenu from '../../components/FloatingMenu/FloatingMenu';
+import FloatingMenuItem from '../../components/FloatingMenu/FloatingMenuItem';
 import { IconButton } from '@mui/material';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';

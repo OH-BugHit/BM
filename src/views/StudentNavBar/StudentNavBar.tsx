@@ -48,14 +48,14 @@ export default function StudentNavBar() {
             <IconMenuItem
                 tooltip={t('common.labels.datasetTip')}
                 hideTip={open}
-                selected={activeView.overlay === 'trainingData'}
+                selected={activeView.overlay === 'datasetGallery'}
             >
                 <MenuButton
                     color="inherit"
                     onClick={() => {
                         setActiveView((old) => ({
                             ...old,
-                            overlay: old.overlay === 'trainingData' ? 'none' : 'trainingData',
+                            overlay: old.overlay === 'datasetGallery' ? 'none' : 'datasetGallery',
                         }));
                     }}
                     aria-label={t('common.labels.datasetTip')}

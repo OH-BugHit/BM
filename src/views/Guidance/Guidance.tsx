@@ -52,7 +52,7 @@ export default function Guidance() {
         { index: 2, title: t('guide.normal.steps.2.title'), view: 'termChange', action: 'share' },
         { index: 3, title: t('guide.normal.steps.3.title'), view: 'userGrid', action: 'pause' },
         { index: 4, title: t('guide.normal.steps.4.title'), view: 'userGrid', action: 'pause' },
-        { index: 5, title: t('guide.normal.steps.5.title'), view: 'trainingData', action: 'pause' },
+        { index: 5, title: t('guide.normal.steps.5.title'), view: 'datasetGallery', action: 'pause' },
         { index: 6, title: t('guide.normal.steps.6.title'), view: 'default', action: 'pause' },
         { index: 7, title: t('guide.normal.steps.7.title'), view: 'default', action: 'reset' },
     ];
@@ -71,8 +71,8 @@ export default function Guidance() {
                 setCurrentView({ active: 'userGridSimple', overlay: 'none' });
                 break;
             }
-            case 'trainingData': {
-                setCurrentView({ active: 'userGridSimple', overlay: 'trainingData' });
+            case 'datasetGallery': {
+                setCurrentView({ active: 'datasetGallery', overlay: 'none' });
                 break;
             }
             case 'default': {
@@ -91,13 +91,6 @@ export default function Guidance() {
                 setConfig((prev) => ({
                     ...prev,
                     gallery: true,
-                }));
-                break;
-            }
-            case 6: {
-                setConfig((prev) => ({
-                    ...prev,
-                    pause: true,
                 }));
                 break;
             }

@@ -11,6 +11,21 @@
     align-items: center;
 }
 
+.codeInput {
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+}
+
 .frontpage h1 {
     font-family: 'Tektur';
     font-weight: bold;

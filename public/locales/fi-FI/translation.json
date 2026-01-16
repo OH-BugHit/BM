@@ -10,7 +10,7 @@
         "noTeachingData": "Opetusdataa ei saatavilla",
         "or": "tai",
         "paused": "Peli on pysäytetty",
-        "selectLabel": "Valitse luokittelusana",
+        "selectLabel": "Valitse luokittelutermi",
         "selectModel": "Valitse malli",
         "title": "Hajoava kone",
         "labels": {
@@ -241,7 +241,7 @@
         },
         "titles": {
             "results": "Tulokset",
-            "waitForLabel": "Odota, että opettaja asettaa luokittelusanan"
+            "waitForLabel": "Odota, että opettaja valmistelee pelin"
         },
         "labels": {
             "disableApp": "Pysäytä kamera",

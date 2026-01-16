@@ -9,12 +9,13 @@ import { useAtom } from 'jotai';
 import { activeViewAtom, configAtom, labelsAtom, modelAtom } from '../../atoms/state';
 import OpenedImage from '../../components/ImageView/OpenedImage';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { motion } from 'framer-motion';
 
 /**
  * Component shows a gallery of images from a dataset
  * @returns
  */
-export function DatasetGallery() {
+export function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
     const { t } = useTranslation();
     const [allImages, setAllImages] = useState<string[]>([]);
     const [images, setImages] = useState<string[]>([]);
@@ -102,17 +103,26 @@ export function DatasetGallery() {
     }, [offset, loading, selected, loadMore, noMoreData]);
 
     return (
-        <div>
-            <div className={style.datasetGallery}>
-                <div className={style.titleRow}>
-                    <Button
-                        onClick={doClose}
-                        title={t('common.close')}
-                        aria-label="Sulje"
-                        style={closeGallery}
-                    >
-                        <CloseSharpIcon />
-                    </Button>
+        <>
+            <motion.div
+                className={`${style.datasetGallery} ${mode === 'teacher' ? style.teacherGallery : ''}`}
+                initial={{ opacity: 0, scale: mode === 'teacher' ? 1 : 0.7 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: mode === 'teacher' ? 1 : 0.7 }}
+                transition={{ duration: 0.2 }}
+            >
+                <div className={`${style.titleRow} ${mode === 'teacher' ? style.teacherRow : ''}`}>
+                    {mode === 'student' && (
+                        <Button
+                            onClick={doClose}
+                            title={t('common.close')}
+                            aria-label="Sulje"
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            style={closeGallery as any}
+                        >
+                            <CloseSharpIcon />
+                        </Button>
+                    )}
                     <h1 style={{ color: 'black' }}>{t('common.dataset')}</h1>
                 </div>
                 <FormControl className={style.selector}>
@@ -144,7 +154,7 @@ export function DatasetGallery() {
                     <em className={style.noData}>{t('common.noTeachingData')}</em>
                 )}
                 <div
-                    className={style.imageGrid}
+                    className={`${style.imageGrid} ${mode === 'teacher' ? style.teacherGrid : ''}`}
                     ref={containerRef}
                 >
                     {images.map((src, index) => (
@@ -157,11 +167,11 @@ export function DatasetGallery() {
                         />
                     ))}
                 </div>
-            </div>
+            </motion.div>
             <OpenedImage
                 setOpenImage={setOpenImage}
                 openImage={openImage ? openImage.replace('_thumb', '') : null}
             />
-        </div>
+        </>
     );
 }

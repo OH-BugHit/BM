@@ -12,6 +12,19 @@
     z-index: 5;
 }
 
+.imageContainer {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.imageContainer img {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 0 0 24px #000;
+    display: block;
+}
+
 .topPictureContainer {
     display: flex;
     flex-direction: row;

@@ -163,12 +163,12 @@ export default function MenuPanel() {
                 <IconMenuItem
                     tooltip={t('common.labels.datasetTip')}
                     hideTip={open}
-                    selected={activeView.overlay === 'trainingData'}
+                    selected={activeView.active === 'datasetGallery'}
                     fullWidth
                 >
                     <MenuButton
                         color="inherit"
-                        onClick={() => doShowDialog('trainingData')}
+                        onClick={() => doShowView('datasetGallery')}
                         aria-label={t('common.labels.datasetTip')}
                         size={iconSize}
                         variant="text"

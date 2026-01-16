@@ -40,6 +40,8 @@ export default function Frontpage() {
                     <TextField
                         title={t('frontpage.labels.enterCode')}
                         label={t('frontpage.labels.enterCode')}
+                        type="number"
+                        className={style.codeInput}
                         value={inputCode}
                         fullWidth
                         onChange={(e) => setInputCode(e.target.value)}

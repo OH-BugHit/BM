@@ -14,7 +14,7 @@ import StudentSettings from './StudentSettings/StudentSettings';
 import TermWatcher from './StudentComponents/TermWatcher';
 import TopScoreSender from './StudentComponents/TopScoreSender';
 import ResultsButton from './ResultsButton';
-import { DatasetGalleryWrapper } from '../DatasetGallery/DatasetGalleryWrapper';
+import { StudentDatasetWrapper } from '../DatasetGallery/StudentDatasetWrapper';
 import { useTranslation } from 'react-i18next';
 
 interface StudentProps {
@@ -35,7 +35,7 @@ export default function Student({ serverCode }: StudentProps) {
     const [translatedTerm, setTranslatedTerm] = useState<string>('');
     const [showError, setShowError] = useState(false);
 
-    console.log('rendering student main view with values:', { username, profilePicture, bouncer, classifyTerm });
+    //console.log('rendering student main view with values:', { username, profilePicture, bouncer, classifyTerm });
 
     // Score circle buffer refs, buffer is in WebcamInput for scores
     const scoreBufferRef = useRef<number[]>(Array(64).fill(0));
@@ -52,6 +52,7 @@ export default function Student({ serverCode }: StudentProps) {
             doRegister({ username, profilePicture });
             sentRef.current = true;
         }
+        console.log('registration effect', { sent: sentRef.current, username, profilePicture });
     }, [doRegister, username, profilePicture]);
 
     /**
@@ -95,7 +96,7 @@ export default function Student({ serverCode }: StudentProps) {
                 }}
             />
             <div className={style.galleryContainer}>
-                <DatasetGalleryWrapper />
+                <StudentDatasetWrapper />
             </div>
             <div className={style.student}>
                 <div className={style.gameContainer}>

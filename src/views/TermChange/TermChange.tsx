@@ -25,7 +25,7 @@ export default function TermChange() {
                 <div className={style.modeContainer}>
                     {config.gameMode === 'all' && (
                         <div className={style.modeItem}>
-                            <h3>{t('termSelect.titles.changeChallenge')}</h3>
+                            <h1>{t('termSelect.titles.changeChallenge')}</h1>
                             {model?.getLabels().length !== 0 && (
                                 <div className={style.selectorItem}>
                                     <TermSelector />
@@ -35,7 +35,7 @@ export default function TermChange() {
                     )}
                     {config.gameMode === 'single' && (
                         <div className={style.modeItem}>
-                            <h3>{t('termSelect.titles.setSingle')}</h3>
+                            <h1>{t('termSelect.titles.setSingle')}</h1>
                             <UserList />
                         </div>
                     )}

@@ -151,13 +151,13 @@ export type Views = {
 };
 
 // Teacher's views
-export type TeacherViews = 'default' | 'userGrid' | 'userGridSimple' | 'termChange';
+export type TeacherViews = 'default' | 'userGrid' | 'userGridSimple' | 'termChange' | 'datasetGallery';
 
 // Teacher's dialogs
-export type TeacherDialogs = 'share' | 'modelChange' | 'trainingData' | 'settings';
+export type TeacherDialogs = 'share' | 'modelChange' | 'settings';
 
 // Student's dialogs
-export type StudentDialogs = 'ownResults' | 'messageDialog';
+export type StudentDialogs = 'ownResults' | 'messageDialog' | 'datasetGallery';
 
 export type ActivityPicture = {
     picture: HTMLCanvasElement;

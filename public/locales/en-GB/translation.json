@@ -281,7 +281,7 @@
         },
         "titles": {
             "results": "Results",
-            "waitForLabel": "Wait for Teacher to set label"
+            "waitForLabel": "Wait for Teacher to set the game"
         },
         "labels": {
             "disableApp": "Pause camera",

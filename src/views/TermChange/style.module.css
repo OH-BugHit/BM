@@ -46,19 +46,19 @@
     color: black;
     max-width: 800px;
     max-height: 80dvh;
-    margin-bottom: 1rem;
     margin-left: auto;
     margin-right: auto;
     min-width: 30dvw;
-    gap: 0.5rem;
-    padding: 1.5rem 1.5rem;
-    background-color: rgba(255,
-            255,
-            255,
-            0.421);
+    gap: 2.5rem;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.934);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
+}
+
+.modeContainer h1 {
+    color: black;
+    font-size: 2.5rem;
 }
 
 .initialOpen {

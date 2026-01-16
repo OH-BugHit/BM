@@ -2,7 +2,13 @@ import style from './style.module.css';
 import { useAtom, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { availableUsernamesAtom, configAtom, profilePictureAtom, takenUsernamesAtom } from '../../atoms/state';
+import {
+    availableUsernamesAtom,
+    configAtom,
+    profilePictureAtom,
+    takenUsernamesAtom,
+    usernameAtom,
+} from '../../atoms/state';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { LargeButton } from '@genai-fi/base';
@@ -25,7 +31,7 @@ export default function EnterUserInfo({ onReady }: Props) {
     const [showRestore, setShowRestore] = useState(false);
     const [errors, setErrors] = useState<RegisterFormErrors>({});
     const [image, setImage] = useState<string | null>(null);
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useAtom(usernameAtom);
     const [config] = useAtom(configAtom);
 
     const onUsername = async (name: string, image: string | null) => {

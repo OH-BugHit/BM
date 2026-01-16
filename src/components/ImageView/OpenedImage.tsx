@@ -23,20 +23,23 @@ export default function OpenedImage({ setOpenImage, openImage }: Props) {
             className={style.openImageOverlay2}
             onClick={() => setOpenImage(null)}
         >
-            <Button
-                onClick={() => setOpenImage(null)}
-                style={close}
-                title={t('common.close')}
-                aria-label="Sulje"
-            >
-                <CloseSharpIcon />
-            </Button>
-            <img
-                src={openImage}
-                alt="isompi kuva"
-                style={{ maxWidth: '90vw', maxHeight: '90vh', boxShadow: '0 0 24px #000' }}
-                onClick={(e) => e.stopPropagation()}
-            />
+            <div className={style.imageContainer}>
+                <Button
+                    onClick={() => setOpenImage(null)}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    style={close as any}
+                    title={t('common.close')}
+                    aria-label="Sulje"
+                >
+                    <CloseSharpIcon />
+                </Button>{' '}
+                <img
+                    src={openImage}
+                    alt="isompi kuva"
+                    style={{ maxWidth: '90vw', maxHeight: '90vh', boxShadow: '0 0 24px #000' }}
+                    onClick={(e) => e.stopPropagation()}
+                />
+            </div>
         </div>
     );
 }

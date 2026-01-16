@@ -209,3 +209,8 @@ export const topScoreAtom = atom<number>(0);
  * Indicates that the classification has started (only used by student))
  */
 export const gameStartedAtom = atom<boolean>(false);
+
+/**
+ * Indicates that the camera is activated (only used by student))
+ */
+export const cameraActivatedAtom = atom<boolean>(false);

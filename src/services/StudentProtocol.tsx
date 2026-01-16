@@ -31,6 +31,7 @@ export function useSpoofProtocol() {
     return useContext(ProtocolContext);
 }
 export default function StudentProtocol({ children }: PropsWithChildren) {
+    console.log('rendering student protocol provider');
     const [config, setConfig] = useAtom(configAtom);
     const [, setTermData] = useAtom(termTransferAtom);
     const [, setAvailableUsernames] = useAtom(availableUsernamesAtom);

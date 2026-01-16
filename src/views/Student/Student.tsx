@@ -1,10 +1,9 @@
 import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import { useSpoofProtocol } from '../../services/StudentProtocol';
 import style from './style.module.css';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { profilePictureAtom, studentBouncerAtom, usernameAtom } from '../../atoms/state';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import StudentNavBar from '../StudentNavBar/StudentNavBar';
 import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 import MessageDisplay from '../MessageDisplay/MessageDisplay';
@@ -16,6 +15,7 @@ import TermWatcher from './StudentComponents/TermWatcher';
 import TopScoreSender from './StudentComponents/TopScoreSender';
 import ResultsButton from './ResultsButton';
 import { DatasetGalleryWrapper } from '../DatasetGallery/DatasetGalleryWrapper';
+import { useTranslation } from 'react-i18next';
 
 interface StudentProps {
     serverCode: string;
@@ -24,17 +24,18 @@ interface StudentProps {
 export default function Student({ serverCode }: StudentProps) {
     const { t } = useTranslation();
     const { doSendImages, doRegister } = useSpoofProtocol();
-    const [username] = useAtom(usernameAtom);
-    const [profilePicture] = useAtom(profilePictureAtom);
-    const [bouncer] = useAtom(studentBouncerAtom);
+    const username = useAtomValue(usernameAtom);
+    const profilePicture = useAtomValue(profilePictureAtom);
+    const bouncer = useAtomValue(studentBouncerAtom);
     const topCanvasRef = useRef<HTMLCanvasElement | null>(null);
     const topHeatmapRef = useRef<HTMLCanvasElement | null>(null);
     const sentRef = useRef(false);
     const blockRef = useRef(true);
     const [classifyTerm, setClassifyTerm] = useState<string>('');
     const [translatedTerm, setTranslatedTerm] = useState<string>('');
-    const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
     const [showError, setShowError] = useState(false);
+
+    console.log('rendering student main view with values:', { username, profilePicture, bouncer, classifyTerm });
 
     // Score circle buffer refs, buffer is in WebcamInput for scores
     const scoreBufferRef = useRef<number[]>(Array(64).fill(0));
@@ -98,21 +99,26 @@ export default function Student({ serverCode }: StudentProps) {
             </div>
             <div className={style.student}>
                 <div className={style.gameContainer}>
-                    <h1 className={style.term}>{classifyTerm && `${translatedTerm}`}</h1>
-                    {!isCameraActive && <div className={style.cameraNotActive}>{t('webcam.notAvailable')}</div>}
+                    {classifyTerm ? (
+                        <h1 className={style.term}>{translatedTerm}</h1>
+                    ) : (
+                        <h2 style={{ color: 'white' }}>{t('student.titles.waitForLabel')}</h2>
+                    )}
                     <Scorebar />
                     <div className={style.interfaceContainer}>
                         <div className={`${window.innerWidth > window.innerHeight ? style.landscape : style.portrait}`}>
-                            <div>
-                                <WebcamInput
-                                    scoreBufferRef={scoreBufferRef}
-                                    scoreSumRef={scoreSumRef}
-                                    topCanvasRef={topCanvasRef}
-                                    topHeatmapRef={topHeatmapRef}
-                                    classifyTerm={classifyTerm}
-                                    setIsCameraActive={setIsCameraActive}
-                                />
-                            </div>
+                            {classifyTerm && (
+                                <div>
+                                    <WebcamInput
+                                        scoreBufferRef={scoreBufferRef}
+                                        scoreSumRef={scoreSumRef}
+                                        topCanvasRef={topCanvasRef}
+                                        topHeatmapRef={topHeatmapRef}
+                                        classifyTerm={classifyTerm}
+                                    />
+                                </div>
+                            )}
+                            {!classifyTerm && <div className={style.waitingForTerm}>Waiting for term...</div>}
                             <div className={style.gameLowerStuff}>
                                 <ResultsButton />
                             </div>

@@ -1,15 +1,15 @@
 import style from './style.module.css';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { availableUsernamesAtom, configAtom, takenUsernamesAtom } from '../../atoms/state';
+import { availableUsernamesAtom, configAtom, profilePictureAtom, takenUsernamesAtom } from '../../atoms/state';
 import { IconButton, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { LargeButton } from '@genai-fi/base';
 import ProfilePictureInput from './ProfilePictureInput';
 
 interface Props {
-    registerStudent: (name: string, image: string | null) => void;
+    onReady: () => void;
 }
 
 export interface RegisterFormErrors {
@@ -17,16 +17,22 @@ export interface RegisterFormErrors {
     image?: 'missing';
 }
 
-export default function EnterUserInfo({ registerStudent: onUsername }: Props) {
+export default function EnterUserInfo({ onReady }: Props) {
     const { t } = useTranslation();
     const [users] = useAtom(availableUsernamesAtom);
     const [takenUsernames] = useAtom(takenUsernamesAtom);
-
+    const setProfilePicture = useSetAtom(profilePictureAtom);
     const [showRestore, setShowRestore] = useState(false);
     const [errors, setErrors] = useState<RegisterFormErrors>({});
     const [image, setImage] = useState<string | null>(null);
     const [username, setUsername] = useState('');
     const [config] = useAtom(configAtom);
+
+    const onUsername = async (name: string, image: string | null) => {
+        setUsername(name);
+        setProfilePicture(image);
+        onReady();
+    };
 
     const handleSubmit = () => {
         const trimmed = username.trim();

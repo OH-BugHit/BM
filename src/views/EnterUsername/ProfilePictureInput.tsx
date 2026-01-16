@@ -12,6 +12,11 @@ interface Props {
     image: string | null;
     setImage: Dispatch<SetStateAction<string | null>>;
 }
+/**
+ * Not in use!
+ * @param param0
+ * @returns
+ */
 export default function ProfilePictureInput({ errors, setErrors, image, setImage }: Props) {
     const { t } = useTranslation();
     const [config] = useAtom(configAtom);

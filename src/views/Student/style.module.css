@@ -67,24 +67,6 @@
     width: 80%;
 }
 
-
-/*For displaying text that camera is not active on top of the webcam component*/
-.cameraNotActive {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    align-self: center;
-    justify-self: center;
-    background-color: rgba(240, 248, 255, 0.712);
-    border-radius: 4px;
-    padding: 4px 8px;
-    backdrop-filter: blur(10px) brightness(150%);
-    z-index: 10000;
-}
-
 .resultButton {
     display: flex;
 }

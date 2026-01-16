@@ -280,7 +280,8 @@
             "settings": "Open or close settings"
         },
         "titles": {
-            "results": "Results"
+            "results": "Results",
+            "waitForLabel": "Wait for Teacher to set label"
         },
         "labels": {
             "disableApp": "Pause camera",

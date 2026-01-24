@@ -51,7 +51,6 @@ export default function MenuPanel() {
     );
 
     const doShowGuidance = useCallback(() => {
-        console.log('show');
         setGuidanceActive((prev) => !prev);
     }, [setGuidanceActive]);
 

@@ -74,30 +74,38 @@
         "normal": {
             "steps": {
                 "1": {
-                    "title": "Yhdistä"
+                    "title": "Yhdistä",
+                    "tip": "Liittyneet oppilaat näkyvät yllä. Voit poistaa pelaajan käyttämällä yläpaneelia. Voit valita käyttäjän painamalla"
                 },
                 "2": {
-                    "title": "Luokittelutermi"
+                    "title": "Luokittelutermi",
+                    "tip": "Valitse luokittelutermi pudotusvalikosta. Voit vaihtaa mallia painamalla \"Vaihda luokittelumalli\". Luokittelutermin tai mallin vaihtaminen ei vaikuta aiempiin tuloksiin."
                 },
                 "3": {
-                    "title": "Pelaa"
+                    "title": "Pelaa",
+                    "tip": "Kaikki on valmista pelaamista varten. Aloita painalla toistopainiketta alapaneelista tai vasemmalta ohjauksen paneelista. Voit tarvittaessa nollata oppilaan tuloksen valitsemalla hänet ja painamalla \"Nollaa käyttäjän tulos termillä...\""
                 },
                 "4": {
-                    "title": "Lämpökartta"
+                    "title": "Lämpökartta",
+                    "tip": "Lämpökartta on nyt oppilaiden käytettävissä. Voit asettaa sen pois käytöstä ja käyttöön alapaneelin liekkipainikkeesta."
                 },
                 "5": {
-                    "title": "Opetusdata"
+                    "title": "Opetusdata",
+                    "tip": "Opetusdata selaaminen on nyt sallittu oppilaille. Voint asettaa sen pois käytöstä ja käyttöön alapaneelin kuvapainikkeesta. Voit palata vaiheeseen kolme seurataksesi oppilaiden pelaamista."
                 },
                 "6": {
-                    "title": "Tulokset"
+                    "title": "Tulokset",
+                    "tip": "Peli on pysäytetty! Voit suurentaa tuloskuvaa painamalla siitä. Voit valita yksittäinen luokittelutermi tarkasteluun painamalla sitä. Yksittäisen luokittelutermin tarkastelussa näet kuvan suurennettuasi myös kuvaan liittyvän lämpökartan."
                 },
                 "7": {
-                    "title": "Valmis"
+                    "title": "Valmis",
+                    "tip": "Olet pelannut loppuun kierroksen Hajoavaa Konetta! Voit aloittaa toisen kierroksen ja siirtyä valitsemaan uuden luokittelutermin painamalla nollauspainiketta ohjauksen paneelista. Nollauspainikkeen painaminen ei vaikuta aiemmpien kierrosten tuloksiin. Nollaus poistaa oppilailta käytöstä lämpökartan ja opetusdatan selaamisen."
                 }
             }
         },
         "common": {
-            "exit": "Poistu ohjauksesta"
+            "exit": "Poistu ohjauksesta",
+            "hideTips": "Piilota vihjeet"
         }
     },
     "library": {
@@ -134,7 +142,8 @@
             "quality1": "Poor Connection",
             "quality2": "Connected",
             "quality3": "Connected",
-            "failed": "No Connection"
+            "failed": "No Connection",
+            "loadingModel": "Odota mallin ja kameran latautumista."
         },
         "errors": {
             "unknown": "Ongelma laitteiden välisessä viestinnässä",
@@ -304,7 +313,10 @@
     "userGrid": {
         "actions": {
             "kickUser": "Potki pelaaja pelistä",
-            "deleteUser": "Poista pelaaja pelistä"
+            "deleteUser": "Poista pelaaja pelistä",
+            "resetScore": "Nollaa käyttäjän tulos termillä: {{label}}",
+            "selectUser": "Valitse käyttäjä klikkaamalla",
+            "selectLabel": "Nollattava termi"
         },
         "titles": {
             "users": "Pelaajat"

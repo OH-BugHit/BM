@@ -20,7 +20,6 @@
 .resultGallery {
     flex-direction: column;
     margin-top: 1rem;
-
     background-color: rgba(255, 255, 255, 0.646);
     padding: 1.2rem 2rem 1.2rem 2rem;
     border-radius: 1rem;
@@ -52,7 +51,6 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 1rem
 }
 
 .imagesContainer {
@@ -65,6 +63,7 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
+    margin-top: 0.7rem;
 }
 
 .openImageOverlay {

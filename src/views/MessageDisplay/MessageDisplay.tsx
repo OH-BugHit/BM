@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { useAtom } from 'jotai';
 import { studentBouncerAtom } from '../../atoms/state';
+import React from 'react';
 
 interface Props {
     open: boolean;
 }
 
-export default function MessageDisplay({ open }: Props) {
+function MessageDisplay({ open }: Props) {
     const { t } = useTranslation();
     const [bouncer] = useAtom(studentBouncerAtom);
 
@@ -25,3 +26,5 @@ export default function MessageDisplay({ open }: Props) {
         </Dialog>
     );
 }
+
+export default React.memo(MessageDisplay);

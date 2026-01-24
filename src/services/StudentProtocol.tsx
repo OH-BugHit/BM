@@ -2,7 +2,7 @@ import { Connection, ConnectionStatus } from '@genai-fi/base';
 import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
 import { EventProtocol } from './protocol';
 import { ImageData, ModelInfo, ModelOrigin, RegisterData } from '../utils/types';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     availableUsernamesAtom,
     configAtom,
@@ -13,6 +13,7 @@ import {
     studentResultsAtom,
     takenUsernamesAtom,
     termTransferAtom,
+    topScoreAtom,
     usernameAtom,
 } from '../atoms/state';
 import { loadLabels, loadModel } from './loadModel';
@@ -31,30 +32,33 @@ export function useSpoofProtocol() {
     return useContext(ProtocolContext);
 }
 export default function StudentProtocol({ children }: PropsWithChildren) {
-    console.log('rendering student protocol provider');
     const [config, setConfig] = useAtom(configAtom);
-    const [, setTermData] = useAtom(termTransferAtom);
-    const [, setAvailableUsernames] = useAtom(availableUsernamesAtom);
-    const [, setTakenUsernames] = useAtom(takenUsernamesAtom);
-    const [, setModel] = useAtom(modelAtom);
-    const [, setBouncer] = useAtom(studentBouncerAtom);
-    const [, setProfilePicture] = useAtom(profilePictureAtom);
-    const [, setResults] = useAtom(studentResultsAtom);
-    const [ownUsername] = useAtom(usernameAtom);
-    const [, setLabels] = useAtom(labelsAtom);
+    const setTermData = useSetAtom(termTransferAtom);
+    const setAvailableUsernames = useSetAtom(availableUsernamesAtom);
+    const setTakenUsernames = useSetAtom(takenUsernamesAtom);
+    const setModel = useSetAtom(modelAtom);
+    const setBouncer = useSetAtom(studentBouncerAtom);
+    const setProfilePicture = useSetAtom(profilePictureAtom);
+    const setResults = useSetAtom(studentResultsAtom);
+    const setTopScore = useSetAtom(topScoreAtom);
+    const ownUsername = useAtomValue(usernameAtom);
+    const setLabels = useSetAtom(labelsAtom);
     const { i18n } = useTranslation();
     // conn: Connection<EventProtocol>
 
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
+        console.log('data received', data);
         if (data.event === 'eter:join') {
             // Send
         }
         if (data.event === 'ping') {
             console.log('ping');
         } else if (data.event === 'eter:termData') {
+            // Sets the label for the student to classify
             if (data.data.recipient.username === 'a' || data.data.recipient.username === ownUsername)
                 setTermData(data.data);
         } else if (data.event === 'eter:config') {
+            // Sets configuration of the game, such as model, and pause, heatmap and datasetview allowance.
             if (data.configuration.modelData) {
                 if (
                     data.configuration.modelData.name !== config.modelData.name ||
@@ -103,6 +107,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             setAvailableUsernames(data.available);
             setTakenUsernames(data.taken);
         } else if (data.event === 'eter:modelTransfer') {
+            // Receives model as zip blob from teacher
             const receivedZip = new Blob([data.data], { type: 'application/zip' });
             const url = URL.createObjectURL(receivedZip);
             const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };
@@ -124,18 +129,24 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                 URL.revokeObjectURL(url);
             }
         } else if (data.event === 'eter:messageUser') {
+            // Messages such as reset result for specific term or bouncer (kick / remove user)
+            console.log('poistetaan?:', ownUsername);
             if (!data.recipient || data.recipient.username === ownUsername) {
                 if (data.action === 'resetResult') {
                     setResults((old) => {
+                        console.log(old);
                         const newResults = { ...old };
                         newResults.data.delete(data.message);
+                        console.log(newResults);
                         return newResults;
                     });
+                    setTopScore(0); // Resetting the topscore for TopScoreSender
                 } else if (data.action === 'bouncer') {
                     setBouncer({ message: data.message, reload: data.reload });
                 }
             }
         } else if (data.event === 'eter:profilePicture') {
+            // For receiving profile picture on reconnect. (Profile picture is not in use currently)
             setProfilePicture(data.data.profilePicture);
         }
     });

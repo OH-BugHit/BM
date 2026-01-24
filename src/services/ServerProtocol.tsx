@@ -1,7 +1,7 @@
 import { ConnectionStatus, Connection } from '@genai-fi/base';
 import { useEffect } from 'react';
 import { EventProtocol } from './protocol';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     takenUsernamesAtom,
     configAtom,
@@ -18,77 +18,19 @@ import { SpoofConfig, StudentScores } from '../utils/types';
 import { base64ToCanvas } from '../utils/base64toCanvas';
 import { canvasToBase64 } from '../utils/canvasToBase64';
 import { usePeerClose, usePeerData, usePeerSender } from '@genai-fi/base/hooks/peer';
+import { updateTopScores } from '../utils/updateTopScores';
 
 export default function ServerProtocol() {
-    const [config] = useAtom<SpoofConfig>(configAtom);
-    const [, setStudent] = useAtom(studentDataAtom);
     const [users, setUsers] = useAtom(usersAtom);
+    const [topScores, setTopScores] = useAtom(topScoresAtom);
     const [profilePictures, setProfilePictures] = useAtom(profilePicturesAtom);
     const [allUNs, setAllUNs] = useAtom(takenUsernamesAtom);
-    const [modelFile] = useAtom(modelDataAtom);
-    const [termData] = useAtom(termTransferAtom);
-    const [messageData] = useAtom(messageTransferAtom);
-    const [, setCurrentActivity] = useAtom(studentActivityAtom);
-    const [topScores, setTopScores] = useAtom(topScoresAtom);
-
-    const checkTopScores = (classname: string, studentId: string, score: number | 'delete') => {
-        const currentTop = topScores.scores.get(classname);
-        if (score === 'delete') {
-            return; // delete not done for top scores, could be implemeted here. If so, add call to if (data.data.image === 'delete') part
-        }
-        if (currentTop === undefined) {
-            setTopScores((old) => {
-                const newScores = new Map(old.scores);
-                newScores.set(classname, {
-                    bestScore: { score: score, studentId: studentId },
-                    secondScore: null,
-                    thirdScore: null,
-                });
-                return { scores: newScores };
-            });
-        } else {
-            // Something is saved already for this classification term
-            if (currentTop.thirdScore !== null && currentTop.thirdScore.score > score) {
-                // No need to check if score is lower than top three
-                return;
-            }
-            if (currentTop.bestScore === null || score > currentTop.bestScore.score) {
-                // New best score
-                if (currentTop.bestScore?.studentId === studentId) {
-                    // Same student improved his own best score
-                    currentTop.bestScore.score = score;
-                } else {
-                    currentTop.thirdScore = currentTop.secondScore;
-                    currentTop.secondScore = currentTop.bestScore;
-                    currentTop.bestScore = { score: score, studentId: studentId };
-                }
-            } else if (currentTop.secondScore === null || score > currentTop.secondScore.score) {
-                // New second score
-                if (currentTop.secondScore?.studentId === studentId && currentTop.bestScore?.studentId !== studentId) {
-                    // Same student improved his own second score and is not best score holder and Update only if student is not already ranked higher
-                    currentTop.secondScore.score = score;
-                } else {
-                    currentTop.thirdScore = currentTop.secondScore;
-                    currentTop.secondScore = { score: score, studentId: studentId };
-                }
-            } else if (currentTop.thirdScore === null || score > currentTop.thirdScore.score) {
-                // New third score
-                if (currentTop.bestScore?.studentId !== studentId && currentTop.secondScore?.studentId !== studentId) {
-                    // Update only if student is not already ranked higher
-                    currentTop.thirdScore = { score: score, studentId: studentId };
-                }
-            }
-            setTopScores((old) => {
-                const newScores = new Map(old.scores);
-                newScores.set(classname, {
-                    bestScore: currentTop.bestScore,
-                    secondScore: currentTop.secondScore,
-                    thirdScore: currentTop.thirdScore,
-                });
-                return { scores: newScores };
-            });
-        }
-    };
+    const setStudent = useSetAtom(studentDataAtom);
+    const setCurrentActivity = useSetAtom(studentActivityAtom);
+    const config = useAtomValue<SpoofConfig>(configAtom);
+    const modelFile = useAtomValue(modelDataAtom);
+    const termData = useAtomValue(termTransferAtom);
+    const messageData = useAtomValue(messageTransferAtom);
 
     // CLOSE HANDLER: whenever a Connection is closed (either via 'eter:close' or network drop),
     // remove that user from your usersAtom.
@@ -245,7 +187,13 @@ export default function ServerProtocol() {
                 });
             } else {
                 // Check and update top-scores
-                checkTopScores(data.data.classname, data.data.studentId, data.data.score);
+                updateTopScores({
+                    classname: data.data.classname,
+                    studentId: data.data.studentId,
+                    score: data.data.score,
+                    topScores,
+                    setTopScores,
+                });
 
                 // Add image to results (studentDataAtom)
                 (async () => {

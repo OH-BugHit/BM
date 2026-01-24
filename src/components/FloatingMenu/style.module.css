@@ -97,6 +97,20 @@
     padding-right: 1rem;
 }
 
+.relative-top {
+    composes: menuContainer;
+    position: relative;
+    width: fit-content;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top: 1rem;
+    flex-direction: row;
+    padding-right: 1rem;
+    margin-bottom: -80px;
+}
+
 .menuSpacerRow {
     margin: 0.5rem 0;
     height: 2px;

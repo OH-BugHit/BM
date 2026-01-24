@@ -41,7 +41,7 @@ export default function Teacher() {
                 <ModelDialog />
                 <SideNavSwitcher />
                 <TeacherContent />
-                <Footer />
+                <Footer hideLang={false} />
             </div>
         </Peer>
     );

@@ -12,15 +12,11 @@
 }
 
 .termChange {
-    margin-top: 1rem;
+    height: 100%;
     display: flex;
-    min-height: 60%;
-    align-self: center;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
     flex-direction: column;
     text-align: center;
+    justify-content: space-evenly;
 }
 
 .termSelector {
@@ -40,19 +36,17 @@
 
 .modeItem {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     color: black;
     max-width: 800px;
     max-height: 80dvh;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     min-width: 30dvw;
     gap: 2.5rem;
     padding: 2rem;
     background-color: rgba(255, 255, 255, 0.934);
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -74,6 +68,17 @@
     opacity: 0;
     height: 0;
     width: 0;
+}
+
+.modelChange {
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.2rem;
+    background-color: rgba(255, 255, 255, 0.934);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 @media (min-width: 1030px) {

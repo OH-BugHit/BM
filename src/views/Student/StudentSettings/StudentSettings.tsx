@@ -1,14 +1,14 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useAtom } from 'jotai';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Button } from '@genai-fi/base';
 import { activeViewAtom } from '../../../atoms/state';
 import StudentGeneralSettings from './StudentGeneralSettings';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-export default function StudentSettings() {
+function StudentSettings() {
     const { t } = useTranslation();
     const [showDialog, setActiveView] = useAtom(activeViewAtom);
 
@@ -52,3 +52,5 @@ export default function StudentSettings() {
         </>
     );
 }
+
+export default React.memo(StudentSettings);

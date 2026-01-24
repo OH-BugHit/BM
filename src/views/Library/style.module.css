@@ -47,6 +47,7 @@ background: linear-gradient(45deg, rgba(127, 126, 187, 0.677), rgba(19, 62, 123,
 
 .content li {
     flex: 0 1 300px;
+    padding: 1rem;
     min-height: 200px;
     background: linear-gradient(45deg, rgb(218, 255, 255), rgb(235, 255, 255));
     border-radius: 6px;

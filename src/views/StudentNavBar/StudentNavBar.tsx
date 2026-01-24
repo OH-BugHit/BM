@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { activeViewAtom, configAtom, studentControlsAtom } from '../../atoms/state';
 import style from './style.module.css';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -13,7 +13,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 import HeaderRow from './HeaderRow';
 import StudentInfo from './StudentInfo';
 
-export default function StudentNavBar() {
+function StudentNavBar() {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const doShowBottomMenu = useCallback(() => setOpen((s) => !s), [setOpen]);
@@ -97,3 +97,5 @@ export default function StudentNavBar() {
         </nav>
     );
 }
+
+export default React.memo(StudentNavBar);

@@ -1,0 +1,29 @@
+.tipsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: max-content;
+    width: 600px;
+    max-width: 80%;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    padding: 0.7rem;
+    background-color: white;
+    text-align: left;
+    z-index: 11;
+    box-shadow: 1px 1px 8px #888;
+}
+
+.tip {
+    position: relative;
+    margin: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.tipsContainer h3 {
+    color: black;
+    margin-top: 0;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+}

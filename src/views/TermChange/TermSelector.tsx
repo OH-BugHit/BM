@@ -9,7 +9,7 @@ import {
     settingAtom,
     termTransferAtom,
 } from '../../atoms/state';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 
 interface Props {
@@ -18,13 +18,13 @@ interface Props {
 
 export default function TermSelector({ toUsers }: Props) {
     const { t } = useTranslation();
-    const [, setTerm] = useAtom(termTransferAtom);
+    const setTerm = useSetAtom(termTransferAtom);
     const [word, setWord] = useState('');
     const [config, setConfig] = useAtom(configAtom);
     const [settings] = useAtom(settingAtom);
-    const [labels] = useAtom(labelsAtom);
-    const [model] = useAtom(modelAtom);
-    const [, setCurrentCommonTerm] = useAtom(currentCommonChallengeAtom);
+    const labels = useAtomValue(labelsAtom);
+    const model = useAtomValue(modelAtom);
+    const setCurrentCommonTerm = useSetAtom(currentCommonChallengeAtom);
 
     function delay(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));

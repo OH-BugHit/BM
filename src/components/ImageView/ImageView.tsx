@@ -2,7 +2,6 @@ import style from './style.module.css';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { CanvasCopy } from '../CanvasCopy/CanvasCopy';
 import { Button } from '@genai-fi/base';
-import { close } from '../Buttons/buttonStyles';
 import { useAtom } from 'jotai';
 import { studentDataAtom } from '../../atoms/state';
 import { Dispatch, SetStateAction } from 'react';
@@ -44,7 +43,18 @@ export default function ImageView({ maxSize, openImage, setOpenImage }: ImageVie
                     <div className={style.topPictureContainer}>
                         <Button
                             onClick={() => setOpenImage(null)}
-                            style={close}
+                            style={{
+                                position: 'absolute',
+                                top: '1rem',
+                                right: '1rem',
+                                zIndex: 3,
+                                background: '#ffffffe7',
+                                width: 32,
+                                height: 32,
+                                fontSize: 24,
+                                cursor: 'pointer',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.81)',
+                            }}
                             title={t('common.close')}
                             aria-label="Sulje"
                         >

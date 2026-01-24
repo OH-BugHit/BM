@@ -120,6 +120,11 @@
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
+.waiting {
+    color: white;
+    margin: 2rem;
+}
+
 @media (min-height: 700px) {
     .gameContainer {
         gap: 1rem

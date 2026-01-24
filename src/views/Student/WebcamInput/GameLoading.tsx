@@ -1,26 +1,16 @@
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { gameStartedAtom } from '../../../atoms/state';
-import { Spinner } from '@genai-fi/base';
+import Loading from '../../../components/Loading/Loading';
+import { useTranslation } from 'react-i18next';
 
 export default function GameLoading() {
-    const [gameReady] = useAtom(gameStartedAtom);
+    const { t } = useTranslation();
+    const gameReady = useAtomValue(gameStartedAtom);
 
     return (
-        <div>
-            {!gameReady && (
-                <span
-                    style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translateX(-50%) translateY(-50%)',
-                        zIndex: 1,
-                        width: '100%',
-                    }}
-                >
-                    <Spinner />
-                </span>
-            )}
-        </div>
+        <Loading
+            loading={!gameReady}
+            message={t('loader.messages.loadingModel')}
+        />
     );
 }

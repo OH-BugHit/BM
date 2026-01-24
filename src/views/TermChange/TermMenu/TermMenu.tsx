@@ -1,16 +1,22 @@
-import FloatingMenu from '../../components/FloatingMenu/FloatingMenu';
-import FloatingMenuItem from '../../components/FloatingMenu/FloatingMenuItem';
 import { IconButton } from '@mui/material';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
-import { useAtom } from 'jotai';
-import { configAtom } from '../../atoms/state';
+import { useAtom, useAtomValue } from 'jotai';
+import { configAtom, guidanceActiveAtom } from '../../../atoms/state';
+import FloatingMenu from '../../../components/FloatingMenu/FloatingMenu';
+import FloatingMenuItem from '../../../components/FloatingMenu/FloatingMenuItem';
 
+/**
+ *
+ * @returns Contains top-menu that changes game-mode between common and single challenge.
+ * Common challenge sends same label to everyone. Single-mode is disabled in guided game
+ */
 export default function TermMenu() {
     const { t } = useTranslation();
     const [config, setConfig] = useAtom(configAtom);
+    const guided = useAtomValue(guidanceActiveAtom);
 
     const toggleGameMode = (mode: number) => {
         if ((config.gameMode === 'single' && mode === 1) || (config.gameMode === 'all' && mode === 2)) {
@@ -36,8 +42,8 @@ export default function TermMenu() {
     return (
         <>
             <FloatingMenu
-                title={t('dashboard.aria.socialUserMenu')}
-                placement="relative"
+                title={t('termSelect.aria.termMenu')}
+                placement="relative-top"
                 label={
                     <div className={style.menuLogo}>
                         {config.gameMode === 'all' ? t('termSelect.titles.all') : t('termSelect.titles.single')}
@@ -58,20 +64,22 @@ export default function TermMenu() {
                         <Diversity3Icon />
                     </IconButton>
                 </FloatingMenuItem>
-                <FloatingMenuItem
-                    tooltip={t('termSelect.actions.single')}
-                    selected={config.gameMode === 'single'}
-                >
-                    <IconButton
-                        color="inherit"
-                        onClick={() => {
-                            toggleGameMode(2);
-                        }}
-                        aria-label={t('termSelect.actions.single')}
+                {!guided && (
+                    <FloatingMenuItem
+                        tooltip={t('termSelect.actions.single')}
+                        selected={config.gameMode === 'single'}
                     >
-                        <EmojiPeopleIcon />
-                    </IconButton>
-                </FloatingMenuItem>
+                        <IconButton
+                            color="inherit"
+                            onClick={() => {
+                                toggleGameMode(2);
+                            }}
+                            aria-label={t('termSelect.actions.single')}
+                        >
+                            <EmojiPeopleIcon />
+                        </IconButton>
+                    </FloatingMenuItem>
+                )}
             </FloatingMenu>
         </>
     );

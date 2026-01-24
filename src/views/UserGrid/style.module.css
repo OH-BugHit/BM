@@ -57,6 +57,11 @@
     box-shadow: 0 0 8px selectedColor;
 }
 
+.loadingWrapper {
+    position: relative;
+    top: 40%;
+}
+
 .userImageContainer {
     align-self: center;
     line-height: 0;

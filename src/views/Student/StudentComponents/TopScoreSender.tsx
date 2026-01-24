@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { studentResultsAtom, studentSettingsAtom, topScoreAtom } from '../../../atoms/state';
 import { canvasToBase64 } from '../../../utils/canvasToBase64';
 import { StudentScore } from '../../../utils/types';
@@ -26,8 +26,8 @@ interface Props {
  */
 export default function TopScoreSender({ classifyTerm, topCanvasRef, topHeatmapRef, doSendImages, username }: Props) {
     const [results, setResults] = useAtom(studentResultsAtom);
-    const [studentSettings] = useAtom(studentSettingsAtom);
-    const [topScore] = useAtom(topScoreAtom);
+    const studentSettings = useAtomValue(studentSettingsAtom);
+    const topScore = useAtomValue(topScoreAtom);
     const isSending = useRef(false);
 
     const sendScore = useCallback(() => {

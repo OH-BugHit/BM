@@ -1,21 +1,20 @@
-import { MenuItem, MenuList } from '@mui/material';
+import { IconButton, MenuItem, MenuList } from '@mui/material';
 import style from './style.module.css';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
-import { useSetAtom } from 'jotai';
-import { activeViewAtom, configAtom, guidanceActiveAtom } from '../../atoms/state';
-import { useState } from 'react';
+import { useAtom, useSetAtom } from 'jotai';
+import { activeViewAtom, configAtom, guidanceActiveAtom, guidanceStepAtom, showTipsAtom } from '../../atoms/state';
 import ActionButton from './ActionButton';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
 
 export default function Guidance() {
-    console.log('guide rerendered');
-
     const { t } = useTranslation();
     const setCurrentView = useSetAtom(activeViewAtom);
     const setConfig = useSetAtom(configAtom);
     const setGuidanceActive = useSetAtom(guidanceActiveAtom);
-    const [currentSelected, setCurrentSelected] = useState(1);
+    const [tips, setShowTips] = useAtom(showTipsAtom);
+    const [currentSelected, setCurrentSelected] = useAtom(guidanceStepAtom);
 
     const doAction = useCallback(
         (action: string) => {
@@ -44,7 +43,7 @@ export default function Guidance() {
                 }
             }
         },
-        [setCurrentView, setConfig]
+        [setCurrentView, setConfig, setCurrentSelected]
     );
 
     const data: { index: number; title: string; view: TeacherDialogs | TeacherViews; action: string }[] = [
@@ -109,6 +108,17 @@ export default function Guidance() {
             className={style.container}
             data-testid="guidance"
         >
+            {!tips && (
+                <IconButton
+                    style={{ position: 'absolute', top: '0', left: '0' }}
+                    onClick={() => {
+                        setShowTips((old) => !old);
+                    }}
+                    size="large"
+                >
+                    <InfoTwoToneIcon fontSize="large" />
+                </IconButton>
+            )}
             <MenuItem
                 selected={false}
                 onClick={() => {

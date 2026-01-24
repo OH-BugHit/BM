@@ -3,7 +3,7 @@ import style from './style.module.css';
 import { TopMenuContext } from './context';
 
 interface Props extends PropsWithChildren {
-    placement?: 'free' | 'left' | 'right' | 'top' | 'bottom' | 'relative' | 'relative-bottom';
+    placement?: 'free' | 'left' | 'right' | 'top' | 'bottom' | 'relative' | 'relative-bottom' | 'relative-top';
     label?: JSX.Element;
     anchor?: HTMLElement;
     selected?: boolean;
@@ -23,6 +23,7 @@ export default function FloatingMenu({ placement = 'free', x = 0, y = 0, label, 
                 <div
                     className={`${
                         placement === 'top' ||
+                        placement === 'relative-top' ||
                         placement === 'bottom' ||
                         placement === 'free' ||
                         placement === 'relative' ||

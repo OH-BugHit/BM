@@ -2,7 +2,7 @@ import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { activeViewAtom, usersAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { LargeButton, QRCode } from '@genai-fi/base';
 
@@ -10,7 +10,7 @@ interface Props {
     code: string;
 }
 
-export default function StartDialog({ code }: Props) {
+function StartDialog({ code }: Props) {
     const { t } = useTranslation();
     const [showDialog, setActiveView] = useAtom(activeViewAtom);
     const [users] = useAtom(usersAtom);
@@ -46,7 +46,7 @@ export default function StartDialog({ code }: Props) {
                         </div>
                         <a
                             style={{ wordBreak: 'break-all' }}
-                            href={window.location.host}
+                            href={window.location.origin}
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -82,3 +82,5 @@ export default function StartDialog({ code }: Props) {
         </Dialog>
     );
 }
+
+export default React.memo(StartDialog);

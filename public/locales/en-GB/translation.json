@@ -115,30 +115,38 @@
         "normal": {
             "steps": {
                 "1": {
-                    "title": "Connect"
+                    "title": "Connect",
+                    "tip": "Students appear above when connected. You can remove a player using the top panel. First, select a user and then click \"Remove\" or \"Kick\"."
                 },
                 "2": {
-                    "title": "Select"
+                    "title": "Select",
+                    "tip": "Select a label for students to spoof from the dropdown menu. You can change the model using the \"Change classifier model\" button. Changing the label or the model will not affect players' previous scores."
                 },
                 "3": {
-                    "title": "Explore"
+                    "title": "Explore",
+                    "tip": "The game is set, and students can start playing now. Start by pressing the play icon on the bottom panel or on the guidance panel located on the left. If needed, you can reset a player's score by selecting the player and clicking \"Reset user's score on label: ...\"."
                 },
                 "4": {
-                    "title": "Heatmap"
+                    "title": "Heatmap",
+                    "tip": "The heatmap is now enabled for students. You can toggle it on and off using the flame icon on the bottom panel."
                 },
                 "5": {
-                    "title": "Dataset"
+                    "title": "Dataset",
+                    "tip": "Exploring the training dataset is now enabled for students. You can toggle it using the images icon on the bottom panel. You can go back to step 3 to see how students perform."
                 },
                 "6": {
-                    "title": "Results"
+                    "title": "Results",
+                    "tip": "The game is now paused! You can view result images by clicking them. Select a label from the left to access individual results for each label. In the individual results, you can also view the heatmap image of selected result image when the image is clicked"
                 },
                 "7": {
-                    "title": "Finish"
+                    "title": "Finish",
+                    "tip": "You have finished a round of Breakable Machine! Move to the \"Select\" phase to choose a new label by clicking reset button on the guidance panel. Resetting will not affect scores on previous labels. Resetting will also disable the heatmap and dataset for student"
                 }
             }
         },
         "common": {
-            "exit": "Exit guide"
+            "exit": "Exit guide",
+            "hideTips": "Hide all tips"
         }
     },
 
@@ -174,7 +182,8 @@
             "quality1": "Poor Connection",
             "quality2": "Connected",
             "quality3": "Connected",
-            "failed": "No Connection"
+            "failed": "No Connection",
+            "loadingModel": "Wait for model and camera to load."
         },
         "errors": {
             "unknown": "A connection problem occurred",
@@ -332,6 +341,9 @@
             "all": "Send new classifying label to all",
             "single": "Send new classifying label to single user"
         },
+        "aria": {
+            "termMenu": "Challenge mode menu"
+        },
         "titles": {
             "all": "Common Challenge",
             "change": "Change label for {{user}}",
@@ -344,7 +356,10 @@
     "userGrid": {
         "actions": {
             "kickUser": "Kick user",
-            "deleteUser": "Remove user from game"
+            "deleteUser": "Remove user from game",
+            "resetScore": "Reset user's score on label: {{label}}",
+            "selectUser": "Select user by clicking",
+            "selectLabel": "Label to reset"
         },
         "titles": {
             "users": "Users"

@@ -110,7 +110,7 @@ export default function Library() {
                     onChange={handleFileChange}
                 />
             </div>
-            <Footer />
+            <Footer hideLang={false} />
         </main>
     );
 }

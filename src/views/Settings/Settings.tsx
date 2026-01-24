@@ -2,14 +2,14 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { activeViewAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from '@mui/material';
 import { Button } from '@genai-fi/base';
 import GeneralSettings from './GeneralSettings';
 import PictureSettings from './PictureSettings';
 import UserGridSettings from './UserGridSettings';
 
-export default function Settings() {
+function Settings() {
     const { t } = useTranslation();
     const [showDialog, setActiveView] = useAtom(activeViewAtom);
     const [tabNumber, setTabNumber] = useState(0);
@@ -53,3 +53,5 @@ export default function Settings() {
         </Dialog>
     );
 }
+
+export default React.memo(Settings);

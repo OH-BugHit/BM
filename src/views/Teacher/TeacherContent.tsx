@@ -4,11 +4,14 @@ import { activeViewAtom } from '../../atoms/state';
 import UserGrid from '../UserGrid/UserGrid';
 import TermChange from '../TermChange/TermChange';
 import UserMenu from '../UserMenu/UserMenu';
-import TermMenu from '../TermMenu/TermMenu';
 import Scoreboard from '../Scoreboard/Scoreboard';
 import ControlMenu from '../ControlMenu/ControlMenu';
 import { TeacherDatasetWrapper } from '../DatasetGallery/TeacherDatasetWrapper';
-export default function TeacherContent() {
+import Tips from '../Tips/Tips';
+import TermMenu from '../TermChange/TermMenu/TermMenu';
+import React from 'react';
+
+function TeacherContent() {
     const [activeView] = useAtom(activeViewAtom);
 
     return (
@@ -18,7 +21,7 @@ export default function TeacherContent() {
                 {(activeView.active === 'userGrid' || activeView.active === 'userGridSimple') && (
                     <>
                         <UserMenu />
-                        <UserGrid simpleMode={activeView.active === 'userGridSimple'} />
+                        <UserGrid />
                     </>
                 )}
                 {activeView.active === 'termChange' && (
@@ -30,8 +33,11 @@ export default function TeacherContent() {
                 {activeView.active === 'default' && <Scoreboard />}
             </>
             <div className={style.controlLayer}>
+                <Tips />
                 <ControlMenu />
             </div>
         </div>
     );
 }
+
+export default React.memo(TeacherContent);

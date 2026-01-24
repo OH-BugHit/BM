@@ -31,6 +31,21 @@ export const activeViewAtom = atom<Views>({ active: 'userGridSimple', overlay: '
 export const guidanceActiveAtom = atom<boolean>(true);
 
 /**
+ * Step of guidance in progress
+ */
+export const guidanceStepAtom = atom<number>(1);
+
+/**
+ * Are tips visible or not TODO: This is not probably the final solution.
+ */
+export const showTipsAtom = atom<boolean>(true);
+
+/**
+ * Contains information of selected label on user grid view
+ */
+export const userGridOpenLabelAtom = atom<string | null>(null);
+
+/**
  * Current model
  */
 export const modelAtom = atom<ClassifierApp | null>(null);
@@ -50,7 +65,7 @@ export const modelListAtom = atom<string[]>([]);
  * Teacher can send new configuration by modifying this atom
  */
 export const configAtom = atom<SpoofConfig>({
-    pause: false,
+    pause: true,
     heatmap: false,
     gallery: false,
     modelData: { origin: ModelOrigin.GenAI, name: '' },

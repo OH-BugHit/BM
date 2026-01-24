@@ -35,8 +35,6 @@ export default function Student({ serverCode }: StudentProps) {
     const [translatedTerm, setTranslatedTerm] = useState<string>('');
     const [showError, setShowError] = useState(false);
 
-    //console.log('rendering student main view with values:', { username, profilePicture, bouncer, classifyTerm });
-
     // Score circle buffer refs, buffer is in WebcamInput for scores
     const scoreBufferRef = useRef<number[]>(Array(64).fill(0));
     const scoreSumRef = useRef(0);
@@ -52,7 +50,6 @@ export default function Student({ serverCode }: StudentProps) {
             doRegister({ username, profilePicture });
             sentRef.current = true;
         }
-        console.log('registration effect', { sent: sentRef.current, username, profilePicture });
     }, [doRegister, username, profilePicture]);
 
     /**
@@ -103,7 +100,7 @@ export default function Student({ serverCode }: StudentProps) {
                     {classifyTerm ? (
                         <h1 className={style.term}>{translatedTerm}</h1>
                     ) : (
-                        <h2 style={{ color: 'white' }}>{t('student.titles.waitForLabel')}</h2>
+                        <h2 className={style.waiting}>{t('student.titles.waitForLabel')}</h2>
                     )}
                     <Scorebar />
                     <div className={style.interfaceContainer}>
@@ -119,7 +116,7 @@ export default function Student({ serverCode }: StudentProps) {
                                     />
                                 </div>
                             )}
-                            {!classifyTerm && <div className={style.waitingForTerm}>Waiting for term...</div>}
+                            {!classifyTerm && <h2 className={style.waiting}>{t('student.titles.waitForLabel')}</h2>}
                             <div className={style.gameLowerStuff}>
                                 <ResultsButton />
                             </div>

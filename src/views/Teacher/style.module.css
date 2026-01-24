@@ -25,7 +25,7 @@ h3 {
     width: -webkit-fill-available;
     bottom: 0;
     pointer-events: none;
-    z-index: 10;
+    z-index: 11;
 }
 
 .controlLayer>* {

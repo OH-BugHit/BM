@@ -4,7 +4,6 @@ import { fetchImageUrls } from '../../services/ImageService';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
-import { closeGallery } from '../../components/Buttons/buttonStyles';
 import { useAtom } from 'jotai';
 import { activeViewAtom, configAtom, labelsAtom, modelAtom } from '../../atoms/state';
 import OpenedImage from '../../components/ImageView/OpenedImage';
@@ -117,8 +116,17 @@ export function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                             onClick={doClose}
                             title={t('common.close')}
                             aria-label="Sulje"
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            style={closeGallery as any}
+                            style={{
+                                position: 'absolute',
+                                top: '0.1rem',
+                                right: '0.1rem',
+                                zIndex: 900,
+                                border: 'none',
+                                width: 32,
+                                height: 32,
+                                fontSize: 24,
+                                cursor: 'pointer',
+                            }}
                         >
                             <CloseSharpIcon />
                         </Button>

@@ -2,7 +2,7 @@ import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { activeViewAtom, configAtom, labelsAtom, modelAtom, modelDataAtom, modelListAtom } from '../../atoms/state';
 import { useAtom } from 'jotai';
-import { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Autocomplete, Dialog, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { LargeButton } from '@genai-fi/base';
@@ -11,7 +11,7 @@ import { ModelInfo, ModelOrigin } from '../../utils/types';
 import { currentModelName, handleFileChange } from './utils';
 import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 
-export default function ModelDialog() {
+function ModelDialog() {
     const { t, i18n } = useTranslation();
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
@@ -202,3 +202,5 @@ export default function ModelDialog() {
         </Dialog>
     );
 }
+
+export default React.memo(ModelDialog);

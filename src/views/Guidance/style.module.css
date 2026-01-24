@@ -4,6 +4,7 @@
     background: bgColourful1;
     min-height: 100vh;
     max-height: 100vh;
+    min-width: 200px;
     color: white;
     display: flex;
     flex-direction: column;
@@ -30,8 +31,8 @@
     font-size: 1.2em;
     padding-top: 0.8em;
     padding-bottom: 0.8em;
-    padding-left: 2em;
-    padding-right: rem;
+    padding-left: 1.5em;
+    padding-right: 1.5rem;
 }
 
 .container :global .Mui-selected {

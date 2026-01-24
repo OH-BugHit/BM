@@ -9,7 +9,6 @@ import { useState } from 'react';
 import Student from './Student';
 
 export default function StudentWrapper() {
-    console.log('rendering student wrap');
     const { serverCode } = useParams<{ serverCode: string }>();
     const MYCODE = useID(5);
     const [ready, setReady] = useState<boolean>(false);
@@ -27,7 +26,7 @@ export default function StudentWrapper() {
                 {!ready && (
                     <>
                         <EnterUserInfo onReady={() => setReady(true)} />
-                        <Footer />
+                        <Footer hideLang={false} />
                     </>
                 )}
                 {ready && serverCode && <Student serverCode={serverCode} />}

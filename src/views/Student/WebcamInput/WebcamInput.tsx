@@ -17,13 +17,7 @@ interface Props {
     topHeatmapRef: RefObject<HTMLCanvasElement | null>;
 }
 
-const WebcamInput = React.memo(function WebcamInput({
-    scoreBufferRef,
-    scoreSumRef,
-    classifyTerm,
-    topCanvasRef,
-    topHeatmapRef,
-}: Props) {
+function WebcamInput({ scoreBufferRef, scoreSumRef, classifyTerm, topCanvasRef, topHeatmapRef }: Props) {
     console.log('rendering webcam input');
     const model = useAtomValue(modelAtom);
     const setCameraActivated = useSetAtom(cameraActivatedAtom);
@@ -79,5 +73,5 @@ const WebcamInput = React.memo(function WebcamInput({
             </div>
         </div>
     );
-});
-export default WebcamInput;
+}
+export default React.memo(WebcamInput);

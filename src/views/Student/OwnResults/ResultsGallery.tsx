@@ -4,8 +4,9 @@ import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { CanvasCopy } from '../../../components/CanvasCopy/CanvasCopy';
-import { close } from '../../../components/Buttons/buttonStyles';
 import Results from './Results';
+import { useSetAtom } from 'jotai';
+import { activeViewAtom } from '../../../atoms/state';
 
 interface Props {
     currentData: {
@@ -22,6 +23,7 @@ interface Props {
 export function ResultsGallery({ currentData }: Props) {
     const { t } = useTranslation();
     const [openImage, setOpenImage] = useState<HTMLCanvasElement | null>(null);
+    const setActiveView = useSetAtom(activeViewAtom);
 
     return (
         <>
@@ -29,6 +31,29 @@ export function ResultsGallery({ currentData }: Props) {
                 <div className={style.headerToggle}>
                     <h1 style={{ color: '#282828' }}>{t('student.titles.results')}</h1>
                 </div>
+                <Button
+                    onClick={() =>
+                        setActiveView((old) => ({
+                            ...old,
+                            overlay: 'none',
+                        }))
+                    }
+                    variant="contained"
+                    style={{
+                        position: 'absolute',
+                        top: '0.5rem',
+                        right: '0.5rem',
+                        zIndex: 3,
+                        background: '#ffffffe7',
+                        width: 32,
+                        height: 32,
+                        fontSize: 24,
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.81)',
+                    }}
+                >
+                    <CloseSharpIcon color="primary" />
+                </Button>
                 <Results
                     setOpenImage={setOpenImage}
                     currentData={currentData}
@@ -42,7 +67,18 @@ export function ResultsGallery({ currentData }: Props) {
                     <>
                         <Button
                             onClick={() => setOpenImage(null)}
-                            style={close}
+                            style={{
+                                position: 'absolute',
+                                top: '1rem',
+                                right: '1rem',
+                                zIndex: 3,
+                                background: '#ffffffe7',
+                                width: 32,
+                                height: 32,
+                                fontSize: 24,
+                                cursor: 'pointer',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.81)',
+                            }}
                             title={t('common.close')}
                             aria-label="Sulje"
                         >

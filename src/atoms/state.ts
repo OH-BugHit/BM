@@ -1,4 +1,4 @@
-import { atom } from 'jotai';
+import { Atom, atom } from 'jotai';
 import ClassifierApp from '@genai-fi/classifier';
 import {
     Bouncer,
@@ -36,7 +36,8 @@ export const guidanceActiveAtom = atom<boolean>(true);
 export const guidanceStepAtom = atom<number>(1);
 
 /**
- * Are tips visible or not TODO: This is not probably the final solution.
+ * Are tips visible or not
+ * Used by teacher and student
  */
 export const showTipsAtom = atom<boolean>(true);
 
@@ -178,8 +179,11 @@ export const settingAtom = atom<Settings>({
     teacherHideResultPicture: false,
     allowStartTermAgain: true,
     limitScoreboard: { limit: 2, showAll: false },
-    userGridShowCrowns: true,
-    userGridMaxColumns: 6,
+    userGridSettings: {
+        userGridShowCrowns: true,
+        userGridAutoGrow: true,
+        userGridMaxColumns: 6,
+    },
 });
 
 export const studentSettingsAtom = atom<StudentSettings>({
@@ -203,6 +207,20 @@ export const teacherHidesAtom = atom<Map<string, string[]>>(new Map());
  * K = students name (username) V = last image receiced
  */
 export const studentActivityAtom = atom<Map<string, ActivityPicture | null>>(new Map());
+
+/**
+ * For optimizing, Cache to rerender only student that most resent picture changed.
+ */
+const studentActivityCache = new Map<string, Atom<ActivityPicture | null>>();
+export const activityCacheAtom = (userId: string) => {
+    if (!studentActivityCache.has(userId)) {
+        studentActivityCache.set(
+            userId,
+            atom((get) => get(studentActivityAtom).get(userId) ?? null)
+        );
+    }
+    return studentActivityCache.get(userId)!;
+};
 
 /**
  * Contains data of student's selected controls.

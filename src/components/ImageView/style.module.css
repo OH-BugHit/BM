@@ -9,38 +9,41 @@
     background: rgba(0, 0, 0, 0.7);
     align-items: center;
     justify-content: center;
-    z-index: 5;
-}
-
-.imageContainer {
-    position: relative;
-    max-width: 90vw;
-    max-height: 90vh;
-}
-
-.imageContainer img {
-    max-width: 100%;
-    max-height: 100%;
-    box-shadow: 0 0 24px #000;
-    display: block;
+    z-index: 1500;
 }
 
 .topPictureContainer {
     display: flex;
     flex-direction: row;
     gap: 2rem;
+    max-width: 70vw;
 }
 
+
+
 /*For opened images in OpenedImage.tsx*/
+
+.imageContainer {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageContainer img {
+    display: block;
+    width: 70vw;
+    height: 70vh;
+}
+
 .openImageOverlay2 {
     display: flex;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.7);
     align-items: center;
     justify-content: center;
     z-index: 1500;
-    height: 100vh;
-    width: 100vw;
 }

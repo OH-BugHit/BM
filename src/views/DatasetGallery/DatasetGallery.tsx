@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import style from './style.module.css';
 import { fetchImageUrls } from '../../services/ImageService';
 import { Button } from '@genai-fi/base';
@@ -14,7 +14,7 @@ import { motion } from 'framer-motion';
  * Component shows a gallery of images from a dataset
  * @returns
  */
-export function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
+function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
     const { t } = useTranslation();
     const [allImages, setAllImages] = useState<string[]>([]);
     const [images, setImages] = useState<string[]>([]);
@@ -161,19 +161,21 @@ export function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                 {images.length === 0 && !loading && selected.length !== 0 && (
                     <em className={style.noData}>{t('common.noTeachingData')}</em>
                 )}
-                <div
-                    className={`${style.imageGrid} ${mode === 'teacher' ? style.teacherGrid : ''}`}
-                    ref={containerRef}
-                >
-                    {images.map((src, index) => (
-                        <img
-                            key={index}
-                            src={src}
-                            alt={`Kuva ${index}`}
-                            className={style.image}
-                            onClick={() => setOpenImage(src)}
-                        />
-                    ))}
+                <div className={style.gridContainer}>
+                    <div
+                        className={`${style.imageGrid} ${mode === 'teacher' ? style.teacherGrid : ''}`}
+                        ref={containerRef}
+                    >
+                        {images.map((src, index) => (
+                            <img
+                                key={index}
+                                src={src}
+                                alt={`Kuva ${index}`}
+                                className={style.image}
+                                onClick={() => setOpenImage(src)}
+                            />
+                        ))}
+                    </div>
                 </div>
             </motion.div>
             <OpenedImage
@@ -183,3 +185,5 @@ export function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
         </>
     );
 }
+
+export default React.memo(DatasetGallery);

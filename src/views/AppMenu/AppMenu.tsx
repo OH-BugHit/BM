@@ -18,6 +18,7 @@ import AppsIcon from '@mui/icons-material/Apps';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
+import SaveButton from '../../components/Savebutton/SaveButton';
 
 export default function MenuPanel() {
     const { t } = useTranslation();
@@ -240,6 +241,9 @@ export default function MenuPanel() {
                         {open ? t('menu.labels.settings') : ''}
                     </MenuButton>
                 </IconMenuItem>
+            </div>
+            <div className={style.sideNavSection}>
+                <SaveButton showText={open} />
             </div>
             <div className={style.sideNavSection}>
                 <IconMenuItem

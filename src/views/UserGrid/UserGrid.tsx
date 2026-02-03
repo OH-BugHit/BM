@@ -30,7 +30,12 @@ export default function UserGrid() {
         setOpenResult(currentTerm);
     }, [currentTerm, setOpenResult]);
 
-    const maxWidth = `calc(${settings.userGridMaxColumns} * 220px + 4 * 1rem)`;
+    let maxWidth = '';
+    if (settings.userGridSettings.userGridAutoGrow) {
+        maxWidth = `calc(${allUNs.length > 0 ? Math.min(Math.round(allUNs.length / 2) + 3, 16) : 2} * 220px + 4 * 1rem)`;
+    } else {
+        maxWidth = `calc(${settings.userGridSettings.userGridMaxColumns} * 220px + 4 * 1rem)`;
+    }
 
     const animateVariants = {
         enter: { width: '0%', opacity: 0.5 },

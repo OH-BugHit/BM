@@ -73,33 +73,41 @@
     "guide": {
         "normal": {
             "steps": {
-                "1": {
-                    "title": "Yhdistä",
-                    "tip": "Liittyneet oppilaat näkyvät yllä. Voit poistaa pelaajan käyttämällä yläpaneelia. Voit valita käyttäjän painamalla"
+                "teacher": {
+                    "1": {
+                        "title": "Yhdistä",
+                        "tip": "Liittyneet oppilaat näkyvät yllä. Voit valita käyttäjän painamalla käyttäjän kuvaa. Voit poistaa valitun pelaajan pelistä käyttämällä yläpaneelia."
+                    },
+                    "2": {
+                        "title": "Luokittelutermi",
+                        "tip": "Valitse luokittelutermi pudotusvalikosta. Voit vaihtaa mallia painamalla \"Vaihda luokittelumalli\". Luokittelutermin tai mallin vaihtaminen ei vaikuta aiempiin tuloksiin."
+                    },
+                    "3": {
+                        "title": "Pelaa",
+                        "tip": "Kaikki on valmista pelaamista varten. Aloita painalla toistopainiketta alapaneelista tai vasemmalta ohjauksen paneelista. Voit tarvittaessa nollata oppilaan tuloksen valitsemalla hänet ja painamalla \"Nollaa käyttäjän tulos termillä...\""
+                    },
+                    "4": {
+                        "title": "Lämpökartta",
+                        "tip": "Lämpökartta on nyt oppilaiden käytettävissä. Voit asettaa sen pois käytöstä ja käyttöön alapaneelin liekkipainikkeesta."
+                    },
+                    "5": {
+                        "title": "Opetusdata",
+                        "tip": "Opetusdata selaaminen on nyt sallittu oppilaille. Voint asettaa sen pois käytöstä ja käyttöön alapaneelin kuvapainikkeesta. Voit palata vaiheeseen kolme seurataksesi oppilaiden pelaamista."
+                    },
+                    "6": {
+                        "title": "Tulokset",
+                        "tip": "Peli on pysäytetty! Voit suurentaa tuloskuvaa painamalla siitä. Voit valita yksittäinen luokittelutermi tarkasteluun painamalla sitä. Yksittäisen luokittelutermin tarkastelussa näet kuvan suurennettuasi myös kuvaan liittyvän lämpökartan."
+                    },
+                    "7": {
+                        "title": "Valmis",
+                        "tip": "Olet pelannut loppuun kierroksen Hajoavaa Konetta! Voit aloittaa toisen kierroksen ja siirtyä valitsemaan uuden luokittelutermin painamalla nollauspainiketta ohjauksen paneelista. Nollauspainikkeen painaminen ei vaikuta aiemmpien kierrosten tuloksiin. Nollaus poistaa oppilailta käytöstä lämpökartan ja opetusdatan selaamisen."
+                    }
                 },
-                "2": {
-                    "title": "Luokittelutermi",
-                    "tip": "Valitse luokittelutermi pudotusvalikosta. Voit vaihtaa mallia painamalla \"Vaihda luokittelumalli\". Luokittelutermin tai mallin vaihtaminen ei vaikuta aiempiin tuloksiin."
-                },
-                "3": {
-                    "title": "Pelaa",
-                    "tip": "Kaikki on valmista pelaamista varten. Aloita painalla toistopainiketta alapaneelista tai vasemmalta ohjauksen paneelista. Voit tarvittaessa nollata oppilaan tuloksen valitsemalla hänet ja painamalla \"Nollaa käyttäjän tulos termillä...\""
-                },
-                "4": {
-                    "title": "Lämpökartta",
-                    "tip": "Lämpökartta on nyt oppilaiden käytettävissä. Voit asettaa sen pois käytöstä ja käyttöön alapaneelin liekkipainikkeesta."
-                },
-                "5": {
-                    "title": "Opetusdata",
-                    "tip": "Opetusdata selaaminen on nyt sallittu oppilaille. Voint asettaa sen pois käytöstä ja käyttöön alapaneelin kuvapainikkeesta. Voit palata vaiheeseen kolme seurataksesi oppilaiden pelaamista."
-                },
-                "6": {
-                    "title": "Tulokset",
-                    "tip": "Peli on pysäytetty! Voit suurentaa tuloskuvaa painamalla siitä. Voit valita yksittäinen luokittelutermi tarkasteluun painamalla sitä. Yksittäisen luokittelutermin tarkastelussa näet kuvan suurennettuasi myös kuvaan liittyvän lämpökartan."
-                },
-                "7": {
-                    "title": "Valmis",
-                    "tip": "Olet pelannut loppuun kierroksen Hajoavaa Konetta! Voit aloittaa toisen kierroksen ja siirtyä valitsemaan uuden luokittelutermin painamalla nollauspainiketta ohjauksen paneelista. Nollauspainikkeen painaminen ei vaikuta aiemmpien kierrosten tuloksiin. Nollaus poistaa oppilailta käytöstä lämpökartan ja opetusdatan selaamisen."
+                "student": {
+                    "1": {
+                        "title": "Kuvan ottaminen",
+                        "tip": "Kamera kuvaa kokoajan ja lähettää uuden parhaan tuloksen automaattisesti. Sinun ei tarvitse painaa mistään ottaaksesi kuvaa."
+                    }
                 }
             }
         },
@@ -172,6 +180,9 @@
     "menu": {
         "labels": {
             "exit": "Lopeta (Kaikki tiedot poistetaan)",
+            "exitShort": "Lopeta",
+            "save": "Lataa tulokset ja kuvat ZIP-tiedostona",
+            "saveShort": "Lataa tulokset",
             "settings": "Asetukset"
         },
         "vis": {
@@ -235,13 +246,15 @@
         "labels": {
             "allowHidePicture": "Käyttäjä voi piilottaa kuvan (ei mahdollista profiilikuvaa)",
             "allowStartTermAgain": "Käyttäjä voi poistaa tuloksensa",
+            "autoGrow": "Mukauta käyttäjäruudukon koko automaattisesti",
             "hideOnDefault": "Piilota tuloskuvasi",
             "hideResultPictures": "Piilota kaikki tuloskuvat",
             "pauseOnChange": "Aloita uusi luokittelutermi pysäytystilassa",
             "showFullScoreboard": "Näytä kaikki tulokset pisteiden taulukossa",
             "scoreboardLimit": "Näytä tulokset vain {{limit}} parhaalle",
-            "userGridMaxColumns": "Käyttäjäruudukon leveys",
-            "showCrowns": "Näytä top-3 kruunut käyttäjäruudukossa"
+            "userGridMaxColumns": "Käyttäjäruudukon koko",
+            "showCrowns": "Näytä top-3 kruunut käyttäjäruudukossa",
+            "showTips": "Näytä ohjeet"
         }
     },
     "student": {

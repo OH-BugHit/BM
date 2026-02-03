@@ -4,11 +4,10 @@ import { CanvasCopy } from '../CanvasCopy/CanvasCopy';
 import { Button } from '@genai-fi/base';
 import { useAtom } from 'jotai';
 import { studentDataAtom } from '../../atoms/state';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ImageViewProps {
-    maxSize: number;
     openImage: { student: string; className: string } | null | HTMLCanvasElement | undefined;
     setOpenImage: Dispatch<
         SetStateAction<
@@ -30,9 +29,25 @@ interface ImageViewProps {
  * @param setOpenImage setter for image to open
  * @returns return view with opened image
  */
-export default function ImageView({ maxSize, openImage, setOpenImage }: ImageViewProps) {
+export default function ImageView({ openImage, setOpenImage }: ImageViewProps) {
     const [studentData] = useAtom(studentDataAtom);
     const { t } = useTranslation();
+
+    const [maxSize, setMaxSize] = useState<{ height: number; width: number }>({
+        height: Math.floor(window.innerHeight * 0.7),
+        width: Math.floor(window.innerWidth * 0.7),
+    });
+    useEffect(() => {
+        const handleResize = () =>
+            setMaxSize({
+                height: Math.floor(window.innerHeight * 0.7),
+                width: Math.floor(window.innerWidth * 0.7),
+            });
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <>
             {openImage && (
@@ -61,36 +76,49 @@ export default function ImageView({ maxSize, openImage, setOpenImage }: ImageVie
                             <CloseSharpIcon />
                         </Button>
                         {!(openImage instanceof HTMLCanvasElement) && (
-                            <>
+                            <div
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    gap: '1rem',
+                                    width: '100vw',
+                                    justifyContent: 'space-evenly',
+                                }}
+                            >
                                 <CanvasCopy
                                     sourceCanvas={
                                         studentData.students.get(openImage.student)?.data.get(openImage.className)
                                             ?.topCanvas
                                     }
-                                    maxWidth={maxSize}
-                                    width={maxSize}
-                                    height={maxSize}
+                                    maxWidth={Math.floor(Math.min(maxSize.height, maxSize.width / 2))}
+                                    maxHeight={maxSize.height}
+                                    width={Math.floor(Math.min(maxSize.height, maxSize.width / 2))}
+                                    height={Math.floor(Math.min(maxSize.height, maxSize.width / 2))}
                                 />
                                 <CanvasCopy
                                     sourceCanvas={
                                         studentData.students.get(openImage.student)?.data.get(openImage.className)
                                             ?.topHeatmap
                                     }
-                                    maxWidth={maxSize}
-                                    width={maxSize}
-                                    height={maxSize}
+                                    maxWidth={Math.floor(Math.min(maxSize.height, maxSize.width / 2))}
+                                    maxHeight={maxSize.height}
+                                    width={Math.floor(Math.min(maxSize.height, maxSize.width / 2))}
+                                    height={Math.floor(Math.min(maxSize.height, maxSize.width / 2))}
                                 />
-                            </>
+                            </div>
                         )}
                         {openImage instanceof HTMLCanvasElement && (
-                            <>
+                            <div onClick={(e) => e.stopPropagation()}>
                                 <CanvasCopy
                                     sourceCanvas={openImage}
-                                    maxWidth={maxSize}
-                                    width={maxSize}
-                                    height={maxSize}
+                                    maxWidth={maxSize.width}
+                                    maxHeight={maxSize.height}
+                                    width={'100%'}
+                                    height={maxSize.height}
+                                    noBorder={true}
                                 />
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>

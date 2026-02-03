@@ -3,13 +3,15 @@ import style from './style.module.css';
 
 interface Props {
     step: number;
+    user: 'student' | 'teacher';
 }
-export default function Tip({ step }: Props) {
+
+export default function Tip({ step, user }: Props) {
     const { t } = useTranslation();
 
     return (
         <div className={style.tip}>
-            <p>{t(`guide.normal.steps.${step}.tip`)}</p>
+            <p>{t(`guide.normal.steps.${user}.${step}.tip`)}</p>
         </div>
     );
 }

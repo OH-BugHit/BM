@@ -121,8 +121,11 @@ export type Settings = {
         limit: number;
         showAll: boolean;
     };
-    userGridShowCrowns: boolean;
-    userGridMaxColumns: number;
+    userGridSettings: {
+        userGridShowCrowns: boolean;
+        userGridAutoGrow: boolean;
+        userGridMaxColumns: number;
+    };
 };
 
 /**

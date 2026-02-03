@@ -8,6 +8,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconButton } from '@mui/material';
 
+const PICSIZE = 140; // Was 80
+
 interface Props {
     term: string;
     student: string;
@@ -65,9 +67,9 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                     >
                         <CanvasCopy
                             sourceCanvas={classEntry.topCanvas}
-                            maxWidth={80}
-                            width={80}
-                            height={80}
+                            maxWidth={PICSIZE}
+                            width={PICSIZE}
+                            height={PICSIZE}
                         />
                     </button>
                 )}
@@ -75,9 +77,9 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                     <div className={style.viewPhotoButton}>
                         <CanvasCopy
                             sourceCanvas={null}
-                            maxWidth={80}
-                            width={80}
-                            height={80}
+                            maxWidth={PICSIZE}
+                            width={PICSIZE}
+                            height={PICSIZE}
                             noBorder={true}
                         />
                     </div>

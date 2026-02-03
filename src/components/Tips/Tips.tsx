@@ -8,7 +8,10 @@ import { guidanceActiveAtom, guidanceStepAtom, showTipsAtom } from '../../atoms/
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-export default function Tips() {
+interface Props {
+    user: 'student' | 'teacher';
+}
+export default function Tips({ user }: Props) {
     const { t } = useTranslation();
     const guidance = useAtomValue(guidanceActiveAtom);
     const step = useAtomValue(guidanceStepAtom);
@@ -50,8 +53,11 @@ export default function Tips() {
                         <CloseSharpIcon />
                     </Button>
 
-                    <h3>{t(`guide.normal.steps.${step}.title`)}</h3>
-                    <Tip step={step} />
+                    <h3>{t(`guide.normal.steps.${user}.${step}.title`)}</h3>
+                    <Tip
+                        step={step}
+                        user={user}
+                    />
 
                     <Button
                         style={{ position: 'absolute', right: '1rem', bottom: '0.1rem' }}

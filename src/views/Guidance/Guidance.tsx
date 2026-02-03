@@ -1,20 +1,33 @@
-import { IconButton, MenuItem, MenuList } from '@mui/material';
+import { MenuItem, MenuList } from '@mui/material';
 import style from './style.module.css';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
 import { useAtom, useSetAtom } from 'jotai';
-import { activeViewAtom, configAtom, guidanceActiveAtom, guidanceStepAtom, showTipsAtom } from '../../atoms/state';
+import { activeViewAtom, configAtom, guidanceActiveAtom, guidanceStepAtom } from '../../atoms/state';
 import ActionButton from './ActionButton';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
+import MiscButtons from './MiscButtons';
 
 export default function Guidance() {
-    const { t } = useTranslation();
+    const { t } = useTranslation('translation', { keyPrefix: 'guide' });
     const setCurrentView = useSetAtom(activeViewAtom);
     const setConfig = useSetAtom(configAtom);
     const setGuidanceActive = useSetAtom(guidanceActiveAtom);
-    const [tips, setShowTips] = useAtom(showTipsAtom);
     const [currentSelected, setCurrentSelected] = useAtom(guidanceStepAtom);
+
+    const stepRefs = useRef<Record<number, HTMLLIElement | null>>({});
+    const containerRef = useRef<HTMLDivElement | null>(null);
+
+    // Autoscroll to phase
+    useEffect(() => {
+        const el = stepRefs.current[currentSelected];
+        if (!el) return;
+
+        el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+        });
+    }, [currentSelected]);
 
     const doAction = useCallback(
         (action: string) => {
@@ -47,13 +60,13 @@ export default function Guidance() {
     );
 
     const data: { index: number; title: string; view: TeacherDialogs | TeacherViews; action: string }[] = [
-        { index: 1, title: t('guide.normal.steps.1.title'), view: 'share', action: 'share' },
-        { index: 2, title: t('guide.normal.steps.2.title'), view: 'termChange', action: 'share' },
-        { index: 3, title: t('guide.normal.steps.3.title'), view: 'userGrid', action: 'pause' },
-        { index: 4, title: t('guide.normal.steps.4.title'), view: 'userGrid', action: 'pause' },
-        { index: 5, title: t('guide.normal.steps.5.title'), view: 'datasetGallery', action: 'pause' },
-        { index: 6, title: t('guide.normal.steps.6.title'), view: 'default', action: 'pause' },
-        { index: 7, title: t('guide.normal.steps.7.title'), view: 'default', action: 'reset' },
+        { index: 1, title: t('normal.steps.teacher.1.title'), view: 'share', action: 'share' },
+        { index: 2, title: t('normal.steps.teacher.2.title'), view: 'termChange', action: 'share' },
+        { index: 3, title: t('normal.steps.teacher.3.title'), view: 'userGrid', action: 'pause' },
+        { index: 4, title: t('normal.steps.teacher.4.title'), view: 'userGrid', action: 'pause' },
+        { index: 5, title: t('normal.steps.teacher.5.title'), view: 'datasetGallery', action: 'pause' },
+        { index: 6, title: t('normal.steps.teacher.6.title'), view: 'default', action: 'pause' },
+        { index: 7, title: t('normal.steps.teacher.7.title'), view: 'default', action: 'reset' },
     ];
 
     const handleStepChage = (selectedStep: { index: number; title: string; view: TeacherDialogs | TeacherViews }) => {
@@ -108,40 +121,39 @@ export default function Guidance() {
             className={style.container}
             data-testid="guidance"
         >
-            {!tips && (
-                <IconButton
-                    style={{ position: 'absolute', top: '0', left: '0' }}
-                    onClick={() => {
-                        setShowTips((old) => !old);
-                    }}
-                    size="large"
-                >
-                    <InfoTwoToneIcon fontSize="large" />
-                </IconButton>
-            )}
+            <div style={{ marginTop: '0.5rem' }}></div>
             <MenuItem
                 selected={false}
                 onClick={() => {
                     setGuidanceActive(false);
                 }}
             >
-                {t('guide.common.exit')}
+                {t('common.exit')}
             </MenuItem>
-            <MenuList>
-                {data.map((step) => (
-                    <MenuItem
-                        selected={currentSelected === step.index}
-                        onClick={() => {
-                            handleStepChage(step);
-                            setCurrentSelected(step.index);
-                        }}
-                        key={step.index}
-                    >
-                        {step.index}. {step.title}
-                    </MenuItem>
-                ))}
-            </MenuList>
-
+            <div style={{ flexGrow: 1 }}></div>
+            <div
+                className={style.stepsContainer}
+                ref={containerRef}
+            >
+                <MenuList>
+                    {data.map((step) => (
+                        <MenuItem
+                            selected={step.index === currentSelected}
+                            onClick={() => {
+                                handleStepChage(step);
+                                setCurrentSelected(step.index);
+                            }}
+                            key={step.index}
+                            component="li"
+                            ref={(el) => {
+                                stepRefs.current[step.index] = el;
+                            }}
+                        >
+                            {step.index}. {step.title}
+                        </MenuItem>
+                    ))}
+                </MenuList>
+            </div>
             {currentSelected && (
                 <div className={style.actionContainer}>
                     {data[currentSelected - 1].action !== 'none' && (
@@ -156,6 +168,8 @@ export default function Guidance() {
                     )}
                 </div>
             )}
+            <div style={{ flexGrow: 1 }}></div>
+            <MiscButtons />
         </nav>
     );
 }

@@ -18,7 +18,6 @@ interface Props {
 }
 
 function WebcamInput({ scoreBufferRef, scoreSumRef, classifyTerm, topCanvasRef, topHeatmapRef }: Props) {
-    console.log('rendering webcam input');
     const model = useAtomValue(modelAtom);
     const setCameraActivated = useSetAtom(cameraActivatedAtom);
     const WEBCAMSIZE = Math.min(512, window.innerHeight - 264); // Size of the webcam component

@@ -44,7 +44,7 @@ export default function Crown({ username, openResult }: Props) {
             );
         }
     };
-    if (settings.userGridShowCrowns !== true) return;
+    if (settings.userGridSettings.userGridShowCrowns !== true) return;
     return (
         <div className={style.crownWrapper}>
             <div className={style.crownImg}>{crown()}</div>

@@ -59,7 +59,7 @@ export default function ScoreRow({ index, student, term, setOpenImage }: Props) 
                             <img
                                 src="/aiKruunuSmall.png"
                                 className={style.crownImg}
-                                height="60"
+                                height="80"
                             />
                         )}
                         {student.studentPic && (

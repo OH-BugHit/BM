@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { DatasetGallery } from './DatasetGallery';
 import { activeViewAtom, configAtom } from '../../atoms/state';
+import DatasetGallery from './DatasetGallery';
 
 export function StudentDatasetWrapper() {
     const activeView = useAtomValue(activeViewAtom);

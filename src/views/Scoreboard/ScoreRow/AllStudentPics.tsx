@@ -5,6 +5,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { CanvasCopy } from '../../../components/CanvasCopy/CanvasCopy';
 import { useTranslation } from 'react-i18next';
 
+const PICSIZE = 140; // Was 80
+
 interface Props {
     student: string;
     setOpenImage: Dispatch<
@@ -55,9 +57,9 @@ export default function AllStudentPics({ student, setOpenImage }: Props) {
                 >
                     <CanvasCopy
                         sourceCanvas={pic}
-                        maxWidth={80}
-                        width={80}
-                        height={80}
+                        maxWidth={PICSIZE}
+                        width={PICSIZE}
+                        height={PICSIZE}
                     />
                 </button>
             ))}

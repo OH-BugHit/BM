@@ -11,6 +11,13 @@
     max-width: 1400px;
 }
 
+.studentTipContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 3.5rem;
+}
+
 .term {
     color: white
 }

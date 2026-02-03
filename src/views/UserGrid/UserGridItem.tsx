@@ -1,8 +1,8 @@
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import style from './style.module.css';
 import { MouseEvent } from 'react';
-import { selectedUserAtom, studentActivityAtom } from '../../atoms/state';
+import { activityCacheAtom, selectedUserAtom } from '../../atoms/state';
 import { useTranslation } from 'react-i18next';
 import Crown from './Crown';
 
@@ -15,11 +15,12 @@ interface Props {
 
 export default function UserGridItem({ username, alive, profilePicture, openResult }: Props) {
     const [selectedUser, setSelectedUser] = useAtom(selectedUserAtom);
-    const [currentActivity] = useAtom(studentActivityAtom);
     const { i18n } = useTranslation();
+    const singleStudentActivityAtom = activityCacheAtom(username);
+    const currentActivity = useAtomValue(singleStudentActivityAtom);
 
+    const currentPic = currentActivity;
     const getPicture = () => {
-        const currentPic = currentActivity.get(username);
         if (currentPic && !currentPic.hidden) {
             return (
                 <CanvasCopy

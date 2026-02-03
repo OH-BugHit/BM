@@ -3,16 +3,26 @@ import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { Checkbox, FormControlLabel, TextField } from '@mui/material';
 import LangSelect from '../../components/LangSelect/LangSelect';
-import { settingAtom } from '../../atoms/state';
+import { settingAtom, showTipsAtom } from '../../atoms/state';
 
 export default function GeneralSettings() {
     const { t } = useTranslation();
     const [settings, setSettings] = useAtom(settingAtom);
+    const [tips, setTips] = useAtom(showTipsAtom);
 
     return (
         <div className={style.column}>
             <LangSelect />
             <div className={style.spacer} />
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        checked={tips || false}
+                        onChange={(_, checked) => setTips(() => checked)}
+                    />
+                }
+                label={t('settings.labels.showTips')}
+            />
             <FormControlLabel
                 control={
                     <Checkbox

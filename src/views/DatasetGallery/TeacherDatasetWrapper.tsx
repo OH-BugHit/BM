@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
-import { DatasetGallery } from './DatasetGallery';
 import { activeViewAtom } from '../../atoms/state';
+import DatasetGallery from './DatasetGallery';
 
 export function TeacherDatasetWrapper() {
     const [activeView] = useAtom(activeViewAtom);

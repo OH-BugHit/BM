@@ -16,6 +16,7 @@ import TopScoreSender from './StudentComponents/TopScoreSender';
 import ResultsButton from './ResultsButton';
 import { StudentDatasetWrapper } from '../DatasetGallery/StudentDatasetWrapper';
 import { useTranslation } from 'react-i18next';
+import Tips from '../../components/Tips/Tips';
 
 interface StudentProps {
     serverCode: string;
@@ -119,6 +120,9 @@ export default function Student({ serverCode }: StudentProps) {
                             {!classifyTerm && <h2 className={style.waiting}>{t('student.titles.waitForLabel')}</h2>}
                             <div className={style.gameLowerStuff}>
                                 <ResultsButton />
+                            </div>
+                            <div className={style.studentTipContainer}>
+                                <Tips user="student" />
                             </div>
                         </div>
                     </div>

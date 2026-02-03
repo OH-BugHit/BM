@@ -203,10 +203,17 @@ export default function ServerProtocol() {
                     // Here we set the image received as current activity of student shown in user grid:
                     setCurrentActivity((prev) => {
                         const id = data.data.studentId;
-                        const prevActivity = prev ?? new Map();
-                        if (data.data.hidden !== 'delete')
-                            prevActivity.set(id, { picture: topCanvas, hidden: data.data.hidden });
-                        return prevActivity;
+                        const prevMap = prev ?? new Map();
+                        const next = new Map(prevMap);
+                        if (data.data.hidden !== 'delete') {
+                            next.set(id, {
+                                picture: topCanvas,
+                                hidden: data.data.hidden,
+                            });
+                        } else {
+                            next.delete(id); // (valinnainen mutta looginen)
+                        }
+                        return next;
                     });
                     setStudent((prev) => {
                         const id = data.data.studentId;

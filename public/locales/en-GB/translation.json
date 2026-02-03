@@ -114,33 +114,41 @@
     "guide": {
         "normal": {
             "steps": {
-                "1": {
-                    "title": "Connect",
-                    "tip": "Students appear above when connected. You can remove a player using the top panel. First, select a user and then click \"Remove\" or \"Kick\"."
+                "teacher": {
+                    "1": {
+                        "title": "Connect",
+                        "tip": "Students appear above when connected. You can remove a player using the top panel. First, select a user and then click \"Remove\" or \"Kick\"."
+                    },
+                    "2": {
+                        "title": "Select",
+                        "tip": "Select a label for students to spoof from the dropdown menu. You can change the model using the \"Change classifier model\" button. Changing the label or the model will not affect players' previous scores."
+                    },
+                    "3": {
+                        "title": "Explore",
+                        "tip": "The game is set, and students can start playing now. Start by pressing the play icon on the bottom panel or on the guidance panel located on the left. If needed, you can reset a player's score by selecting the player and clicking \"Reset user's score on label: ...\"."
+                    },
+                    "4": {
+                        "title": "Heatmap",
+                        "tip": "The heatmap is now enabled for students. You can toggle it on and off using the flame icon on the bottom panel."
+                    },
+                    "5": {
+                        "title": "Dataset",
+                        "tip": "Exploring the training dataset is now enabled for students. You can toggle it using the images icon on the bottom panel. You can go back to step 3 to see how students perform."
+                    },
+                    "6": {
+                        "title": "Results",
+                        "tip": "The game is now paused! You can view result images by clicking them. Select a label from the left to access individual results for each label. In the individual results, you can also view the heatmap image of selected result image when the image is clicked"
+                    },
+                    "7": {
+                        "title": "Finish",
+                        "tip": "You have finished a round of Breakable Machine! Move to the \"Select\" phase to choose a new label by clicking reset button on the guidance panel. Resetting will not affect scores on previous labels. Resetting will also disable the heatmap and dataset for student"
+                    }
                 },
-                "2": {
-                    "title": "Select",
-                    "tip": "Select a label for students to spoof from the dropdown menu. You can change the model using the \"Change classifier model\" button. Changing the label or the model will not affect players' previous scores."
-                },
-                "3": {
-                    "title": "Explore",
-                    "tip": "The game is set, and students can start playing now. Start by pressing the play icon on the bottom panel or on the guidance panel located on the left. If needed, you can reset a player's score by selecting the player and clicking \"Reset user's score on label: ...\"."
-                },
-                "4": {
-                    "title": "Heatmap",
-                    "tip": "The heatmap is now enabled for students. You can toggle it on and off using the flame icon on the bottom panel."
-                },
-                "5": {
-                    "title": "Dataset",
-                    "tip": "Exploring the training dataset is now enabled for students. You can toggle it using the images icon on the bottom panel. You can go back to step 3 to see how students perform."
-                },
-                "6": {
-                    "title": "Results",
-                    "tip": "The game is now paused! You can view result images by clicking them. Select a label from the left to access individual results for each label. In the individual results, you can also view the heatmap image of selected result image when the image is clicked"
-                },
-                "7": {
-                    "title": "Finish",
-                    "tip": "You have finished a round of Breakable Machine! Move to the \"Select\" phase to choose a new label by clicking reset button on the guidance panel. Resetting will not affect scores on previous labels. Resetting will also disable the heatmap and dataset for student"
+                "student": {
+                    "1": {
+                        "title": "Using camera",
+                        "tip": "The game uses live feed from your camera. You do not have to use any buttons to take a picture"
+                    }
                 }
             }
         },
@@ -212,6 +220,9 @@
     "menu": {
         "labels": {
             "exit": "Quit session (All data is removed)",
+            "exitShort": "Quit session",
+            "save": "Download scores and images from the session as a ZIP-file",
+            "saveShort": "Save",
             "settings": "Settings"
         },
         "vis": {
@@ -275,13 +286,15 @@
         "labels": {
             "allowHidePicture": "Allow students to hide their result pictures",
             "allowStartTermAgain": "Allow students to reset own scores",
+            "autoGrow": "Adjust grid automatically",
             "hideOnDefault": "Hide your result pictures",
             "hideResultPictures": "Hide all result pictures",
             "pauseOnChange": "Pause game when label is changed",
             "showFullScoreboard": "Show all scores on scoreboard",
             "scoreboardLimit": "Limit scoreboard to {{limit}} best scores",
-            "userGridMaxColumns": "User grid view columns",
-            "showCrowns": "Show crowns for top three"
+            "userGridMaxColumns": "User grid view size",
+            "showCrowns": "Show crowns for top three",
+            "showTips": "Show tips"
         }
     },
     "student": {

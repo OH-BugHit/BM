@@ -7,7 +7,7 @@ import UserMenu from '../UserMenu/UserMenu';
 import Scoreboard from '../Scoreboard/Scoreboard';
 import ControlMenu from '../ControlMenu/ControlMenu';
 import { TeacherDatasetWrapper } from '../DatasetGallery/TeacherDatasetWrapper';
-import Tips from '../Tips/Tips';
+import Tips from '../../components/Tips/Tips';
 import TermMenu from '../TermChange/TermMenu/TermMenu';
 import React from 'react';
 
@@ -33,7 +33,7 @@ function TeacherContent() {
                 {activeView.active === 'default' && <Scoreboard />}
             </>
             <div className={style.controlLayer}>
-                <Tips />
+                <Tips user="teacher" />
                 <ControlMenu />
             </div>
         </div>

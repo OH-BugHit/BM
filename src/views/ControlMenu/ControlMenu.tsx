@@ -37,13 +37,17 @@ export default function ControlMenu() {
             </FloatingMenuItem>
             <FloatingMenuItem
                 tooltip={
-                    config?.heatmap ? t('controlMenu.actions.disableHeatmap') : t('controlMenu.actions.enableHeatmap')
+                    config?.heatmap.on
+                        ? t('controlMenu.actions.disableHeatmap')
+                        : t('controlMenu.actions.enableHeatmap')
                 }
-                selected={config?.heatmap}
+                selected={config?.heatmap.on}
             >
                 <MenuButton
                     color="inherit"
-                    onClick={() => setConfig((old) => ({ ...old, heatmap: !old.heatmap }))}
+                    onClick={() =>
+                        setConfig((old) => ({ ...old, heatmap: { on: !old.heatmap.on, force: old.heatmap.force } }))
+                    }
                     aria-label={t('controlMenu.actions.disableHeatmap')}
                     size="large"
                     variant="text"
@@ -54,15 +58,17 @@ export default function ControlMenu() {
             </FloatingMenuItem>
             <FloatingMenuItem
                 tooltip={
-                    config?.gallery
+                    config?.gallery.on
                         ? t('controlMenu.actions.disableDataGallery')
                         : t('controlMenu.actions.enableDataGallery')
                 }
-                selected={config?.gallery}
+                selected={config?.gallery.on}
             >
                 <MenuButton
                     color="inherit"
-                    onClick={() => setConfig((old) => ({ ...old, gallery: !old.gallery }))}
+                    onClick={() =>
+                        setConfig((old) => ({ ...old, gallery: { on: !old.gallery.on, force: old.gallery.force } }))
+                    }
                     aria-label={t('controlMenu.actions.disableDataGallery')}
                     size="large"
                     variant="text"

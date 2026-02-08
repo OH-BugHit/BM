@@ -48,11 +48,24 @@ export default function Guidance() {
                     setConfig((prev) => ({
                         ...prev,
                         pause: true,
-                        heatmap: false,
-                        gallery: false,
+                        heatmap: { on: false, force: false },
+                        gallery: { on: false, force: false },
                     }));
                     setCurrentSelected(2);
                     break;
+                }
+                case 'heatmap': {
+                    setConfig((prev) => ({
+                        ...prev,
+                        heatmap: { on: !prev.heatmap.on, force: prev.heatmap.force },
+                    }));
+                    break;
+                }
+                case 'dataset': {
+                    setConfig((prev) => ({
+                        ...prev,
+                        gallery: { on: !prev.gallery.on, force: prev.gallery.force },
+                    }));
                 }
             }
         },
@@ -63,8 +76,8 @@ export default function Guidance() {
         { index: 1, title: t('normal.steps.teacher.1.title'), view: 'share', action: 'share' },
         { index: 2, title: t('normal.steps.teacher.2.title'), view: 'termChange', action: 'share' },
         { index: 3, title: t('normal.steps.teacher.3.title'), view: 'userGrid', action: 'pause' },
-        { index: 4, title: t('normal.steps.teacher.4.title'), view: 'userGrid', action: 'pause' },
-        { index: 5, title: t('normal.steps.teacher.5.title'), view: 'datasetGallery', action: 'pause' },
+        { index: 4, title: t('normal.steps.teacher.4.title'), view: 'userGrid', action: 'heatmap' },
+        { index: 5, title: t('normal.steps.teacher.5.title'), view: 'datasetGallery', action: 'dataset' },
         { index: 6, title: t('normal.steps.teacher.6.title'), view: 'default', action: 'pause' },
         { index: 7, title: t('normal.steps.teacher.7.title'), view: 'default', action: 'reset' },
     ];
@@ -95,14 +108,14 @@ export default function Guidance() {
             case 4: {
                 setConfig((prev) => ({
                     ...prev,
-                    heatmap: true,
+                    heatmap: { on: true, force: prev.heatmap.force },
                 }));
                 break;
             }
             case 5: {
                 setConfig((prev) => ({
                     ...prev,
-                    gallery: true,
+                    gallery: { on: true, force: prev.gallery.force },
                 }));
                 break;
             }

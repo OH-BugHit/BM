@@ -12,7 +12,9 @@ export default function HeatmapLayer({ heatmapRef }: Props) {
     const controls = useAtomValue(studentControlsAtom);
 
     return (
-        <div className={` ${config.heatmap && controls.heatmap ? style.heatmapCanvas : style.hiddenCanvas}`}>
+        <div
+            className={` ${(config.heatmap.on && controls.heatmap) || config.heatmap.force ? style.heatmapCanvas : style.hiddenCanvas}`}
+        >
             <canvas
                 ref={heatmapRef}
                 width={224}

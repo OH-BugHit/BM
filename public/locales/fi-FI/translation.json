@@ -84,23 +84,23 @@
                     },
                     "3": {
                         "title": "Pelaa",
-                        "tip": "Kaikki on valmista pelaamista varten. Aloita painalla toistopainiketta alapaneelista tai vasemmalta ohjauksen paneelista. Voit tarvittaessa nollata oppilaan tuloksen valitsemalla hänet ja painamalla \"Nollaa käyttäjän tulos termillä...\""
+                        "tip": "Kaikki on valmista pelaamista varten. Aloita painalla toistopainiketta alapaneelista tai vasemmalta ohjauksen paneelista. Voit myös keskeyttää pelin milloin tahansa. Voit tarvittaessa nollata oppilaan tuloksen valitsemalla hänet ja painamalla \"Nollaa käyttäjän tulos termillä...\""
                     },
                     "4": {
                         "title": "Lämpökartta",
-                        "tip": "Lämpökartta on nyt oppilaiden käytettävissä. Voit asettaa sen pois käytöstä ja käyttöön alapaneelin liekkipainikkeesta."
+                        "tip": "Lämpökartta on nyt oppilaiden käytettävissä. Voit pakottaa lämpökartan päälle ohjauksen paneelista. Voit asettaa lämpökartan oppilaiden käyttöön ja pois ohjauksen paneelista tai alapaneelin liekkipainikkeesta."
                     },
                     "5": {
                         "title": "Opetusdata",
-                        "tip": "Opetusdata selaaminen on nyt sallittu oppilaille. Voint asettaa sen pois käytöstä ja käyttöön alapaneelin kuvapainikkeesta. Voit palata vaiheeseen kolme seurataksesi oppilaiden pelaamista."
+                        "tip": "Opetusdatan selaaminen on nyt sallittu oppilaille. Voit pakottaa opetusdatan näkymän päälle ohjauksen paneelista. Voit asettaa opetusdatan näkymän oppilaiden käyttöön ja pois käytöstä ohjauksen paneelista tai alapaneelin kuvapainikkeesta. Voit palata vaiheeseen kolme seurataksesi oppilaiden pelaamista."
                     },
                     "6": {
                         "title": "Tulokset",
-                        "tip": "Peli on pysäytetty! Voit suurentaa tuloskuvaa painamalla siitä. Voit valita yksittäinen luokittelutermi tarkasteluun painamalla sitä. Yksittäisen luokittelutermin tarkastelussa näet kuvan suurennettuasi myös kuvaan liittyvän lämpökartan."
+                        "tip": "Muista, että voit pysäyttää halutessasi pelin alapaneelista tai ohjauksen paneelista. Voit suurentaa tuloskuvaa painamalla siitä. Voit valita yksittäisen luokittelutermin tarkasteluun painamalla sitä. Yksittäisen luokittelutermin tarkastelussa näet kuvan suurennettuasi myös kuvaan liittyvän lämpökartan."
                     },
                     "7": {
                         "title": "Valmis",
-                        "tip": "Olet pelannut loppuun kierroksen Hajoavaa Konetta! Voit aloittaa toisen kierroksen ja siirtyä valitsemaan uuden luokittelutermin painamalla nollauspainiketta ohjauksen paneelista. Nollauspainikkeen painaminen ei vaikuta aiemmpien kierrosten tuloksiin. Nollaus poistaa oppilailta käytöstä lämpökartan ja opetusdatan selaamisen."
+                        "tip": "Olet pelannut loppuun kierroksen Hajoavaa Konetta! Voit aloittaa toisen kierroksen ja siirtyä valitsemaan uuden luokittelutermin painamalla nollauspainiketta ohjauksen paneelista. Nollauspainikkeen painaminen ei vaikuta aiemmpien kierrosten tuloksiin. Nollaus poistaa oppilailta käytöstä lämpökartan ja opetusdatan selaamisen. Voit halutessasi tallentaa tulokset ohjauksen paneelista"
                     }
                 },
                 "student": {

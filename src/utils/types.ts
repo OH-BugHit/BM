@@ -53,8 +53,8 @@ export type Labels = {
 
 export type SpoofConfig = {
     pause: boolean;
-    heatmap: boolean;
-    gallery: boolean;
+    heatmap: { on: boolean; force: boolean };
+    gallery: { on: boolean; force: boolean };
     modelData: ModelInfo;
     gameMode: 'all' | 'single';
     settings: {

@@ -67,8 +67,8 @@ export const modelListAtom = atom<string[]>([]);
  */
 export const configAtom = atom<SpoofConfig>({
     pause: true,
-    heatmap: false,
-    gallery: false,
+    heatmap: { on: false, force: false },
+    gallery: { on: false, force: false },
     modelData: { origin: ModelOrigin.GenAI, name: '' },
     gameMode: 'all',
     settings: {

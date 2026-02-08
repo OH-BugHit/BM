@@ -129,19 +129,19 @@
                     },
                     "4": {
                         "title": "Heatmap",
-                        "tip": "The heatmap is now enabled for students. You can toggle it on and off using the flame icon on the bottom panel."
+                        "tip": "The heatmap is now enabled for students. You can force it on from the guidance panel. You can toggle heatmap availability using the flame icon in the guidance or bottom panel."
                     },
                     "5": {
                         "title": "Dataset",
-                        "tip": "Exploring the training dataset is now enabled for students. You can toggle it using the images icon on the bottom panel. You can go back to step 3 to see how students perform."
+                        "tip": "Exploring the training dataset is now enabled for students. You can force the dataset view on from the guidance panel. You can toggle dataset view availability using the images icon in the guidance or bottom panel. You can go back to step 3 to see how students perform."
                     },
                     "6": {
                         "title": "Results",
-                        "tip": "The game is now paused! You can view result images by clicking them. Select a label from the left to access individual results for each label. In the individual results, you can also view the heatmap image of selected result image when the image is clicked"
+                        "tip": "Remember that you can pause the game from the guidance or bottom panel. You can view result images by clicking them. Select a label from the left to access individual results for each label. In the individual results, you can also view the heatmap image of selected result image when the image is clicked"
                     },
                     "7": {
                         "title": "Finish",
-                        "tip": "You have finished a round of Breakable Machine! Move to the \"Select\" phase to choose a new label by clicking reset button on the guidance panel. Resetting will not affect scores on previous labels. Resetting will also disable the heatmap and dataset for student"
+                        "tip": "You have finished a round of Breakable Machine! Move to the \"Select\" phase to choose a new label by clicking reset button on the guidance panel. Resetting will not affect scores on previous labels. Resetting will also disable the heatmap and dataset for student. You can save the results from the Save button at the guidance panel"
                     }
                 },
                 "student": {

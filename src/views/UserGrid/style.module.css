@@ -10,7 +10,6 @@
     margin-right: 1rem;
     margin-top: 1rem;
     max-height: 87dvh;
-    overflow: auto;
 }
 
 .userGridContainer {
@@ -126,7 +125,7 @@
 .crownImg {
     position: absolute;
     top: -24px;
-    left: 31%;
+    left: 25%;
     pointer-events: none;
 }
 

@@ -5,5 +5,13 @@ import DatasetGallery from './DatasetGallery';
 export function StudentDatasetWrapper() {
     const activeView = useAtomValue(activeViewAtom);
     const [config] = useAtom(configAtom);
-    return <>{activeView.overlay === 'datasetGallery' && config.gallery && <DatasetGallery mode="student" />} </>;
+    return (
+        <>
+            {config.gallery.force ? (
+                <DatasetGallery mode="student" />
+            ) : (
+                activeView.overlay === 'datasetGallery' && config.gallery.on && <DatasetGallery mode="student" />
+            )}{' '}
+        </>
+    );
 }

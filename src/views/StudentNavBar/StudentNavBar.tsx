@@ -61,7 +61,7 @@ function StudentNavBar() {
                     aria-label={t('common.labels.datasetTip')}
                     size="large"
                     variant="text"
-                    disabled={!config.gallery}
+                    disabled={!config.gallery.on || config.gallery.force || config.pause}
                 >
                     <CollectionsIcon fontSize="large" />
                     {open ? t('common.labels.datasetTip') : ''}
@@ -79,7 +79,7 @@ function StudentNavBar() {
                     aria-label={t('student.labels.heatmap')}
                     size="large"
                     variant="text"
-                    disabled={!config.heatmap}
+                    disabled={!config.heatmap.on || config.gallery.force || config.pause}
                 >
                     <LocalFireDepartmentIcon fontSize="large" />
                     {open ? t('student.labels.heatmap') : ''}

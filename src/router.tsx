@@ -21,7 +21,7 @@ const routes = createRoutesFromElements(
         />
         <Route
             path="/teacher/"
-            lazy={() => import('./views/Teacher/Teacher').then((mod) => ({ element: <mod.default /> }))}
+            lazy={() => import('./views/Teacher/TeacherWrapper').then((mod) => ({ element: <mod.default /> }))}
         />
         <Route
             path="/student/:serverCode/main"

@@ -1,8 +1,7 @@
 export enum ModelOrigin {
-    GenAI = 'Gen-AI',
-    Local = 'local',
+    GenAI = 'GenAI',
     Teacher = 'teacher',
-    Default = 'default',
+    TM = 'TM',
 }
 
 /**
@@ -154,7 +153,18 @@ export type Views = {
 };
 
 // Teacher's views
-export type TeacherViews = 'default' | 'userGrid' | 'userGridSimple' | 'termChange' | 'datasetGallery';
+export type TeacherViews =
+    | 'userGrid'
+    | 'userGridSimple'
+    | 'termChange'
+    | 'datasetGallery'
+    | 'heatmap'
+    | 'ready'
+    | 'connect'
+    | 'select'
+    | 'explore'
+    | 'data'
+    | 'results';
 
 // Teacher's dialogs
 export type TeacherDialogs = 'share' | 'modelChange' | 'settings';

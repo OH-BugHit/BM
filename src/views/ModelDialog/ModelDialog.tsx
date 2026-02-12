@@ -1,7 +1,7 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { activeViewAtom, configAtom, labelsAtom, modelAtom, modelDataAtom, modelListAtom } from '../../atoms/state';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import React, { useCallback, useRef, useState } from 'react';
 import { Autocomplete, Dialog, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
@@ -9,7 +9,7 @@ import { LargeButton } from '@genai-fi/base';
 import { loadLabels, loadModel } from '../../services/loadModel';
 import { ModelInfo, ModelOrigin } from '../../utils/types';
 import { currentModelName, handleFileChange } from './utils';
-import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
+import { useLocation, useNavigate } from 'react-router';
 
 function ModelDialog() {
     const { t, i18n } = useTranslation();
@@ -21,11 +21,27 @@ function ModelDialog() {
     const [modelList] = useAtom(modelListAtom);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedModel, setSelectedModel] = useState('');
-    const [activeView, setActiveView] = useAtom(activeViewAtom);
+    const activeView = useAtomValue(activeViewAtom);
     const [, setLabels] = useAtom(labelsAtom);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
-    useModelNamesLoader();
+    const doClose = useCallback(() => {
+        const params = new URLSearchParams(location.search);
+        params.set('overlay', 'none');
+        navigate(`${location.pathname}?${params.toString()}`, { replace: false });
+    }, [location, navigate]);
+
+    const doCloseAccept = useCallback(
+        (modelInfo: ModelInfo) => {
+            const params = new URLSearchParams(location.search);
+            params.set('modelOrigin', modelInfo.origin);
+            params.set('model', modelInfo.name);
+            params.set('overlay', 'none');
+            navigate(`${location.pathname}?${params.toString()}`, { replace: false });
+        },
+        [location, navigate]
+    );
 
     const openFile = useCallback(() => {
         fileInputRef.current?.click();
@@ -67,7 +83,7 @@ function ModelDialog() {
                     pause: true,
                     modelData: { name: selectedModel, origin: ModelOrigin.GenAI },
                 }));
-                doClose();
+                doCloseAccept(modelInfo);
             } catch (e) {
                 console.error('Mallin lataus epäonnistui', e);
             } finally {
@@ -77,7 +93,7 @@ function ModelDialog() {
             setModelFile(selectedFile);
             setLoading(true);
             const url = URL.createObjectURL(selectedFile);
-            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };
+            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Teacher, name: url };
             try {
                 const model = await loadModel(modelLoadingObject);
                 setModel(model);
@@ -91,7 +107,7 @@ function ModelDialog() {
                     return { labels: newLabels };
                 });
                 setConfig((old) => ({ ...old, modelData: { name: selectedFile.name, origin: ModelOrigin.Teacher } }));
-                doClose();
+                doCloseAccept({ origin: ModelOrigin.Teacher, name: selectedFile.name.replace('.zip', '') });
             } catch (err) {
                 console.error('Mallin lataus epäonnistui', err);
             } finally {

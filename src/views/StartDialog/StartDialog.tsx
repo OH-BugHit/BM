@@ -1,10 +1,11 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { activeViewAtom, usersAtom } from '../../atoms/state';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import React, { useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { LargeButton, QRCode } from '@genai-fi/base';
+import { useLocation, useNavigate } from 'react-router';
 
 interface Props {
     code: string;
@@ -12,10 +13,17 @@ interface Props {
 
 function StartDialog({ code }: Props) {
     const { t } = useTranslation();
-    const [showDialog, setActiveView] = useAtom(activeViewAtom);
-    const [users] = useAtom(usersAtom);
+    const showDialog = useAtomValue(activeViewAtom);
+    const users = useAtomValue(usersAtom);
 
-    const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const doClose = useCallback(() => {
+        const params = new URLSearchParams(location.search);
+        params.set('overlay', 'none');
+        navigate(`${location.pathname}?${params.toString()}`, { replace: false });
+    }, [location, navigate]);
 
     return (
         <Dialog

@@ -5,18 +5,20 @@ import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 import style from './style.module.css';
 import Footer from '../../components/Footer/Footer';
 import ContentItem from './ContentItem';
-import { loadLabels, loadModel } from '../../services/loadModel';
+import { loadModel } from '../../services/loadModel';
 import { ModelOrigin } from '../../utils/types';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoadGame from '../../components/Save_Load_Buttons/LoadButton';
 
 export default function Library() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [, setConfig] = useAtom(configAtom);
     const [, setModel] = useAtom(modelAtom);
     const [, setLabels] = useAtom(labelsAtom);
     useModelNamesLoader();
     const fileInputRef = useRef<HTMLInputElement>(null);
+
     const navigate = useNavigate();
 
     // Handler for clicking a ContentItem
@@ -25,28 +27,8 @@ export default function Library() {
             // Open file dialog for own model
             fileInputRef.current?.click();
         } else {
-            // Load Gen-AI model
-            const modelInfo = {
-                origin: ModelOrigin.GenAI,
-                name: type,
-            };
-            const loadedModel = await loadModel(modelInfo);
-            const labels = await loadLabels({ language: i18n.language, modelName: modelInfo.name });
-            if (loadedModel) {
-                setModel(loadedModel);
-                setLabels((old) => {
-                    const newLabels = new Map<string, string>(old.labels);
-                    Object.entries(labels).forEach(([label, translation]) => {
-                        newLabels.set(label as string, translation as string);
-                    });
-                    return { labels: newLabels };
-                });
-                setConfig((old) => ({
-                    ...old,
-                    modelData: modelInfo,
-                }));
-            }
-            navigate('/teacher/');
+            // Navigate to teacher. Selected model is loaded in teacher view based on URL params
+            navigate(`/teacher/?modelOrigin=${ModelOrigin.GenAI}&model=${type}&view=userGridSimple&overlay=share`);
         }
     };
 
@@ -56,7 +38,7 @@ export default function Library() {
             const file = e.target.files[0];
             const url = URL.createObjectURL(file);
             const modelInfo = { origin: ModelOrigin.Teacher, name: file.name };
-            const loadedModel = await loadModel({ origin: ModelOrigin.Local, name: url });
+            const loadedModel = await loadModel({ origin: ModelOrigin.Teacher, name: url });
             if (loadedModel) {
                 setModel(loadedModel);
                 setLabels((old) => {
@@ -74,8 +56,11 @@ export default function Library() {
                 }));
             }
             URL.revokeObjectURL(url);
+            navigate(
+                `/teacher/?modelOrigin=${modelInfo.origin}&model=${modelInfo.name}&view=userGridSimple&overlay=share`
+            );
         }
-        navigate('/teacher/');
+        console.error('No file selected or file input error');
     };
 
     return (
@@ -101,6 +86,7 @@ export default function Library() {
                         description={t('library.own.description')}
                         onClick={() => handleItemClick('own')}
                     />
+                    <LoadGame />
                 </ul>
                 <input
                     ref={fileInputRef}

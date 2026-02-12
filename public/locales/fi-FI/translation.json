@@ -88,11 +88,11 @@
                     },
                     "4": {
                         "title": "Lämpökartta",
-                        "tip": "Lämpökartta on nyt oppilaiden käytettävissä. Voit pakottaa lämpökartan päälle ohjauksen paneelista. Voit asettaa lämpökartan oppilaiden käyttöön ja pois ohjauksen paneelista tai alapaneelin liekkipainikkeesta."
+                        "tip": "Lämpökartta on nyt oppilaiden käytettävissä. Voit pakottaa lämpökartan päälle ohjauksen paneelista. Voit asettaa lämpökartan oppilaiden käyttöön ja pois tai alapaneelin liekkipainikkeesta."
                     },
                     "5": {
                         "title": "Opetusdata",
-                        "tip": "Opetusdatan selaaminen on nyt sallittu oppilaille. Voit pakottaa opetusdatan näkymän päälle ohjauksen paneelista. Voit asettaa opetusdatan näkymän oppilaiden käyttöön ja pois käytöstä ohjauksen paneelista tai alapaneelin kuvapainikkeesta. Voit palata vaiheeseen kolme seurataksesi oppilaiden pelaamista."
+                        "tip": "Opetusdatan selaaminen on nyt sallittu oppilaille. Voit pakottaa opetusdatan näkymän päälle ohjauksen paneelista. Voit asettaa opetusdatan näkymän oppilaiden käyttöön ja pois käytöstä alapaneelin kuvapainikkeesta. Voit palata vaiheeseen kolme seurataksesi oppilaiden pelaamista."
                     },
                     "6": {
                         "title": "Tulokset",
@@ -113,6 +113,10 @@
         },
         "common": {
             "exit": "Poistu ohjauksesta",
+            "force": {
+                "heatmap": "Pakota Lämpökartta",
+                "dataset": "Pakota Opetusdatanäkymä"
+            },
             "hideTips": "Piilota vihjeet"
         }
     },
@@ -122,13 +126,17 @@
             "title": "Eläimet",
             "description": "Luokittelijaa on opetettu 11 eri eläimellä. Vaikeampi luokittelija huijata."
         },
+        "continue": {
+            "title": "Jatka tallennettua peliä",
+            "description": "Lataa aiemmin tallennetun pelin tulokset. Valitse sen jälkeen malli jatkaaksesi peliä."
+        },
         "jobs": {
             "title": "Ammatit",
             "description": "Luokittelijaa on opetettu seitsemällä eri ammatilla."
         },
         "own": {
             "title": "Oma malli",
-            "description": "Lataa Gen-AI Opettava kone -työkalulla luomasi malli."
+            "description": "Lataa Gen-AI Opettava kone -työkalulla luomasi malli tietokoneeltasi."
         }
     },
     "loader": {
@@ -215,6 +223,9 @@
             },
             "usernameTaken": "Käyttäjänimi oli varattu, yritä uudelleen sivuston latauduttua..."
         }
+    },
+    "modelLoader": {
+        "loading": "Malli latautuu, odota hetki..."
     },
     "scoreboard": {
         "actions": {

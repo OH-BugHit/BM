@@ -47,7 +47,6 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
     // conn: Connection<EventProtocol>
 
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
-        console.log('data received', data);
         if (data.event === 'eter:join') {
             // Send
         }
@@ -64,7 +63,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                     data.configuration.modelData.name !== config.modelData.name ||
                     data.configuration.modelData.origin !== config.modelData.origin
                 ) {
-                    if (data.configuration.modelData.origin === 'Gen-AI') {
+                    if (data.configuration.modelData.origin === ModelOrigin.GenAI) {
                         try {
                             const model = await loadModel(data.configuration.modelData);
                             const labels = await loadLabels({
@@ -110,7 +109,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             // Receives model as zip blob from teacher
             const receivedZip = new Blob([data.data], { type: 'application/zip' });
             const url = URL.createObjectURL(receivedZip);
-            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };
+            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Teacher, name: url };
             try {
                 const model = await loadModel(modelLoadingObject);
                 setModel(model);
@@ -130,14 +129,11 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             }
         } else if (data.event === 'eter:messageUser') {
             // Messages such as reset result for specific term or bouncer (kick / remove user)
-            console.log('poistetaan?:', ownUsername);
             if (!data.recipient || data.recipient.username === ownUsername) {
                 if (data.action === 'resetResult') {
                     setResults((old) => {
-                        console.log(old);
                         const newResults = { ...old };
                         newResults.data.delete(data.message);
-                        console.log(newResults);
                         return newResults;
                     });
                     setTopScore(0); // Resetting the topscore for TopScoreSender

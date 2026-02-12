@@ -2,21 +2,23 @@ import { MenuItem, MenuList } from '@mui/material';
 import style from './style.module.css';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
 import { useAtom, useSetAtom } from 'jotai';
-import { activeViewAtom, configAtom, guidanceActiveAtom, guidanceStepAtom } from '../../atoms/state';
+import { configAtom, guidanceActiveAtom, guidanceStepAtom } from '../../atoms/state';
 import ActionButton from './ActionButton';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import MiscButtons from './MiscButtons';
+import { useLocation, useNavigate } from 'react-router';
 
 export default function Guidance() {
     const { t } = useTranslation('translation', { keyPrefix: 'guide' });
-    const setCurrentView = useSetAtom(activeViewAtom);
     const setConfig = useSetAtom(configAtom);
     const setGuidanceActive = useSetAtom(guidanceActiveAtom);
     const [currentSelected, setCurrentSelected] = useAtom(guidanceStepAtom);
-
     const stepRefs = useRef<Record<number, HTMLLIElement | null>>({});
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
 
     // Autoscroll to phase
     useEffect(() => {
@@ -33,7 +35,8 @@ export default function Guidance() {
         (action: string) => {
             switch (action) {
                 case 'share': {
-                    setCurrentView((prev) => ({ active: prev.active, overlay: 'share' }));
+                    params.set('overlay', 'share');
+                    navigate(`${location.pathname}?${params.toString()}`, { replace: false });
                     break;
                 }
                 case 'pause': {
@@ -44,7 +47,9 @@ export default function Guidance() {
                     break;
                 }
                 case 'reset': {
-                    setCurrentView({ active: 'termChange', overlay: 'none' });
+                    params.set('view', 'termChange');
+                    params.set('overlay', 'none');
+                    navigate(`${location.pathname}?${params.toString()}`, { replace: false });
                     setConfig((prev) => ({
                         ...prev,
                         pause: true,
@@ -57,19 +62,19 @@ export default function Guidance() {
                 case 'heatmap': {
                     setConfig((prev) => ({
                         ...prev,
-                        heatmap: { on: !prev.heatmap.on, force: prev.heatmap.force },
+                        heatmap: { on: prev.heatmap.on, force: !prev.heatmap.force },
                     }));
                     break;
                 }
                 case 'dataset': {
                     setConfig((prev) => ({
                         ...prev,
-                        gallery: { on: !prev.gallery.on, force: prev.gallery.force },
+                        gallery: { on: prev.gallery.on, force: !prev.gallery.force },
                     }));
                 }
             }
         },
-        [setCurrentView, setConfig, setCurrentSelected]
+        [navigate, setConfig, setCurrentSelected, location, params]
     );
 
     const data: { index: number; title: string; view: TeacherDialogs | TeacherViews; action: string }[] = [
@@ -78,55 +83,92 @@ export default function Guidance() {
         { index: 3, title: t('normal.steps.teacher.3.title'), view: 'userGrid', action: 'pause' },
         { index: 4, title: t('normal.steps.teacher.4.title'), view: 'userGrid', action: 'heatmap' },
         { index: 5, title: t('normal.steps.teacher.5.title'), view: 'datasetGallery', action: 'dataset' },
-        { index: 6, title: t('normal.steps.teacher.6.title'), view: 'default', action: 'pause' },
-        { index: 7, title: t('normal.steps.teacher.7.title'), view: 'default', action: 'reset' },
+        { index: 6, title: t('normal.steps.teacher.6.title'), view: 'results', action: 'pause' },
+        { index: 7, title: t('normal.steps.teacher.7.title'), view: 'results', action: 'reset' },
     ];
 
-    const handleStepChage = (selectedStep: { index: number; title: string; view: TeacherDialogs | TeacherViews }) => {
-        switch (selectedStep.view) {
-            case 'share': {
-                setCurrentView((prev) => ({ active: prev.active, overlay: 'share' }));
-                break;
-            }
-            case 'termChange': {
-                setCurrentView({ active: 'termChange', overlay: 'none' });
-                break;
-            }
-            case 'userGrid': {
-                setCurrentView({ active: 'userGridSimple', overlay: 'none' });
-                break;
-            }
-            case 'datasetGallery': {
-                setCurrentView({ active: 'datasetGallery', overlay: 'none' });
-                break;
-            }
-            case 'default': {
-                setCurrentView({ active: 'default', overlay: 'none' });
+    // Sync URL view parameter to currentSelected step
+    //TODO: REMOVE or FIX
+    useEffect(() => {
+        const viewParam = params.get('view');
+        if (viewParam) {
+            const matchingStep = {
+                connect: 1,
+                select: 2,
+                explore: 3,
+                heatmap: 4,
+                data: 5,
+                results: 6,
+                ready: 7,
+            }[viewParam as string];
+
+            if (matchingStep && matchingStep !== currentSelected) {
+                setCurrentSelected(matchingStep);
             }
         }
+    }, [location.search, currentSelected, setCurrentSelected, params]);
+
+    const handleStepChage = (selectedStep: { index: number; title: string; view: TeacherDialogs | TeacherViews }) => {
         switch (selectedStep.index) {
+            case 1: {
+                params.set('view', 'connect');
+                params.set('overlay', 'share');
+                break;
+            }
+
+            case 2: {
+                params.set('view', 'select');
+                params.set('overlay', 'none');
+                break;
+            }
+
+            case 3: {
+                params.set('view', 'explore');
+                params.set('overlay', 'none');
+                break;
+            }
+
             case 4: {
                 setConfig((prev) => ({
                     ...prev,
                     heatmap: { on: true, force: prev.heatmap.force },
                 }));
+                params.set('view', 'heatmap');
+                params.set('overlay', 'none');
                 break;
             }
+
             case 5: {
                 setConfig((prev) => ({
                     ...prev,
                     gallery: { on: true, force: prev.gallery.force },
                 }));
+                params.set('view', 'data');
+                params.set('overlay', 'none');
                 break;
             }
+
+            case 6: {
+                params.set('view', 'results');
+                params.set('overlay', 'none');
+                break;
+            }
+
             case 7: {
                 setConfig((prev) => ({
                     ...prev,
                     pause: true,
                 }));
+                params.set('view', 'ready');
+                params.set('overlay', 'none');
                 break;
             }
+
+            default:
+                return;
         }
+
+        navigate(`${location.pathname}?${params.toString()}`, { replace: false });
     };
 
     return (
@@ -152,9 +194,17 @@ export default function Guidance() {
                     {data.map((step) => (
                         <MenuItem
                             selected={step.index === currentSelected}
+                            sx={{
+                                '&.Mui-selected': {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                                },
+                                '&.Mui-selected:hover': {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                                },
+                            }}
                             onClick={() => {
-                                handleStepChage(step);
                                 setCurrentSelected(step.index);
+                                handleStepChage(step);
                             }}
                             key={step.index}
                             component="li"

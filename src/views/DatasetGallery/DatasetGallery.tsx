@@ -9,6 +9,9 @@ import { activeViewAtom, configAtom, labelsAtom, modelAtom } from '../../atoms/s
 import OpenedImage from '../../components/ImageView/OpenedImage';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router';
+import { ModelOrigin } from '../../utils/types';
+import { ISample } from '@genai-fi/classifier/main/ClassifierApp';
 
 /**
  * Component shows a gallery of images from a dataset
@@ -31,6 +34,7 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
     const loaded = useRef(false);
     const [labels] = useAtom(labelsAtom);
     const [model] = useAtom(modelAtom);
+    const location = useLocation();
 
     /**
      * Loads more images with offset.
@@ -53,15 +57,58 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
     }, [allImages, offset, loading, noMoreData]);
     const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
 
+    /**
+     * Load image paths for the current model. For Teacher-model and direct-TM-import-model this builds image paths from the local model samples (the TM-exported zip with samples).
+     */
     useEffect(() => {
         if (loaded.current) return;
         if (config.modelData.name.length > 0) {
-            fetchImageUrls({ dataset: config.modelData }).then((data) => {
-                setImagePaths(data);
-            });
+            const params = new URLSearchParams(location.search);
+            if (params.get('modelOrigin' as ModelOrigin) !== ModelOrigin.GenAI) {
+                // Teacher model OR TM-model. TODO: TEST TM MODEL! Should work but still need to be tested
+
+                // This builds image paths from the local model samples (the TM-exported zip with samples).
+                // The goal is to produce the same
+                // shape as server-side JSON: `Record<label, string[]>` where each label maps to
+                // an array of image URLs (here data-URLs generated from canvas samples).
+
+                // Note:
+                // `model.getLabels()` returns an array of labels (strings). When `samples`
+                // is an array-of-arrays (`ISample[][]`), (why would it not be but anyway), each inner array corresponds to the
+                // label at the same index in the `getLabels()` array. We therefore use
+                // `labelsList` as the keys for the `result` map.
+
+                // `model.samples` is `ISample[][]` (buckets per label). Each
+                // `ISample` contains a `data: HTMLCanvasElement` that we convert to a
+                // data-URL with `toDataURL()` for use as image `src`. Type declarition (ISample) can be found in `@genai-fi/classifier` package.
+                setImagePaths(() => {
+                    const result: Record<string, string[]> = {};
+                    const samples: ISample[][] = model?.samples ?? [];
+                    const labelsList: string[] =
+                        (typeof model?.getLabels === 'function' ? model.getLabels() : []) || [];
+
+                    // If samples is an array-of-arrays, map each bucket to the corresponding
+                    // label from `labelsList` and convert canvas -> data-URL.
+                    if (Array.isArray(samples) && samples.length > 0) {
+                        if (Array.isArray(samples[0])) {
+                            labelsList.forEach((lbl, idx) => {
+                                const bucket = samples[idx] ?? [];
+                                result[lbl] = bucket
+                                    .map((s: ISample) => (s?.data ? s.data.toDataURL() : null))
+                                    .filter(Boolean) as string[];
+                            });
+                        }
+                    }
+                    return result;
+                });
+            } else {
+                fetchImageUrls({ dataset: config.modelData }).then((data) => {
+                    setImagePaths(data);
+                });
+            }
         }
         loaded.current = true;
-    }, [config.modelData]);
+    }, [config.modelData, location.search, model]);
 
     useEffect(() => {
         setSelected('');

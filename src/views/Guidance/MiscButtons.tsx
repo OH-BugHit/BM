@@ -6,11 +6,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { useAtom } from 'jotai';
 import { activeViewAtom } from '../../atoms/state';
 import { useTranslation } from 'react-i18next';
-import SaveButton from '../../components/Savebutton/SaveButton';
+import { useSearchParams } from 'react-router';
+import SaveButton from '../../components/Save_Load_Buttons/SaveButton';
 
 function MiscButtons() {
     const { t } = useTranslation();
-    const [activeView, setActiveView] = useAtom(activeViewAtom);
+    const [activeView] = useAtom(activeViewAtom);
+    const [, setSearchParams] = useSearchParams();
 
     const toMain = () => {
         window.location.href = `/`;
@@ -27,7 +29,12 @@ function MiscButtons() {
                 <MenuButton
                     style={{}}
                     color="inherit"
-                    onClick={() => setActiveView((old) => ({ ...old, overlay: 'settings' }))}
+                    onClick={() => {
+                        setSearchParams((prev) => {
+                            prev.set('overlay', 'settings');
+                            return prev;
+                        });
+                    }} // setActiveView((old) => ({ ...old, overlay: 'settings' }))}
                     aria-label={t('menu.aria.settings')}
                     size={'large'}
                     variant="text"

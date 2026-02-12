@@ -30,7 +30,7 @@ function TeacherContent() {
                         <TermChange />
                     </>
                 )}
-                {activeView.active === 'default' && <Scoreboard />}
+                {activeView.active === 'results' && <Scoreboard />}
             </>
             <div className={style.controlLayer}>
                 <Tips user="teacher" />

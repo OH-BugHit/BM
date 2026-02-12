@@ -22,11 +22,10 @@ export async function loadModel({ name, origin }: ModelInfo) {
         if (modelFile) {
             return await TMClassifier.load(modelFile);
         } else return null;
-    } else if (origin === ModelOrigin.Local) {
-        return await TMClassifier.load(name);
     } else if (origin === ModelOrigin.Teacher) {
         return await TMClassifier.load(name);
     } else {
+        console.log('model loading from origin', origin, 'not implemented');
         return null;
     }
 }

@@ -129,11 +129,11 @@
                     },
                     "4": {
                         "title": "Heatmap",
-                        "tip": "The heatmap is now enabled for students. You can force it on from the guidance panel. You can toggle heatmap availability using the flame icon in the guidance or bottom panel."
+                        "tip": "The heatmap is now enabled for students. You can force it on from the guidance panel. You can toggle heatmap availability using the flame icon in the bottom panel."
                     },
                     "5": {
                         "title": "Dataset",
-                        "tip": "Exploring the training dataset is now enabled for students. You can force the dataset view on from the guidance panel. You can toggle dataset view availability using the images icon in the guidance or bottom panel. You can go back to step 3 to see how students perform."
+                        "tip": "Exploring the training dataset is now enabled for students. You can force the dataset view on from the guidance panel. You can toggle dataset view availability using the images icon in the bottom panel. You can go back to step 3 to see how students perform."
                     },
                     "6": {
                         "title": "Results",
@@ -154,6 +154,10 @@
         },
         "common": {
             "exit": "Exit guide",
+            "force": {
+                "heatmap": "Force Heatmap",
+                "dataset": "Force Dataset view"
+            },
             "hideTips": "Hide all tips"
         }
     },
@@ -163,6 +167,10 @@
         "animals": {
             "title": "Animals",
             "description": "Classifier is fine-tuned with 11 different animals. Harder model to spoof."
+        },
+        "continue": {
+            "title": "Continue saved game",
+            "description": "Load previously saved game results. Select model after loading to continue game."
         },
         "jobs": {
             "title": "Jobs",
@@ -255,6 +263,9 @@
             },
             "usernameTaken": "Username was taken, try again after reload..."
         }
+    },
+    "modelLoader": {
+        "loading": "Loading model, please wait..."
     },
     "scoreboard": {
         "actions": {

@@ -14,11 +14,13 @@ import { useRestoreGameState } from '../../hooks/useRestoreGameStateHook';
 import { usePersistGameState } from '../../hooks/usePersistGameState';
 import TeacherContent from './TeacherContent';
 import SideNavSwitcher from './SideMenu/SideMenuSwitcher';
+import ViewHandler from '../../components/ViewHandler';
 
 export default function Teacher() {
     const blockRef = useRef(true);
     useLeaveWarning(blockRef);
-    const MYCODE = useID(5);
+    const ID = useID(5);
+
     // Load model if needed and set initial term, also pause the students
     useModelNamesLoader();
     useRestoreGameState();
@@ -30,13 +32,14 @@ export default function Teacher() {
             secure={PeerEnv.secure}
             peerkey={PeerEnv.peerkey}
             port={PeerEnv.port}
-            code={`spoof-${MYCODE}`}
+            code={`spoof-${ID}`}
         >
+            <ViewHandler />
             <div className={style.teacher}>
                 <div className={style.serverProtocolContainer}>
                     <ServerProtocol />
                 </div>
-                <StartDialog code={MYCODE} />
+                <StartDialog code={ID} />
                 <Settings />
                 <ModelDialog />
                 <SideNavSwitcher />

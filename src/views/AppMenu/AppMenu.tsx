@@ -18,7 +18,7 @@ import AppsIcon from '@mui/icons-material/Apps';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
-import SaveButton from '../../components/Savebutton/SaveButton';
+import SaveButton from '../../components/Save_Load_Buttons/SaveButton';
 
 export default function MenuPanel() {
     const { t } = useTranslation();
@@ -182,7 +182,7 @@ export default function MenuPanel() {
                     tooltip={t('menu.vis.results')}
                     hideTip={open}
                     fullWidth
-                    selected={activeView.active === 'default'}
+                    selected={activeView.active === 'results'}
                 >
                     <MenuButton
                         color="inherit"
@@ -191,7 +191,7 @@ export default function MenuPanel() {
                         variant="text"
                         fullWidth
                         style={{ minHeight: '64px', minWidth: '64px' }}
-                        onClick={() => doShowView('default')}
+                        onClick={() => doShowView('results')}
                     >
                         <EmojiEventsIcon fontSize={iconSize} />
                         {open ? t('menu.vis.results') : ''}

@@ -6,10 +6,9 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import ReplayIcon from '@mui/icons-material/Replay';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import CollectionsIcon from '@mui/icons-material/Collections';
 import { configAtom } from '../../atoms/state';
 import style from './style.module.css';
+import { useTranslation } from 'react-i18next';
 
 interface Props extends PropsWithChildren {
     action: string;
@@ -20,6 +19,7 @@ interface Props extends PropsWithChildren {
 
 export default function ActionButton({ action, onAction, children, selected = false, color = 'secondary' }: Props) {
     const [config, setConfig] = useAtom(configAtom);
+    const { t } = useTranslation();
 
     const doClick = useCallback(() => {
         if (onAction) onAction();
@@ -35,7 +35,6 @@ export default function ActionButton({ action, onAction, children, selected = fa
             {children}
             {action === 'pause' && config.pause && <PlayArrowIcon data-testid="paused-app" />}
             {action === 'pause' && !config.pause && <PauseIcon />}
-            {action === 'heatmap' && <LocalFireDepartmentIcon color={config.heatmap.on ? 'secondary' : 'primary'} />}
             {action === 'heatmap' && (
                 <>
                     <FormControlLabel
@@ -51,7 +50,7 @@ export default function ActionButton({ action, onAction, children, selected = fa
                                 }
                             />
                         }
-                        label="Pakota"
+                        label={t('guide.common.force.heatmap')}
                         labelPlacement="bottom"
                         className={style.forceText}
                         onClick={(e) => {
@@ -59,12 +58,6 @@ export default function ActionButton({ action, onAction, children, selected = fa
                         }}
                     />
                 </>
-            )}
-            {action === 'dataset' && (
-                <CollectionsIcon
-                    fontSize="large"
-                    color={config.gallery.on ? 'secondary' : 'primary'}
-                />
             )}
             {action === 'dataset' && (
                 <FormControlLabel
@@ -80,7 +73,7 @@ export default function ActionButton({ action, onAction, children, selected = fa
                             }
                         />
                     }
-                    label="Pakota"
+                    label={t('guide.common.force.dataset')}
                     labelPlacement="bottom"
                     className={style.forceText}
                     onClick={(e) => {

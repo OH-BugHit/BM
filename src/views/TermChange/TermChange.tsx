@@ -1,4 +1,4 @@
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useLeaveWarning } from '../../hooks/useLeaveBlocker';
 import style from './style.module.css';
 import { activeViewAtom, configAtom, modelAtom, selectedTermAtom } from '../../atoms/state';
@@ -6,8 +6,8 @@ import { useCallback, useEffect, useRef } from 'react';
 import TermSelector from './TermSelector';
 import { useTranslation } from 'react-i18next';
 import UserList from './UserList';
-import { TeacherDialogs } from '../../utils/types';
 import ActionButton from '../Guidance/ActionButton';
+import { useLocation, useNavigate } from 'react-router';
 
 export default function TermChange() {
     const { t } = useTranslation();
@@ -16,20 +16,19 @@ export default function TermChange() {
     const [config] = useAtom(configAtom);
     const [word, setWord] = useAtom(selectedTermAtom);
     const [model] = useAtom(modelAtom);
-    const [activeView, setActiveView] = useAtom(activeViewAtom);
+    const activeView = useAtomValue(activeViewAtom);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         setWord(word || '');
     }, [setWord, word]);
 
-    const doShowDialog = useCallback(
-        (dialog: TeacherDialogs) => {
-            if (activeView.overlay === dialog) {
-                setActiveView((old) => ({ ...old, overlay: 'none' }));
-            } else setActiveView((old) => ({ ...old, overlay: dialog }));
-        },
-        [activeView, setActiveView]
-    );
+    const doShowDialog = useCallback(() => {
+        const params = new URLSearchParams(location.search);
+        params.set('overlay', 'modelChange');
+        navigate(`${location.pathname}?${params.toString()}`, { replace: false });
+    }, [location, navigate]);
 
     return (
         <div className={style.termChange}>
@@ -54,7 +53,7 @@ export default function TermChange() {
             <div className={style.modelChange}>
                 <ActionButton
                     selected={activeView.overlay === 'modelChange'}
-                    onAction={() => doShowDialog('modelChange')}
+                    onAction={() => doShowDialog()}
                     aria-label={t('teacher.labels.changeModel')}
                     action="changeModel"
                     color="primary"

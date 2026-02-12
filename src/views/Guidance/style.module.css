@@ -39,14 +39,6 @@
     padding-right: 1.5rem;
 }
 
-.container :global .Mui-selected {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.container :global .Mui-selected:hover {
-    background: rgba(0, 0, 0, 0.2);
-}
-
 .advanced {
     position: absolute;
     top: 0.5rem;

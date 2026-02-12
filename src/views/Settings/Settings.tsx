@@ -1,20 +1,28 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { activeViewAtom } from '../../atoms/state';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import React, { useCallback, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs } from '@mui/material';
 import { Button } from '@genai-fi/base';
 import GeneralSettings from './GeneralSettings';
 import PictureSettings from './PictureSettings';
 import UserGridSettings from './UserGridSettings';
+import { useLocation, useNavigate } from 'react-router';
 
 function Settings() {
     const { t } = useTranslation();
-    const [showDialog, setActiveView] = useAtom(activeViewAtom);
+    const showDialog = useAtomValue(activeViewAtom);
     const [tabNumber, setTabNumber] = useState(0);
+    const navigate = useNavigate();
 
-    const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
+    const location = useLocation();
+
+    const doClose = useCallback(() => {
+        const params = new URLSearchParams(location.search);
+        params.set('overlay', 'none');
+        navigate(`${location.pathname}?${params.toString()}`, { replace: false });
+    }, [location, navigate]);
 
     return (
         <Dialog

@@ -41,7 +41,6 @@ export default function ServerProtocol() {
     });
 
     usePeerData((data: EventProtocol, conn: Connection<EventProtocol>) => {
-        console.log('received data from peer:', data);
         if (data.event === 'eter:alive') {
             const userExists = users.some((u) => u.username === data.user.username);
             if (!userExists && data.user.username) {
@@ -96,7 +95,7 @@ export default function ServerProtocol() {
             const idx = users.findIndex((u) => u.username === data.data.username);
             if (idx !== -1) {
                 // Dublicate user!
-                console.log('users have tried to enter with same username. No dublicates allowed.'); // Sends reload command back to same connection
+                console.warn('users have tried to enter with same username. No dublicates allowed.'); // Sends reload command back to same connection
                 conn.send({
                     event: 'eter:messageUser',
                     message: 'usernameTaken',
@@ -153,7 +152,7 @@ export default function ServerProtocol() {
                     data: modelFile,
                 });
             } else {
-                console.log('Modelfile not found when requested by student');
+                console.warn('Modelfile not found when requested by student');
             }
         } else if (data.event === 'eter:image') {
             // On new image from student. This also usually means new score.

@@ -64,7 +64,17 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
         if (loaded.current) return;
         if (config.modelData.name.length > 0) {
             const params = new URLSearchParams(location.search);
-            if (params.get('modelOrigin' as ModelOrigin) !== ModelOrigin.GenAI) {
+            let serverOrigin = false;
+            if (mode === 'student') {
+                const modelName = model?.model?.getMetadata()?.modelName ?? 'unknown';
+                if (modelName === 'jobs' || modelName === 'animals') {
+                    //TODO: This is a temporary solution to determine the model origin at student side. Fix better some day
+                    serverOrigin = true;
+                } else {
+                    serverOrigin = false;
+                }
+            }
+            if (params.get('modelOrigin' as ModelOrigin) !== ModelOrigin.GenAI && !serverOrigin) {
                 // Teacher model OR TM-model. TODO: TEST TM MODEL! Should work but still need to be tested
 
                 // This builds image paths from the local model samples (the TM-exported zip with samples).
@@ -108,7 +118,7 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
             }
         }
         loaded.current = true;
-    }, [config.modelData, location.search, model]);
+    }, [config.modelData, location.search, model, mode]);
 
     useEffect(() => {
         setSelected('');

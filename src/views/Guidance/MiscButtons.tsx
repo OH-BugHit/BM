@@ -8,6 +8,7 @@ import { activeViewAtom } from '../../atoms/state';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import SaveButton from '../../components/Save_Load_Buttons/SaveButton';
+import style from './style.module.css';
 
 function MiscButtons() {
     const { t } = useTranslation();
@@ -41,7 +42,7 @@ function MiscButtons() {
                     fullWidth
                 >
                     <SettingsIcon fontSize={'large'} />
-                    {t('menu.labels.settings')}
+                    <p className={style.guidanceTitle}>{t('menu.labels.settings')}</p>
                 </MenuButton>
             </IconMenuItem>
             <SaveButton showText={true} />
@@ -60,7 +61,7 @@ function MiscButtons() {
                     fullWidth
                 >
                     <LogoutIcon fontSize={'large'} />
-                    {t('menu.labels.exitShort')}
+                    <p className={style.guidanceTitle}>{t('menu.labels.exitShort')}</p>
                 </MenuButton>
             </IconMenuItem>
             <div style={{ marginBottom: '1rem' }}></div>

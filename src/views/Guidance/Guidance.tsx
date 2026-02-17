@@ -88,7 +88,6 @@ export default function Guidance() {
     ];
 
     // Sync URL view parameter to currentSelected step
-    //TODO: REMOVE or FIX
     useEffect(() => {
         const viewParam = params.get('view');
         if (viewParam) {
@@ -167,7 +166,6 @@ export default function Guidance() {
             default:
                 return;
         }
-
         navigate(`${location.pathname}?${params.toString()}`, { replace: false });
     };
 
@@ -183,7 +181,7 @@ export default function Guidance() {
                     setGuidanceActive(false);
                 }}
             >
-                {t('common.exit')}
+                <p className={style.guidanceTitle}>{t('common.exit')}</p>
             </MenuItem>
             <div style={{ flexGrow: 1 }}></div>
             <div
@@ -212,7 +210,9 @@ export default function Guidance() {
                                 stepRefs.current[step.index] = el;
                             }}
                         >
-                            {step.index}. {step.title}
+                            <p className={style.guidanceTitle}>
+                                {step.index}. {step.title}
+                            </p>
                         </MenuItem>
                     ))}
                 </MenuList>

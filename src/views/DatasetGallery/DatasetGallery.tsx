@@ -68,37 +68,26 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
             if (mode === 'student') {
                 const modelName = model?.model?.getMetadata()?.modelName ?? 'unknown';
                 if (modelName === 'jobs' || modelName === 'animals') {
-                    //TODO: This is a temporary solution to determine the model origin at student side. Fix better some day
+                    //TODO: This is a temporary solution to determine the model origin at student side. Fix better some day cause contains hardcoded classes. Maybe use current model info atom?
                     serverOrigin = true;
                 } else {
                     serverOrigin = false;
                 }
             }
             if (params.get('origin' as ModelOrigin) !== ModelOrigin.GenAI && !serverOrigin) {
-                // Teacher model OR TM-model. TODO: TEST TM MODEL! Should work but still need to be tested
+                // Teacher model OR TM-model. Shared model does not contain samples. This should work if they are added at some point.
 
-                // This builds image paths from the local model samples (the TM-exported zip with samples).
-                // The goal is to produce the same
-                // shape as server-side JSON: `Record<label, string[]>` where each label maps to
-                // an array of image URLs (here data-URLs generated from canvas samples).
+                // This builds image paths from the local model samples (the TM-exported zip with samples and for local ).
 
-                // Note:
-                // `model.getLabels()` returns an array of labels (strings). When `samples`
-                // is an array-of-arrays (`ISample[][]`), (why would it not be but anyway), each inner array corresponds to the
-                // label at the same index in the `getLabels()` array. We therefore use
-                // `labelsList` as the keys for the `result` map.
-
-                // `model.samples` is `ISample[][]` (buckets per label). Each
-                // `ISample` contains a `data: HTMLCanvasElement` that we convert to a
-                // data-URL with `toDataURL()` for use as image `src`. Type declarition (ISample) can be found in `@genai-fi/classifier` package.
+                // model.samples is ISample[][] (buckets per label).
+                // Each ISample contains a data: HTMLCanvasElement that we convert to a
+                // data-URL with toDataURL() for use as image src.
                 setImagePaths(() => {
                     const result: Record<string, string[]> = {};
                     const samples: ISample[][] = model?.samples ?? [];
                     const labelsList: string[] =
                         (typeof model?.getLabels === 'function' ? model.getLabels() : []) || [];
 
-                    // If samples is an array-of-arrays, map each bucket to the corresponding
-                    // label from `labelsList` and convert canvas -> data-URL.
                     if (Array.isArray(samples) && samples.length > 0) {
                         if (Array.isArray(samples[0])) {
                             labelsList.forEach((lbl, idx) => {

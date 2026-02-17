@@ -3,23 +3,26 @@ import { useAtom, useAtomValue, useSetAtom, useStore } from 'jotai';
 import { useCallback, useEffect } from 'react';
 import { modelAtom, modelSharedAtom, sessionCodeAtom, shareModelAtom } from '../atoms/state';
 
-const API_BASE_URL = import.meta.env.VITE_APP_API || 'http://localhost:9001';
+const API_SHARE_BASE_URL = import.meta.env.VITE_API_SHARE_BASE_URL;
 const SHARE_INTERVAL = 20 * 60 * 1000; // 20 minutes
 
 /**
  * Sends the model to the server for sharing
+ * Removes samples and behaviours before sendin
  * @param code - Session code for identification
  * @param model - The classifier model to share
  */
 async function sendModel(code: string, model: ClassifierApp) {
     model.projectId = code;
+    model.samples = [];
+    model.behaviours = [];
     const blob = await model.saveComponents();
     if (!blob.zip) {
         console.error('Failed to save model as zip');
         throw new Error('Model save failed - no zip file generated');
     }
 
-    const response = await fetch(`${API_BASE_URL}/model/${code}/`, {
+    const response = await fetch(`${API_SHARE_BASE_URL}/model/${code}/`, {
         method: 'POST',
         body: blob.zip,
     });
@@ -36,7 +39,7 @@ async function sendModel(code: string, model: ClassifierApp) {
  * @param code - Session code for identification
  */
 async function unshareModel(code: string) {
-    const response = await fetch(`${API_BASE_URL}/model/${code}/`, {
+    const response = await fetch(`${API_SHARE_BASE_URL}/model/${code}/`, {
         method: 'DELETE',
     });
 

@@ -28,7 +28,7 @@ export default function ModelChangeHandler() {
             if (modelOrigin === ModelOrigin.GenAI || modelOrigin === ModelOrigin.Remote) {
                 loadAndShare(modelOrigin, modelName);
             } else if (modelOrigin === ModelOrigin.Local) {
-                console.log('Local model - should be handled in library view');
+                console.log('Local model - is be handled in library view or model dialog');
             }
         }
     }, [modelOrigin, modelName, currentModelInfo, navigate, loadAndShare]);

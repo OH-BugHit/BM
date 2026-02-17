@@ -9,6 +9,7 @@ import {
     labelsAtom,
     modelAtom,
     profilePictureAtom,
+    sessionCodeAtom,
     studentBouncerAtom,
     studentResultsAtom,
     takenUsernamesAtom,
@@ -16,7 +17,7 @@ import {
     topScoreAtom,
     usernameAtom,
 } from '../atoms/state';
-import { loadLabels, loadModel } from './loadModel';
+import { loadLabels, loadModel, loadSharedModel } from './loadModel';
 import { usePeerData, usePeerSender, usePeerStatus } from '@genai-fi/base/hooks/peer';
 import { useTranslation } from 'react-i18next';
 
@@ -43,10 +44,12 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
     const setTopScore = useSetAtom(topScoreAtom);
     const ownUsername = useAtomValue(usernameAtom);
     const setLabels = useSetAtom(labelsAtom);
+    const sessionCode = useAtomValue(sessionCodeAtom);
     const { i18n } = useTranslation();
     // conn: Connection<EventProtocol>
 
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
+        console.log(data);
         if (data.event === 'eter:join') {
             // Send
         }
@@ -110,10 +113,12 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                             console.error('Failed to load model', e);
                         }
                     } else {
-                        // TM model loading from URL
+                        // Teachers model loading from URL
                         try {
-                            const model = await loadModel(data.configuration.modelData);
-                            setModel(model);
+                            console.log('Loading teachers local model');
+
+                            const model = await loadSharedModel(sessionCode);
+                            if (model) setModel(model);
                             setLabels((old) => {
                                 const newLabels = new Map<string, string>(old.labels);
                                 const labelList = model?.getLabels() ?? [];
@@ -141,6 +146,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             setTakenUsernames(data.taken);
         } else if (data.event === 'eter:modelTransfer') {
             // Receives model as zip blob from teacher
+            console.warn('Not in use, should not happen');
             const receivedZip = new Blob([data.data], { type: 'application/zip' });
             const url = URL.createObjectURL(receivedZip);
             const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };

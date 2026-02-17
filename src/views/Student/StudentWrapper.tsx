@@ -7,11 +7,15 @@ import { Peer } from '@genai-fi/base/hooks/peer';
 import PeerEnv from '../../env';
 import { useState } from 'react';
 import Student from './Student';
+import { useSetAtom } from 'jotai';
+import { sessionCodeAtom } from '../../atoms/state';
 
 export default function StudentWrapper() {
     const { serverCode } = useParams<{ serverCode: string }>();
     const MYCODE = useID(5);
     const [ready, setReady] = useState<boolean>(false);
+    const setSessionCode = useSetAtom(sessionCodeAtom);
+    setSessionCode(serverCode || '');
 
     return (
         <Peer

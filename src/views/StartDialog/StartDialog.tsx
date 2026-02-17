@@ -24,12 +24,18 @@ function StartDialog({ code }: Props) {
         params.set('overlay', 'none');
         navigate(`${location.pathname}?${params.toString()}`, { replace: false });
     }, [location, navigate]);
-
+    const size =
+        window.innerHeight < 760 || window.innerWidth < 800
+            ? 'small'
+            : window.innerHeight < 900 || window.innerWidth < 1200
+              ? 'normal'
+              : 'large';
     return (
         <Dialog
             open={showDialog.overlay === 'share'}
             onClose={doClose}
-            maxWidth="md"
+            maxWidth={size === 'large' || size === 'normal' ? 'md' : 'sm'}
+            fullWidth={false}
         >
             <DialogTitle className={style.title}>{t('teacher.titles.connectUsers')}</DialogTitle>
             <DialogContent>
@@ -38,7 +44,7 @@ function StartDialog({ code }: Props) {
                         {t('teacher.messages.scanQR')}
                         <QRCode
                             url={`${window.location.origin}/student/${code}/main`}
-                            size="large"
+                            size={size}
                             label={t('teacher.aria.linkForFeed')}
                         />
                     </div>

@@ -60,6 +60,7 @@ function ModelDialog() {
 
     const handleAccept = async () => {
         if (!selectedFile && selectedModel.length === 0) return;
+        setShare(false);
         if (selectedModel.length > 0) {
             setLoading(true);
             const modelInfo = { origin: ModelOrigin.GenAI, name: selectedModel };
@@ -67,6 +68,7 @@ function ModelDialog() {
             setCurrentInfo(modelInfo); // Sets current modelInfo as current atom state.
             try {
                 const model = await loadModel(modelInfo);
+                console.log(model);
 
                 setModel(model);
                 const labels = await loadLabels({

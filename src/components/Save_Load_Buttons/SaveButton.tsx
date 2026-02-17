@@ -8,6 +8,7 @@ import { canvasToBlob, mergeCanvases, upscaleCanvasToSameSize } from '../../util
 import { useTranslation } from 'react-i18next';
 import { useStore } from 'jotai';
 import { modelAtom, studentDataAtom } from '../../atoms/state';
+import style from '../../views/Guidance/style.module.css';
 
 interface Props {
     showText: boolean;
@@ -81,7 +82,7 @@ function SaveButton({ showText }: Props) {
                 fullWidth
             >
                 <SaveAltIcon fontSize={'large'} />
-                {showText ? `${t('menu.labels.saveShort')}` : ''}
+                <p className={style.guidanceTitle}>{showText ? `${t('menu.labels.saveShort')}` : ''}</p>
             </MenuButton>
         </IconMenuItem>
     );

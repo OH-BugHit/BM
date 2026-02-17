@@ -27,9 +27,10 @@ export const useLoadModelAndShare = () => {
                 if (origin === ModelOrigin.GenAI) {
                     loadedModel = await loadModel(modelInfo);
                     labels = (await loadLabels({ language: i18n.language, modelName })) || {};
+                    setShare(false);
                 } else if (origin === ModelOrigin.Remote) {
                     loadedModel = await loadModel(modelInfo);
-                    setShare(true);
+                    setShare(false);
                 } else if (origin === ModelOrigin.Local) {
                     loadedModel = await loadModel(modelInfo);
                     setShare(true);
@@ -43,6 +44,7 @@ export const useLoadModelAndShare = () => {
                 // Set model and send students new model info via config
                 setModel(loadedModel);
                 setCurrentInfo(modelInfo);
+
                 setConfig((old) => ({
                     ...old,
                     modelData: modelInfo,

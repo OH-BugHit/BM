@@ -9,8 +9,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 2rem;
-    font-size: 0.8rem;
+    align-content: space-evenly;
+    font-size: 0.6rem;
     z-index: 11;
     overflow-y: auto;
 }
@@ -19,17 +19,61 @@
     color: primary;
 }
 
+.guidanceTitle {
+    font-size: 0.8rem;
+}
+
+.actionContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.2rem;
+    margin-top: 0.1rem;
+}
+
+.stepsContainer {
+    overflow: auto;
+    scrollbar-color: rgb(22, 27, 35) rgb(106, 123, 128);
+    margin-bottom: 0.3rem;
+}
+
 @media (min-height: 700px) {
     .container {
+        font-size: 0.7rem;
+    }
+
+    .guidanceTitle {
         font-size: 1.0rem;
+    }
+
+    .actionContainer {
+        margin-top: 0.2rem;
     }
 }
 
-@media (min-height: 1000px) {
+@media (min-height: 950px) {
+    .container {
+        font-size: 0.8rem;
+    }
+
+    .guidanceTitle {
+        font-size: 1.2rem;
+    }
+
+    .actionContainer {
+        margin-top: 1.2rem;
+    }
+}
+
+@media (min-height: 1200px) {
     .container {
         font-size: 1.2rem;
     }
+
+    .guidanceTitle {
+        font-size: 1.6rem;
+    }
 }
+
 
 .container :global .MuiMenuItem-root {
     font-size: 1.2em;
@@ -47,12 +91,6 @@
     z-index: 12;
 }
 
-.actionContainer {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0.2rem;
-}
-
 .actionContainer :global .MuiIconButton-root {
     background: white;
     font-size: 2em;
@@ -66,9 +104,4 @@
 
 .actionContainer :global .MuiSvgIcon-root {
     font-size: 2em;
-}
-
-.stepsContainer {
-    overflow: auto;
-    scrollbar-color: rgb(22, 27, 35) rgb(106, 123, 128);
 }

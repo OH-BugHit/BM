@@ -1,62 +1,36 @@
 import { useNavigate, useSearchParams } from 'react-router';
-import { loadLabels, loadModel } from '../services/loadModel';
-import { ModelInfo, ModelOrigin } from './types';
-import i18n from '../i18n';
-import { useSetAtom } from 'jotai';
-import { configAtom, labelsAtom, modelAtom } from '../atoms/state';
+import { ModelOrigin } from './types';
 import GameLoading from '../views/Student/WebcamInput/GameLoading';
 import { useTranslation } from 'react-i18next';
+import { useLayoutEffect } from 'react';
+import { useLoadModelAndShare } from '../hooks/useLoadModelAndShare';
 
 export default function ModelLoader() {
     const { t } = useTranslation();
-    const [serachParams] = useSearchParams();
-    const modelOrigin = serachParams.get('modelOrigin') as ModelOrigin;
-    const modelName = serachParams.get('model');
+    const [searchParams] = useSearchParams();
+    const modelOrigin = searchParams.get('origin') as ModelOrigin;
+    const modelName = searchParams.get('model');
     const navigate = useNavigate();
-    const setModel = useSetAtom(modelAtom);
-    const setLabels = useSetAtom(labelsAtom);
-    const setConfig = useSetAtom(configAtom);
+    const { loadAndShare } = useLoadModelAndShare();
 
-    const handleGenAILoad = async (type: 'jobs' | 'animals') => {
-        // Load Gen-AI model
-        const modelInfo = {
-            origin: ModelOrigin.GenAI,
-            name: type,
-        } as ModelInfo;
-        const loadedModel = await loadModel(modelInfo);
-        const labels = await loadLabels({ language: i18n.language, modelName: modelInfo.name });
-        if (loadedModel) {
-            setModel(loadedModel);
-            setLabels((old) => {
-                const newLabels = new Map<string, string>(old.labels);
-                Object.entries(labels).forEach(([label, translation]) => {
-                    newLabels.set(label as string, translation as string);
-                });
-                return { labels: newLabels };
-            });
-            setConfig((old) => ({
-                ...old,
-                modelData: modelInfo,
-            }));
+    useLayoutEffect(() => {
+        if (!modelOrigin || !modelName) {
+            console.warn('Model parameters missing in URL, redirecting to library');
+            navigate('/library');
+            return;
         }
-    };
 
-    if (modelOrigin && modelOrigin.length > 0 && modelName && modelName.length > 0) {
         console.log('Loading model from URL parameters:', { modelOrigin, modelName });
-        if (modelOrigin === ModelOrigin.GenAI) {
-            console.log('load genai model');
-            handleGenAILoad(modelName as 'jobs' | 'animals');
-        } else if (modelOrigin === ModelOrigin.Teacher) {
+
+        if (modelOrigin === ModelOrigin.GenAI || modelOrigin === ModelOrigin.Remote) {
+            loadAndShare(modelOrigin, modelName);
+        } else if (modelOrigin === ModelOrigin.Local) {
             console.warn(
                 'Model should have been loaded already. Try loading the model again at "select classification task" view'
             );
-        } else if (modelOrigin === ModelOrigin.TM) {
-            console.log('not implemented yet');
+            navigate('/library');
         }
-    } else {
-        console.warn('Model parameters missing in URL, redirecting to library');
-        navigate('/library');
-    }
+    }, [modelOrigin, modelName, navigate, loadAndShare]);
 
     return (
         <>

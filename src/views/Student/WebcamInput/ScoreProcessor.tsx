@@ -78,6 +78,7 @@ export default function ScoreProcessor({
 
             try {
                 const results = await classifyImage(model, canvas);
+
                 if (!results) {
                     return;
                 }

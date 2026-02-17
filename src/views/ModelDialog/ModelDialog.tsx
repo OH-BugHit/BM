@@ -1,7 +1,16 @@
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
-import { activeViewAtom, configAtom, labelsAtom, modelAtom, modelDataAtom, modelListAtom } from '../../atoms/state';
-import { useAtom, useAtomValue } from 'jotai';
+import {
+    activeViewAtom,
+    configAtom,
+    currentModelInfoAtom,
+    labelsAtom,
+    modelAtom,
+    modelDataAtom,
+    modelListAtom,
+    shareModelAtom,
+} from '../../atoms/state';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import React, { useCallback, useRef, useState } from 'react';
 import { Autocomplete, Dialog, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
@@ -15,16 +24,18 @@ function ModelDialog() {
     const { t, i18n } = useTranslation();
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
-    const [, setModel] = useAtom(modelAtom);
+    const setModel = useSetAtom(modelAtom);
     const [config, setConfig] = useAtom(configAtom);
-    const [, setModelFile] = useAtom(modelDataAtom);
-    const [modelList] = useAtom(modelListAtom);
+    const setModelFile = useSetAtom(modelDataAtom);
+    const modelList = useAtomValue(modelListAtom);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedModel, setSelectedModel] = useState('');
     const activeView = useAtomValue(activeViewAtom);
-    const [, setLabels] = useAtom(labelsAtom);
+    const setLabels = useSetAtom(labelsAtom);
     const navigate = useNavigate();
     const location = useLocation();
+    const setShare = useSetAtom(shareModelAtom);
+    const setCurrentInfo = useSetAtom(currentModelInfoAtom);
 
     const doClose = useCallback(() => {
         const params = new URLSearchParams(location.search);
@@ -35,7 +46,7 @@ function ModelDialog() {
     const doCloseAccept = useCallback(
         (modelInfo: ModelInfo) => {
             const params = new URLSearchParams(location.search);
-            params.set('modelOrigin', modelInfo.origin);
+            params.set('origin', modelInfo.origin);
             params.set('model', modelInfo.name);
             params.set('overlay', 'none');
             navigate(`${location.pathname}?${params.toString()}`, { replace: false });
@@ -52,8 +63,11 @@ function ModelDialog() {
         if (selectedModel.length > 0) {
             setLoading(true);
             const modelInfo = { origin: ModelOrigin.GenAI, name: selectedModel };
+
+            setCurrentInfo(modelInfo); // Sets current modelInfo as current atom state.
             try {
                 const model = await loadModel(modelInfo);
+
                 setModel(model);
                 const labels = await loadLabels({
                     language: i18n.language,
@@ -86,6 +100,8 @@ function ModelDialog() {
                 doCloseAccept(modelInfo);
             } catch (e) {
                 console.error('Mallin lataus epäonnistui', e);
+
+                setCurrentInfo({ name: 'error', origin: ModelOrigin.Local }); // Sets current modelInfo as current atom state.
             } finally {
                 setLoading(false);
             }
@@ -93,12 +109,12 @@ function ModelDialog() {
             setModelFile(selectedFile);
             setLoading(true);
             const url = URL.createObjectURL(selectedFile);
-            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Teacher, name: url };
+            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };
             try {
                 const model = await loadModel(modelLoadingObject);
                 setModel(model);
                 setLabels((old) => {
-                    // Default fallback to model.getLabels!
+                    // Default fallback to model.getLabels! So if it not our model it has labels from the model.getLabels.
                     const newLabels = new Map<string, string>(old.labels);
                     const labelList = model?.getLabels() ?? [];
                     labelList.forEach((label) => {
@@ -106,8 +122,9 @@ function ModelDialog() {
                     });
                     return { labels: newLabels };
                 });
-                setConfig((old) => ({ ...old, modelData: { name: selectedFile.name, origin: ModelOrigin.Teacher } }));
-                doCloseAccept({ origin: ModelOrigin.Teacher, name: selectedFile.name.replace('.zip', '') });
+                setConfig((old) => ({ ...old, modelData: { name: selectedFile.name, origin: ModelOrigin.Local } }));
+                doCloseAccept({ origin: ModelOrigin.Local, name: selectedFile.name.replace('.zip', '') });
+                setShare(true); // Starts sharing local model
             } catch (err) {
                 console.error('Mallin lataus epäonnistui', err);
             } finally {

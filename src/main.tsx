@@ -11,9 +11,9 @@ const spoofTheme = createTheme(theme, {
         MuiInputLabel: {
             styleOverrides: {
                 root: {
-                    color: '#000000ff', // oletus
+                    color: '#000000ff',
                     '&.Mui-focused': {
-                        color: '#000000ff', // esim. sininen
+                        color: '#000000ff',
                     },
                     '&.Mui-error': {
                         color: 'red',

@@ -35,7 +35,7 @@ export default function ClassSelect({ openResult, setOpenResult, blockOverall }:
     };
 
     if (!studentData?.students) return <div>Ei kuvia</div>;
-
+    // TODO, LOAD MISSING
     return (
         <div className={style.classSelect}>
             {blockOverall || (

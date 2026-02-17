@@ -26,7 +26,7 @@ export const currentModelName = ({ config, t }: CurrentModelProps) => {
                 ? config.modelData.name + ' ' + t('teacher.labels.from') + ' ' + config.modelData.origin
                 : t('teacher.labels.noModel')
         }`;
-    } else if (config.modelData.origin === ModelOrigin.Teacher) {
+    } else if (config.modelData.origin === ModelOrigin.Local) {
         return `${t('teacher.labels.currentModel')}: ${config.modelData.name.slice(0, -4)} ${t(
             'teacher.labels.from'
         )} ${config.modelData.origin}`;

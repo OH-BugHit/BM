@@ -306,7 +306,7 @@
             "shareTip": "Näytä QR-koodi liittymistä varten"
         },
         "messages": {
-            "connection": "Tai mene alla olevaan www-osoitteeseen ja syötä koodi <Code>{{codeText}}</Code>",
+            "connection": "Tai mene alla olevaan www-osoitteeseen ja syötä koodi",
             "waitingPeople": "Odotetaan käyttäjiä...",
             "onePerson": "{{count}} käyttäjä on liittynyt mukaan.",
             "orGoStraight": "Voit myös mennä suoraan osoitteeseen:",

@@ -4,13 +4,15 @@ import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { useTranslation } from 'react-i18next';
 import { Dispatch, useEffect, useState } from 'react';
 import { SetStateAction } from 'jotai';
+import { CanvasCopy } from '../CanvasCopy/CanvasCopy';
 
 interface Props {
-    setOpenImage: Dispatch<SetStateAction<string | null>>;
+    setOpenImage: Dispatch<SetStateAction<string | null>> | Dispatch<SetStateAction<HTMLCanvasElement | null>>;
     openImage: string | null;
+    openCanvas?: HTMLCanvasElement | null;
 }
 
-export default function OpenedImage({ setOpenImage, openImage }: Props) {
+export default function OpenedImage({ setOpenImage, openImage, openCanvas }: Props) {
     const { t } = useTranslation();
 
     const [maxSize, setMaxSize] = useState<{ height: number; width: number }>({
@@ -28,7 +30,7 @@ export default function OpenedImage({ setOpenImage, openImage }: Props) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    if (!openImage) {
+    if (!openImage && !openCanvas) {
         return;
     }
 
@@ -38,13 +40,22 @@ export default function OpenedImage({ setOpenImage, openImage }: Props) {
             onClick={() => setOpenImage(null)}
         >
             <div className={style.imageContainer}>
-                <img
-                    src={openImage}
-                    alt="isompi kuva"
-                    width={'100%'}
-                    height={'100%'}
-                    style={{ objectFit: 'contain', maxHeight: maxSize.height, maxWidth: maxSize.width }}
-                ></img>
+                {openImage ? (
+                    <img
+                        src={openImage}
+                        alt="isompi kuva"
+                        width={'100%'}
+                        height={'100%'}
+                        style={{ objectFit: 'contain', maxHeight: maxSize.height, maxWidth: maxSize.width }}
+                    ></img>
+                ) : (
+                    <CanvasCopy
+                        sourceCanvas={openCanvas}
+                        height={maxSize.width}
+                        maxWidth={maxSize.width}
+                        maxHeight={maxSize.height}
+                    />
+                )}
             </div>
             <Button
                 onClick={() => setOpenImage(null)}

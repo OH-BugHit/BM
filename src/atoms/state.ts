@@ -18,6 +18,7 @@ import {
     ActivityPicture,
     Labels,
     TopThreeResults,
+    ModelInfo,
 } from '../utils/types';
 
 /**
@@ -202,6 +203,8 @@ export const modelDataAtom = atom<File | null>(null);
  */
 export const teacherHidesAtom = atom<Map<string, string[]>>(new Map());
 
+export const sessionCodeAtom = atom<string>('');
+
 /**
  * Contains last received top images shown at user grid view
  * K = students name (username) V = last image receiced
@@ -247,3 +250,18 @@ export const gameStartedAtom = atom<boolean>(false);
  * Indicates that the camera is activated (only used by student))
  */
 export const cameraActivatedAtom = atom<boolean>(false);
+
+/**
+ * Set true when starting sharing model Used only by teacher
+ */
+export const shareModelAtom = atom<boolean>(false);
+
+/**
+ * Contains state of "is model shared" Used only by teacher
+ */
+export const modelSharedAtom = atom<boolean>(false);
+
+/**
+ * Contains information, what is the current model info. Used only by teacher
+ */
+export const currentModelInfoAtom = atom<ModelInfo | null>(null);

@@ -93,10 +93,44 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                         } catch (e) {
                             console.error('Failed to load model', e);
                         }
+                    } else if (data.configuration.modelData.origin === ModelOrigin.Remote) {
+                        // TM model loading from URL
+                        try {
+                            const model = await loadModel(data.configuration.modelData);
+                            setModel(model);
+                            setLabels((old) => {
+                                const newLabels = new Map<string, string>(old.labels);
+                                const labelList = model?.getLabels() ?? [];
+                                labelList.forEach((label) => {
+                                    newLabels.set(label, label);
+                                });
+                                return { labels: newLabels };
+                            });
+                        } catch (e) {
+                            console.error('Failed to load model', e);
+                        }
                     } else {
+                        // TM model loading from URL
+                        try {
+                            const model = await loadModel(data.configuration.modelData);
+                            setModel(model);
+                            setLabels((old) => {
+                                const newLabels = new Map<string, string>(old.labels);
+                                const labelList = model?.getLabels() ?? [];
+                                labelList.forEach((label) => {
+                                    newLabels.set(label, label);
+                                });
+                                return { labels: newLabels };
+                            });
+                        } catch (e) {
+                            console.error('Failed to load model', e);
+                        }
+                        //
+                        /* Old model transfering via p2p
                         conn.send({
                             event: 'eter:modelRequest',
                         });
+                        */
                     }
                 }
             }
@@ -109,7 +143,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             // Receives model as zip blob from teacher
             const receivedZip = new Blob([data.data], { type: 'application/zip' });
             const url = URL.createObjectURL(receivedZip);
-            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Teacher, name: url };
+            const modelLoadingObject: ModelInfo = { origin: ModelOrigin.Local, name: url };
             try {
                 const model = await loadModel(modelLoadingObject);
                 setModel(model);

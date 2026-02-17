@@ -74,7 +74,7 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                     serverOrigin = false;
                 }
             }
-            if (params.get('modelOrigin' as ModelOrigin) !== ModelOrigin.GenAI && !serverOrigin) {
+            if (params.get('origin' as ModelOrigin) !== ModelOrigin.GenAI && !serverOrigin) {
                 // Teacher model OR TM-model. TODO: TEST TM MODEL! Should work but still need to be tested
 
                 // This builds image paths from the local model samples (the TM-exported zip with samples).

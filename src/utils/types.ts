@@ -1,7 +1,7 @@
 export enum ModelOrigin {
     GenAI = 'GenAI',
-    Teacher = 'teacher',
-    TM = 'TM',
+    Local = 'teacher',
+    Remote = 'remote',
 }
 
 /**

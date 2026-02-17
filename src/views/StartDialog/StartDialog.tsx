@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { activeViewAtom, usersAtom } from '../../atoms/state';
 import { useAtomValue } from 'jotai';
 import React, { useCallback } from 'react';
@@ -43,31 +43,15 @@ function StartDialog({ code }: Props) {
                         />
                     </div>
                     <div className={style.column}>
-                        <div>
-                            <Trans
-                                values={{ codeText: code }}
-                                i18nKey="teacher.messages.connection"
-                                components={{
-                                    Code: <em />,
-                                }}
-                            />
-                        </div>
+                        <div>{t('teacher.messages.connection')}</div>
+                        <h2>{code}</h2>
                         <a
                             style={{ wordBreak: 'break-all' }}
                             href={window.location.origin}
                             target="_blank"
                             rel="noreferrer"
                         >
-                            {window.location.host}
-                        </a>
-                        {t('teacher.messages.orGoStraight')}
-                        <a
-                            style={{ wordBreak: 'break-all' }}
-                            href={`${window.location.origin}/student/${code}/main`}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            {`${window.location.host}/student/${code}/main`}
+                            <h2>{window.location.host}</h2>
                         </a>
                     </div>
                 </div>

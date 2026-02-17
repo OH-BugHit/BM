@@ -1,6 +1,6 @@
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import { configAtom, labelsAtom, modelAtom } from '../../atoms/state';
+import { configAtom, currentModelInfoAtom, labelsAtom, modelAtom, shareModelAtom } from '../../atoms/state';
 import { useModelNamesLoader } from '../../hooks/useModelNamesLoader';
 import style from './style.module.css';
 import Footer from '../../components/Footer/Footer';
@@ -13,9 +13,11 @@ import LoadGame from '../../components/Save_Load_Buttons/LoadButton';
 
 export default function Library() {
     const { t } = useTranslation();
-    const [, setConfig] = useAtom(configAtom);
-    const [, setModel] = useAtom(modelAtom);
-    const [, setLabels] = useAtom(labelsAtom);
+    const setConfig = useSetAtom(configAtom);
+    const setModel = useSetAtom(modelAtom);
+    const setLabels = useSetAtom(labelsAtom);
+    const setShare = useSetAtom(shareModelAtom);
+    const setCurrentInfo = useSetAtom(currentModelInfoAtom);
     useModelNamesLoader();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -28,7 +30,7 @@ export default function Library() {
             fileInputRef.current?.click();
         } else {
             // Navigate to teacher. Selected model is loaded in teacher view based on URL params
-            navigate(`/teacher/?modelOrigin=${ModelOrigin.GenAI}&model=${type}&view=userGridSimple&overlay=share`);
+            navigate(`/teacher/?origin=${ModelOrigin.GenAI}&model=${type}&view=userGridSimple&overlay=share`);
         }
     };
 
@@ -37,8 +39,8 @@ export default function Library() {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
             const url = URL.createObjectURL(file);
-            const modelInfo = { origin: ModelOrigin.Teacher, name: file.name };
-            const loadedModel = await loadModel({ origin: ModelOrigin.Teacher, name: url });
+            const modelInfo = { origin: ModelOrigin.Local, name: file.name };
+            const loadedModel = await loadModel({ origin: ModelOrigin.Local, name: url });
             if (loadedModel) {
                 setModel(loadedModel);
                 setLabels((old) => {
@@ -54,11 +56,21 @@ export default function Library() {
                     ...old,
                     modelData: modelInfo,
                 }));
+                setCurrentInfo(modelInfo);
+                setShare(true);
+                navigate(
+                    `/teacher/?origin=${modelInfo.origin}&model=${modelInfo.name.replace('.zip', '')}&view=connect&overlay=share`
+                );
+            } else {
+                console.error(
+                    'Failed to load model from file. Make sure the file is a valid zip containing a model and try again.'
+                );
+                alert(
+                    'Failed to load model from file. Make sure the file is a valid zip containing a model and try again.'
+                );
             }
             URL.revokeObjectURL(url);
-            navigate(
-                `/teacher/?modelOrigin=${modelInfo.origin}&model=${modelInfo.name}&view=userGridSimple&overlay=share`
-            );
+            return;
         }
         console.error('No file selected or file input error');
     };

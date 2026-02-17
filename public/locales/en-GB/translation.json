@@ -346,7 +346,7 @@
             "shareTip": "Show join code"
         },
         "messages": {
-            "connection": "Or go to the address below and enter the code <Code>{{codeText}}</Code>",
+            "connection": "Or go to the address below and enter the code",
             "waitingPeople": "Waiting for people...",
             "onePerson": "{{count}} person has joined.",
             "orGoStraight": "Or go straight to the address:",

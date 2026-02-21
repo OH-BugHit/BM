@@ -64,42 +64,42 @@ stages:
                 - publish: $(System.DefaultWorkingDirectory)/dist
                   artifact: DistFolder
 
-    #    - stage: Test
-    #      dependsOn: Build
-    #      jobs:
-    #          - job: Ubuntu_x64
-    #            displayName: Test Ubuntu X64
-    #            steps:
-    #                - task: Cache@2
-    #                  inputs:
-    #                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
-    #                      restoreKeys: |
-    #                          npm | "$(Agent.OS)"
-    #                          npm
-    #                      path: $(System.DefaultWorkingDirectory)/node_modules
-    #                  displayName: Cache NPM packages
-    #                - download: current
-    #                  artifact: DistFolder
-    #                - script: |
-    #                      npm ci
-    #                      CI=true npm run ci:test
-    #                  displayName: 'Test'
-    #                - task: PublishTestResults@2
-    #                  displayName: Publish Test Results
-    #                  condition: succeededOrFailed()
-    #                  inputs:
-    #                      testRunner: JUnit
-    #                      testResultsFiles: '**/junit.xml'
-    #                - task: PublishCodeCoverageResults@1
-    #                  inputs:
-    #                      codeCoverageTool: 'Cobertura'
-    #                      summaryFileLocation: 'coverage/cobertura-coverage.xml'
-    #                      pathToSources: 'src'
-    #                      reportDirectory: 'coverage'
+    - stage: Test
+      dependsOn: Build
+      jobs:
+          - job: Ubuntu_x64
+            displayName: Test Ubuntu X64
+            steps:
+                - task: Cache@2
+                  inputs:
+                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
+                      restoreKeys: |
+                          npm | "$(Agent.OS)"
+                          npm
+                      path: $(System.DefaultWorkingDirectory)/node_modules
+                  displayName: Cache NPM packages
+                - download: current
+                  artifact: DistFolder
+                - script: |
+                      npm ci
+                      CI=true npm run ci:test
+                  displayName: 'Test'
+                - task: PublishTestResults@2
+                  displayName: Publish Test Results
+                  condition: succeededOrFailed()
+                  inputs:
+                      testRunner: JUnit
+                      testResultsFiles: '**/junit.xml'
+                - task: PublishCodeCoverageResults@2
+                  inputs:
+                      codeCoverageTool: 'Cobertura'
+                      summaryFileLocation: 'coverage/cobertura-coverage.xml'
+                      pathToSources: 'src'
+                      reportDirectory: 'coverage'
 
     - stage: DeployProduction
       displayName: Deploy Production
-      dependsOn: Build
+      dependsOn: Test
       condition: and(succeeded(), contains(variables['build.sourceBranch'], 'refs/tags/v'))
       jobs:
           - job: AzureSWA
@@ -126,7 +126,7 @@ stages:
 
     - stage: DeployStaging
       displayName: Deploy Staging
-      dependsOn: Build
+      dependsOn: Test
       condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
       jobs:
           - job: AzureSWA

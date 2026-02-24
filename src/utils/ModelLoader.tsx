@@ -19,9 +19,6 @@ export default function ModelLoader() {
             navigate('/library');
             return;
         }
-
-        console.log('Loading model from URL parameters:', { modelOrigin, modelName });
-
         if (modelOrigin === ModelOrigin.GenAI || modelOrigin === ModelOrigin.Remote) {
             loadAndShare(modelOrigin, modelName);
         } else if (modelOrigin === ModelOrigin.Local) {

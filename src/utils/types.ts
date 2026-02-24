@@ -60,6 +60,7 @@ export type SpoofConfig = {
         allowHidePicture: boolean;
         allowResetTerm: boolean;
         profilePicture: boolean;
+        allowAllLabels: boolean;
     };
 };
 
@@ -124,6 +125,9 @@ export type Settings = {
         userGridShowCrowns: boolean;
         userGridAutoGrow: boolean;
         userGridMaxColumns: number;
+    };
+    datasetGallery: {
+        allowAllLabels: boolean;
     };
 };
 

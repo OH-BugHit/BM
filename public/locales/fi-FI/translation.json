@@ -13,6 +13,7 @@
         "selectLabel": "Valitse luokittelutermi",
         "selectModel": "Valitse malli",
         "title": "Hajoava kone",
+        "trashClasses": "Muut opetuksessa käytetyt luokat",
         "labels": {
             "disableApp": "Pysäytä",
             "datasetTip": "Tutki opetusdataa"
@@ -107,6 +108,9 @@
                     "1": {
                         "title": "Kuvan ottaminen",
                         "tip": "Kamera kuvaa kokoajan ja lähettää uuden parhaan tuloksen automaattisesti. Sinun ei tarvitse painaa mistään ottaaksesi kuvaa."
+                    },
+                    "noTrainingData": {
+                        "tip": "Opetusdatan näkymä ei ole käytettävissä oppilaille tällä mallilla"
                     }
                 }
             }
@@ -132,7 +136,7 @@
         },
         "jobs": {
             "title": "Ammatit",
-            "description": "Luokittelijaa on opetettu seitsemällä eri ammatilla."
+            "description": "Valitse haaste seitsemästä eri ammatista."
         },
         "own": {
             "title": "Oma malli",
@@ -255,6 +259,7 @@
             "userGridSettings": "Käyttäjäruudukon asetukset"
         },
         "labels": {
+            "allowAllLabelsView": "Salli oppilaiden tarkastella koko opetusdataa",
             "allowHidePicture": "Käyttäjä voi piilottaa kuvan (ei mahdollista profiilikuvaa)",
             "allowStartTermAgain": "Käyttäjä voi poistaa tuloksensa",
             "autoGrow": "Mukauta käyttäjäruudukon koko automaattisesti",

@@ -1,16 +1,21 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { activeViewAtom, configAtom } from '../../atoms/state';
+import GalleryStudentStripped from './GalleryStudentStripped';
 import DatasetGallery from './DatasetGallery';
 
 export function StudentDatasetWrapper() {
     const activeView = useAtomValue(activeViewAtom);
-    const [config] = useAtom(configAtom);
+    const config = useAtomValue(configAtom);
+
+    if (config.settings.allowAllLabels) {
+        return <DatasetGallery mode="student" />;
+    }
     return (
         <>
             {config.gallery.force ? (
-                <DatasetGallery mode="student" />
+                <GalleryStudentStripped />
             ) : (
-                activeView.overlay === 'datasetGallery' && config.gallery.on && <DatasetGallery mode="student" />
+                activeView.overlay === 'datasetGallery' && config.gallery.on && <GalleryStudentStripped />
             )}{' '}
         </>
     );

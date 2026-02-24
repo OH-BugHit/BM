@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import style from './style.module.css';
 
 interface Props {
-    step: number;
+    step: number | string;
     user: 'student' | 'teacher';
 }
 

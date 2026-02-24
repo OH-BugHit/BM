@@ -10,8 +10,6 @@ import OpenedImage from '../../components/ImageView/OpenedImage';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router';
-import { ModelOrigin } from '../../utils/types';
-import { ISample } from '@genai-fi/classifier/main/ClassifierApp';
 
 /**
  * Component shows a gallery of images from a dataset
@@ -63,43 +61,14 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
     useEffect(() => {
         if (loaded.current) return;
         if (config.modelData.name.length > 0) {
-            const params = new URLSearchParams(location.search);
-            let serverOrigin = false;
             if (mode === 'student') {
                 const modelName = model?.model?.getMetadata()?.modelName ?? 'unknown';
                 if (modelName === 'jobs' || modelName === 'animals') {
                     //TODO: This is a temporary solution to determine the model origin at student side. Fix better some day cause contains hardcoded classes. Maybe use current model info atom?
-                    serverOrigin = true;
-                } else {
-                    serverOrigin = false;
+                    fetchImageUrls({ dataset: config.modelData }).then((data) => {
+                        setImagePaths(data);
+                    });
                 }
-            }
-            if (params.get('origin' as ModelOrigin) !== ModelOrigin.GenAI && !serverOrigin) {
-                // Teacher model OR TM-model. Shared model does not contain samples. This should work if they are added at some point.
-
-                // This builds image paths from the local model samples (the TM-exported zip with samples and for local ).
-
-                // model.samples is ISample[][] (buckets per label).
-                // Each ISample contains a data: HTMLCanvasElement that we convert to a
-                // data-URL with toDataURL() for use as image src.
-                setImagePaths(() => {
-                    const result: Record<string, string[]> = {};
-                    const samples: ISample[][] = model?.samples ?? [];
-                    const labelsList: string[] =
-                        (typeof model?.getLabels === 'function' ? model.getLabels() : []) || [];
-
-                    if (Array.isArray(samples) && samples.length > 0) {
-                        if (Array.isArray(samples[0])) {
-                            labelsList.forEach((lbl, idx) => {
-                                const bucket = samples[idx] ?? [];
-                                result[lbl] = bucket
-                                    .map((s: ISample) => (s?.data ? s.data.toDataURL() : null))
-                                    .filter(Boolean) as string[];
-                            });
-                        }
-                    }
-                    return result;
-                });
             } else {
                 fetchImageUrls({ dataset: config.modelData }).then((data) => {
                     setImagePaths(data);
@@ -147,36 +116,144 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
         return () => el.removeEventListener('scroll', handleScroll);
     }, [offset, loading, selected, loadMore, noMoreData]);
 
+    const allLabels = model?.getLabels() ?? [];
+    const labelOptions = allLabels.filter((word) => !(word.startsWith('_{') && word.endsWith('}')));
+    const trashClasses = allLabels.filter((word) => word.startsWith('_{') && word.endsWith('}'));
+
+    if (mode === 'student') {
+        return (
+            <>
+                <motion.div
+                    className={style.datasetGallery}
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.7 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    <div className={style.titleRow}>
+                        {mode === 'student' && (
+                            <Button
+                                onClick={doClose}
+                                title={t('common.close')}
+                                aria-label="Sulje"
+                                style={{
+                                    position: 'absolute',
+                                    top: '0.1rem',
+                                    right: '0.1rem',
+                                    zIndex: 900,
+                                    border: 'none',
+                                    width: 32,
+                                    height: 32,
+                                    fontSize: 24,
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                <CloseSharpIcon />
+                            </Button>
+                        )}
+                        <h1 style={{ color: 'black' }}>{t('common.dataset')}</h1>
+                    </div>
+                    <FormControl className={style.selector}>
+                        <InputLabel id="term-label">{t('common.selectLabel')}</InputLabel>
+                        <Select
+                            labelId="term-label"
+                            value={selected}
+                            onChange={(e) => setSelected(e.target.value || '')}
+                        >
+                            {labelOptions
+                                .slice()
+                                .sort((a, b) => {
+                                    // Order items by trasnlated label
+                                    const va = labels?.labels?.get(a) ?? a;
+                                    const vb = labels?.labels?.get(b) ?? b;
+                                    return va.localeCompare(vb, 'fi', { sensitivity: 'base' });
+                                })
+                                .map(
+                                    (
+                                        label // Translations mappin
+                                    ) => (
+                                        <MenuItem
+                                            key={label}
+                                            value={label}
+                                        >
+                                            {labels?.labels?.get(label) ?? label}
+                                        </MenuItem>
+                                    )
+                                )}
+                            {trashClasses[0] && (
+                                <MenuItem
+                                    disabled
+                                    sx={{ fontWeight: 600 }}
+                                >
+                                    {t('common.trashClasses')}
+                                </MenuItem>
+                            )}
+                            {trashClasses
+                                .slice()
+                                .sort((a, b) => {
+                                    // Order items by trasnlated label
+                                    const va = labels?.labels?.get(a) ?? a;
+                                    const vb = labels?.labels?.get(b) ?? b;
+                                    return va.localeCompare(vb, 'fi', { sensitivity: 'base' });
+                                })
+                                .map(
+                                    (
+                                        label // Translations mappin
+                                    ) => (
+                                        <MenuItem
+                                            key={label}
+                                            value={label}
+                                            sx={{ color: 'gray', fontStyle: 'italic' }}
+                                        >
+                                            {labels?.labels
+                                                ?.get(label)
+                                                ?.replace(/^_\{/, '')
+                                                .replace(/\}$/, '')
+                                                .replace(/_/g, ' ') ??
+                                                label.replace(/^_\{/, '').replace(/\}$/, '').replace(/_/g, ' ')}
+                                        </MenuItem>
+                                    )
+                                )}
+                        </Select>
+                    </FormControl>
+                    {images.length === 0 && !loading && selected.length !== 0 && (
+                        <em className={style.noData}>{t('common.noTeachingData')}</em>
+                    )}
+                    <div className={style.gridContainer}>
+                        <div
+                            className={`${style.imageGrid} ${style.teacherGrid}`}
+                            ref={containerRef}
+                        >
+                            {images.map((src, index) => (
+                                <img
+                                    key={index}
+                                    src={src}
+                                    alt={`Kuva ${index}`}
+                                    className={style.image}
+                                    onClick={() => setOpenImage(src)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </motion.div>
+                <OpenedImage
+                    setOpenImage={setOpenImage}
+                    openImage={openImage ? openImage.replace('_thumb', '') : null}
+                />
+            </>
+        );
+    }
+
     return (
         <>
             <motion.div
-                className={`${style.datasetGallery} ${mode === 'teacher' ? style.teacherGallery : ''}`}
-                initial={{ opacity: 0, scale: mode === 'teacher' ? 1 : 0.7 }}
+                className={`${style.datasetGallery} ${style.teacherGallery}`}
+                initial={{ opacity: 0, scale: 1 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: mode === 'teacher' ? 1 : 0.7 }}
+                exit={{ opacity: 0, scale: 1 }}
                 transition={{ duration: 0.2 }}
             >
-                <div className={`${style.titleRow} ${mode === 'teacher' ? style.teacherRow : ''}`}>
-                    {mode === 'student' && (
-                        <Button
-                            onClick={doClose}
-                            title={t('common.close')}
-                            aria-label="Sulje"
-                            style={{
-                                position: 'absolute',
-                                top: '0.1rem',
-                                right: '0.1rem',
-                                zIndex: 900,
-                                border: 'none',
-                                width: 32,
-                                height: 32,
-                                fontSize: 24,
-                                cursor: 'pointer',
-                            }}
-                        >
-                            <CloseSharpIcon />
-                        </Button>
-                    )}
+                <div className={`${style.titleRow} ${style.teacherRow}`}>
                     <h1 style={{ color: 'black' }}>{t('common.dataset')}</h1>
                 </div>
                 <FormControl className={style.selector}>
@@ -186,22 +263,60 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                         value={selected}
                         onChange={(e) => setSelected(e.target.value || '')}
                     >
-                        {(model?.getLabels() ?? [])
+                        {labelOptions
                             .slice()
                             .sort((a, b) => {
-                                // Järjestä käännösten mukaan
+                                // Order items by trasnlated label
                                 const va = labels?.labels?.get(a) ?? a;
                                 const vb = labels?.labels?.get(b) ?? b;
                                 return va.localeCompare(vb, 'fi', { sensitivity: 'base' });
                             })
-                            .map((label) => (
-                                <MenuItem
-                                    key={label}
-                                    value={label}
-                                >
-                                    {labels?.labels?.get(label) ?? label}
-                                </MenuItem>
-                            ))}
+                            .map(
+                                (
+                                    label // Translations mappin
+                                ) => (
+                                    <MenuItem
+                                        key={label}
+                                        value={label}
+                                    >
+                                        {labels?.labels?.get(label) ?? label}
+                                    </MenuItem>
+                                )
+                            )}
+                        {trashClasses[0] && (
+                            <MenuItem
+                                disabled
+                                sx={{ fontWeight: 600 }}
+                            >
+                                {t('common.trashClasses')}
+                            </MenuItem>
+                        )}
+                        {trashClasses
+                            .slice()
+                            .sort((a, b) => {
+                                // Order items by trasnlated label
+                                const va = labels?.labels?.get(a) ?? a;
+                                const vb = labels?.labels?.get(b) ?? b;
+                                return va.localeCompare(vb, 'fi', { sensitivity: 'base' });
+                            })
+                            .map(
+                                (
+                                    label // Translations mappin
+                                ) => (
+                                    <MenuItem
+                                        key={label}
+                                        value={label}
+                                        sx={{ color: 'gray', fontStyle: 'italic' }}
+                                    >
+                                        {labels?.labels
+                                            ?.get(label)
+                                            ?.replace(/^_\{/, '')
+                                            .replace(/\}$/, '')
+                                            .replace(/_/g, ' ') ??
+                                            label.replace(/^_\{/, '').replace(/\}$/, '').replace(/_/g, ' ')}
+                                    </MenuItem>
+                                )
+                            )}
                     </Select>
                 </FormControl>
                 {images.length === 0 && !loading && selected.length !== 0 && (

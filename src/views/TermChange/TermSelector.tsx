@@ -56,7 +56,8 @@ export default function TermSelector({ toUsers }: Props) {
             setCurrentCommonTerm(newValue || '');
         }
     };
-    const labelOptions = model?.getLabels() ?? [];
+    const allLabels = model?.getLabels() ?? [];
+    const labelOptions = allLabels.filter((word) => !(word.startsWith('_{') && word.endsWith('}')));
     const validWord = labelOptions.includes(word) ? word : '';
     return (
         <FormControl

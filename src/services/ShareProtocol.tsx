@@ -14,9 +14,10 @@ const SHARE_INTERVAL = 20 * 60 * 1000; // 20 minutes
  */
 async function sendModel(code: string, model: ClassifierApp) {
     model.projectId = code;
-    model.samples = [];
+    //model.samples = [];
     model.behaviours = [];
-    const blob = await model.saveComponents();
+    const toSend = new ClassifierApp('image', model.model); // we send model without the samples
+    const blob = await toSend.saveComponents();
     if (!blob.zip) {
         console.error('Failed to save model as zip');
         throw new Error('Model save failed - no zip file generated');
@@ -31,7 +32,7 @@ async function sendModel(code: string, model: ClassifierApp) {
         throw new Error(`Failed to upload model: ${response.statusText}`);
     }
 
-    console.log('Model shared successfully with code:', code);
+    console.log('Model shared successfully with code:');
 }
 
 /**
@@ -69,7 +70,6 @@ export default function ShareProtocol() {
         const model = store.get(modelAtom);
 
         if (model && share && code) {
-            console.log('Sharing model with code:', code);
             sendModel(code, model)
                 .then(() => {
                     setModelShared(true);

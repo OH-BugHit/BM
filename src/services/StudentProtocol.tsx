@@ -49,7 +49,6 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
     // conn: Connection<EventProtocol>
 
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
-        console.log(data);
         if (data.event === 'eter:join') {
             // Send
         }

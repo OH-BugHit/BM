@@ -82,13 +82,13 @@ export default function Library() {
                 <ul className={style.grid}>
                     <ContentItem
                         title={t('library.jobs.title')}
-                        image="/images/library/jobs.png"
+                        image="/images/library/jobs.jpg"
                         description={t('library.jobs.description')}
                         onClick={() => handleItemClick('jobs')}
                     />
                     <ContentItem
                         title={t('library.animals.title')}
-                        image="/images/library/animals.png"
+                        image="/images/library/animals.jpg"
                         description={t('library.animals.description')}
                         onClick={() => handleItemClick('animals')}
                     />

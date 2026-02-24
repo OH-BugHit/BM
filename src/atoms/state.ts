@@ -76,12 +76,14 @@ export const configAtom = atom<SpoofConfig>({
         allowHidePicture: true,
         allowResetTerm: true,
         profilePicture: false,
+        allowAllLabels: false,
     },
 });
 
 /**
  * Teacher can send classifying term by modifying this atom
  * if recipient: username === 'a', every student changes to this term
+ * This atom also keeps current classifying term at student
  */
 export const termTransferAtom = atom<SpoofData>({
     term: '',
@@ -184,6 +186,9 @@ export const settingAtom = atom<Settings>({
         userGridShowCrowns: true,
         userGridAutoGrow: true,
         userGridMaxColumns: 6,
+    },
+    datasetGallery: {
+        allowAllLabels: false,
     },
 });
 

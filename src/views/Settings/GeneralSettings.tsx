@@ -1,13 +1,14 @@
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import style from './style.module.css';
 import { Trans, useTranslation } from 'react-i18next';
 import { Checkbox, FormControlLabel, TextField } from '@mui/material';
 import LangSelect from '../../components/LangSelect/LangSelect';
-import { settingAtom, showTipsAtom } from '../../atoms/state';
+import { configAtom, settingAtom, showTipsAtom } from '../../atoms/state';
 
 export default function GeneralSettings() {
     const { t } = useTranslation();
     const [settings, setSettings] = useAtom(settingAtom);
+    const setConfig = useSetAtom(configAtom);
     const [tips, setTips] = useAtom(showTipsAtom);
 
     return (
@@ -31,6 +32,21 @@ export default function GeneralSettings() {
                     />
                 }
                 label={t('settings.labels.pauseOnChange')}
+            />
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        checked={settings.datasetGallery.allowAllLabels}
+                        onChange={(_, checked) => {
+                            setSettings((old) => ({
+                                ...old,
+                                datasetGallery: { allowAllLabels: checked },
+                            }));
+                            setConfig((old) => ({ ...old, settings: { ...old.settings, allowAllLabels: checked } }));
+                        }}
+                    />
+                }
+                label={t('settings.labels.allowAllLabelsView')}
             />
             <FormControlLabel
                 control={

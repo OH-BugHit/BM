@@ -56,6 +56,7 @@
         "selectLabel": "Select label",
         "selectModel": "Select model",
         "title": "Breakable Machine",
+        "trashClasses": "Other classes used in training",
         "labels": {
             "disableApp": "Pause",
             "datasetTip": "Examine the training data"
@@ -148,6 +149,9 @@
                     "1": {
                         "title": "Using camera",
                         "tip": "The game uses live feed from your camera. You do not have to use any buttons to take a picture"
+                    },
+                    "noTrainingData": {
+                        "tip": "Training data view is not available to students with this model"
                     }
                 }
             }
@@ -174,7 +178,7 @@
         },
         "jobs": {
             "title": "Jobs",
-            "description": "Classifier is fine-tuned with collection of seven different occupations."
+            "description": "Select the challenge from seven different occupations."
         },
         "own": {
             "title": "Own model",
@@ -295,6 +299,7 @@
             "userGridSettings": "User grid view settings"
         },
         "labels": {
+            "allowAllLabelsView": "Allow students to view whole training data",
             "allowHidePicture": "Allow students to hide their result pictures",
             "allowStartTermAgain": "Allow students to reset own scores",
             "autoGrow": "Adjust grid automatically",

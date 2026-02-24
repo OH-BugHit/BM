@@ -118,6 +118,26 @@
     text-align: center;
 }
 
+.tipContainer {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: max-content;
+    width: 600px;
+    max-width: 80%;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    padding: 0.7rem;
+    background-color: white;
+    text-align: left;
+    z-index: 11;
+    box-shadow: 1px 1px 8px #888;
+}
+
 @media (max-width: 600px) {
     .container {
         top: 0;

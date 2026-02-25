@@ -180,3 +180,9 @@ export type ActivityPicture = {
     picture: HTMLCanvasElement;
     hidden: boolean;
 };
+
+export type LoadingError = {
+    isError: boolean;
+    message: string;
+    modelInfo: ModelInfo | undefined;
+};

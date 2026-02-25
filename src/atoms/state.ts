@@ -19,6 +19,7 @@ import {
     Labels,
     TopThreeResults,
     ModelInfo,
+    LoadingError,
 } from '../utils/types';
 
 /**
@@ -270,3 +271,8 @@ export const modelSharedAtom = atom<boolean>(false);
  * Contains information, what is the current model info. Used only by teacher
  */
 export const currentModelInfoAtom = atom<ModelInfo | null>(null);
+
+/**
+ * Loading error atom
+ */
+export const loadingErrorAtom = atom<LoadingError>({ isError: false, message: '', modelInfo: undefined });

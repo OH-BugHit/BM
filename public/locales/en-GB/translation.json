@@ -186,6 +186,21 @@
         }
     },
     "loader": {
+        "actions": {
+            "close": "Close"
+        },
+        "errors": {
+            "unknown": "A connection problem occurred",
+            "id-in-use": "Someone is already using this code",
+            "peer-not-found": "The code could not be found",
+            "missing-ice": "Could not connect, you may be offline.",
+            "no-signaling": "Our server isn't responding",
+            "bad-browser": "Your device doesn't support this app",
+            "unknownContent": "There is a problem with the media content",
+            "load": "Could not load the media content",
+            "download": "Could not download the media content",
+            "none": "Ok"
+        },
         "messages": {
             "cameraPermission": "To allow direct connections between devices you need to allow temporary access to the camera.",
             "connecting": "Trying to connect...",
@@ -205,17 +220,8 @@
             "failed": "No Connection",
             "loadingModel": "Wait for model and camera to load."
         },
-        "errors": {
-            "unknown": "A connection problem occurred",
-            "id-in-use": "Someone is already using this code",
-            "peer-not-found": "The code could not be found",
-            "missing-ice": "Could not connect, you may be offline.",
-            "no-signaling": "Our server isn't responding",
-            "bad-browser": "Your device doesn't support this app",
-            "unknownContent": "There is a problem with the media content",
-            "load": "Could not load the media content",
-            "download": "Could not download the media content",
-            "none": "Ok"
+        "model": {
+            "fail": "Failed to load model<br/><Model/> from <Origin/>.<br/>Please report this issue to <Link>our project on github</Link> if you have time.<br/><Refresh>Refresh</Refresh> to try again or <Main>go to front page</Main>"
         },
         "titles": {
             "iceConfig": "Configuring",
@@ -224,9 +230,6 @@
             "error": "Problem",
             "contentLoad": "Media Content",
             "networkType": "Information"
-        },
-        "actions": {
-            "close": "Close"
         }
     },
     "menu": {

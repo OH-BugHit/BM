@@ -1,5 +1,12 @@
 import { useSetAtom } from 'jotai';
-import { configAtom, currentModelInfoAtom, labelsAtom, modelAtom, shareModelAtom } from '../atoms/state';
+import {
+    configAtom,
+    currentModelInfoAtom,
+    labelsAtom,
+    loadingErrorAtom,
+    modelAtom,
+    shareModelAtom,
+} from '../atoms/state';
 import { ModelInfo, ModelOrigin } from '../utils/types';
 import { loadLabels, loadModel } from '../services/loadModel';
 import i18n from '../i18n';
@@ -11,6 +18,7 @@ export const useLoadModelAndShare = () => {
     const setLabels = useSetAtom(labelsAtom);
     const setConfig = useSetAtom(configAtom);
     const setShare = useSetAtom(shareModelAtom);
+    const setLoadError = useSetAtom(loadingErrorAtom);
 
     const loadAndShare = useCallback(
         async (origin: ModelOrigin, modelName: string) => {
@@ -38,6 +46,11 @@ export const useLoadModelAndShare = () => {
 
                 if (!loadedModel) {
                     console.error(`Failed to load model: ${origin} - ${modelName}`);
+                    setLoadError({
+                        isError: true,
+                        message: `loader.model.fail`,
+                        modelInfo: { origin: origin, name: modelName },
+                    });
                     return false;
                 }
 
@@ -78,7 +91,7 @@ export const useLoadModelAndShare = () => {
                 return false;
             }
         },
-        [setModel, setCurrentInfo, setLabels, setConfig, setShare]
+        [setModel, setCurrentInfo, setLabels, setConfig, setShare, setLoadError]
     );
 
     return { loadAndShare };

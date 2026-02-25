@@ -165,6 +165,9 @@
             "failed": "No Connection",
             "loadingModel": "Odota mallin ja kameran latautumista."
         },
+        "model": {
+            "fail": "Mallin<br/><Model/>  lataus epäonnistui sijainnista <Origin/>.<br/>Voit ilmoittaa ongelmasta <Link>projektimme githubissa</Link> jos sinulla on aikaa.<br/><Refresh>Päivitä sivu</Refresh> yrittääksesi uudelleen tai <Main>siirry etusivulle</Main>"
+        },
         "errors": {
             "unknown": "Ongelma laitteiden välisessä viestinnässä",
             "id-in-use": "Jollakulla toisella on jo tämä koodi käytössä",

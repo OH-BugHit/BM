@@ -26,6 +26,9 @@ export default function ModelLoader() {
                 'Model should have been loaded already. Try loading the model again at "select classification task" view'
             );
             navigate('/library');
+        } else {
+            console.error(`Invalid model origin: ${modelOrigin}`);
+            navigate('/library');
         }
     }, [modelOrigin, modelName, navigate, loadAndShare]);
 

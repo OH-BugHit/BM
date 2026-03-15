@@ -1,4 +1,4 @@
-import { FormControlLabel, IconButton, Switch } from '@mui/material';
+import { FormControlLabel, IconButton, Switch, Tooltip } from '@mui/material';
 import { PropsWithChildren, useCallback } from 'react';
 import { useAtom } from 'jotai';
 import PauseIcon from '@mui/icons-material/Pause';
@@ -15,9 +15,17 @@ interface Props extends PropsWithChildren {
     onAction?: () => void;
     selected?: boolean;
     color?: 'secondary' | 'primary' | 'inherit' | 'default' | 'error' | 'info' | 'success' | 'warning' | undefined;
+    tooltipTitle?: string;
 }
 
-export default function ActionButton({ action, onAction, children, selected = false, color = 'secondary' }: Props) {
+export default function ActionButton({
+    action,
+    onAction,
+    children,
+    selected = false,
+    color = 'secondary',
+    tooltipTitle,
+}: Props) {
     const [config, setConfig] = useAtom(configAtom);
     const { t } = useTranslation();
 
@@ -25,65 +33,92 @@ export default function ActionButton({ action, onAction, children, selected = fa
         if (onAction) onAction();
     }, [onAction]);
 
+    const provideTitle = () => {
+        if (tooltipTitle) return tooltipTitle;
+        switch (action) {
+            case 'pause': {
+                if (config.pause) {
+                    return t('controlMenu.actions.enableApp');
+                } else {
+                    return t('controlMenu.actions.disableApp');
+                }
+            }
+            case 'share': {
+                return t('teacher.titles.connectUsers');
+            }
+            case 'reset': {
+                return t('guide.common.startNew');
+            }
+            case 'heatmap': {
+                return t('guide.common.force.heatmap');
+            }
+            case 'dataset': {
+                return t('guide.common.force.dataset');
+            }
+        }
+    };
+
     return (
-        <IconButton
-            onClick={doClick}
-            color={color}
-            data-testid="action-button"
-            aria-selected={selected}
-        >
-            {children}
-            {action === 'pause' && config.pause && <PlayArrowIcon data-testid="paused-app" />}
-            {action === 'pause' && !config.pause && <PauseIcon />}
-            {action === 'heatmap' && (
-                <>
+        <Tooltip title={provideTitle()}>
+            <IconButton
+                onClick={doClick}
+                color={color}
+                data-testid="action-button"
+                aria-selected={selected}
+            >
+                {children}
+                {action === 'pause' && config.pause && <PlayArrowIcon data-testid="paused-app" />}
+                {action === 'pause' && !config.pause && <PauseIcon />}
+                {action === 'heatmap' && (
+                    <>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    color="secondary"
+                                    checked={!!config.heatmap.force}
+                                    onChange={(e) =>
+                                        setConfig((prev) => ({
+                                            ...prev,
+                                            heatmap: { on: prev.heatmap.on, force: e.target.checked },
+                                        }))
+                                    }
+                                />
+                            }
+                            label={t('guide.common.force.force')}
+                            labelPlacement="bottom"
+                            className={style.forceText}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                        />
+                    </>
+                )}
+                {action === 'dataset' && (
                     <FormControlLabel
                         control={
                             <Switch
                                 color="secondary"
-                                checked={!!config.heatmap.force}
+                                checked={!!config.gallery.force}
                                 onChange={(e) =>
                                     setConfig((prev) => ({
                                         ...prev,
-                                        heatmap: { on: prev.heatmap.on, force: e.target.checked },
+                                        gallery: { on: prev.gallery.on, force: e.target.checked },
                                     }))
                                 }
                             />
                         }
-                        label={t('guide.common.force.heatmap')}
+                        label={t('guide.common.force.force')}
                         labelPlacement="bottom"
                         className={style.forceText}
                         onClick={(e) => {
                             e.stopPropagation();
                         }}
                     />
-                </>
-            )}
-            {action === 'dataset' && (
-                <FormControlLabel
-                    control={
-                        <Switch
-                            color="secondary"
-                            checked={!!config.gallery.force}
-                            onChange={(e) =>
-                                setConfig((prev) => ({
-                                    ...prev,
-                                    gallery: { on: prev.gallery.on, force: e.target.checked },
-                                }))
-                            }
-                        />
-                    }
-                    label={t('guide.common.force.dataset')}
-                    labelPlacement="bottom"
-                    className={style.forceText}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                    }}
-                />
-            )}
-            {action === 'share' && <QrCode2Icon />}
-            {action === 'reset' && <ReplayIcon />}
-            {action === 'changeModel' && <ModelTrainingIcon fontSize={'large'} />}
-        </IconButton>
+                )}
+                {action === 'share' && <QrCode2Icon />}
+                {action === 'reset' && <ReplayIcon />}
+                {action === 'changeModel' && <ModelTrainingIcon fontSize={'large'} />}
+            </IconButton>
+        </Tooltip>
     );
 }

@@ -118,10 +118,12 @@
         "common": {
             "exit": "Poistu ohjauksesta",
             "force": {
-                "heatmap": "Pakota Lämpökartta",
-                "dataset": "Pakota Opetusdatanäkymä"
+                "force": "Pakota",
+                "heatmap": "Pakota Lämpökartta oppilaiden laitteisiin päälle",
+                "dataset": "Pakota Opetusdatanäkymä oppilaiden laitteisiin päälle"
             },
-            "hideTips": "Piilota vihjeet"
+            "hideTips": "Piilota vihjeet",
+            "startNew": "Aloita uusi kierros"
         }
     },
     "library": {

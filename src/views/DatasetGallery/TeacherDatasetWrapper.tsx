@@ -8,7 +8,7 @@ export function TeacherDatasetWrapper() {
     const [activeView] = useAtom(activeViewAtom);
     const params = new URLSearchParams(location.search);
 
-    if (params.get('origin' as ModelOrigin) !== ModelOrigin.GenAI) {
+    if (params.get('origin') !== ModelOrigin.GenAI) {
         return <>{activeView.active === 'datasetGallery' && <DatasetGalleryRemote />} </>;
     }
     return <>{activeView.active === 'datasetGallery' && <DatasetGallery mode="teacher" />} </>;

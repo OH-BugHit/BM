@@ -2,8 +2,7 @@ import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { createStore, Provider } from 'jotai';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { I18nextProvider } from 'react-i18next';
-import i18n from './i18n';
+import { MemoryRouter } from 'react-router-dom';
 
 const theme = createTheme({
     transitions: {
@@ -24,11 +23,11 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'wrapper'> {
 
 function AllProviders({ children, store }: React.PropsWithChildren<{ store: ReturnType<typeof createStore> }>) {
     return (
-        <I18nextProvider i18n={i18n}>
+        <MemoryRouter>
             <ThemeProvider theme={theme}>
                 <Provider store={store}>{children}</Provider>
             </ThemeProvider>
-        </I18nextProvider>
+        </MemoryRouter>
     );
 }
 

@@ -57,6 +57,7 @@ export default function TermChange() {
                     aria-label={t('teacher.labels.changeModel')}
                     action="changeModel"
                     color="primary"
+                    tooltipTitle={t('teacher.labels.changeModel')}
                 >
                     {t('teacher.labels.changeModel')}
                 </ActionButton>

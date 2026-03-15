@@ -159,10 +159,12 @@
         "common": {
             "exit": "Exit guide",
             "force": {
-                "heatmap": "Force Heatmap",
-                "dataset": "Force Dataset view"
+                "force": "Force",
+                "heatmap": "Force heatmap on students' devices",
+                "dataset": "Force dataset view on students' devices"
             },
-            "hideTips": "Hide all tips"
+            "hideTips": "Hide all tips",
+            "startNew": "Start new round"
         }
     },
 

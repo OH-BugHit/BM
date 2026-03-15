@@ -8,7 +8,15 @@ export function StudentDatasetWrapper() {
     const config = useAtomValue(configAtom);
 
     if (config.settings.allowAllLabels) {
-        return <DatasetGallery mode="student" />;
+        return (
+            <>
+                {config.gallery.force ? (
+                    <DatasetGallery mode="student" />
+                ) : (
+                    activeView.overlay === 'datasetGallery' && config.gallery.on && <DatasetGallery mode="student" />
+                )}{' '}
+            </>
+        );
     }
     return (
         <>

@@ -4,6 +4,9 @@
         "privacyTitle": "Tietoturvaselvitys"
     },
     "common": {
+        "aria": {
+            "openImage": "Avaa kuva kokonäytölle"
+        },
         "cancel": "Peruuta",
         "close": "Sulje",
         "dataset": "Opetusdata",

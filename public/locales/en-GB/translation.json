@@ -47,6 +47,9 @@
         ]
     },
     "common": {
+        "aria": {
+            "openImage": "Open image in full screen"
+        },
         "cancel": "Cancel",
         "close": "Close",
         "dataset": "Dataset",

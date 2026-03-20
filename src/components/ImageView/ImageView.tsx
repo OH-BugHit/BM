@@ -48,6 +48,22 @@ export default function ImageView({ openImage, setOpenImage }: ImageViewProps) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                setOpenImage(null);
+            }
+        };
+
+        if (openImage) {
+            window.addEventListener('keydown', handleKeyDown);
+        }
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [openImage, setOpenImage]);
+
     return (
         <>
             {openImage && (
@@ -71,7 +87,7 @@ export default function ImageView({ openImage, setOpenImage }: ImageViewProps) {
                                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.81)',
                             }}
                             title={t('common.close')}
-                            aria-label="Sulje"
+                            aria-label={t('common.close')}
                         >
                             <CloseSharpIcon />
                         </Button>

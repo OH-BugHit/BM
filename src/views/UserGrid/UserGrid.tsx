@@ -43,7 +43,6 @@ export default function UserGrid() {
         exit: { width: '0%', opacity: 0.5 },
     };
 
-    // TODO test rerendering and maybe limit?
     return (
         <>
             <div className={style.loadingWrapper}>

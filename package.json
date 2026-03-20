@@ -1,10 +1,10 @@
 {
     "name": "genai-bias-game",
     "private": true,
-    "version": "0.0.0",
+    "version": "1.4.0",
     "author": "Olli Hilke",
     "description": "Machine Learning tool for Children",
-    "homepage": "https://www.generation-ai-stn.fi",
+    "homepage": "https://spoof.gen-ai.fi/",
     "license": "MIT",
     "type": "module",
     "scripts": {

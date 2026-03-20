@@ -17,10 +17,10 @@ export default function StudentInfo({ open }: Props) {
             hideTip={open}
         >
             <MenuButton
-                color="primary"
                 aria-label={'username'}
                 size="large"
                 variant="text"
+                sx={{ fontSize: '1.1rem', color: 'whitesmoke' }}
             >
                 {profilePicture && (
                     <img

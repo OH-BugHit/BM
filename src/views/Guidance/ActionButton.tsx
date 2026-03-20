@@ -58,67 +58,54 @@ export default function ActionButton({
         }
     };
 
+    const label = provideTitle();
+
     return (
-        <Tooltip title={provideTitle()}>
-            <IconButton
-                onClick={doClick}
-                color={color}
-                data-testid="action-button"
-                aria-selected={selected}
-            >
-                {children}
-                {action === 'pause' && config.pause && <PlayArrowIcon data-testid="paused-app" />}
-                {action === 'pause' && !config.pause && <PauseIcon />}
-                {action === 'heatmap' && (
-                    <>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    color="secondary"
-                                    checked={!!config.heatmap.force}
-                                    onChange={(e) =>
-                                        setConfig((prev) => ({
-                                            ...prev,
-                                            heatmap: { on: prev.heatmap.on, force: e.target.checked },
-                                        }))
-                                    }
-                                />
-                            }
-                            label={t('guide.common.force.force')}
-                            labelPlacement="bottom"
-                            className={style.forceText}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                            }}
-                        />
-                    </>
+        <Tooltip title={label}>
+            <div>
+                {action !== 'heatmap' && action !== 'dataset' && (
+                    <IconButton
+                        onClick={doClick}
+                        color={color}
+                        data-testid="action-button"
+                        aria-label={label}
+                        aria-pressed={selected}
+                    >
+                        {children}
+                        {action === 'pause' && config.pause && <PlayArrowIcon />}
+                        {action === 'pause' && !config.pause && <PauseIcon />}
+                        {action === 'share' && <QrCode2Icon />}
+                        {action === 'reset' && <ReplayIcon />}
+                        {action === 'changeModel' && <ModelTrainingIcon fontSize="large" />}
+                    </IconButton>
                 )}
-                {action === 'dataset' && (
+                {(action === 'heatmap' || action === 'dataset') && (
                     <FormControlLabel
                         control={
                             <Switch
                                 color="secondary"
-                                checked={!!config.gallery.force}
-                                onChange={(e) =>
-                                    setConfig((prev) => ({
-                                        ...prev,
-                                        gallery: { on: prev.gallery.on, force: e.target.checked },
-                                    }))
-                                }
+                                checked={action === 'heatmap' ? !!config.heatmap.force : !!config.gallery.force}
+                                onChange={(e) => {
+                                    if (action === 'heatmap') {
+                                        setConfig((prev) => ({
+                                            ...prev,
+                                            heatmap: { on: prev.heatmap.on, force: e.target.checked },
+                                        }));
+                                    } else {
+                                        setConfig((prev) => ({
+                                            ...prev,
+                                            gallery: { on: prev.gallery.on, force: e.target.checked },
+                                        }));
+                                    }
+                                }}
                             />
                         }
                         label={t('guide.common.force.force')}
                         labelPlacement="bottom"
                         className={style.forceText}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                        }}
                     />
                 )}
-                {action === 'share' && <QrCode2Icon />}
-                {action === 'reset' && <ReplayIcon />}
-                {action === 'changeModel' && <ModelTrainingIcon fontSize={'large'} />}
-            </IconButton>
+            </div>
         </Tooltip>
     );
 }

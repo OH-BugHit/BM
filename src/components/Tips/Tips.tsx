@@ -46,8 +46,9 @@ export default function Tips({ user }: Props) {
                             fontSize: 24,
                             cursor: 'pointer',
                         }}
+                        className={style.closeButton}
                         title={t('common.close')}
-                        aria-label="Sulje"
+                        aria-label={t('common.close')}
                         onClick={() => setHide(true)}
                     >
                         <CloseSharpIcon />
@@ -62,7 +63,7 @@ export default function Tips({ user }: Props) {
                     <Button
                         style={{ position: 'absolute', right: '1rem', bottom: '0.1rem' }}
                         title={t('guide.common.hideTips')}
-                        aria-label="Sulje"
+                        aria-label={t('common.close')}
                         onClick={() => setShowTips(false)}
                     >
                         {t('guide.common.hideTips')}

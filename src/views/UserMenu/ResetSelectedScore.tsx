@@ -83,7 +83,12 @@ export default function ResetSelectedScore({ selectedUser }: Props) {
                     maxHeight: '600px',
                 }}
             >
-                <InputLabel id="term-label">{t('userGrid.actions.selectLabel')}</InputLabel>
+                <InputLabel
+                    id="term-label"
+                    sx={{ color: 'white' }}
+                >
+                    {t('userGrid.actions.selectLabel')}
+                </InputLabel>
                 <Select
                     labelId="term-label"
                     value={selected}

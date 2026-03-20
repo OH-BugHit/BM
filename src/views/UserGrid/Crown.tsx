@@ -24,6 +24,7 @@ export default function Crown({ username, openResult }: Props) {
                     src="/aiKruunuSmall.png"
                     className={style.crownImg}
                     height="70"
+                    alt="Golder crown"
                 />
             );
         } else if (topScores.scores.get(openResult)?.secondScore?.studentId === username) {
@@ -32,6 +33,7 @@ export default function Crown({ username, openResult }: Props) {
                     src="/crownSilverSmall.png"
                     className={style.crownImg}
                     height="70"
+                    alt="Silver crown"
                 />
             );
         } else if (topScores.scores.get(openResult)?.thirdScore?.studentId === username) {
@@ -40,6 +42,7 @@ export default function Crown({ username, openResult }: Props) {
                     src="/crownBronzeSmall.png"
                     className={style.crownImg}
                     height="70"
+                    alt="Bronze crown"
                 />
             );
         }

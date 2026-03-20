@@ -225,13 +225,17 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                             ref={containerRef}
                         >
                             {images.map((src, index) => (
-                                <img
-                                    key={index}
-                                    src={src}
-                                    alt={`Kuva ${index}`}
-                                    className={style.image}
+                                <button
                                     onClick={() => setOpenImage(src)}
-                                />
+                                    className={style.thumbnailButton}
+                                    aria-label={t('common.aria.openImage')}
+                                >
+                                    <img
+                                        key={index}
+                                        src={src}
+                                        alt={`Kuva ${index}`}
+                                    />
+                                </button>
                             ))}
                         </div>
                     </div>
@@ -328,13 +332,17 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                         ref={containerRef}
                     >
                         {images.map((src, index) => (
-                            <img
-                                key={index}
-                                src={src}
-                                alt={`Kuva ${index}`}
-                                className={style.image}
+                            <button
                                 onClick={() => setOpenImage(src)}
-                            />
+                                aria-label={t('common.aria.openImage')}
+                                className={style.thumbnailButton}
+                            >
+                                <img
+                                    key={index}
+                                    src={src}
+                                    alt={`Kuva ${index}`}
+                                />
+                            </button>
                         ))}
                     </div>
                 </div>

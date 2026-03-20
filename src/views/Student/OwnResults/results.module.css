@@ -20,7 +20,7 @@
 .resultGallery {
     flex-direction: column;
     margin-top: 1rem;
-    background-color: rgba(255, 255, 255, 0.646);
+    background-color: rgba(255, 255, 255, 0.913);
     padding: 1.2rem 2rem 1.2rem 2rem;
     border-radius: 1rem;
     backdrop-filter: blur(10px);
@@ -90,6 +90,10 @@
     top: -38px;
     right: -122px;
     max-width: 35px;
+}
+
+.closeButton :hover {
+    background: aliceblue;
 }
 
 @media (max-width: 600px) {

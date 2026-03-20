@@ -69,6 +69,7 @@ export default function TermSelector({ toUsers }: Props) {
                 labelId="term-label"
                 value={validWord}
                 onChange={(e) => handleTermChange(e.target.value)}
+                sx={{ color: 'black' }}
             >
                 {labelOptions
                     .slice()

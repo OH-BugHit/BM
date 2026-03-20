@@ -49,8 +49,11 @@ export function ResultsGallery({ currentData }: Props) {
                         height: 32,
                         fontSize: 24,
                         cursor: 'pointer',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.81)',
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.22)',
                     }}
+                    className={style.closeButton}
+                    title={t('common.close')}
+                    aria-label={t('common.close')}
                 >
                     <CloseSharpIcon color="primary" />
                 </Button>

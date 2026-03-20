@@ -1,4 +1,4 @@
-import { MenuItem, MenuList } from '@mui/material';
+import { Button, MenuItem, MenuList } from '@mui/material';
 import style from './style.module.css';
 import { TeacherDialogs, TeacherViews } from '../../utils/types';
 import { useAtom, useSetAtom } from 'jotai';
@@ -175,14 +175,14 @@ export default function Guidance() {
             data-testid="guidance"
         >
             <div style={{ marginTop: '0.5rem' }}></div>
-            <MenuItem
-                selected={false}
+            <Button
                 onClick={() => {
                     setGuidanceActive(false);
                 }}
+                sx={{ color: 'white', textTransform: 'none' }}
             >
                 <p className={style.guidanceTitle}>{t('common.exit')}</p>
-            </MenuItem>
+            </Button>
             <div style={{ flexGrow: 1 }}></div>
             <div
                 className={style.stepsContainer}

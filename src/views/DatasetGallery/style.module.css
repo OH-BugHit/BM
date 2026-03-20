@@ -1,3 +1,5 @@
+@value primary, secondary, bgColourful1, textDark from "@genai-fi/base/css/colours.module.css";
+
 .datasetGallery {
     position: absolute;
     top: 0;
@@ -80,14 +82,30 @@
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.thumbnailButton {
+    all: unset;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    position: relative;
+}
 
-.image {
+.thumbnailButton img {
     width: 200px;
     height: 100%;
     max-height: 200px;
     object-fit: contain;
     display: block;
-    cursor: pointer;
+}
+
+.thumbnailButton:focus-visible {
+    outline: 3px solid primary;
+    outline-offset: 2px;
+}
+
+.thumbnailButton:hover img {
+    transform: scale(1.05);
+    transition: transform 0.2s;
 }
 
 .openImage {

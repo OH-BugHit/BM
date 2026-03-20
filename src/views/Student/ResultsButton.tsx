@@ -2,14 +2,16 @@ import { useAtom } from 'jotai';
 import { activeViewAtom } from '../../atoms/state';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@genai-fi/base';
 
-export default function ResultsButton() {
+export default function ResultsButton({ landscape }: { landscape: boolean }) {
     const { t } = useTranslation();
     const [, setActiveView] = useAtom(activeViewAtom);
 
     return (
-        <button
-            className={style.resultButton}
+        <Button
+            className={landscape ? style.resultButtonLandscape : style.resultButtonPortrait}
+            variant="contained"
             onClick={() =>
                 setActiveView((old) => ({
                     ...old,
@@ -18,6 +20,6 @@ export default function ResultsButton() {
             }
         >
             {t('student.labels.ownResults')}
-        </button>
+        </Button>
     );
 }

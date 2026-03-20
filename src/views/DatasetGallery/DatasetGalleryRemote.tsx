@@ -148,7 +148,7 @@ function DatasetGalleryRemote() {
                             })
                             .map(
                                 (
-                                    label // Translations mappin
+                                    label // Translations mapping
                                 ) => (
                                     <MenuItem
                                         key={label}
@@ -197,19 +197,23 @@ function DatasetGalleryRemote() {
                 {images.length === 0 && !loading && selected.length !== 0 && (
                     <em className={style.noData}>{t('common.noTeachingData')}</em>
                 )}
-                <div className={style.gridContainer}>
+                <div
+                    className={style.gridContainer}
+                    tabIndex={0}
+                >
                     <div
                         className={`${style.imageGrid} ${mode === 'teacher' ? style.teacherGrid : ''}`}
                         ref={containerRef}
                     >
                         {images.map((src, index) => (
-                            <div
-                                className={style.image}
+                            <button
+                                className={style.thumbnailButton}
                                 onClick={() => setOpenImage(src.data.toDataURL())}
                                 key={index}
+                                aria-label={t('common.aria.openImage')}
                             >
                                 <CanvasCopy sourceCanvas={src.data} />
-                            </div>
+                            </button>
                         ))}
                     </div>
                 </div>

@@ -119,7 +119,7 @@ export default function Student({ serverCode }: StudentProps) {
                             )}
                             {!classifyTerm && <h2 className={style.waiting}>{t('student.titles.waitForLabel')}</h2>}
                             <div className={style.gameLowerStuff}>
-                                <ResultsButton />
+                                <ResultsButton landscape={window.innerWidth > window.innerHeight} />
                             </div>
                             <div className={style.studentTipContainer}>
                                 <Tips user="student" />

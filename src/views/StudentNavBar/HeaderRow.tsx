@@ -12,10 +12,10 @@ export default function HeaderRow({ doShowBottomMenu, open }: Props) {
         <div className={open ? style.logoRowOpen : style.logoRow}>
             <div className={style.backgroundLogo}>
                 <img
-                    src="/logo48_bw_invert.png"
+                    src="/logo72_bw_invert.png"
                     width={48}
                     height={48}
-                    alt="Spoofgame logo"
+                    alt="Generation AI logo"
                 />
             </div>
             {open && <h1 className={style.title}>{t('common.title')}</h1>}

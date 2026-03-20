@@ -17,11 +17,18 @@
     color: white;
 }
 
-/*
-TODO: Background color tuning and theming of everything
-background:linear-gradient(45deg, rgba(45, 236, 239, 0.309), rgba(24, 249, 253, 0.519));
-background: linear-gradient(45deg, rgba(127, 126, 187, 0.677), rgba(19, 62, 123, 0.38));
-*/
+.itemButton {
+    all: unset;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+}
+
+.itemButton:focus-visible {
+    outline: 3px solid primary;
+    outline-offset: 2px;
+}
+
 .content {
     padding: 1rem;
     height: fit-content;

@@ -34,6 +34,7 @@ export default function UserGridItem({ username, alive, profilePicture, openResu
                     <img
                         src="/noPic_FI.png"
                         width={200}
+                        alt="Tuloskuva on piilotettu"
                     ></img>
                 );
             } else {
@@ -41,6 +42,7 @@ export default function UserGridItem({ username, alive, profilePicture, openResu
                     <img
                         src="/noPic_EN.png"
                         width={200}
+                        alt="Result image is hidden"
                     ></img>
                 );
             }

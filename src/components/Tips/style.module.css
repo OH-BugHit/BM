@@ -27,3 +27,7 @@
     margin-left: 0.5rem;
     margin-bottom: 0.5rem;
 }
+
+.closeButton :hover {
+    background-color: aliceblue;
+}

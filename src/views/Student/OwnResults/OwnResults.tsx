@@ -1,4 +1,4 @@
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import style from './results.module.css';
 import { activeViewAtom } from '../../../atoms/state';
 import { ResultsGallery } from './ResultsGallery';
@@ -13,20 +13,12 @@ interface Props {
 }
 
 function OwnResults({ currentData }: Props) {
-    const [activeView, setActiveView] = useAtom(activeViewAtom);
+    const activeView = useAtomValue(activeViewAtom);
 
     return (
         <>
             {activeView.overlay === 'ownResults' && (
-                <div
-                    className={style.resultsWrapper}
-                    onClick={() =>
-                        setActiveView((old) => ({
-                            ...old,
-                            overlay: old.overlay === 'ownResults' ? 'none' : 'ownResults',
-                        }))
-                    }
-                >
+                <div className={style.resultsWrapper}>
                     <div
                         className={style.resultsContainer}
                         onClick={(e) => e.stopPropagation()}

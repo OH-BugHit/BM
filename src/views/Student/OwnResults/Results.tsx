@@ -101,7 +101,7 @@ export default function Results({ setOpenImage, currentData }: Props) {
                         </h2>
                         <div className={style.imageColumn}>
                             <div className={style.imagesContainer}>
-                                <div
+                                <Button
                                     className={style.image}
                                     onClick={() => setOpenImage(topCanvas || null)}
                                 >
@@ -114,8 +114,8 @@ export default function Results({ setOpenImage, currentData }: Props) {
                                             />
                                         </div>
                                     )}
-                                </div>
-                                <div
+                                </Button>
+                                <Button
                                     className={style.image}
                                     onClick={() => setOpenImage(topHeatmap || null)}
                                 >
@@ -128,7 +128,7 @@ export default function Results({ setOpenImage, currentData }: Props) {
                                             />
                                         </div>
                                     )}
-                                </div>
+                                </Button>
                             </div>
                             {(config.settings.allowHidePicture || config.settings.allowResetTerm) && (
                                 <div className={style.buttonContainer}>

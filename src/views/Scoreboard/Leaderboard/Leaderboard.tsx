@@ -1,7 +1,7 @@
 import style from './leaderboard.module.css';
-import { profilePicturesAtom, studentDataAtom } from '../../../atoms/state';
-import { useAtom } from 'jotai';
-import { useState } from 'react';
+import { isOutOfFocusAtom, profilePicturesAtom, studentDataAtom } from '../../../atoms/state';
+import { useAtom, useSetAtom } from 'jotai';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import ImageView from '../../../components/ImageView/ImageView';
@@ -17,6 +17,7 @@ export default function Leaderboard({ className }: Props) {
     const { t } = useTranslation();
     const [studentData] = useAtom(studentDataAtom);
     const [profilePics] = useAtom(profilePicturesAtom);
+    const setIsOutOfFocus = useSetAtom(isOutOfFocusAtom);
 
     const [openImage, setOpenImage] = useState<
         { student: string; className: string } | null | HTMLCanvasElement | undefined
@@ -24,13 +25,26 @@ export default function Leaderboard({ className }: Props) {
 
     const scores = generateScores(studentData, profilePics, className);
 
+    useEffect(() => {
+        if (openImage) {
+            setIsOutOfFocus(true);
+        } else {
+            setIsOutOfFocus(undefined);
+        }
+    }, [openImage, setIsOutOfFocus]);
+
     return (
         <>
-            <div className={style.leaderboard}>
+            <div
+                className={style.leaderboard}
+                inert={openImage ? true : undefined}
+                role="list"
+            >
                 <div className={style.hidePictures}>
                     <VisibilityToggle />
                 </div>
                 <h1>{t('scoreboard.labels.standings')}</h1>
+
                 <AnimatePresence>
                     {scores.map((student, index) => (
                         <motion.div
@@ -41,6 +55,7 @@ export default function Leaderboard({ className }: Props) {
                             key={student.studentId}
                             className={style.leaderboardItem}
                             transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                            role="listitem"
                         >
                             <ScoreRow
                                 index={index}

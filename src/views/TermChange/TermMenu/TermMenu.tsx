@@ -43,7 +43,7 @@ export default function TermMenu() {
         <>
             <FloatingMenu
                 title={t('termSelect.aria.termMenu')}
-                placement="relative-top"
+                placement="relative"
                 label={
                     <div className={style.menuLogo}>
                         {config.gameMode === 'all' ? t('termSelect.titles.all') : t('termSelect.titles.single')}

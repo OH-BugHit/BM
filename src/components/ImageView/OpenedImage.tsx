@@ -53,7 +53,9 @@ export default function OpenedImage({ setOpenImage, openImage, openCanvas }: Pro
     return (
         <div
             className={style.openImageOverlay2}
-            onClick={() => setOpenImage(null)}
+            onClick={() => {
+                setOpenImage(null);
+            }}
         >
             <div className={style.imageContainer}>
                 {openImage ? (
@@ -74,7 +76,9 @@ export default function OpenedImage({ setOpenImage, openImage, openCanvas }: Pro
                 )}
             </div>
             <Button
-                onClick={() => setOpenImage(null)}
+                onClick={() => {
+                    setOpenImage(null);
+                }}
                 style={{
                     position: 'absolute',
                     top: '1rem',

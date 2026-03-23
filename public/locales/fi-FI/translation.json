@@ -5,7 +5,10 @@
     },
     "common": {
         "aria": {
-            "openImage": "Avaa kuva kokonäytölle"
+            "collideControls": "Sulje painikkeiden selitteet",
+            "expandControls": "Laajenna painikkeiden selitteet näkyviin",
+            "openImage": "Avaa kuva kokonäytölle",
+            "topCanvas": "Parhaan tuloksen kuva"
         },
         "cancel": "Peruuta",
         "close": "Sulje",
@@ -47,7 +50,7 @@
         "messages": {
             "usernameError": {
                 "missing": "Käyttäjänimi puuttuu",
-                "long": "Käyttäjänimi on liian pitkä",
+                "long": "Käyttäjänimi on liian pitkä. (Anna enintään 15 merkkiä)",
                 "short": "Käyttäjänimen pitää olla ainakin 3 merkkiä",
                 "taken": "Käyttäjänimi on jo käytössä",
                 "takenFree": "Käyttäjänimi on jo käytössä, jos yhteytesi katkesi voit palata samalla käyttäjällä \"Aloita\" painikkeen alta."
@@ -342,6 +345,8 @@
             "all": "Yhteinen haaste",
             "change": "Vaihda luokittelutermi käyttäjälle {{user}}",
             "changeChallenge": "Vaihda haastetta",
+            "current": "Haaste nyt:",
+            "noChallenge": "Ei haastetta valittuna. Valitse alta",
             "selectUsers": "Valitse käyttäjät",
             "setSingle": "Aseta uusi haaste yksittäisille pelaajille",
             "single": "Yksilöhaasteet"

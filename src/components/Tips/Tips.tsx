@@ -4,7 +4,7 @@ import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { Button } from '@genai-fi/base';
 import Tip from './Tip';
 import { useAtom, useAtomValue } from 'jotai';
-import { guidanceActiveAtom, guidanceStepAtom, showTipsAtom } from '../../atoms/state';
+import { guidanceActiveAtom, guidanceStepAtom, isOutOfFocusAtom, showTipsAtom } from '../../atoms/state';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
@@ -17,6 +17,7 @@ export default function Tips({ user }: Props) {
     const step = useAtomValue(guidanceStepAtom);
     const [show, setShowTips] = useAtom(showTipsAtom);
     const [hide, setHide] = useState(false);
+    const isOutOfFocus = useAtomValue(isOutOfFocusAtom);
 
     useEffect(() => {
         setHide(false);
@@ -33,6 +34,7 @@ export default function Tips({ user }: Props) {
                     exit={{ opacity: 0, scale: 0.7 }}
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
                     className={style.tipsContainer}
+                    inert={isOutOfFocus}
                 >
                     <Button
                         style={{

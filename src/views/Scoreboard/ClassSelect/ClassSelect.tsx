@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import style from './classSelect.module.css';
-import { labelsAtom, studentDataAtom } from '../../../atoms/state';
+import { isOutOfFocusAtom, labelsAtom, studentDataAtom } from '../../../atoms/state';
 import { getClassNames } from './getClassNames';
 
 interface Props {
@@ -23,6 +23,7 @@ export default function ClassSelect({ openResult, setOpenResult, blockOverall }:
     const { t } = useTranslation();
     const [studentData] = useAtom(studentDataAtom);
     const [labels] = useAtom(labelsAtom);
+    const isOutOfFocus = useAtomValue(isOutOfFocusAtom);
 
     const allClassnames = getClassNames(studentData);
 
@@ -35,16 +36,20 @@ export default function ClassSelect({ openResult, setOpenResult, blockOverall }:
     };
 
     if (!studentData?.students) return <div>Ei kuvia</div>;
-    // TODO, LOAD MISSING
     return (
-        <div className={style.classSelect}>
+        <div
+            className={style.classSelect}
+            inert={isOutOfFocus}
+            role="group"
+            aria-label="Class selection"
+        >
             {blockOverall || (
                 <button
                     title={t('scoreboard.labels.forAll')}
                     className={`${openResult === null ? style.selectedTermItem : style.termItem}`}
                     onClick={() => toggleMenu(null)}
                 >
-                    <h3>{t('scoreboard.labels.leaderboard')}</h3>
+                    <span className={style.classNameText}>{t('scoreboard.labels.leaderboard')}</span>
                 </button>
             )}
             {[...allClassnames].sort().map((classname) => (
@@ -54,7 +59,7 @@ export default function ClassSelect({ openResult, setOpenResult, blockOverall }:
                     key={classname}
                     onClick={() => toggleMenu(classname)}
                 >
-                    <h3>{labels.labels.get(classname)}</h3>
+                    <span className={style.classNameText}>{labels.labels.get(classname)}</span>
                 </button>
             ))}
         </div>

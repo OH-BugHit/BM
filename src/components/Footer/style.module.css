@@ -6,6 +6,8 @@
 
 .langSelect {
     position: absolute;
+    min-height: 23px;
     bottom: 0px;
     right: 0px;
+    z-index: 11;
 }

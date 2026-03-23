@@ -19,6 +19,7 @@ export default function HeatmapLayer({ heatmapRef }: Props) {
                 ref={heatmapRef}
                 width={224}
                 height={224}
+                aria-hidden={true}
             />
         </div>
     );

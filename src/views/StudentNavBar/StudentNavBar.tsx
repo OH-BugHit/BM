@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { activeViewAtom, configAtom, studentControlsAtom } from '../../atoms/state';
+import { activeViewAtom, configAtom, isOutOfFocusAtom, studentControlsAtom } from '../../atoms/state';
 import style from './style.module.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import IconMenuItem from '../../components/IconMenu/Items';
 import { MenuButton } from '../../components/Buttons/MenuButton';
@@ -12,6 +12,8 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseIcon from '@mui/icons-material/Pause';
 import HeaderRow from './HeaderRow';
 import StudentInfo from './StudentInfo';
+import { Button } from '@mui/material';
+import { easeOut, motion } from 'framer-motion';
 
 function StudentNavBar() {
     const { t } = useTranslation();
@@ -20,9 +22,19 @@ function StudentNavBar() {
     const [config] = useAtom(configAtom);
     const [controls, setControls] = useAtom(studentControlsAtom);
     const [activeView, setActiveView] = useAtom(activeViewAtom);
+    const isOutOfFocus = useAtomValue(isOutOfFocusAtom);
 
+    const navVariants = {
+        closed: { height: '60px', transition: { duration: 0.3, ease: easeOut } },
+        open: { height: 'fit-content', transition: { duration: 0.3, ease: easeOut } },
+    };
     return (
-        <nav className={open ? style.bottomNav : style.bottomNavClosed}>
+        <motion.nav
+            className={style.bottomNav}
+            variants={navVariants}
+            animate={open ? 'open' : 'closed'}
+            inert={isOutOfFocus}
+        >
             <HeaderRow
                 open={open}
                 doShowBottomMenu={doShowBottomMenu}
@@ -87,14 +99,18 @@ function StudentNavBar() {
             </IconMenuItem>
             <StudentInfo open={open} />
             {!open && (
-                <MenuIcon
-                    fontSize="large"
-                    sx={{ width: '3.5rem', height: '3.5rem' }}
-                    style={{ cursor: 'pointer', opacity: '0.7' }}
+                <Button
                     onClick={doShowBottomMenu}
-                />
+                    aria-label={t('common.aria.collideControls')}
+                >
+                    <MenuIcon
+                        fontSize="large"
+                        sx={{ width: '3.5rem', height: '3.5rem' }}
+                        style={{ cursor: 'pointer', opacity: '0.7' }}
+                    />
+                </Button>
             )}
-        </nav>
+        </motion.nav>
     );
 }
 

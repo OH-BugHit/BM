@@ -2,7 +2,7 @@ import style from './style.module.css';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { CanvasCopy } from '../CanvasCopy/CanvasCopy';
 import { Button } from '@genai-fi/base';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { studentDataAtom } from '../../atoms/state';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,7 +30,7 @@ interface ImageViewProps {
  * @returns return view with opened image
  */
 export default function ImageView({ openImage, setOpenImage }: ImageViewProps) {
-    const [studentData] = useAtom(studentDataAtom);
+    const studentData = useAtomValue(studentDataAtom);
     const { t } = useTranslation();
 
     const [maxSize, setMaxSize] = useState<{ height: number; width: number }>({
@@ -64,16 +64,29 @@ export default function ImageView({ openImage, setOpenImage }: ImageViewProps) {
         };
     }, [openImage, setOpenImage]);
 
+    useEffect(() => {
+        if (!(openImage instanceof HTMLCanvasElement)) {
+            if (openImage) {
+                if (!studentData.students.get(openImage.student)?.data.get(openImage.className)?.topCanvas)
+                    setOpenImage(null);
+            }
+        }
+    }, [openImage, studentData.students, setOpenImage]);
+
     return (
         <>
             {openImage && (
                 <div
                     className={style.openImageOverlay}
-                    onClick={() => setOpenImage(null)}
+                    onClick={() => {
+                        setOpenImage(null);
+                    }}
                 >
                     <div className={style.topPictureContainer}>
                         <Button
-                            onClick={() => setOpenImage(null)}
+                            onClick={() => {
+                                setOpenImage(null);
+                            }}
                             style={{
                                 position: 'absolute',
                                 top: '1rem',

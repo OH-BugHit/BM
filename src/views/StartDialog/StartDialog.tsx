@@ -71,6 +71,7 @@ function StartDialog({ code }: Props) {
                             color="primary"
                             data-testid="teacher-start-button"
                             onClick={doClose}
+                            title={t('common.close')}
                         >
                             {t('common.close')}
                         </LargeButton>

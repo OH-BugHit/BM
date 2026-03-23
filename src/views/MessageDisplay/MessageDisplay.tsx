@@ -20,7 +20,13 @@ function MessageDisplay({ open }: Props) {
         >
             <DialogTitle className={style.title}>{t(`messageDisplay.title.${bouncer.message}`)}</DialogTitle>
             <DialogContent>
-                <div className={style.selectModelMessage}>{t(`messageDisplay.message.${bouncer.message}`)}</div>
+                <div
+                    className={style.selectModelMessage}
+                    role="status"
+                    aria-live="assertive"
+                >
+                    {t(`messageDisplay.message.${bouncer.message}`)}
+                </div>
                 <em>{bouncer.reload ? t('messageDisplay.reload.true') : t('messageDisplay.reload.false')}</em>
             </DialogContent>
         </Dialog>

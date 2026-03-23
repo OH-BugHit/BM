@@ -47,7 +47,7 @@ export default function Guidance() {
                     break;
                 }
                 case 'reset': {
-                    params.set('view', 'termChange');
+                    params.set('view', 'select');
                     params.set('overlay', 'none');
                     navigate(`${location.pathname}?${params.toString()}`, { replace: false });
                     setConfig((prev) => ({
@@ -79,12 +79,12 @@ export default function Guidance() {
 
     const data: { index: number; title: string; view: TeacherDialogs | TeacherViews; action: string }[] = [
         { index: 1, title: t('normal.steps.teacher.1.title'), view: 'share', action: 'share' },
-        { index: 2, title: t('normal.steps.teacher.2.title'), view: 'termChange', action: 'share' },
-        { index: 3, title: t('normal.steps.teacher.3.title'), view: 'userGrid', action: 'pause' },
-        { index: 4, title: t('normal.steps.teacher.4.title'), view: 'userGrid', action: 'heatmap' },
-        { index: 5, title: t('normal.steps.teacher.5.title'), view: 'datasetGallery', action: 'dataset' },
+        { index: 2, title: t('normal.steps.teacher.2.title'), view: 'select', action: 'share' },
+        { index: 3, title: t('normal.steps.teacher.3.title'), view: 'explore', action: 'pause' },
+        { index: 4, title: t('normal.steps.teacher.4.title'), view: 'heatmap', action: 'heatmap' },
+        { index: 5, title: t('normal.steps.teacher.5.title'), view: 'data', action: 'dataset' },
         { index: 6, title: t('normal.steps.teacher.6.title'), view: 'results', action: 'pause' },
-        { index: 7, title: t('normal.steps.teacher.7.title'), view: 'results', action: 'reset' },
+        { index: 7, title: t('normal.steps.teacher.7.title'), view: 'ready', action: 'reset' },
     ];
 
     // Sync URL view parameter to currentSelected step

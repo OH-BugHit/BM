@@ -115,7 +115,23 @@
     border-radius: 1rem;
 }
 
+@container board (width < 900px) {
+    .infoData {
+        font-size: x-large;
+    }
+}
+
 @container board (width < 700px) {
+    .leaderboardPlace {
+        padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+        ;
+    }
+
+    .score {
+        padding: 1rem 1rem 1rem 1rem;
+        ;
+    }
+
     .allPics {
         display: none;
     }
@@ -126,5 +142,9 @@
 
     .visButton {
         display: none;
+    }
+
+    .infoData {
+        font-size: medium;
     }
 }

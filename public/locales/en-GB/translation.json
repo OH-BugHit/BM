@@ -48,7 +48,10 @@
     },
     "common": {
         "aria": {
-            "openImage": "Open image in full screen"
+            "collideControls": "Close controls",
+            "expandControls": "Expand controls",
+            "openImage": "Open image in full screen",
+            "topCanvas": "Top image"
         },
         "cancel": "Cancel",
         "close": "Close",
@@ -88,7 +91,7 @@
         "messages": {
             "usernameError": {
                 "missing": "A username is required",
-                "long": "The username is too long",
+                "long": "The username is too long (Max 15 characters)",
                 "short": "The username must be 3 or more characters",
                 "taken": "The username is already taken",
                 "takenFree": "The username is already taken. If you are trying to reconnect, press button below \"Enter\""
@@ -385,6 +388,8 @@
             "all": "Common Challenge",
             "change": "Change label for {{user}}",
             "changeChallenge": "Change the Challenge",
+            "current": "Current challenge:",
+            "noChallenge": "Challenge not set. Select one below.",
             "selectUsers": "Select users",
             "setSingle": "Set new challenge for individual players",
             "single": "Individual Challenges"

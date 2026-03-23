@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import Results from './Results';
 import { useSetAtom } from 'jotai';
-import { activeViewAtom } from '../../../atoms/state';
+import { activeViewAtom, isOutOfFocusAtom } from '../../../atoms/state';
 import OpenedImage from '../../../components/ImageView/OpenedImage';
 
 interface Props {
@@ -24,20 +24,25 @@ export function ResultsGallery({ currentData }: Props) {
     const { t } = useTranslation();
     const [openImage, setOpenImage] = useState<HTMLCanvasElement | null>(null);
     const setActiveView = useSetAtom(activeViewAtom);
+    const setIsResultsOpen = useSetAtom(isOutOfFocusAtom);
 
     return (
         <>
-            <div className={style.resultGallery}>
+            <div
+                className={style.resultGallery}
+                inert={openImage ? true : undefined}
+            >
                 <div className={style.headerToggle}>
                     <h1 style={{ color: '#282828' }}>{t('student.titles.results')}</h1>
                 </div>
                 <Button
-                    onClick={() =>
+                    onClick={() => {
+                        setIsResultsOpen(undefined);
                         setActiveView((old) => ({
                             ...old,
                             overlay: 'none',
-                        }))
-                    }
+                        }));
+                    }}
                     variant="contained"
                     style={{
                         position: 'absolute',

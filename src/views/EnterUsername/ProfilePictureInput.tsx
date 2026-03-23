@@ -57,7 +57,7 @@ export default function ProfilePictureInput({ errors, setErrors, image, setImage
                 {image && (
                     <img
                         src={image}
-                        alt="Otettu kuva"
+                        alt="Picture taken"
                         style={{ maxWidth: '100%' }}
                     />
                 )}

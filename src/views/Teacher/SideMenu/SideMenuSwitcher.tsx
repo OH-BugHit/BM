@@ -3,7 +3,7 @@ import Guidance from '../../Guidance/Guidance';
 import MenuPanel from '../../AppMenu/AppMenu';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAtomValue } from 'jotai';
-import { guidanceActiveAtom } from '../../../atoms/state';
+import { guidanceActiveAtom, isOutOfFocusAtom } from '../../../atoms/state';
 import React from 'react';
 
 const slideVariants = {
@@ -14,6 +14,7 @@ const slideVariants = {
 
 function SideNavSwitcher() {
     const guidanceActive = useAtomValue(guidanceActiveAtom);
+    const isOutOfFocus = useAtomValue(isOutOfFocusAtom);
     return (
         <div className={style.sideNavWrapper}>
             <AnimatePresence mode="wait">
@@ -25,6 +26,7 @@ function SideNavSwitcher() {
                     exit="exit"
                     transition={{ duration: 0.25, ease: 'easeInOut' }}
                     className={style.sideMenuWrapper}
+                    inert={isOutOfFocus} // If image is opened, side nav is out of focus
                 >
                     {guidanceActive ? (
                         <Guidance />

@@ -4,8 +4,8 @@ import { fetchImageUrls } from '../../services/ImageService';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
-import { useAtom } from 'jotai';
-import { activeViewAtom, configAtom, labelsAtom, modelAtom } from '../../atoms/state';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { activeViewAtom, configAtom, isOutOfFocusAtom, labelsAtom, modelAtom } from '../../atoms/state';
 import OpenedImage from '../../components/ImageView/OpenedImage';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { motion } from 'framer-motion';
@@ -25,13 +25,14 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
     const [noMoreData, setNoMoreData] = useState(false);
     const [openImage, setOpenImage] = useState<string | null>(null);
     const limit = 10;
-    const [config] = useAtom(configAtom);
+    const config = useAtomValue(configAtom);
     const [selected, setSelected] = useState('');
-    const [, setActiveView] = useAtom(activeViewAtom);
+    const setActiveView = useSetAtom(activeViewAtom);
+    const setIsOutOfFocus = useSetAtom(isOutOfFocusAtom);
     const [imagePaths, setImagePaths] = useState<Record<string, string[]>>({});
     const loaded = useRef(false);
-    const [labels] = useAtom(labelsAtom);
-    const [model] = useAtom(modelAtom);
+    const labels = useAtomValue(labelsAtom);
+    const model = useAtomValue(modelAtom);
     const location = useLocation();
 
     /**
@@ -77,6 +78,14 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
         }
         loaded.current = true;
     }, [config.modelData, location.search, model, mode]);
+
+    useEffect(() => {
+        if (openImage) {
+            setIsOutOfFocus(true);
+        } else {
+            setIsOutOfFocus(undefined);
+        }
+    }, [openImage, setIsOutOfFocus]);
 
     useEffect(() => {
         setSelected('');
@@ -129,6 +138,7 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.7 }}
                     transition={{ duration: 0.2 }}
+                    inert={openImage ? true : undefined}
                 >
                     <div className={style.titleRow}>
                         {mode === 'student' && (
@@ -226,7 +236,9 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                         >
                             {images.map((src, index) => (
                                 <button
-                                    onClick={() => setOpenImage(src)}
+                                    onClick={() => {
+                                        setOpenImage(src);
+                                    }}
                                     className={style.thumbnailButton}
                                     aria-label={t('common.aria.openImage')}
                                 >
@@ -256,6 +268,7 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1 }}
                 transition={{ duration: 0.2 }}
+                inert={openImage ? true : undefined}
             >
                 <div className={`${style.titleRow} ${style.teacherRow}`}>
                     <h1 style={{ color: 'black' }}>{t('common.dataset')}</h1>
@@ -333,7 +346,9 @@ function DatasetGallery({ mode }: { mode: 'student' | 'teacher' }) {
                     >
                         {images.map((src, index) => (
                             <button
-                                onClick={() => setOpenImage(src)}
+                                onClick={() => {
+                                    setOpenImage(src);
+                                }}
                                 aria-label={t('common.aria.openImage')}
                                 className={style.thumbnailButton}
                             >

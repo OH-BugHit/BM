@@ -155,12 +155,6 @@ export const studentBouncerAtom = atom<Bouncer>({ message: '', reload: false });
 export const profilePicturesAtom = atom<Map<string, HTMLCanvasElement>>(new Map());
 
 /**
- * Contains the current word for everyone.
- * Used only by teacher
- */
-export const selectedTermAtom = atom<string>('');
-
-/**
  * Contains selected user in usergrid view
  * Only used by teacher
  */
@@ -276,3 +270,10 @@ export const currentModelInfoAtom = atom<ModelInfo | null>(null);
  * Loading error atom
  */
 export const loadingErrorAtom = atom<LoadingError>({ isError: false, message: '', modelInfo: undefined });
+
+/**
+ * Used as Atom to help with inert states
+ * Contains true if controls, tips, navigation etc. is out of focus. (Image or own results-gallery is opened)
+ * Contains true, if results are opened at student or if image is opened at teacher
+ */
+export const isOutOfFocusAtom = atom<true | undefined>(undefined);

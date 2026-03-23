@@ -10,7 +10,14 @@ export default function Scorebar() {
     return (
         <div className={style.scoreBarContainer}>
             {/* Current Score bar */}
-            <div className={style.currentScoreBar}>
+            <div
+                className={style.currentScoreBar}
+                role="meter"
+                aria-label="Current score"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(currentScore)}
+            >
                 <motion.span
                     animate={{ width: `${Math.round(currentScore)}%` }}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -18,7 +25,14 @@ export default function Scorebar() {
             </div>
 
             {/* Top Score bar */}
-            <div className={style.scoreBar}>
+            <div
+                className={style.scoreBar}
+                role="meter"
+                aria-label="Top score"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(topScore)}
+            >
                 <motion.span
                     animate={{ width: `${Math.round(topScore)}%` }}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -30,6 +44,7 @@ export default function Scorebar() {
                 className={style.scoreBarToolTip}
                 animate={{ width: `${Math.round(topScore)}%` }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
+                aria-hidden="true"
             >
                 <span data-label={topScore.toFixed(2)}></span>
             </motion.div>
@@ -39,6 +54,7 @@ export default function Scorebar() {
                 className={style.scoreBarCurrentToolTip}
                 animate={{ width: `${Math.round(currentScore)}%` }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
+                aria-hidden="true"
             >
                 <span data-label={currentScore.toFixed(2)}></span>
             </motion.div>

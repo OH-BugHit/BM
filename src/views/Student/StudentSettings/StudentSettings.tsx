@@ -1,16 +1,17 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import React, { useCallback } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Button } from '@genai-fi/base';
-import { activeViewAtom } from '../../../atoms/state';
+import { activeViewAtom, isOutOfFocusAtom } from '../../../atoms/state';
 import StudentGeneralSettings from './StudentGeneralSettings';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 function StudentSettings() {
     const { t } = useTranslation();
     const [showDialog, setActiveView] = useAtom(activeViewAtom);
+    const isOutOfFocus = useAtomValue(isOutOfFocusAtom);
 
     const doClose = useCallback(() => setActiveView((old) => ({ ...old, overlay: 'none' })), [setActiveView]);
 
@@ -23,6 +24,8 @@ function StudentSettings() {
                 aria-label={t('student.aria.settings')}
                 aria-pressed={showDialog.overlay === 'settings'}
                 sx={{ position: 'absolute' }}
+                title={t('student.aria.settings')}
+                inert={isOutOfFocus}
             >
                 <SettingsIcon
                     fontSize="large"

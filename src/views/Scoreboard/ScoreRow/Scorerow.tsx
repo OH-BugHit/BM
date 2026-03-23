@@ -50,7 +50,12 @@ export default function ScoreRow({ index, student, term, setOpenImage }: Props) 
     return (
         <>
             <div className={style.leaderboardPlace}>
-                <div className={style.infoData}>{index + 1}</div>
+                <div
+                    className={style.infoData}
+                    aria-label={`Position ${index + 1}`}
+                >
+                    {index + 1}
+                </div>
             </div>
             <div className={style.scoreRow}>
                 <div className={style.studentInfo}>
@@ -71,7 +76,12 @@ export default function ScoreRow({ index, student, term, setOpenImage }: Props) 
                             />
                         )}
                     </div>
-                    <div className={style.infoData}>{student.studentId}</div>
+                    <div
+                        className={style.infoData}
+                        aria-label={`Student ${student.studentId}`}
+                    >
+                        {student.studentId}
+                    </div>
                 </div>
                 <div style={{ flexGrow: 1 }} />
                 {!settings.teacherHideResultPicture && term !== null && (
@@ -95,7 +105,12 @@ export default function ScoreRow({ index, student, term, setOpenImage }: Props) 
                 )}
                 <div className={style.score}>
                     {(settings.limitScoreboard.showAll || index < settings.limitScoreboard.limit) && (
-                        <div className={style.infoData}>{student.totalScore.toFixed(2)}</div>
+                        <div
+                            className={style.infoData}
+                            aria-label={`Score ${student.totalScore.toFixed(2)}`}
+                        >
+                            {student.totalScore.toFixed(2)}
+                        </div>
                     )}
                     {!settings.limitScoreboard.showAll && index >= settings.limitScoreboard.limit && (
                         <div className={style.infoData}>???</div>

@@ -69,7 +69,7 @@ export default function MenuPanel() {
                             src="/logo48_bw_invert.png"
                             width={48}
                             height={48}
-                            alt="Spoofgame logo"
+                            alt="Generation AI logo"
                         />
                         <h3>{t('common.title')}</h3>
                     </div>

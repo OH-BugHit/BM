@@ -11,6 +11,7 @@ export default function StudentInfo({ open }: Props) {
     const [profilePicture] = useAtom(profilePictureAtom);
     if (!open) return;
 
+    // Menu button for profile picture purposes, currently profile pictures are not supported
     return (
         <IconMenuItem
             tooltip={username}

@@ -22,12 +22,16 @@ export default function HeaderRow({ doShowBottomMenu, open }: Props) {
             <div style={{ flexGrow: 1 }} />
             {open && (
                 <div style={{}}>
-                    <ExpandMoreIcon
-                        fontSize="large"
-                        sx={{ width: '3.5rem', height: '3.5rem' }}
-                        className={style.expandIcon}
+                    <button
                         onClick={doShowBottomMenu}
-                    />
+                        className={style.expandIcon}
+                        aria-label={t('common.aria.collideControls')}
+                    >
+                        <ExpandMoreIcon
+                            fontSize="large"
+                            sx={{ width: '3.5rem', height: '3.5rem' }}
+                        />
+                    </button>
                 </div>
             )}
         </div>

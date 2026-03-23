@@ -5,7 +5,7 @@ import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { activeViewAtom, configAtom, modelAtom, termTransferAtom } from '../../atoms/state';
+import { activeViewAtom, configAtom, isOutOfFocusAtom, modelAtom, termTransferAtom } from '../../atoms/state';
 import OpenedImage from '../../components/ImageView/OpenedImage';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router';
@@ -29,6 +29,7 @@ function DatasetGalleryStudentStripped() {
     const currentTerm = useAtomValue(termTransferAtom);
     const [selected, setSelected] = useState<string>(currentTerm.term);
     const setActiveView = useSetAtom(activeViewAtom);
+    const setIsOutOfFocus = useSetAtom(isOutOfFocusAtom);
     const [imagePaths, setImagePaths] = useState<Record<string, string[]>>({});
     const loaded = useRef(false);
     const model = useAtomValue(modelAtom);
@@ -132,10 +133,14 @@ function DatasetGalleryStudentStripped() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.7 }}
                 transition={{ duration: 0.2 }}
+                inert={openImage ? true : undefined}
             >
                 <div className={style.titleRow}>
                     <Button
-                        onClick={doClose}
+                        onClick={() => {
+                            setIsOutOfFocus(undefined);
+                            doClose();
+                        }}
                         title={t('common.close')}
                         aria-label="Sulje"
                         style={{
@@ -164,13 +169,19 @@ function DatasetGalleryStudentStripped() {
                         ref={containerRef}
                     >
                         {images.map((src, index) => (
-                            <img
-                                key={index}
-                                src={src}
-                                alt={`Kuva ${index}`}
-                                className={style.image}
-                                onClick={() => setOpenImage(src)}
-                            />
+                            <Button
+                                onClick={() => {
+                                    setIsOutOfFocus(true);
+                                    setOpenImage(src);
+                                }}
+                            >
+                                <img
+                                    key={index}
+                                    src={src}
+                                    alt={`Picture ${index} of dataset`}
+                                    className={style.image}
+                                />
+                            </Button>
                         ))}
                     </div>
                 </div>

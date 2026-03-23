@@ -1,6 +1,6 @@
 import style from './scoreRow.module.css';
-import { useAtom } from 'jotai';
-import { studentDataAtom, teacherHidesAtom } from '../../../atoms/state';
+import { useAtom, useSetAtom } from 'jotai';
+import { isOutOfFocusAtom, studentDataAtom, teacherHidesAtom } from '../../../atoms/state';
 import { CanvasCopy } from '../../../components/CanvasCopy/CanvasCopy';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -37,6 +37,7 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
     const { t } = useTranslation();
     const [hiddenByTeacher, setHiddenByTeacher] = useAtom(teacherHidesAtom);
     const [studentData] = useAtom(studentDataAtom);
+    const setIsOutOfFocus = useSetAtom(isOutOfFocusAtom);
 
     const studentEntry = studentData.students.get(student);
 
@@ -57,6 +58,7 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                         title={t('scoreboard.actions.open.image')}
                         className={style.viewPhotoButton}
                         onClick={() => {
+                            setIsOutOfFocus(true);
                             setOpenImage({ student: student, className: term });
                         }}
                         style={{
@@ -90,18 +92,19 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                 )}
 
                 {!classEntry.hidden && !hiddenByTeacher.get(student)?.includes(term) && (
-                    <div
-                        className={style.visButton}
-                        onClick={() => {
-                            setHiddenByTeacher((prev) => {
-                                const newMap = new Map(prev);
-                                const hiddenClasses = newMap.get(student) ?? [];
-                                newMap.set(student, [...hiddenClasses, term]);
-                                return newMap;
-                            });
-                        }}
-                    >
-                        <IconButton title={t('scoreboard.labels.hideResultPicture')}>
+                    <div className={style.visButton}>
+                        <IconButton
+                            title={t('scoreboard.labels.hideResultPicture')}
+                            aria-label={t('scoreboard.labels.hideResultPicture')}
+                            onClick={() => {
+                                setHiddenByTeacher((prev) => {
+                                    const newMap = new Map(prev);
+                                    const hiddenClasses = newMap.get(student) ?? [];
+                                    newMap.set(student, [...hiddenClasses, term]);
+                                    return newMap;
+                                });
+                            }}
+                        >
                             <VisibilityIcon
                                 fontSize="large"
                                 color="action"
@@ -110,21 +113,21 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                     </div>
                 )}
                 {!classEntry.hidden && hiddenByTeacher.get(student)?.includes(term) && (
-                    <div
-                        className={style.visButton}
-                        onClick={() => {
-                            setHiddenByTeacher((prev) => {
-                                const newMap = new Map(prev);
-                                const hiddenClasses = newMap.get(student) ?? [];
-                                newMap.set(
-                                    student,
-                                    [...hiddenClasses].filter((c) => c !== term)
-                                );
-                                return newMap;
-                            });
-                        }}
-                    >
-                        <IconButton title={t('scoreboard.labels.showResultPicture')}>
+                    <div className={style.visButton}>
+                        <IconButton
+                            title={t('scoreboard.labels.showResultPicture')}
+                            onClick={() => {
+                                setHiddenByTeacher((prev) => {
+                                    const newMap = new Map(prev);
+                                    const hiddenClasses = newMap.get(student) ?? [];
+                                    newMap.set(
+                                        student,
+                                        [...hiddenClasses].filter((c) => c !== term)
+                                    );
+                                    return newMap;
+                                });
+                            }}
+                        >
                             <VisibilityOffIcon
                                 fontSize="large"
                                 color="action"

@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type CanvasCopyProps = {
     sourceCanvas: HTMLCanvasElement | null | undefined;
@@ -20,6 +21,7 @@ export function CanvasCopy({
     noBorder,
 }: CanvasCopyProps) {
     const ref = useRef<HTMLCanvasElement | null>(null);
+    const { t } = useTranslation();
 
     const canvasStyle: React.CSSProperties = {
         maxWidth,
@@ -51,6 +53,7 @@ export function CanvasCopy({
         <canvas
             ref={ref}
             style={canvasStyle}
+            aria-label={t('common.aria.topCanvas')}
         />
     );
 }

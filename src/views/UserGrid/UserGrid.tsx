@@ -15,6 +15,7 @@ import {
 import ClassSelect from '../Scoreboard/ClassSelect/ClassSelect';
 import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import UserMenu from '../UserMenu/UserMenu';
 
 export default function UserGrid() {
     const { t } = useTranslation();
@@ -22,7 +23,7 @@ export default function UserGrid() {
     const [allUNs] = useAtom(takenUsernamesAtom);
     const [profilePictures] = useAtom(profilePicturesAtom);
     const [currentTerm] = useAtom(currentCommonChallengeAtom);
-    const [openResult, setOpenResult] = useAtom(userGridOpenLabelAtom); // For selecting term for calculting top players
+    const [openResult, setOpenResult] = useAtom(userGridOpenLabelAtom);
     const [settings] = useAtom(settingAtom);
     const simpleMode = useAtomValue(guidanceActiveAtom);
 
@@ -74,8 +75,9 @@ export default function UserGrid() {
                 </AnimatePresence>
                 <div
                     className={allUNs.length === 0 ? 'none' : style.userGridContainer}
-                    style={{ maxWidth }}
+                    style={{ maxWidth, paddingTop: '0.5rem' }}
                 >
+                    {allUNs.length > 0 && <UserMenu />}
                     <div
                         className={style.grid}
                         data-testid="usergrid"

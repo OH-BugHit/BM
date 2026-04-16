@@ -15,10 +15,17 @@ This application is developed as a part of the [Generation AI](https://www.gener
 
 ### Citation
 
-_O. Hilke, N. Pope, J. Kahila, H. Vartiainen, T. Roos, T. Parkki and M. Tedre. 2025. Breakable Machine: A K-12 Classroom Game for Transformative AI Literacy Through Spoofing and eXplainable AI (XAI)_ (preprint) _https://arxiv.org/abs/2508.14201_
+_Hilke, O., Pope, N., Kahila, J., Vartiainen, H., Roos, T., Parkki, T., &
+Tedre, M. (2026). Breakable Machine: A K–12 Classroom Game for
+Transformative AI Literacy Through Spoofing and eXplainable AI (XAI).
+Proceedings of the AAAI Conference on Artificial Intelligence, 40(47),
+40762-40770_<br>
+https://doi.org/10.1609/aaai.v40i47.41525
 <br>
 <br>
-_O. Hilke, N. Pope, J. Kahila, H. Vartiainen, T. Roos, T. Parkki, and M. Tedre. 2025. Failure as a Learning Opportunity in AI Literacy. In Proceedings of the 25th Koli Calling International Conference on Computing Education Research (Koli Calling '25). Association for Computing Machinery, New York, NY, USA, Article 53, 1–3. https://doi.org/10.1145/3769994.3770062_
+_Hilke, O., Pope, N., Kahila, J., Vartiainen, H., Roos, T., Parkki, T., &
+Tedre, M. (2025). Failure as a Learning Opportunity in AI Literacy. In Proceedings of the 25th Koli Calling International Conference on Computing Education Research (Koli Calling '25). Association for Computing Machinery, New York, NY, USA, Article 53, 1–3._<br>
+https://doi.org/10.1145/3769994.3770062
 
 ## Installation
 

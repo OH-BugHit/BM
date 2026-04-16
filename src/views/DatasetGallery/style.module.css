@@ -94,6 +94,7 @@
     width: 200px;
     height: 100%;
     max-height: 200px;
+    max-width: 40dvw;
     object-fit: contain;
     display: block;
 }
@@ -156,6 +157,12 @@
     box-shadow: 1px 1px 8px #888;
 }
 
+@media (max-width: 990px) {
+    .teacherGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 600px) {
     .container {
         top: 0;
@@ -165,6 +172,7 @@
         overflow: auto;
         max-height: 70%;
     }
+
 }
 
 @media (max-width: 500px) {

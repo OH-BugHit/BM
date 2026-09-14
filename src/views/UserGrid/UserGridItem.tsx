@@ -37,6 +37,14 @@ export default function UserGridItem({ username, alive, profilePicture, openResu
                         alt="Tuloskuva on piilotettu"
                     ></img>
                 );
+            } else if (i18n.language === 'fr-FR') {
+                return (
+                    <img
+                        src="/noPic_FR.png"
+                        width={200}
+                        alt="Image de résultat masquée"
+                    ></img>
+                );
             } else {
                 return (
                     <img

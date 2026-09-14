@@ -1,0 +1,414 @@
+{
+    "languages": {
+        "en-GB": "English",
+        "fi-FI": "Suomi",
+        "fr-FR": "Français"
+    },
+    "about": {
+        "title": "Generation AI",
+        "privacyStart": "La GenAI Breakable Machine a été financée par le <Link>Strategic Research Council (SRC)</Link>, rattaché au Research Council of Finland, subventions n° 352859, 352870 et 352876. L'application fait partie du <Link2>projet Generation AI</Link2>. Elle a été développée par Olli Hilke, stagiaire de recherche à la University of Eastern Finland. Pour toute question sur l'outil, écrivez à olli.hilke@uef.fi ou à nicolas.pope@uef.fi<br/><br/>Copyright (c) 2025 Olli Hilke.",
+        "privacyTitle": "Politique de confidentialité",
+        "privacy": [
+            "Bienvenue dans notre politique de confidentialité. Elle vous informe sur la manière dont nous traitons vos données personnelles, conformément au Règlement général sur la protection des données (RGPD), lorsque vous utilisez notre site proposant la GenAI Breakable Machine.",
+            "Pour clarifier le propos, voici quelques termes du RGPD. Le \"responsable du traitement\" désigne nous-mêmes : nous décidons comment et pourquoi vos données personnelles sont utilisées, ce qui nous rend aussi responsables de leur protection. Les \"données personnelles\" regroupent toute information permettant de vous identifier directement ou indirectement, comme votre adresse IP. Le \"traitement\" couvre toutes les opérations effectuées sur vos données : collecte, conservation, utilisation, suppression.",
+            "Il est important de lire cette politique pour comprendre quelles données nous collectons, pourquoi, ce que nous en faisons et quels droits vous avez sur ces données.",
+            "Pour toute question sur cette politique, contactez le responsable du traitement :",
+            "**Dr Nicolas Pope**,",
+            "**Adresse postale :** University of Eastern Finland, Länsikatu 15, 80110 Joensuu, Finlande.",
+            "**E-mail :** nicolas.pope@uef.fi",
+            "**Téléphone :** +358 505 288 449.",
+            "### 1. Activité de traitement :",
+            "Nous enregistrons les adresses IP.",
+            "En revanche, nous n'utilisons pas de cookies de suivi ou de mesure d'audience ; le contenu fourni dépend uniquement de vos saisies.",
+            "### 2. Finalités du traitement :",
+            "L'enregistrement des adresses IP contribue à l'intégrité et à la sécurité du site en permettant d'identifier et de prévenir les activités malveillantes.",
+            "### 3. Base légale du traitement :",
+            "Nous traitons principalement les adresses IP pour des raisons de sécurité, sur la base de notre intérêt légitime à protéger notre site et nos données, conformément à l'article 6(1)(f) du RGPD. Nous pouvons aussi traiter des données sur la base de votre consentement, au titre de l'article 6(1)(a) du RGPD, si vous souhaitez exercer votre droit d'accès à votre adresse IP enregistrée. Enfin, nous pouvons traiter vos données personnelles si une juridiction compétente nous l'ordonne, au titre de l'article 6(1)(c).",
+            "### 4. Intérêts légitimes poursuivis :",
+            "Notre objectif est d'assurer le fonctionnement du site en préservant son intégrité et sa sécurité, et en prévenant les abus.",
+            "### 5. Sécurité :",
+            "Nous mettons en œuvre des mesures de sécurité pour protéger vos adresses IP contre tout accès illicite ou toute altération. Vos adresses IP sont chiffrées lors de tout transfert ultérieur.",
+            "### 6. Destinataires des données :",
+            "Seul le personnel autorisé du site peut accéder à votre adresse IP, à des fins de sécurité et de maintenance.",
+            "### 7. Transferts de données :",
+            "Les adresses IP peuvent être transférées vers des serveurs Microsoft, mais nous veillons au respect du RGPD pour la protection des données.",
+            "### 8. Durée de conservation :",
+            "Nous conservons les adresses IP uniquement le temps nécessaire, en général jusqu'à 7 jours, sauf obligation légale.",
+            "### 9. Vos droits :",
+            "Le RGPD vous accorde notamment les droits suivants :",
+            "* Droit à l'information : en plus d'être informé des finalités du traitement, des durées de conservation et des destinataires de vos données, vous avez le droit de savoir comment nous les collectons. Nous collectons votre adresse IP lorsque vous visitez notre site.",
+            "* Droit d'accès : vous pouvez demander une copie de votre adresse IP enregistrée et des données de journal associées.",
+            "* Droit de rectification : si les données enregistrées sont inexactes ou incomplètes, vous pouvez en demander la rectification, même si une adresse IP ne se corrige généralement pas comme d'autres données.",
+            "* Droit à l'effacement : vous pouvez demander la suppression de votre adresse IP dans les 7 jours suivant votre dernière visite, puisqu'elle est supprimée automatiquement au bout de 7 jours.",
+            "* Droit d'opposition : vous pouvez vous opposer au traitement de vos adresses IP.",
+            "* Droit d'introduire une réclamation : vous pouvez déposer une réclamation auprès de l'autorité de contrôle si vous estimez que vos données ne sont pas traitées conformément au RGPD.",
+            "### 10. Mises à jour de cette politique :",
+            "Nous pouvons mettre à jour cette politique pour refléter l'évolution de nos pratiques de traitement ou des obligations légales. Nous vous informerons de toute modification.",
+            "Nous accordons une grande importance à votre vie privée et nous nous engageons à protéger vos données et à respecter le RGPD. Pour toute question ou pour exercer vos droits, écrivez à nicolas.pope@uef.fi."
+        ]
+    },
+    "common": {
+        "aria": {
+            "collideControls": "Masquer les commandes",
+            "expandControls": "Afficher les commandes",
+            "openImage": "Ouvrir l'image en plein écran",
+            "topCanvas": "Image du haut"
+        },
+        "cancel": "Annuler",
+        "close": "Fermer",
+        "dataset": "Données",
+        "noTeachingData": "Aucune donnée disponible",
+        "or": "ou",
+        "paused": "Jeu en pause",
+        "selectLabel": "Choisir une étiquette",
+        "selectModel": "Choisir un modèle",
+        "title": "Breakable Machine",
+        "trashClasses": "Autres classes utilisées pour l'entraînement",
+        "labels": {
+            "disableApp": "Pause",
+            "datasetTip": "Examiner les données d'entraînement"
+        }
+    },
+    "controlMenu": {
+        "actions": {
+            "disableApp": "Mettre tous les joueurs en pause",
+            "disableDataGallery": "Bloquer la consultation des données d'entraînement",
+            "disableHeatmap": "Bloquer la carte de chaleur",
+            "enableApp": "Reprendre le jeu",
+            "enableDataGallery": "Autoriser la consultation des données d'entraînement",
+            "enableHeatmap": "Autoriser la carte de chaleur"
+        },
+        "titles": {
+            "controlMenu": "Commandes du jeu"
+        }
+    },
+    "enterUsername": {
+        "actions": {
+            "enterUser": "Entrer",
+            "changePicture": "Changer de photo",
+            "takePicture": "Prendre une photo"
+        },
+        "labels": { "enterUsername": "Choisissez un pseudo" },
+        "messages": {
+            "usernameError": {
+                "missing": "Un pseudo est obligatoire",
+                "long": "Le pseudo est trop long (15 caractères maximum)",
+                "short": "Le pseudo doit contenir au moins 3 caractères",
+                "taken": "Ce pseudo est déjà pris",
+                "takenFree": "Ce pseudo est déjà pris. Si vous essayez de vous reconnecter, cliquez sur le bouton \"Entrer\" ci-dessous"
+            },
+            "imageRequired": "Photo de profil obligatoire"
+        }
+    },
+    "errorPage": {
+        "notFound": {
+            "title": "Page introuvable",
+            "info": "La page que vous cherchez n'existe pas. Vérifiez l'adresse ou revenez à la <Link>page d'accueil</Link>"
+        },
+        "somethingWrong": {
+            "title": "Une erreur s'est produite",
+            "info": "Si vous avez le temps, signalez ce problème sur <Link>notre projet GitHub</Link> en joignant les informations ci-dessous. Rechargez la page pour réessayer."
+        }
+    },
+    "frontpage": {
+        "actions": {
+            "createNew": "Enseignant - Créer une partie",
+            "start": "Commencer"
+        },
+        "labels": {
+            "enterCode": "Élève - Saisir le code"
+        }
+    },
+    "guide": {
+        "normal": {
+            "steps": {
+                "teacher": {
+                    "1": {
+                        "title": "Connexion",
+                        "tip": "Les élèves apparaissent ci-dessus lorsqu'ils se connectent. Vous pouvez retirer un joueur depuis le panneau du haut : sélectionnez-le, puis cliquez sur \"Supprimer\" ou \"Exclure\"."
+                    },
+                    "2": {
+                        "title": "Choix",
+                        "tip": "Choisissez dans le menu déroulant l'étiquette que les élèves doivent tromper. Vous pouvez changer de modèle avec le bouton \"Changer le modèle de classification\". Changer d'étiquette ou de modèle ne modifie pas les scores précédents des joueurs."
+                    },
+                    "3": {
+                        "title": "Exploration",
+                        "tip": "Le jeu est prêt, les élèves peuvent commencer à jouer. Lancez la partie avec l'icône de lecture du panneau du bas ou du panneau de guidage à gauche. Si besoin, vous pouvez remettre à zéro le score d'un joueur : sélectionnez-le, puis cliquez sur \"Remettre à zéro le score du joueur pour l'étiquette : ...\"."
+                    },
+                    "4": {
+                        "title": "Carte de chaleur",
+                        "tip": "La carte de chaleur est maintenant disponible pour les élèves. Vous pouvez l'imposer depuis le panneau de guidage. L'icône de flamme du panneau du bas permet d'activer ou de désactiver la carte de chaleur."
+                    },
+                    "5": {
+                        "title": "Données",
+                        "tip": "Les élèves peuvent maintenant explorer les données d'entraînement. Vous pouvez imposer l'affichage des données depuis le panneau de guidage. L'icône d'images du panneau du bas permet d'activer ou de désactiver l'affichage des données. Vous pouvez revenir à l'étape 3 pour voir comment les élèves s'en sortent."
+                    },
+                    "6": {
+                        "title": "Résultats",
+                        "tip": "Vous pouvez mettre le jeu en pause depuis le panneau de guidage ou le panneau du bas. Cliquez sur une image de résultat pour l'afficher. Choisissez une étiquette à gauche pour voir les résultats détaillés de chaque étiquette. Dans les résultats détaillés, un clic sur une image de résultat affiche aussi sa carte de chaleur."
+                    },
+                    "7": {
+                        "title": "Fin",
+                        "tip": "Vous avez terminé une manche de Breakable Machine ! Pour choisir une nouvelle étiquette, revenez à l'étape \"Choix\" avec le bouton de remise à zéro du panneau de guidage. La remise à zéro ne modifie pas les scores des étiquettes précédentes, mais elle désactive la carte de chaleur et les données pour les élèves. Vous pouvez enregistrer les résultats avec le bouton \"Enregistrer\" du panneau de guidage."
+                    }
+                },
+                "student": {
+                    "1": {
+                        "title": "Utilisation de la caméra",
+                        "tip": "Le jeu utilise l'image en direct de votre caméra. Pas besoin d'appuyer sur un bouton pour prendre une photo."
+                    },
+                    "noTrainingData": {
+                        "tip": "Avec ce modèle, les élèves ne peuvent pas consulter les données d'entraînement"
+                    }
+                }
+            }
+        },
+        "common": {
+            "exit": "Quitter le guide",
+            "force": {
+                "force": "Imposer",
+                "heatmap": "Imposer la carte de chaleur sur les appareils des élèves",
+                "dataset": "Imposer l'affichage des données sur les appareils des élèves"
+            },
+            "hideTips": "Masquer toutes les astuces",
+            "startNew": "Commencer une nouvelle manche"
+        }
+    },
+
+    "library": {
+        "title": "Choisir le contenu",
+        "animals": {
+            "title": "Animaux",
+            "description": "Modèle de classification affiné sur 11 animaux différents. Plus difficile à tromper."
+        },
+        "continue": {
+            "title": "Reprendre une partie enregistrée",
+            "description": "Chargez les résultats d'une partie enregistrée. Choisissez ensuite un modèle pour reprendre le jeu."
+        },
+        "jobs": {
+            "title": "Métiers",
+            "description": "Choisissez le défi parmi sept métiers différents."
+        },
+        "own": {
+            "title": "Votre modèle",
+            "description": "Importez votre propre modèle créé avec Gen-AI Teachable Machine"
+        }
+    },
+    "loader": {
+        "actions": {
+            "close": "Fermer"
+        },
+        "errors": {
+            "unknown": "Un problème de connexion s'est produit",
+            "id-in-use": "Quelqu'un utilise déjà ce code",
+            "peer-not-found": "Code introuvable",
+            "missing-ice": "Connexion impossible, vous êtes peut-être hors ligne.",
+            "no-signaling": "Notre serveur ne répond pas",
+            "bad-browser": "Votre appareil ne prend pas en charge cette application",
+            "unknownContent": "Le contenu multimédia pose un problème",
+            "load": "Impossible de charger le contenu multimédia",
+            "download": "Impossible de télécharger le contenu multimédia",
+            "none": "OK"
+        },
+        "messages": {
+            "cameraPermission": "Pour permettre les connexions directes entre appareils, vous devez autoriser temporairement l'accès à la caméra.",
+            "connecting": "Tentative de connexion...",
+            "disconnected": "Déconnecté de l'autre appareil",
+            "retry": "Nouvelle tentative...",
+            "content_load": "Chargement du contenu",
+            "content_download": "Téléchargement du contenu",
+            "ready": "Connecté",
+            "content_none": "Contenu prêt",
+            "starting": "Connexion...",
+            "wifiNetwork": "Vos données passent par Internet, car vous n'utilisez pas le même réseau Wi-Fi.",
+            "permNetwork": "Vos données passent par Internet, car vous n'avez pas autorisé l'accès à la caméra.",
+            "quality0": "Vérification...",
+            "quality1": "Connexion faible",
+            "quality2": "Connecté",
+            "quality3": "Connecté",
+            "failed": "Pas de connexion",
+            "loadingModel": "Patientez pendant le chargement du modèle et de la caméra."
+        },
+        "model": {
+            "fail": "Impossible de charger le modèle<br/><Model/> depuis <Origin/>.<br/>Si vous avez le temps, signalez ce problème sur <Link>notre projet GitHub</Link>.<br/><Refresh>Rechargez la page</Refresh> pour réessayer ou <Main>revenez à la page d'accueil</Main>"
+        },
+        "titles": {
+            "iceConfig": "Configuration",
+            "permission": "Autorisations",
+            "connecting": "Connexion",
+            "error": "Problème",
+            "contentLoad": "Contenu multimédia",
+            "networkType": "Information"
+        }
+    },
+    "menu": {
+        "labels": {
+            "exit": "Quitter la session (toutes les données sont supprimées)",
+            "exitShort": "Quitter la session",
+            "save": "Télécharger les scores et les images de la session dans un fichier ZIP",
+            "saveShort": "Enregistrer",
+            "settings": "Réglages"
+        },
+        "vis": {
+            "guidance": "Partie guidée",
+            "results": "Résultats",
+            "term": "Choisir l'étiquette à classer",
+            "usergrid": "Grille des joueurs"
+        }
+    },
+    "messageDisplay": {
+        "title": {
+            "userGrid": {
+                "messages": {
+                    "kick": "Avertissement",
+                    "remove": "Attention"
+                }
+            },
+            "usernameTaken": "Pseudo déjà pris"
+        },
+        "reload": {
+            "true": "Le navigateur va se recharger",
+            "false": "La session va reprendre"
+        },
+        "message": {
+            "userGrid": {
+                "messages": {
+                    "kick": "Vous avez été exclu du jeu. Vous pouvez le rejoindre à nouveau. Demandez plus de détails à votre enseignant.",
+                    "remove": "Vous avez été retiré du jeu. Votre profil et votre progression ont été supprimés. Demandez plus de détails à votre enseignant."
+                }
+            },
+            "usernameTaken": "Ce pseudo était déjà pris, réessayez après le rechargement..."
+        }
+    },
+    "modelLoader": {
+        "loading": "Chargement du modèle, veuillez patienter..."
+    },
+    "scoreboard": {
+        "actions": {
+            "open": {
+                "image": "Ouvrir l'image"
+            }
+        },
+        "labels": {
+            "forAll": "Classement",
+            "forClass": "Classement pour",
+            "hidden": "Masquée",
+            "hideResultPicture": "Masquer l'image de résultat",
+            "hideResultPictures": "Masquer les images de résultat",
+            "leaderboard": "Tableau des scores",
+            "resultPictures": "Images de résultat",
+            "scores": "Scores",
+            "showResultPicture": "Afficher l'image de résultat",
+            "showResultPictures": "Afficher les images de résultat",
+            "standings": "Classement"
+        }
+    },
+    "settings": {
+        "titles": {
+            "general": "Général",
+            "pictureSettings": "Réglages des images",
+            "settings": "Réglages",
+            "userGridSettings": "Réglages de la grille des joueurs"
+        },
+        "labels": {
+            "allowAllLabelsView": "Autoriser les élèves à voir toutes les données d'entraînement",
+            "allowHidePicture": "Autoriser les élèves à masquer leurs images de résultat",
+            "allowStartTermAgain": "Autoriser les élèves à remettre leurs scores à zéro",
+            "autoGrow": "Ajuster la grille automatiquement",
+            "hideOnDefault": "Masquer vos images de résultat",
+            "hideResultPictures": "Masquer toutes les images de résultat",
+            "pauseOnChange": "Mettre le jeu en pause au changement d'étiquette",
+            "showFullScoreboard": "Afficher tous les scores dans le tableau",
+            "scoreboardLimit": "Limiter le tableau aux {{limit}} meilleurs scores",
+            "userGridMaxColumns": "Taille de la grille des joueurs",
+            "showCrowns": "Afficher des couronnes pour les trois premiers",
+            "showTips": "Afficher les astuces"
+        }
+    },
+    "student": {
+        "aria": {
+            "settings": "Ouvrir ou fermer les réglages"
+        },
+        "titles": {
+            "results": "Résultats",
+            "waitForLabel": "Attendez que l'enseignant prépare le jeu"
+        },
+        "labels": {
+            "disableApp": "Mettre la caméra en pause",
+            "enableApp": "Reprendre",
+            "heatmap": "Carte de chaleur",
+            "ownResults": "Résultats"
+        },
+        "actions": {
+            "deleteProgress": "Effacer la progression",
+            "hide": "Masquer l'image",
+            "show": "Afficher l'image"
+        }
+    },
+    "teacher": {
+        "aria": {
+            "mainMenu": "Ouvrir ou fermer le menu latéral principal"
+        },
+        "actions": {
+            "loadingModel": "Chargement du modèle",
+            "openFileExplorer": "Ouvrir l'explorateur de fichiers",
+            "setModel": "Choisir le modèle",
+            "start": "Commencer"
+        },
+        "labels": {
+            "changeModel": "Changer le modèle de classification",
+            "currentModel": "Modèle actuel",
+            "from": "de",
+            "noModel": "aucun modèle choisi",
+            "shareTip": "Afficher le code pour rejoindre"
+        },
+        "messages": {
+            "connection": "Ou allez à l'adresse ci-dessous et saisissez le code",
+            "waitingPeople": "En attente des participants...",
+            "onePerson": "{{count}} personne a rejoint la partie.",
+            "orGoStraight": "Ou allez directement à l'adresse :",
+            "manyPeople": "{{count}} personnes ont rejoint la partie.",
+            "scanQR": "Scannez le QR code pour rejoindre la partie",
+            "selectModelGenAI": "Choisir un modèle Gen-AI",
+            "selectOwnModel": "Ou importez, sous forme de fichier zip, votre propre modèle créé avec Gen-AI <Link>Teachable Machine</Link>."
+        },
+        "titles": {
+            "changeModel": "Changer de modèle",
+            "connectUsers": "Connecter les joueurs"
+        }
+    },
+    "termSelect": {
+        "actions": {
+            "all": "Envoyer la nouvelle étiquette à tous",
+            "single": "Envoyer la nouvelle étiquette à un seul joueur"
+        },
+        "aria": {
+            "termMenu": "Menu du mode défi"
+        },
+        "titles": {
+            "all": "Défi commun",
+            "change": "Changer l'étiquette de {{user}}",
+            "changeChallenge": "Changer le défi",
+            "current": "Défi actuel :",
+            "noChallenge": "Aucun défi choisi. Choisissez-en un ci-dessous.",
+            "selectUsers": "Choisir les joueurs",
+            "setSingle": "Définir un nouveau défi pour chaque joueur",
+            "single": "Défis individuels"
+        }
+    },
+    "userGrid": {
+        "actions": {
+            "kickUser": "Exclure le joueur",
+            "deleteUser": "Supprimer le joueur du jeu",
+            "resetScore": "Remettre à zéro le score du joueur pour l'étiquette : {{label}}",
+            "selectUser": "Cliquez pour choisir un joueur",
+            "selectLabel": "Étiquette à remettre à zéro"
+        },
+        "titles": {
+            "users": "Joueurs"
+        }
+    },
+    "webcam": {
+        "notAvailable": "Chargement de la caméra"
+    }
+}

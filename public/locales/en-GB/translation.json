@@ -1,7 +1,8 @@
 {
     "languages": {
         "en-GB": "English",
-        "fi-FI": "Suomi"
+        "fi-FI": "Suomi",
+        "fr-FR": "Français"
     },
     "about": {
         "title": "Generation AI",

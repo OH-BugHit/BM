@@ -5,6 +5,7 @@ import { MouseEvent } from 'react';
 import { activityCacheAtom, selectedUserAtom } from '../../atoms/state';
 import { useTranslation } from 'react-i18next';
 import Crown from './Crown';
+import NoPic from '../../components/SvgComponents/NoPic';
 
 interface Props {
     username: string;
@@ -15,7 +16,7 @@ interface Props {
 
 export default function UserGridItem({ username, alive, profilePicture, openResult }: Props) {
     const [selectedUser, setSelectedUser] = useAtom(selectedUserAtom);
-    const { i18n } = useTranslation();
+    const { t } = useTranslation();
     const singleStudentActivityAtom = activityCacheAtom(username);
     const currentActivity = useAtomValue(singleStudentActivityAtom);
 
@@ -29,23 +30,12 @@ export default function UserGridItem({ username, alive, profilePicture, openResu
                 />
             );
         } else {
-            if (i18n.language === 'fi-FI') {
-                return (
-                    <img
-                        src="/noPic_FI.png"
-                        width={200}
-                        alt="Tuloskuva on piilotettu"
-                    ></img>
-                );
-            } else {
-                return (
-                    <img
-                        src="/noPic_EN.png"
-                        width={200}
-                        alt="Result image is hidden"
-                    ></img>
-                );
-            }
+            return (
+                <NoPic
+                    size={162}
+                    title={t('common.labels.hiddenImage')}
+                />
+            );
         }
     };
 

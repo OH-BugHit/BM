@@ -8,7 +8,7 @@ import ContentItem from './ContentItem';
 import { loadModel } from '../../services/loadModel';
 import { ModelOrigin } from '../../utils/types';
 import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import LoadGame from '../../components/Save_Load_Buttons/LoadButton';
 
 export default function Library() {

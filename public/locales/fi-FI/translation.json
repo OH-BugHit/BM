@@ -3,6 +3,21 @@
         "title": "Generation AI",
         "privacyTitle": "Tietoturvaselvitys"
     },
+    "app": {
+        "cancel": "Peruuta",
+        "reportProblem": "Palaute",
+        "reportProblemTip": "Ilmoita meille ongelmasta tai ideasta.",
+        "report": {
+            "title": "Palaute tai bugi",
+            "reason": "Syy",
+            "bug": "Sovelluksessa on ongelma",
+            "feedback": "Minulla on ehdotus",
+            "other": "Muu syy",
+            "message": "Viesti",
+            "send": "Lähetä",
+            "error": "Raportin lähetys epäonnistui. Yritä uudelleen."
+        }
+    },
     "common": {
         "aria": {
             "collideControls": "Sulje painikkeiden selitteet",
@@ -22,7 +37,8 @@
         "trashClasses": "Muut opetuksessa käytetyt luokat",
         "labels": {
             "disableApp": "Pysäytä",
-            "datasetTip": "Tutki opetusdataa"
+            "datasetTip": "Tutki opetusdataa",
+            "hiddenImage": "Ei kuvaa"
         }
     },
     "controlMenu": {
@@ -45,7 +61,8 @@
             "takePicture": "Ota kuva"
         },
         "labels": {
-            "enterUsername": "Anna käyttäjänimesi"
+            "enterUsername": "Anna käyttäjänimesi",
+            "return": "Palaa peliin"
         },
         "messages": {
             "usernameError": {
@@ -329,7 +346,8 @@
             "manyPeople": "{{count}} käyttäjää on liittynyt mukaan.",
             "scanQR": "Lue QR-koodi liittyäksesi",
             "selectModelGenAI": "Valitse malli Gen-AI:lta",
-            "selectOwnModel": "Tai lataa oma Gen-AI <Link>Opettava kone</Link> -mallisi zip-tiedostona."
+            "selectOwnModel": "Tai lataa oma Gen-AI <Link>Opettava kone</Link> -mallisi zip-tiedostona.",
+            "tip": "Liitä itsesi peliin klikkaamalla QR-koodia."
         },
         "titles": {
             "changeModel": "Vaihda malli",

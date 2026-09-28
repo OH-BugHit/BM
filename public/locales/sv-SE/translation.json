@@ -1,0 +1,399 @@
+{
+    "about": {
+        "title": "Generation AI",
+        "privacyStart": "GenAI Breakable Machine har finansierats av <Link>Strategiska forskningsrådet (SRC)</Link> vid Finlands Akademi genom bidragen #352859, #352870 och #352876. Applikationen är en del av <Link2>Generation AI-projektet</Link2>. Applikationen utvecklades av Olli Hilke under hans arbete som forskningsassistent vid Östra Finlands universitet. Om du har frågor om verktyget kan du kontakta olli.hilke@uef.fi eller nicolas.pope@uef.fi<br/><br/>Copyright © 2025 Olli Hilke.",
+        "privacyTitle": "Integritet"
+    },
+    "app": {
+        "cancel": "Avbryt",
+        "reportProblem": "Feedback",
+        "reportProblemTip": "Rapportera ett problem eller en idé till oss.",
+        "report": {
+            "title": "Feedback eller bugg",
+            "reason": "Orsak",
+            "bug": "Det finns ett problem",
+            "feedback": "Jag har ett förslag",
+            "other": "Annan orsak",
+            "message": "Meddelande",
+            "send": "Skicka",
+            "error": "Det gick inte att skicka rapporten. Försök igen."
+        }
+    },
+    "common": {
+        "aria": {
+            "collideControls": "Dölj kontroller",
+            "expandControls": "Visa kontroller",
+            "openImage": "Öppna bild i helskärm",
+            "topCanvas": "Översta bilden"
+        },
+        "cancel": "Avbryt",
+        "close": "Stäng",
+        "dataset": "Datamängd",
+        "noTeachingData": "Ingen data tillgänglig",
+        "or": "eller",
+        "paused": "Spelet pausat",
+        "selectLabel": "Välj etikett",
+        "selectModel": "Välj modell",
+        "title": "Breakable Machine",
+        "trashClasses": "Andra klasser som använts vid träningen",
+        "labels": {
+            "disableApp": "Pausa",
+            "datasetTip": "Granska träningsdatan",
+            "hiddenImage": "Ingen bild"
+        }
+    },
+    "controlMenu": {
+        "actions": {
+            "disableApp": "Pausa alla användare",
+            "disableDataGallery": "Inaktivera visning av träningsdata",
+            "disableHeatmap": "Inaktivera värmekarta",
+            "enableApp": "Fortsätt spelet",
+            "enableDataGallery": "Tillåt visning av träningsdata",
+            "enableHeatmap": "Tillåt värmekarta"
+        },
+        "titles": {
+            "controlMenu": "Spelkontroller"
+        }
+    },
+    "enterUsername": {
+        "actions": {
+            "enterUser": "Gå med",
+            "changePicture": "Byt bild",
+            "takePicture": "Ta bild"
+        },
+        "labels": {
+            "enterUsername": "Ange användarnamn",
+            "return": "Återgå till spelet"
+        },
+        "messages": {
+            "usernameError": {
+                "missing": "Användarnamn krävs",
+                "long": "Användarnamnet är för långt (max 15 tecken)",
+                "short": "Användarnamnet måste vara minst 3 tecken långt",
+                "taken": "Användarnamnet används redan",
+                "takenFree": "Användarnamnet används redan. Om du försöker återansluta, tryck på knappen under \"Gå med\""
+            },
+            "imageRequired": "Profilbild krävs"
+        }
+    },
+    "errorPage": {
+        "notFound": {
+            "title": "Sidan hittades inte",
+            "info": "Sidan du söker finns inte. Kontrollera adressen eller gå tillbaka till <Link>startsidan</Link>"
+        },
+        "somethingWrong": {
+            "title": "Något gick fel",
+            "info": "Rapportera gärna problemet till <Link>vårt projekt på GitHub</Link> och inkludera informationen nedan. Uppdatera sidan för att försöka igen."
+        }
+    },
+    "frontpage": {
+        "actions": {
+            "createNew": "Lärare – Skapa ny",
+            "start": "Starta"
+        },
+        "labels": {
+            "enterCode": "Elev – Ange kod"
+        }
+    },
+    "guide": {
+        "normal": {
+            "steps": {
+                "teacher": {
+                    "1": {
+                        "title": "Anslut",
+                        "tip": "Studenter visas ovan när de har anslutit. Du kan ta bort en spelare via toppanelen. Välj först en användare och klicka sedan på \"Ta bort\" eller \"Kicka\"."
+                    },
+                    "2": {
+                        "title": "Välj",
+                        "tip": "Välj en etikett som studenterna ska försöka imitera från rullgardinsmenyn. Du kan ändra modellen med knappen \"Byt klassificeringsmodell\". Att ändra etikett eller modell påverkar inte spelarnas tidigare poäng."
+                    },
+                    "3": {
+                        "title": "Utforska",
+                        "tip": "Spelet är klart och studenter kan börja spela nu. Starta genom att trycka på play-ikonen i bottenpanelen eller i vägledningspanelen till vänster. Vid behov kan du återställa en spelares poäng genom att välja spelaren och klicka på \"Återställ användarens poäng för etikett: ...\"."
+                    },
+                    "4": {
+                        "title": "Värmekarta",
+                        "tip": "Värmekartan är nu aktiverad för studenter. Du kan tvinga den på via vägledningspanelen. Du kan slå på eller av värmekartan via flame-ikonen i bottenpanelen."
+                    },
+                    "5": {
+                        "title": "Datamängd",
+                        "tip": "Visning av träningsdata är nu aktiverad för studenter. Du kan tvinga datavy på via vägledningspanelen. Du kan slå på eller av datavy via bildikonen i bottenpanelen. Du kan gå tillbaka till steg 3 för att se hur studenterna presterar."
+                    },
+                    "6": {
+                        "title": "Resultat",
+                        "tip": "Kom ihåg att du kan pausa spelet via väglednings- eller bottenpanelen. Du kan visa resultatbilder genom att klicka på dem. Välj en etikett till vänster för att se individuella resultat per etikett. I den individuella vyn kan du även visa värmekartan för en vald resultatbild när den klickas."
+                    },
+                    "7": {
+                        "title": "Avsluta",
+                        "tip": "Du har avslutat en omgång av Breakable Machine! Gå till \"Välj\"-läget för att välja en ny etikett genom att klicka på återställningsknappen i vägledningspanelen. Återställning påverkar inte tidigare poäng. Det inaktiverar också värmekarta och datamängd för studenter. Du kan spara resultaten via knappen Spara i vägledningspanelen."
+                    }
+                },
+                "student": {
+                    "1": {
+                        "title": "Använder kamera",
+                        "tip": "Spelet använder liveflöde från din kamera. Du behöver inte trycka på några knappar för att ta en bild."
+                    },
+                    "noTrainingData": {
+                        "tip": "Visning av träningsdata är inte tillgänglig för studenter med denna modell"
+                    }
+                }
+            }
+        },
+        "common": {
+            "exit": "Avsluta guide",
+            "force": {
+                "force": "Tvinga",
+                "heatmap": "Tvinga värmekarta på studenternas enheter",
+                "dataset": "Tvinga datavy på studenternas enheter"
+            },
+            "hideTips": "Dölj alla tips",
+            "startNew": "Starta ny omgång"
+        }
+    },
+
+    "library": {
+        "title": "Välj innehåll",
+        "animals": {
+            "title": "Djur",
+            "description": "Klassificeraren är finjusterad med 11 olika djur. Svårare modell att lura."
+        },
+        "continue": {
+            "title": "Fortsätt sparat spel",
+            "description": "Ladda tidigare sparade spelresultat. Välj modell efter inläsning för att fortsätta spelet."
+        },
+        "jobs": {
+            "title": "Yrken",
+            "description": "Välj utmaning från sju olika yrken."
+        },
+        "own": {
+            "title": "Egen modell",
+            "description": "Ladda upp din egen modell skapad med Gen-AI Teachable Machine"
+        }
+    },
+    "loader": {
+        "actions": {
+            "close": "Stäng"
+        },
+        "errors": {
+            "unknown": "Ett anslutningsproblem uppstod",
+            "id-in-use": "Någon använder redan den här koden",
+            "peer-not-found": "Koden kunde inte hittas",
+            "missing-ice": "Kunde inte ansluta, du kan vara offline.",
+            "no-signaling": "Vår server svarar inte",
+            "bad-browser": "Din enhet stöder inte den här appen",
+            "unknownContent": "Det finns ett problem med medieinnehållet",
+            "load": "Kunde inte ladda medieinnehållet",
+            "download": "Kunde inte ladda ner medieinnehållet",
+            "none": "OK"
+        },
+        "messages": {
+            "cameraPermission": "För att möjliggöra direktanslutningar mellan enheter behöver du ge tillfällig åtkomst till kameran.",
+            "connecting": "Försöker ansluta...",
+            "disconnected": "Frånkopplad från den andra enheten",
+            "retry": "Försöker igen...",
+            "content_load": "Laddar innehåll",
+            "content_download": "Laddar ner innehåll",
+            "ready": "Ansluten",
+            "content_none": "Innehåll klart",
+            "starting": "Ansluter...",
+            "wifiNetwork": "Din data skickas över internet eftersom du inte använder samma Wi-Fi-nätverk.",
+            "permNetwork": "Din data skickas över internet eftersom du inte har tillåtit kameratillgång.",
+            "quality0": "Kontrollerar...",
+            "quality1": "Dålig anslutning",
+            "quality2": "Ansluten",
+            "quality3": "Ansluten",
+            "failed": "Ingen anslutning",
+            "loadingModel": "Vänta medan modellen och kameran laddas."
+        },
+        "model": {
+            "fail": "Misslyckades med att ladda modell<br/><Model/> från <Origin/>.<br/>Rapportera gärna problemet till <Link>vårt GitHub-projekt</Link> om du har tid.<br/><Refresh>Uppdatera</Refresh> för att försöka igen eller <Main>gå till startsidan</Main>"
+        },
+        "titles": {
+            "iceConfig": "Konfiguration",
+            "permission": "Behörigheter",
+            "connecting": "Anslutning",
+            "error": "Problem",
+            "contentLoad": "Medieinnehåll",
+            "networkType": "Information"
+        }
+    },
+
+    "menu": {
+        "labels": {
+            "exit": "Avsluta session (All data raderas)",
+            "exitShort": "Avsluta session",
+            "save": "Ladda ner poäng och bilder från sessionen som en ZIP-fil",
+            "saveShort": "Spara",
+            "settings": "Inställningar"
+        },
+        "vis": {
+            "guidance": "Guidad spel",
+            "results": "Resultat",
+            "term": "Välj klassificeringsetikett",
+            "usergrid": "Användargrid"
+        }
+    },
+
+    "messageDisplay": {
+        "title": {
+            "userGrid": {
+                "messages": {
+                    "kick": "Varning",
+                    "remove": "Varning"
+                }
+            },
+            "usernameTaken": "Användarnamnet är upptaget"
+        },
+        "reload": {
+            "true": "Webbläsaren startas om strax",
+            "false": "Sessionen fortsätter strax"
+        },
+        "message": {
+            "userGrid": {
+                "messages": {
+                    "kick": "Du har tagits bort från spelet. Du kan gå med igen. Fråga din lärare för mer information.",
+                    "remove": "Du har tagits bort från spelet. Din profil och dina framsteg har raderats. Fråga din lärare för mer information."
+                }
+            },
+            "usernameTaken": "Användarnamnet var upptaget, försök igen efter omladdning..."
+        }
+    },
+
+    "modelLoader": {
+        "loading": "Laddar modell, vänta..."
+    },
+
+    "scoreboard": {
+        "actions": {
+            "open": {
+                "image": "Öppna bild"
+            }
+        },
+        "labels": {
+            "forAll": "Tabell",
+            "forClass": "Tabell för",
+            "hidden": "Dold",
+            "hideResultPicture": "Dölj resultatbild",
+            "hideResultPictures": "Dölj resultatbilder",
+            "leaderboard": "Topplista",
+            "resultPictures": "Resultatbilder",
+            "scores": "Poäng",
+            "showResultPicture": "Visa resultatbild",
+            "showResultPictures": "Visa resultatbilder",
+            "standings": "Ställning"
+        }
+    },
+    "settings": {
+        "titles": {
+            "general": "Allmänt",
+            "pictureSettings": "Bildinställningar",
+            "settings": "Inställningar",
+            "userGridSettings": "Inställningar för användargridvy"
+        },
+        "labels": {
+            "allowAllLabelsView": "Tillåt studenter att se hela träningsdatan",
+            "allowHidePicture": "Tillåt studenter att dölja sina resultatbilder",
+            "allowStartTermAgain": "Tillåt studenter att återställa egna poäng",
+            "autoGrow": "Justera rutnät automatiskt",
+            "hideOnDefault": "Dölj dina resultatbilder som standard",
+            "hideResultPictures": "Dölj alla resultatbilder",
+            "pauseOnChange": "Pausa spelet när etikett ändras",
+            "showFullScoreboard": "Visa alla poäng på resultattavlan",
+            "scoreboardLimit": "Begränsa resultattavlan till {{limit}} bästa resultat",
+            "userGridMaxColumns": "Storlek på användargridvy",
+            "showCrowns": "Visa kronor för topp tre",
+            "showTips": "Visa tips"
+        }
+    },
+
+    "student": {
+        "aria": {
+            "settings": "Öppna eller stäng inställningar"
+        },
+        "titles": {
+            "results": "Resultat",
+            "waitForLabel": "Väntar på att läraren ska starta spelet"
+        },
+        "labels": {
+            "disableApp": "Pausa kamera",
+            "enableApp": "Fortsätt",
+            "heatmap": "Värmekarta",
+            "ownResults": "Resultat"
+        },
+        "actions": {
+            "deleteProgress": "Radera framsteg",
+            "hide": "Dölj bild",
+            "show": "Visa bild"
+        }
+    },
+
+    "teacher": {
+        "aria": {
+            "mainMenu": "Öppna eller stäng huvudmenyn"
+        },
+        "actions": {
+            "loadingModel": "Laddar modell",
+            "openFileExplorer": "Öppna filutforskare",
+            "setModel": "Ställ in modell",
+            "start": "Starta"
+        },
+        "labels": {
+            "changeModel": "Byt klassificeringsmodell",
+            "currentModel": "Nuvarande modell",
+            "from": "från",
+            "noModel": "ingen modell vald",
+            "shareTip": "Visa anslutningskod"
+        },
+        "messages": {
+            "connection": "Eller gå till adressen nedan och ange koden",
+            "waitingPeople": "Väntar på deltagare...",
+            "onePerson": "{{count}} person har anslutit.",
+            "orGoStraight": "Eller gå direkt till adressen:",
+            "manyPeople": "{{count}} personer har anslutit.",
+            "scanQR": "Skanna QR-koden för att gå med",
+            "selectModelGenAI": "Välj modell från Gen-AI",
+            "selectOwnModel": "Eller ladda upp din egen modell skapad med Gen-AI <Link>Teachable Machine</Link> som en zip-fil.",
+            "tip": "Klicka på QR-koden för att ansluta."
+        },
+        "titles": {
+            "changeModel": "Byt modell",
+            "connectUsers": "Anslut användare"
+        }
+    },
+    "termSelect": {
+        "actions": {
+            "all": "Skicka ny klassificeringsetikett till alla",
+            "single": "Skicka ny klassificeringsetikett till en enskild användare"
+        },
+        "aria": {
+            "termMenu": "Utmaningsmeny"
+        },
+        "titles": {
+            "all": "Gemensam utmaning",
+            "change": "Ändra etikett för {{user}}",
+            "changeChallenge": "Ändra utmaningen",
+            "current": "Nuvarande utmaning:",
+            "noChallenge": "Ingen utmaning har ställts in. Välj en nedan.",
+            "selectUsers": "Välj användare",
+            "setSingle": "Ställ in ny utmaning för enskilda spelare",
+            "single": "Individuella utmaningar"
+        }
+    },
+
+    "userGrid": {
+        "actions": {
+            "kickUser": "Kasta ut användare",
+            "deleteUser": "Ta bort användare från spelet",
+            "resetScore": "Återställ användarens poäng för etikett: {{label}}",
+            "selectUser": "Välj användare genom att klicka",
+            "selectLabel": "Etikett att återställa"
+        },
+        "titles": {
+            "users": "Användare"
+        }
+    },
+
+    "webcam": {
+        "notAvailable": "Kameran laddas"
+    }
+}

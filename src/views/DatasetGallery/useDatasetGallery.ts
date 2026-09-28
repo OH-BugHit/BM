@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import type { SetStateAction } from 'react';
 
 export function useDatasetGallery<T>(
     initialSelected: string,
@@ -6,59 +7,55 @@ export function useDatasetGallery<T>(
     resetDeps: unknown[] = [],
     limit = 10
 ) {
-    const [selected, setSelected] = useState(initialSelected);
-    const [allItems, setAllItems] = useState<T[]>([]);
-    const [items, setItems] = useState<T[]>([]);
-    const [offset, setOffset] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const [noMoreData, setNoMoreData] = useState(false);
+    const [galleryState, setGalleryState] = useState({
+        initialSelected,
+        resetDeps: [...resetDeps],
+        selected: initialSelected,
+        offset: limit,
+    });
     const [openImage, setOpenImage] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-        setSelected(initialSelected);
-    }, [initialSelected]);
+    const resetChanged =
+        galleryState.initialSelected !== initialSelected ||
+        galleryState.resetDeps.length !== resetDeps.length ||
+        resetDeps.some((dependency, index) => !Object.is(dependency, galleryState.resetDeps[index]));
 
-    useEffect(() => {
-        setSelected(initialSelected);
-        setItems([]);
-        setAllItems([]);
-        setOffset(0);
-        setLoading(false);
-        setNoMoreData(false);
-    }, resetDeps);
+    if (resetChanged) {
+        setGalleryState({
+            initialSelected,
+            resetDeps: [...resetDeps],
+            selected: initialSelected,
+            offset: limit,
+        });
+    }
 
-    useEffect(() => {
-        if (!selected) return;
+    const selected = resetChanged ? initialSelected : galleryState.selected;
+    const offset = resetChanged ? limit : galleryState.offset;
+    const allItems = useMemo(() => (selected ? (itemsByLabel?.[selected] ?? []) : []), [selected, itemsByLabel]);
+    const items = allItems.slice(0, offset);
+    const loading = false;
+    const noMoreData = offset >= allItems.length;
 
-        const selectedItems = itemsByLabel?.[selected];
-        if (selectedItems === undefined) return;
-
-        setLoading(true);
-        const data = selectedItems;
-        setAllItems(data);
-        setItems(data.slice(0, limit));
-        setOffset(data.length > limit ? limit : data.length);
-        setNoMoreData(data.length <= limit);
-        setLoading(false);
-    }, [selected, itemsByLabel, limit]);
+    const setSelected = useCallback(
+        (next: SetStateAction<string>) => {
+            setGalleryState((previous) => ({
+                ...previous,
+                selected: typeof next === 'function' ? next(previous.selected) : next,
+                offset: limit,
+            }));
+        },
+        [limit]
+    );
 
     const loadMore = useCallback(() => {
         if (loading || noMoreData) return;
 
-        if (offset >= allItems.length) {
-            setNoMoreData(true);
-            return;
-        }
-
-        const nextItems = allItems.slice(offset, offset + limit);
-        setItems((prev) => [...prev, ...nextItems]);
-        setOffset((prev) => prev + nextItems.length);
-
-        if (offset + limit >= allItems.length) {
-            setNoMoreData(true);
-        }
-    }, [allItems, offset, loading, noMoreData, limit]);
+        setGalleryState((previous) => ({
+            ...previous,
+            offset: Math.min(previous.offset + limit, allItems.length),
+        }));
+    }, [allItems, loading, noMoreData, limit]);
 
     return {
         selected,

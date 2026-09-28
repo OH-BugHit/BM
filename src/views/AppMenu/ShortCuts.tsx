@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import style from './style.module.css';
 import { MenuButton } from '../../components/Buttons/MenuButton';
 import AppsIcon from '@mui/icons-material/Apps';

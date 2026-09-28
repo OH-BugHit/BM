@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router';
 import Frontpage from './views/Frontpage/Frontpage';
 import ErrorComponent from './components/ErrorComponent/Error';
 

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { activeViewAtom, usersAtom } from '../../atoms/state';
 import { useAtomValue } from 'jotai';
 import React, { useCallback } from 'react';
-import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { Alert, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { LargeButton, QRCode } from '@genai-fi/base';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -47,6 +47,7 @@ function StartDialog({ code }: Props) {
                             size={size}
                             label={t('teacher.aria.linkForFeed')}
                         />
+                        <Alert severity="info">{t('teacher.messages.tip')}</Alert>
                     </div>
                     <div className={style.column}>
                         <div>{t('teacher.messages.connection')}</div>

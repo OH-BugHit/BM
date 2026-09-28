@@ -8,10 +8,9 @@ import { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconButton } from '@mui/material';
 
-const PICSIZE = 140; // Was 80
-
 interface Props {
     term: string;
+    size?: number;
     student: string;
     setOpenImage: Dispatch<
         SetStateAction<
@@ -33,7 +32,7 @@ interface Props {
  * @param setOpenImage For opening image to preview
  * @returns View containing image of selected student's top pic on selected term
  */
-export default function SingleClassImage({ term, student, setOpenImage }: Props) {
+export default function SingleClassImage({ term, student, size = 140, setOpenImage }: Props) {
     const { t } = useTranslation();
     const [hiddenByTeacher, setHiddenByTeacher] = useAtom(teacherHidesAtom);
     const [studentData] = useAtom(studentDataAtom);
@@ -69,9 +68,9 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                     >
                         <CanvasCopy
                             sourceCanvas={classEntry.topCanvas}
-                            maxWidth={PICSIZE}
-                            width={PICSIZE}
-                            height={PICSIZE}
+                            maxWidth={size}
+                            width={size}
+                            height={size}
                         />
                     </button>
                 )}
@@ -79,9 +78,9 @@ export default function SingleClassImage({ term, student, setOpenImage }: Props)
                     <div className={style.viewPhotoButton}>
                         <CanvasCopy
                             sourceCanvas={null}
-                            maxWidth={PICSIZE}
-                            width={PICSIZE}
-                            height={PICSIZE}
+                            maxWidth={size}
+                            width={size}
+                            height={size}
                             noBorder={true}
                         />
                     </div>

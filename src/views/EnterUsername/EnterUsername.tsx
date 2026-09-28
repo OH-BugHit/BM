@@ -116,7 +116,7 @@ export default function EnterUserInfo({ onReady }: Props) {
                                 onClick={() => setShowRestore(true)}
                                 className={style.restoreButton}
                             >
-                                <em>Return to Game</em>
+                                <em>{t('enterUsername.labels.return')}</em>
                                 <RestoreIcon />
                             </IconButton>
                         )}

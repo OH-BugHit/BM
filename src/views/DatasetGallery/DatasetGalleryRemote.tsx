@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { useAtom, useSetAtom } from 'jotai';
 import { configAtom, isOutOfFocusAtom, labelsAtom, modelAtom } from '../../atoms/state';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { useLocation } from 'react-router';
 import { ISample } from '@genai-fi/classifier/main/ClassifierApp';
 import { CanvasCopy } from '../../components/CanvasCopy/CanvasCopy';
 import DatasetGalleryBase from './DatasetGalleryBase';
@@ -21,9 +20,19 @@ function DatasetGalleryRemote() {
     const [labels] = useAtom(labelsAtom);
     const [model] = useAtom(modelAtom);
     const setIsOutOfFocus = useSetAtom(isOutOfFocusAtom);
-    const location = useLocation();
-    const [imagePaths, setImagePaths] = React.useState<Record<string, ISample[] | null>>({});
-    const loaded = useRef(false);
+    const imagePaths = React.useMemo(() => {
+        if (config.modelData.name.length === 0) return {};
+
+        const result: Record<string, ISample[]> = {};
+        const samples: ISample[][] = model?.samples ?? [];
+        const labelsList: string[] = (typeof model?.getLabels === 'function' ? model.getLabels() : []) || [];
+
+        labelsList.forEach((label, inx) => {
+            result[label] = samples[inx] ?? [];
+        });
+
+        return result;
+    }, [config.modelData.name, model]);
     const mode = 'teacher';
 
     const {
@@ -39,24 +48,6 @@ function DatasetGalleryRemote() {
     } = useDatasetGallery<ISample>('', imagePaths as Record<string, ISample[]>, [config.modelData.name], 10);
 
     useEffect(() => {
-        if (loaded.current) return;
-        if (config.modelData.name.length > 0) {
-            setImagePaths(() => {
-                const result: Record<string, ISample[]> = {};
-                const samples: ISample[][] = model?.samples ?? [];
-                const labelsList: string[] = (typeof model?.getLabels === 'function' ? model.getLabels() : []) || [];
-
-                labelsList.forEach((label, inx) => {
-                    result[label] = samples[inx] ?? [];
-                });
-
-                return result;
-            });
-        }
-        loaded.current = true;
-    }, [config.modelData, location.search, model, mode]);
-
-    useEffect(() => {
         if (openImage) {
             setIsOutOfFocus(true);
         } else {
@@ -66,7 +57,6 @@ function DatasetGalleryRemote() {
 
     useEffect(() => {
         setSelected('');
-        loaded.current = false;
     }, [config.modelData.name, setSelected]);
 
     useEffect(() => {

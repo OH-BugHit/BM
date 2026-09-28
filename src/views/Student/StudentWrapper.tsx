@@ -2,7 +2,7 @@ import StudentProtocol from '../../services/StudentProtocol';
 import { useID } from '@genai-fi/base';
 import EnterUserInfo from '../EnterUsername/EnterUsername';
 import Footer from '../../components/Footer/Footer';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { Peer } from '@genai-fi/base/hooks/peer';
 import PeerEnv from '../../env';
 import { useState } from 'react';

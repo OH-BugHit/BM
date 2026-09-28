@@ -1,7 +1,7 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@genai-fi/base';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import Footer from '../../components/Footer/Footer';
 
 import { useState } from 'react';

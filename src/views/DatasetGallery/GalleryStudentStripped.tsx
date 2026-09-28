@@ -24,7 +24,8 @@ function DatasetGalleryStudentStripped() {
     const loaded = useRef(false);
     const model = useAtomValue(modelAtom);
     const location = useLocation();
-    const [available, setAvailable] = useState(false);
+    const modelName = model?.model?.getMetadata()?.modelName ?? 'unknown';
+    const available = modelName === 'jobs' || modelName === 'animals';
 
     const {
         selected,
@@ -41,19 +42,13 @@ function DatasetGalleryStudentStripped() {
 
     useEffect(() => {
         if (loaded.current) return;
-        if (config.modelData.name.length > 0) {
-            const modelName = model?.model?.getMetadata()?.modelName ?? 'unknown';
-            if (modelName === 'jobs' || modelName === 'animals') {
-                setAvailable(true);
-                fetchImageUrls({ dataset: config.modelData }).then((data) => {
-                    setImagePaths(data);
-                });
-            } else {
-                setAvailable(false);
-            }
+        if (config.modelData.name.length > 0 && available) {
+            fetchImageUrls({ dataset: config.modelData }).then((data) => {
+                setImagePaths(data);
+            });
         }
         loaded.current = true;
-    }, [config.modelData, location.search, model]);
+    }, [config.modelData, location.search, available]);
 
     useEffect(() => {
         if (openImage) {

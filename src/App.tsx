@@ -1,5 +1,5 @@
 import './App.css';
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 import { router } from './router';
 import { Suspense } from 'react';
 import { Spinner } from '@genai-fi/base';

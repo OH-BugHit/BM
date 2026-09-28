@@ -1,8 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { createStore, Provider } from 'jotai';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 const theme = createTheme({
     transitions: {

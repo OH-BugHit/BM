@@ -5,10 +5,9 @@ import { Dispatch, SetStateAction } from 'react';
 import { CanvasCopy } from '../../../components/CanvasCopy/CanvasCopy';
 import { useTranslation } from 'react-i18next';
 
-const PICSIZE = 140; // Was 80
-
 interface Props {
     student: string;
+    size?: number;
     setOpenImage: Dispatch<
         SetStateAction<
             | HTMLCanvasElement
@@ -28,7 +27,7 @@ interface Props {
  * @param setOpenImage For opening image to preview
  * @returns View of all the top pictures from single student
  */
-export default function AllStudentPics({ student, setOpenImage }: Props) {
+export default function AllStudentPics({ student, size = 140, setOpenImage }: Props) {
     const { t } = useTranslation();
     const [studentData] = useAtom(studentDataAtom);
     const [hiddenByTeacher] = useAtom(teacherHidesAtom);
@@ -39,6 +38,7 @@ export default function AllStudentPics({ student, setOpenImage }: Props) {
     const pics = Array.from(studentEntry?.data.entries() || [])
         .filter(([className, entry]) => !entry.hidden && !hiddenByTeacher.get(student)?.includes(className))
         .map(([, entry]) => entry.topCanvas);
+
     return (
         <div
             className={style.viewPhotoButton}
@@ -67,9 +67,9 @@ export default function AllStudentPics({ student, setOpenImage }: Props) {
                 >
                     <CanvasCopy
                         sourceCanvas={pic}
-                        maxWidth={PICSIZE}
-                        width={PICSIZE}
-                        height={PICSIZE}
+                        maxWidth={size}
+                        width={size}
+                        height={size}
                     />
                 </button>
             ))}

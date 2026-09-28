@@ -1,7 +1,8 @@
 {
     "languages": {
         "en-GB": "English",
-        "fi-FI": "Suomi"
+        "fi-FI": "Suomi",
+        "sv-SE": "Svenska"
     },
     "about": {
         "title": "Generation AI",
@@ -46,6 +47,22 @@
             "We value your privacy and we are committed to protect your data and ensuring GDPR compliance. If you have questions or want to exercise your rights, contact us at nicolas.pope@uef.fi."
         ]
     },
+    "app": {
+        "cancel": "Cancel",
+        "reportProblem": "Feedback",
+        "reportProblemTip": "Report an issue or idea to us.",
+        "report": {
+            "title": "Feedback or Bug",
+            "reason": "Reason",
+            "bug": "There is a problem",
+            "feedback": "I have a suggestion",
+            "other": "Other reason",
+            "message": "Message",
+            "send": "Send",
+            "error": "Failed to send report."
+        }
+    },
+
     "common": {
         "aria": {
             "collideControls": "Close controls",
@@ -65,13 +82,14 @@
         "trashClasses": "Other classes used in training",
         "labels": {
             "disableApp": "Pause",
-            "datasetTip": "Examine the training data"
+            "datasetTip": "Examine the training data",
+            "hiddenImage": "No Picture"
         }
     },
     "controlMenu": {
         "actions": {
             "disableApp": "Pause all users",
-            "disableDataGallery": "Disable teching data browsing",
+            "disableDataGallery": "Disable teaching data browsing",
             "disableHeatmap": "Disable heatmap",
             "enableApp": "Continue game",
             "enableDataGallery": "Allow teaching data browsing",
@@ -87,7 +105,10 @@
             "changePicture": "Change Picture",
             "takePicture": "Take Picture"
         },
-        "labels": { "enterUsername": "Enter Username" },
+        "labels": {
+            "enterUsername": "Enter Username",
+            "return": "Return to Game"
+        },
         "messages": {
             "usernameError": {
                 "missing": "A username is required",
@@ -260,7 +281,7 @@
             "userGrid": {
                 "messages": {
                     "kick": "Warning",
-                    "remove": "Cauction"
+                    "remove": "Caution"
                 }
             },
             "usernameTaken": "Username taken"
@@ -369,7 +390,8 @@
             "manyPeople": "{{count}} people have joined.",
             "scanQR": "Scan the QR code to join",
             "selectModelGenAI": "Select model from Gen-AI",
-            "selectOwnModel": "Or upload your own model created with Gen-AI <Link>Teachable Machine</Link> as a zip file."
+            "selectOwnModel": "Or upload your own model created with Gen-AI <Link>Teachable Machine</Link> as a zip file.",
+            "tip": "Click the QR code to connect yourself."
         },
         "titles": {
             "changeModel": "Change Model",

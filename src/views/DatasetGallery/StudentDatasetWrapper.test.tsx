@@ -1,5 +1,6 @@
 import { it, expect, vi } from 'vitest';
 import { screen } from '@testing-library/react';
+import '@testing-library/jest-dom/vitest';
 import { createStore } from 'jotai';
 
 import { StudentDatasetWrapper } from './StudentDatasetWrapper';

@@ -6,7 +6,7 @@ import Tip from './Tip';
 import { useAtom, useAtomValue } from 'jotai';
 import { guidanceActiveAtom, guidanceStepAtom, isOutOfFocusAtom, showTipsAtom } from '../../atoms/state';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface Props {
     user: 'student' | 'teacher';
@@ -16,12 +16,10 @@ export default function Tips({ user }: Props) {
     const guidance = useAtomValue(guidanceActiveAtom);
     const step = useAtomValue(guidanceStepAtom);
     const [show, setShowTips] = useAtom(showTipsAtom);
-    const [hide, setHide] = useState(false);
+    const [hiddenAtStep, setHiddenAtStep] = useState<number | null>(null);
+    const hide = hiddenAtStep === step;
     const isOutOfFocus = useAtomValue(isOutOfFocusAtom);
 
-    useEffect(() => {
-        setHide(false);
-    }, [show, setHide, step]);
     if (!guidance || step < 1 || !show) return null;
 
     return (
@@ -51,7 +49,7 @@ export default function Tips({ user }: Props) {
                         className={style.closeButton}
                         title={t('common.close')}
                         aria-label={t('common.close')}
-                        onClick={() => setHide(true)}
+                        onClick={() => setHiddenAtStep(step)}
                     >
                         <CloseSharpIcon />
                     </Button>

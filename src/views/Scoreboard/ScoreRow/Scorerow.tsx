@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { CanvasCopy } from '../../../components/CanvasCopy/CanvasCopy';
 import AllStudentPics from './AllStudentPics';
 import SingleClassImage from './SingleClassImages';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
 interface Props {
     index: number;
@@ -37,6 +38,7 @@ interface Props {
  */
 export default function ScoreRow({ index, student, term, setOpenImage }: Props) {
     const [settings] = useAtom(settingAtom);
+    const size = useWindowSize();
 
     /* Structure of the score row:
      *  Position in scores
@@ -89,6 +91,7 @@ export default function ScoreRow({ index, student, term, setOpenImage }: Props) 
                         <SingleClassImage
                             term={term}
                             student={student.studentId}
+                            size={size.width < 800 ? 60 : size.width < 1000 ? 80 : size.width < 1110 ? 100 : 140}
                             setOpenImage={setOpenImage}
                         />
                     </>
@@ -98,6 +101,7 @@ export default function ScoreRow({ index, student, term, setOpenImage }: Props) 
                         <div className={style.allPics}>
                             <AllStudentPics
                                 student={student.studentId}
+                                size={size.width < 800 ? 60 : size.width < 1000 ? 80 : size.width < 1110 ? 100 : 140}
                                 setOpenImage={setOpenImage}
                             />
                         </div>

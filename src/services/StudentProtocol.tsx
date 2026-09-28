@@ -1,5 +1,5 @@
 import { Connection, ConnectionStatus } from '@genai-fi/base';
-import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useCallback, useContext } from 'react';
 import { EventProtocol } from './protocol';
 import { ImageData, ModelInfo, ModelOrigin, RegisterData } from '../utils/types';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -185,14 +185,8 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             setProfilePicture(data.data.profilePicture);
         }
     });
-    const [hasBeenReady, setHasBeenReady] = useState(false);
-
     const ready = usePeerStatus() === 'ready';
     const send = usePeerSender<EventProtocol>();
-
-    useEffect(() => {
-        setHasBeenReady(true);
-    }, [ready]);
 
     /**
      * Sends heatmap and normal image and score to the teacher
@@ -222,7 +216,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
                 doRegister,
             }}
         >
-            {hasBeenReady && children}
+            {ready && children}
             <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', pointerEvents: 'none' }}>
                 <ConnectionStatus
                     api={import.meta.env.VITE_APP_APIURL}

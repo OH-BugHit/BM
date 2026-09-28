@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import React from 'react';
 
 // Mockit TOP-level ennen muita importteja

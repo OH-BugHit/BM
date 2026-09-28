@@ -59,10 +59,11 @@ export default function Student({ serverCode }: StudentProps) {
     useEffect(() => {
         if (bouncer.reload) {
             blockRef.current = false;
-            setShowError(true);
+            const showErrorFrame = window.requestAnimationFrame(() => setShowError(true));
             setTimeout(() => {
                 window.location.href = `/student/${serverCode}/main`;
             }, 8000);
+            return () => window.cancelAnimationFrame(showErrorFrame);
         }
     }, [bouncer.reload, serverCode]);
 

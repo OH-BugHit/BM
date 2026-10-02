@@ -258,7 +258,7 @@ export default function ServerProtocol() {
     return (
         <ConnectionStatus
             api={import.meta.env.VITE_APP_APIURL}
-            appName={'spoofgame'}
+            appName={'spoof'}
             visibility={2}
         />
     );

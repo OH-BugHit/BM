@@ -220,7 +220,7 @@ export default function StudentProtocol({ children }: PropsWithChildren) {
             <div style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', pointerEvents: 'none' }}>
                 <ConnectionStatus
                     api={import.meta.env.VITE_APP_APIURL}
-                    appName={'spoofgame'}
+                    appName={'spoof'}
                     visibility={1}
                 />
             </div>

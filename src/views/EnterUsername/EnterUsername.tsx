@@ -81,35 +81,43 @@ export default function EnterUserInfo({ onReady }: Props) {
         <>
             {config && (
                 <div className={config?.settings?.profilePicture ? style.enterUserInfo : style.noPicContainer}>
-                    <ProfilePictureInput
-                        errors={errors}
-                        setErrors={setErrors}
-                        setImage={setImage}
-                        image={image}
-                    />
-                    <div className={style.textField}>
-                        <TextField
-                            label={t('enterUsername.labels.enterUsername')}
-                            value={username}
-                            sx={{ color: 'white' }}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                            error={!!errors.username}
-                            helperText={
-                                errors.username
-                                    ? t(`enterUsername.messages.usernameError.${errors.username}`)
-                                    : undefined
-                            }
-                            fullWidth
-                            margin="normal"
-                        />
-                    </div>
-                    <LargeButton
-                        onClick={handleSubmit}
-                        variant="contained"
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSubmit();
+                        }}
                     >
-                        {t('enterUsername.actions.enterUser')}
-                    </LargeButton>
+                        <ProfilePictureInput
+                            errors={errors}
+                            setErrors={setErrors}
+                            setImage={setImage}
+                            image={image}
+                        />
+                        <div className={style.textField}>
+                            <TextField
+                                label={t('enterUsername.labels.enterUsername')}
+                                value={username}
+                                sx={{ color: 'white' }}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                                error={!!errors.username}
+                                helperText={
+                                    errors.username
+                                        ? t(`enterUsername.messages.usernameError.${errors.username}`)
+                                        : undefined
+                                }
+                                fullWidth
+                                margin="normal"
+                                autoComplete="username"
+                            />
+                        </div>
+                        <LargeButton
+                            onClick={handleSubmit}
+                            variant="contained"
+                        >
+                            {t('enterUsername.actions.enterUser')}
+                        </LargeButton>
+                    </form>
                     <div className={style.restore}>
                         {!showRestore && (
                             <IconButton

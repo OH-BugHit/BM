@@ -28,7 +28,7 @@
         },
         "cancel": "Avbryt",
         "close": "Stäng",
-        "dataset": "Datamängd",
+        "dataset": "Träningsdata",
         "noTeachingData": "Ingen data tillgänglig",
         "or": "eller",
         "paused": "Spelet pausat",
@@ -109,14 +109,14 @@
                     },
                     "3": {
                         "title": "Utforska",
-                        "tip": "Spelet är klart och studenter kan börja spela nu. Starta genom att trycka på play-ikonen i bottenpanelen eller i vägledningspanelen till vänster. Vid behov kan du återställa en spelares poäng genom att välja spelaren och klicka på \"Återställ användarens poäng för etikett: ...\"."
+                        "tip": "Spelet är klart och studenterna kan börja spela nu. Starta genom att trycka på play-ikonen i bottenpanelen eller i vägledningspanelen till vänster. Vid behov kan du nollställa en spelares poäng genom att välja spelaren och klicka på \"Nollställ användarens poäng för etikett: ...\"."
                     },
                     "4": {
                         "title": "Värmekarta",
                         "tip": "Värmekartan är nu aktiverad för studenter. Du kan tvinga den på via vägledningspanelen. Du kan slå på eller av värmekartan via flame-ikonen i bottenpanelen."
                     },
                     "5": {
-                        "title": "Datamängd",
+                        "title": "Träningsdata",
                         "tip": "Visning av träningsdata är nu aktiverad för studenter. Du kan tvinga datavy på via vägledningspanelen. Du kan slå på eller av datavy via bildikonen i bottenpanelen. Du kan gå tillbaka till steg 3 för att se hur studenterna presterar."
                     },
                     "6": {
@@ -125,7 +125,7 @@
                     },
                     "7": {
                         "title": "Avsluta",
-                        "tip": "Du har avslutat en omgång av Breakable Machine! Gå till \"Välj\"-läget för att välja en ny etikett genom att klicka på återställningsknappen i vägledningspanelen. Återställning påverkar inte tidigare poäng. Det inaktiverar också värmekarta och datamängd för studenter. Du kan spara resultaten via knappen Spara i vägledningspanelen."
+                        "tip": "Du har avslutat en omgång av Breakable Machine! Gå till \"Välj\"-läget för att välja en ny etikett genom att klicka på återställningsknappen i vägledningspanelen. Återställning påverkar inte tidigare poäng. Det inaktiverar också värmekarta och träningsdata för studenter. Du kan spara resultaten via knappen Spara i vägledningspanelen."
                     }
                 },
                 "student": {
@@ -384,9 +384,9 @@
         "actions": {
             "kickUser": "Kasta ut användare",
             "deleteUser": "Ta bort användare från spelet",
-            "resetScore": "Återställ användarens poäng för etikett: {{label}}",
+            "resetScore": "Nollställ poängen för etiketten: {{label}}",
             "selectUser": "Välj användare genom att klicka",
-            "selectLabel": "Etikett att återställa"
+            "selectLabel": "Etikett att nollställa"
         },
         "titles": {
             "users": "Användare"

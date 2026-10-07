@@ -1,12 +1,9 @@
-import { RefObject, useState } from 'react';
+import { RefObject } from 'react';
 import style from './results.module.css';
 import { Button } from '@genai-fi/base';
 import { useTranslation } from 'react-i18next';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import Results from './Results';
-import { useSetAtom } from 'jotai';
-import { activeViewAtom, isOutOfFocusAtom } from '../../../atoms/state';
-import OpenedImage from '../../../components/ImageView/OpenedImage';
 
 interface Props {
     currentData: {
@@ -14,17 +11,17 @@ interface Props {
         topCanv: RefObject<HTMLCanvasElement | null>;
         topHeat: RefObject<HTMLCanvasElement | null>;
     };
+    doClose: () => void;
+    openImage: HTMLCanvasElement | null;
+    setOpenImage: React.Dispatch<React.SetStateAction<HTMLCanvasElement | null>>;
 }
 
 /**
  * Component shows a gallery of images from a dataset
  * @returns
  */
-export function ResultsGallery({ currentData }: Props) {
+export function ResultsGallery({ currentData, doClose, openImage, setOpenImage }: Props) {
     const { t } = useTranslation();
-    const [openImage, setOpenImage] = useState<HTMLCanvasElement | null>(null);
-    const setActiveView = useSetAtom(activeViewAtom);
-    const setIsResultsOpen = useSetAtom(isOutOfFocusAtom);
 
     return (
         <>
@@ -32,29 +29,18 @@ export function ResultsGallery({ currentData }: Props) {
                 className={style.resultGallery}
                 inert={openImage ? true : undefined}
             >
-                <div className={style.headerToggle}>
-                    <h1 style={{ color: '#282828' }}>{t('student.titles.results')}</h1>
-                </div>
                 <Button
-                    onClick={() => {
-                        setIsResultsOpen(undefined);
-                        setActiveView((old) => ({
-                            ...old,
-                            overlay: 'none',
-                        }));
-                    }}
+                    onClick={doClose}
                     variant="contained"
                     style={{
                         position: 'absolute',
-                        top: '0.5rem',
-                        right: '0.5rem',
+                        top: '0',
+                        right: '0',
                         zIndex: 3,
                         background: '#ffffffe7',
-                        width: 32,
-                        height: 32,
                         fontSize: 24,
                         cursor: 'pointer',
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.22)',
+                        boxShadow: '-2px 3px 4px rgba(0, 0, 0, 0.4)',
                     }}
                     className={style.closeButton}
                     title={t('common.close')}
@@ -62,23 +48,15 @@ export function ResultsGallery({ currentData }: Props) {
                 >
                     <CloseSharpIcon color="primary" />
                 </Button>
+                <div className={style.headerToggle}>
+                    <h1 style={{ color: '#282828' }}>{t('student.titles.results')}</h1>
+                </div>
+
                 <Results
                     setOpenImage={setOpenImage}
                     currentData={currentData}
                 />
             </div>
-            {openImage && (
-                <div
-                    className={style.openImageOverlay}
-                    onClick={() => setOpenImage(null)}
-                >
-                    <OpenedImage
-                        setOpenImage={setOpenImage}
-                        openImage={null}
-                        openCanvas={openImage}
-                    />
-                </div>
-            )}
         </>
     );
 }
